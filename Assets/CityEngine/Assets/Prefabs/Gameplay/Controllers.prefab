@@ -1,0 +1,360 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &283021290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 283021291}
+  m_Layer: 0
+  m_Name: CitizensParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &283021291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283021290}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1462640282}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &728635247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 728635248}
+  m_Layer: 0
+  m_Name: RoadsParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &728635248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728635247}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -585.43604, y: -1.065093, z: -267.45786}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1462640282}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1101898827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1101898828}
+  m_Layer: 0
+  m_Name: CarsParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1101898828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101898827}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1462640282}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1432390751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1432390752}
+  m_Layer: 0
+  m_Name: BuildingsParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1432390752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432390751}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -585.43604, y: -1.065093, z: -267.45786}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1462640282}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1462640281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462640282}
+  m_Layer: 0
+  m_Name: Parents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1462640282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462640281}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 585.43604, y: 1.065093, z: 267.45786}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1432390752}
+  - {fileID: 728635248}
+  - {fileID: 283021291}
+  - {fileID: 1101898828}
+  m_Father: {fileID: 1024400442031631239}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1024400442031631237
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1024400442031631239}
+  - component: {fileID: 1024400442031631236}
+  - component: {fileID: 1024400442031631238}
+  - component: {fileID: 277078930}
+  - component: {fileID: 783540589}
+  - component: {fileID: 783540590}
+  - component: {fileID: 783540595}
+  m_Layer: 0
+  m_Name: Controllers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1024400442031631239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1462640282}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1024400442031631236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaab8faabae66a64082f20d3d5b1f728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  citizensCarsToSpawn:
+  - {fileID: 8243772047393798230, guid: 60e6c6c5dfaf1464eac6cfc1692d8236, type: 3}
+  - {fileID: 8243772047393798230, guid: 1d3bdc78106584a468ff0687ed407861, type: 3}
+  - {fileID: 8243772047393798230, guid: 2e3011aaab1adb143bd8394df3ca35e2, type: 3}
+  - {fileID: 8243772047393798230, guid: fdca1d572268b114c8d97c5a6999935c, type: 3}
+  "ambulance\u0421arsToSpawn":
+  - {fileID: 8243772047393798230, guid: c02f8557397f62b48b3edc47dd686531, type: 3}
+  "industrial\u0421arsToSpawn":
+  - {fileID: 8243772047393798230, guid: 537bd70be509ca34b8aa23e2b65816a3, type: 3}
+  - {fileID: 8243772047393798230, guid: bfaa33ae484156446b57ad476677c6fd, type: 3}
+  - {fileID: 8243772047393798230, guid: 5ebda11ab6f054d4899b73a7f8b84cb3, type: 3}
+  - {fileID: 8243772047393798230, guid: 2dfd57f610e146b4a900efaa39bc15d3, type: 3}
+  - {fileID: 8243772047393798230, guid: ae3c8018fbd91084897d2acc08cacf1d, type: 3}
+  - {fileID: 8243772047393798230, guid: 069f463f961810245b494fdfa0692a0e, type: 3}
+  - {fileID: 8243772047393798230, guid: bc2db95b07f359341acd3118cee3b11c, type: 3}
+  - {fileID: 8243772047393798230, guid: 3978f09b1f1e1bc42b4e083b6250d6e1, type: 3}
+  citizenToSpawn:
+  - {fileID: 3504201633332158748, guid: ed85d253a828add44afc9190703432b5, type: 3}
+  - {fileID: 7101627081467134790, guid: c467bbeb77b459449a8c0e8f56b441c4, type: 3}
+  - {fileID: 5855227950798877521, guid: cbf7b57c32d008c468a742a1a07ab144, type: 3}
+  - {fileID: 6851077178390621474, guid: 27455028553efdf46b544290fdbe329f, type: 3}
+  carsCount: 0
+  citizensCount: 0
+  carsSpawnPoints: []
+  citizensSpawnPoints: []
+--- !u!114 &1024400442031631238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e80009b32142f441ab88695c59068de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  windSpeed: 3
+  blades: []
+--- !u!114 &277078930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a42573c21a30c47b3f17d9a91ba141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionalLight: {fileID: 0}
+  lights: []
+  switchDayNight: 0
+  dayTime: 30
+--- !u!114 &783540589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8b618b7a645ec841b0960c54e928957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingsPropertiesForIndex:
+  - {fileID: 1730668401964716652, guid: 8dea5bf296fd82a499eec37c5cab0a6b, type: 3}
+  - {fileID: 7188806469217189867, guid: 8800a5088c454c84387f2d38b6eee631, type: 3}
+  - {fileID: 1730668401964716652, guid: 821c233820071784ba8cd5ce1cc9b4a5, type: 3}
+  - {fileID: 7188806469217189867, guid: 2a40a694b1fff2d4c993fb534f981ffc, type: 3}
+  - {fileID: 1730668401964716652, guid: 5d80aa83a6f9f67438d4d86ca27e03dc, type: 3}
+  - {fileID: 2071171572114819212, guid: d5dec82806cfd054cac0eb297eb8276e, type: 3}
+  - {fileID: 5793062631657546409, guid: 0c24d2af891e2e84aa2252fc009b849b, type: 3}
+  - {fileID: 5793062631657546409, guid: b339866acaa2a4e409055ee7d14c3514, type: 3}
+  - {fileID: 5793062631657546409, guid: d612cdab29acd63499016cf4e001debe, type: 3}
+  - {fileID: 5793062631657546409, guid: 6d1c5f3fce53bcd4698b26c0e04c8e78, type: 3}
+  - {fileID: 5793062631657546409, guid: d895956676bc93c48bb72f193d3dea6b, type: 3}
+  - {fileID: 1268100822294927193, guid: 99f51fe82d9ed6444a4b88d2df35c665, type: 3}
+  - {fileID: 6729065792135710501, guid: 77b789078b5c22a4ca3b5e57de86eacb, type: 3}
+  - {fileID: 3489959697771838828, guid: 52c05d1ca47de5047965a82e1a153da9, type: 3}
+  - {fileID: 5603589027118884365, guid: 3417ce02a22a96340909da04d68dbdcc, type: 3}
+  - {fileID: 536471201410148810, guid: 44f34daca555cf046833e642a0e210b9, type: 3}
+  - {fileID: 5793062631657546409, guid: c93cd9b9e2140ee4d95162c6a160c3c4, type: 3}
+  - {fileID: 5793062631657546409, guid: 62be45ec74ee0b84ab672adc637c68e6, type: 3}
+  - {fileID: 6729065792135710501, guid: 30fbe15ddea22684e948b391d6774f34, type: 3}
+  - {fileID: 6729065792135710501, guid: d8b38058dd2b524498c4554424a7859a, type: 3}
+  - {fileID: 5793062631657546409, guid: 1593f55f91253ed4a9e52759ba38172f, type: 3}
+  - {fileID: 6729065792135710501, guid: cbeb87040dec08343b48aedae4b747e1, type: 3}
+  - {fileID: 5793062631657546409, guid: c4941966bcc2faf4b9382057f72e24bd, type: 3}
+  - {fileID: 5793062631657546409, guid: 5511ea001a66d6e40a19022284d6bb49, type: 3}
+  - {fileID: 5793062631657546409, guid: 25aa94777ae3f744ab014109ae4fc515, type: 3}
+  - {fileID: 5793062631657546409, guid: 099f213e58245c044a887fd7009ed7eb, type: 3}
+  - {fileID: 5793062631657546409, guid: eec413181174c544e9152bb91d9165bb, type: 3}
+  - {fileID: 5793062631657546409, guid: 12a5d4c408fd4d44fbb9420b3c63c4b7, type: 3}
+  - {fileID: 6729065792135710501, guid: c3062cb2a5cc0994a9bb884d092d4520, type: 3}
+  - {fileID: 5793062631657546409, guid: b0043a66a71e6b94691b3294e6c7b871, type: 3}
+  - {fileID: 5793062631657546409, guid: 4dcf63371cef5f747bc39249dd48409a, type: 3}
+  - {fileID: 6729065792135710501, guid: 5d740882abb885640a2b93bd8678ed83, type: 3}
+  - {fileID: 5793062631657546409, guid: 2cf4cf390803bf04b9ef15c2369851be, type: 3}
+  - {fileID: 6729065792135710501, guid: 757b2f9ef638a904c8ee04197238bfc1, type: 3}
+  - {fileID: 5793062631657546409, guid: dbb9093c06779434185cbfb8a0fc83da, type: 3}
+  - {fileID: 6729065792135710501, guid: 6d9fe40561fbbab408df01d84fb7fd6c, type: 3}
+  - {fileID: 5793062631657546409, guid: c720cc577b752e940b20cfbd8bc265af, type: 3}
+  - {fileID: 1268100822294927193, guid: 9295f064480ac884ab6cecfca5cff18f, type: 3}
+  - {fileID: 1268100822294927193, guid: c445095dafe584147918ca9685b690fe, type: 3}
+  - {fileID: 6729065792135710501, guid: 6b7a72e5bfc57db468686e8d216ac607, type: 3}
+  road: {fileID: 1730668401964716652, guid: bc0c6e061703dff48a029ec97c7143ea, type: 3}
+--- !u!114 &783540590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ffedecee98d4b479c0918904a3f37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraHolder: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  buildingsParent: {fileID: 1432390752}
+  roadsParent: {fileID: 728635248}
+  citizensParent: {fileID: 283021291}
+  carsParent: {fileID: 1101898828}
+  moveTarget: 0
+  target: {fileID: 0}
+  gridSize: 10
+  normalSpeed: 1
+  fastSpeed: 3
+  movSpeed: 1
+  rotationScale: 3
+  zoomScale: {x: 0, y: -10, z: 10}
+  minZoom: -80
+  maxZoom: 300
+  allBuildings: []
+  forest: {fileID: 0}
+  doubleClick: 0
+  lastClickTime: 0
+--- !u!114 &783540595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00c914167dfedb44086e32700b9be2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winterWeather: 0
+  snow: {fileID: 0}

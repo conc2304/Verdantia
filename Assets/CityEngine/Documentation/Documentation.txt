@@ -1,0 +1,81 @@
+City Engine is a complete project system that will help you in creating your game.
+You can easily use your own 3D building models to create your city.
+The scripts can controll hundreds of characters (citizens and cars).
+
+ 
+Version 1.1
+    * Productivity increased by 50%
+    * The change of night and day
+    * New shaders
+    * Added post processes
+    * Minor bugs fixed
+
+ 
+Supported Platforms   
+    PC, Android, IOS, XBOX
+
+ 
+Asset contains   
+    1. Menu for building
+        * ability to add your own buildings to the menu
+        * building removal tool
+
+    2. Building system   
+        * road construction system
+        * building construction animation (system of scripts, shader and particles)
+        * large map for the city (1000x1000 meters)
+        * customizability of building duration
+        * cranes are adaptable to any building
+        * grid for building
+        * forest generator tool
+        * lamppost wires run along the roads
+        * lthe forest is cut down during the construction of buildings
+
+    3. Adaptive citizens and transport control system
+        * cars and citizens pathfinding tool
+        * cars can change lanes and give way
+        * the ability to create transitions for people between buildings
+        * cars and citizens come out of buildings
+        * animated citizens
+        * the number of citizens and cars depends on the number of buildings
+
+    4. Control system
+        * ability to rotate buildings
+        * camera control - rotate, zoom, move
+
+    5. Other
+         * 240 models   
+         * the change of night and day
+         * shaders 
+         * particles
+         * post processes
+         * all objects are made through prefabs, which will make them easy to upgrade ones
+         *  at night street lights, windows of houses and headlights of cars are on.
+
+
+Load   
+    Shadows       
+        600k tris - 450 batches   
+    No shadows       
+        250k tris - 200 batches
+
+ 
+Control
+    Move - W / S / A / D - left mouse drag
+	Rotate - Q / E - middle mouse
+	Scale - R / E
+	Choose building in menu - left mouse double click
+	Rotate building - right mouse click
+	Winter - Y
+
+
+To save, you need to add your buildings to the SaveDataTrigger script. the first 6 indices are roads. You can edit the number of indices on line 102.
+
+
+Feedback(suggestions, questions, reports or errors)
+    SomeOneWhoCaresFeedBack @gmail.com
+
+
+My social networks
+    https://www.artstation.com/vrdsgsegs
+    https://twitter.com/iOneWhoCares
