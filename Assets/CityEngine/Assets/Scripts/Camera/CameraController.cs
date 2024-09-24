@@ -56,6 +56,9 @@ public class CameraController : MonoBehaviour
     bool findPositionAfterMuiltyIputs;
 
     public GameObject activateMenu;
+    private HeatMap heatMap;  // Reference to HeatMap script
+    private bool cityChanged = false;
+
 
     void Awake()
     {
@@ -63,11 +66,12 @@ public class CameraController : MonoBehaviour
         roadGenerator = FindObjectOfType<RoadGenerator>();
         spawner = FindObjectOfType<Spawner>();
         saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
+        heatMap = FindObjectOfType<HeatMap>();
 
         toPos = cameraHolder.transform.position;
         toRot = cameraHolder.transform.rotation;
         toZoom = cameraTransform.localPosition;
-        
+
         for (int i = 0; i < forest.childCount; i++)
             forestObj.Add(forest.GetChild(i));
     }
@@ -75,10 +79,10 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        MouseInut();
+        MouseInput();
         KeyboardInput();
         SetPosition();
-        
+
         if (Input.GetMouseButtonDown(0))
         {
             if (Time.time - lastClickTime < catchTime)
@@ -91,11 +95,20 @@ public class CameraController : MonoBehaviour
             }
             lastClickTime = Time.time;
         }
+
+
+        if (cityChanged && allBuildings != null)
+        {
+            // print(allBuildings.GetType());
+            print("City Changed = True");
+            heatMap.UpdateHeatMap(allBuildings);  // Directly pass the allBuildings list to the HeatMap
+        }
+        cityChanged = false;
     }
 
     private void LateUpdate()
     {
-        
+
         if (moveTarget)
         {
             float planeY = 0;
@@ -110,7 +123,7 @@ public class CameraController : MonoBehaviour
                    0, Mathf.Floor((ray.GetPoint(distance).z + gridSize / 2) / gridSize) * gridSize), Time.deltaTime * 50);
             }
         }
-        
+
     }
 
 
@@ -122,6 +135,7 @@ public class CameraController : MonoBehaviour
         roadSpawnWasSuccessful = roadGenerator.CheckRoadType(targetNew);
         if (roadSpawnWasSuccessful)
         {
+            cityChanged = true;
             for (int i = 0; i < forestObj.Count; i++)
             {
                 if (forestObj[i].position == targetNew.position)
@@ -141,26 +155,32 @@ public class CameraController : MonoBehaviour
 
     public void SpawnBuilding(Transform targetNew)
     {
+        // Get Building Properties
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
 
+        // Double Click Handler
         doubleClick = false;
         lastClickTime = 0;
 
         targetNew.parent = buildingsParent;
         for (int i = 0; i < allBuildings.Count; i++)
         {
+            // Check for Building Overlap
             if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10)
             {
+                cityChanged = false;
                 dontBuild = true;
                 break;
             }
 
             for (int u = 0; u < targetBuildProp.additionalSpace.Length; u++)
             {
+                // Check for Building Overlap
                 if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.z / 10) * 10)
                 {
+                    cityChanged = false;
                     dontBuild = true;
                     break;
                 }
@@ -168,9 +188,11 @@ public class CameraController : MonoBehaviour
         }
         for (int i = 0; i < roadGenerator.allRoads.Count; i++)
         {
+            // Check for Road Overlap
             if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(targetNew.position.x) &&
                 Mathf.Round(roadGenerator.allRoads[i].position.z / 10) * 10 == Mathf.Round(targetNew.position.z))
             {
+                cityChanged = false;
                 dontBuild = true;
                 break;
             }
@@ -180,14 +202,18 @@ public class CameraController : MonoBehaviour
                 if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.x / 10) * 10 &&
                 Mathf.Round(roadGenerator.allRoads[i].position.z / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.z / 10) * 10)
                 {
+                    cityChanged = false;
                     dontBuild = true;
                     break;
                 }
             }
         }
 
+        // Build
         if (dontBuild == false)
         {
+            cityChanged = true;
+            // Remove Forest Objects
             for (int i = 0; i < forestObj.Count; i++)
             {
                 if (forestObj[i].position == targetNew.position)
@@ -210,7 +236,11 @@ public class CameraController : MonoBehaviour
             allBuildings.Add(targetNew);
 
             for (int i = 0; i < targetBuildProp.additionalSpace.Length; i++)
+            {
+
+                // targetBuildProp.additionalSpace[i].heatContribution = targetBuildProp.heatContribution;
                 allBuildings.Add(targetBuildProp.additionalSpace[i].transform);
+            }
 
             targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
 
@@ -320,7 +350,7 @@ public class CameraController : MonoBehaviour
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, toZoom, Time.deltaTime * 5);
     }
 
-    void MouseInut()
+    void MouseInput()
     {
         //Scrolling
         if (Input.mouseScrollDelta.y != 0)
@@ -388,7 +418,7 @@ public class CameraController : MonoBehaviour
             if (target != null)
             {
                 float y = target.rotation.eulerAngles.y + 90;
-                target.rotation = Quaternion.Euler(0,y,0);
+                target.rotation = Quaternion.Euler(0, y, 0);
             }
         }
     }
@@ -400,7 +430,7 @@ public class CameraController : MonoBehaviour
             movSpeed = fastSpeed;
         else
             movSpeed = normalSpeed;
-        
+
         //Movement
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             toPos += cameraHolder.transform.forward * movSpeed;
@@ -425,16 +455,16 @@ public class CameraController : MonoBehaviour
 
     }
 
-  /*  private void OnDisable()
-    {
-        saveDataTrigger.BuildingDataSave();
-    }
+    /*  private void OnDisable()
+      {
+          saveDataTrigger.BuildingDataSave();
+      }
 
-    private void OnApplicationPause(bool pause)
-    {
-        saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
-        saveDataTrigger.BuildingDataSave();
-    }*/
+      private void OnApplicationPause(bool pause)
+      {
+          saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
+          saveDataTrigger.BuildingDataSave();
+      }*/
 
     private void OnApplicationQuit()
     {
