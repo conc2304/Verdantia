@@ -57,12 +57,16 @@ public class CameraController : MonoBehaviour
 
     public GameObject activateMenu;
 
+    private HeatMap heatMap;
+    bool cityChanged = false;
+
     void Awake()
     {
         buildingMenu = FindObjectOfType<BuildingsMenu>();
         roadGenerator = FindObjectOfType<RoadGenerator>();
         spawner = FindObjectOfType<Spawner>();
         saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
+        heatMap = FindObjectOfType<HeatMap>();
 
         toPos = cameraHolder.transform.position;
         toRot = cameraHolder.transform.rotation;
@@ -75,7 +79,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        MouseInut();
+        MouseInput();
         KeyboardInput();
         SetPosition();
 
@@ -91,6 +95,9 @@ public class CameraController : MonoBehaviour
             }
             lastClickTime = Time.time;
         }
+        if (heatMap != null && cityChanged) heatMap.UpdateHeatMap(allBuildings);
+
+        cityChanged = false;
     }
 
     private void LateUpdate()
@@ -122,6 +129,7 @@ public class CameraController : MonoBehaviour
         roadSpawnWasSuccessful = roadGenerator.CheckRoadType(targetNew);
         if (roadSpawnWasSuccessful)
         {
+
             for (int i = 0; i < forestObj.Count; i++)
             {
                 if (forestObj[i].position == targetNew.position)
@@ -133,7 +141,7 @@ public class CameraController : MonoBehaviour
 
             Transform target1 = Instantiate(targetNew, new Vector3(0, 0, 0), Quaternion.identity).transform;
             target = target1;
-
+            cityChanged = true;
             lastClickTime = 0;
         }
         doubleClick = false;
@@ -231,6 +239,7 @@ public class CameraController : MonoBehaviour
             buildingMenu.grid.enabled = false;
             moveTarget = false;
             target = null;
+            cityChanged = true;
         }
     }
 
@@ -253,59 +262,68 @@ public class CameraController : MonoBehaviour
                 }
                 else if (target.tag == "DeleteTool")
                 {
-
-                    doubleClick = false;
-                    lastClickTime = 0;
-
-                    for (int i = 0; i < allBuildings.Count; i++)
-                    {
-                        if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(target.position.x / 10) * 10 &&
-                            Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(target.position.z / 10) * 10)
-                        {
-
-                            for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect.Length; pathTargetIndex++)
-                                spawner.carsSpawnPoints.Remove(allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect[pathTargetIndex].GetComponent<PathTarget>().previousPathTarget.transform);
-
-                            for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().citizensPathTargetsToSpawn.Length; pathTargetIndex++)
-                                spawner.citizensSpawnPoints.Remove(allBuildings[i].GetComponent<BuildingProperties>().citizensPathTargetsToSpawn[pathTargetIndex]);
-
-                            if (allBuildings[i].tag == "Space")
-                            {
-                                BuildingProperties spaceBuildingProperty = allBuildings[i].parent.parent.GetComponent<BuildingProperties>();
-                                for (int y = 0; y < spaceBuildingProperty.additionalSpace.Length; y++)
-                                {
-                                    Destroy(spaceBuildingProperty.additionalSpace[y].gameObject);
-                                    allBuildings.Remove(spaceBuildingProperty.additionalSpace[y]);
-                                }
-
-                                Destroy(spaceBuildingProperty.gameObject);
-                                allBuildings.Remove(spaceBuildingProperty.transform);
-                            }
-                            else
-                            {
-                                for (int y = 0; y < allBuildings[i].GetComponent<BuildingProperties>().additionalSpace.Length; y++)
-                                    allBuildings.Remove(allBuildings[i].GetComponent<BuildingProperties>().additionalSpace[y]);
-
-                                Destroy(allBuildings[i].gameObject);
-                                allBuildings.Remove(allBuildings[i]);
-
-                            }
-
-                            break;
-                        }
-                    }
-                    for (int i = 0; i < roadGenerator.allRoads.Count; i++)
-                    {
-                        if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(target.position.x) &&
-                            Mathf.Round(roadGenerator.allRoads[i].position.z / 10) * 10 == Mathf.Round(target.position.z))
-                        {
-                            Destroy(roadGenerator.allRoads[i].gameObject);
-                            roadGenerator.allRoads.Remove(roadGenerator.allRoads[i]);
-                            roadGenerator.DeleteRoad(target.transform);
-                            break;
-                        }
-                    }
+                    DeleteTarget(target);
                 }
+            }
+        }
+    }
+
+    void DeleteTarget(Transform target)
+    {
+        doubleClick = false;
+        lastClickTime = 0;
+
+        for (int i = 0; i < allBuildings.Count; i++)
+        {
+            if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(target.position.x / 10) * 10 &&
+                Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(target.position.z / 10) * 10)
+            {
+                cityChanged = true;
+
+                for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect.Length; pathTargetIndex++)
+                    spawner.carsSpawnPoints.Remove(allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect[pathTargetIndex].GetComponent<PathTarget>().previousPathTarget.transform);
+
+                for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().citizensPathTargetsToSpawn.Length; pathTargetIndex++)
+                    spawner.citizensSpawnPoints.Remove(allBuildings[i].GetComponent<BuildingProperties>().citizensPathTargetsToSpawn[pathTargetIndex]);
+
+                if (allBuildings[i].tag == "Space")
+                {
+                    BuildingProperties spaceBuildingProperty = allBuildings[i].parent.parent.GetComponent<BuildingProperties>();
+                    for (int y = 0; y < spaceBuildingProperty.additionalSpace.Length; y++)
+                    {
+                        Destroy(spaceBuildingProperty.additionalSpace[y].gameObject);
+                        allBuildings.Remove(spaceBuildingProperty.additionalSpace[y]);
+                    }
+
+                    Destroy(spaceBuildingProperty.gameObject);
+                    allBuildings.Remove(spaceBuildingProperty.transform);
+                    cityChanged = true;
+
+                }
+                else
+                {
+                    for (int y = 0; y < allBuildings[i].GetComponent<BuildingProperties>().additionalSpace.Length; y++)
+                        allBuildings.Remove(allBuildings[i].GetComponent<BuildingProperties>().additionalSpace[y]);
+
+                    Destroy(allBuildings[i].gameObject);
+                    allBuildings.Remove(allBuildings[i]);
+                    cityChanged = true;
+
+                }
+
+                break;
+            }
+        }
+        for (int i = 0; i < roadGenerator.allRoads.Count; i++)
+        {
+            if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(target.position.x) &&
+                Mathf.Round(roadGenerator.allRoads[i].position.z / 10) * 10 == Mathf.Round(target.position.z))
+            {
+                Destroy(roadGenerator.allRoads[i].gameObject);
+                roadGenerator.allRoads.Remove(roadGenerator.allRoads[i]);
+                roadGenerator.DeleteRoad(target.transform);
+                cityChanged = true;
+                break;
             }
         }
     }
@@ -322,7 +340,7 @@ public class CameraController : MonoBehaviour
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, toZoom, Time.deltaTime * 5);
     }
 
-    void MouseInut()
+    void MouseInput()
     {
         //Scrolling
         if (Input.mouseScrollDelta.y != 0)

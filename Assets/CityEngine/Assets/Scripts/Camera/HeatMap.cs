@@ -10,11 +10,16 @@ public class HeatMap : MonoBehaviour
     public GameObject heatMapPlane;
 
     // Initialize the HeatMap by passing the grid size values from Grid.cs
-    public void InitializeHeatMap(int gridX, int gridZ)
+    public void InitializeHeatMap(int gridX, int gridZ, float stepSize)
     {
-        print("InitializeHeatMap");
-        gridSizeX = gridX;
-        gridSizeZ = gridZ;
+        print("InitializeHeatMap x: " + gridX + "  z: " + gridZ);
+        gridSizeX = gridX / (int)stepSize;
+        gridSizeZ = gridZ / (int)stepSize;
+
+        // Move the heat map above the ground on init
+        Vector3 currentPosition = heatMapPlane.transform.position;
+        heatMapPlane.transform.position = new Vector3(currentPosition.x, 10, currentPosition.z);
+
 
         heatValues = new float[gridSizeX, gridSizeZ];
         for (int x = 0; x < gridSizeX; x++)
@@ -45,7 +50,6 @@ public class HeatMap : MonoBehaviour
 
         // Calculate heat contributions from buildings
 
-        Transform lastBuilding = null;
         foreach (Transform building in allBuildings)
         {
             BuildingProperties buildingProp = building.GetComponent<BuildingProperties>();
@@ -57,8 +61,11 @@ public class HeatMap : MonoBehaviour
             {
                 print(building.name + " --- " + buildingProp.heatContribution);
 
-                int gridX = Mathf.RoundToInt(building.position.x);
-                int gridZ = Mathf.RoundToInt(building.position.z);
+                int rescaleVal = 10;
+                int gridX = Mathf.RoundToInt(building.position.x / rescaleVal);
+                int gridZ = Mathf.RoundToInt(building.position.z / rescaleVal);
+
+                print("X: " + gridX + "  Z: " + gridZ);
 
                 if (gridX >= 0 && gridX < gridSizeX && gridZ >= 0 && gridZ < gridSizeZ)
                 {
@@ -81,16 +88,18 @@ public class HeatMap : MonoBehaviour
     {
         print("GenerateHeatMapTexture || " + "X:" + gridSizeX + "   Z:" + gridSizeZ);
         heatMapTexture = new Texture2D(gridSizeX, gridSizeZ);
-
+        float heatMin = 0f;
+        float heatMax = 100f;
 
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int z = 0; z < gridSizeZ; z++)
             {
-
-                float normalizedHeat = Mathf.InverseLerp(0f, 100f, heatValues[x, z]);
+                float normalizedHeat = Mathf.InverseLerp(heatMin, heatMax + 1f, heatValues[x, z]);
+                float normalizedAlpha = NumbersUtils.Remap(heatMin, heatMax + 1f, 0f, 0.5f, heatValues[x, z]);
                 Color heatColor = Color.Lerp(Color.blue, Color.red, normalizedHeat);
-                // heatColor.a = 0.25f;
+
+                heatColor.a = normalizedAlpha;
                 print(normalizedHeat);
                 print("heat color: " + heatColor);
                 heatMapTexture.SetPixel(x, z, heatColor);
