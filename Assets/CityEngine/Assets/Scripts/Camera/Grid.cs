@@ -38,9 +38,8 @@ public class Grid : MonoBehaviour
         }
         print(heatMap);
 
-
         // heatMap = 
-        if (heatMap != null) heatMap.InitializeHeatMap(gridSizeX, gridSizeZ);
+        if (heatMap != null) heatMap.InitializeHeatMap(gridSizeX, gridSizeZ, smallStep);
     }
 
     void CreateLineMaterial()

@@ -28,11 +28,14 @@ public class BuildingProperties : MonoBehaviour
 
     void Start()
     {
-        // heatContribution = Random.Range(1, 101);
+        // print("HEAT: " + heatContribution);
+        heatContribution = 100;
 
         if (gameObject.CompareTag("Space"))
         {
-            heatContribution = transform.parent.parent.GetComponent<BuildingProperties>().heatContribution;
+            BuildingProperties parent = transform.parent.parent.GetComponent<BuildingProperties>();
+            print(parent.name);
+            print(parent.heatContribution);
             print("Space heat = " + heatContribution);
         }
     }
