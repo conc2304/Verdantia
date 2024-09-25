@@ -350,6 +350,17 @@ public class CameraController : MonoBehaviour
 
         cameraHolder.transform.rotation = Quaternion.Lerp(cameraHolder.transform.rotation, toRot, Time.deltaTime * 5);
 
+
+        if (!heatmapActive)
+        {
+            toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, maxZoom);
+            toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
+        }
+        else
+        {
+            toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, maxZoom * 1.5f);
+        }
+
         toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, maxZoom);
         toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, toZoom, Time.deltaTime * 5);
@@ -455,13 +466,32 @@ public class CameraController : MonoBehaviour
 
         //Movement
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            toPos += cameraHolder.transform.forward * movSpeed;
+        {
+            Vector3 forwardMovement = cameraHolder.transform.forward * movSpeed;
+            if (heatmapActive) forwardMovement.y = 0; // Prevent Y-axis movement
+            toPos += forwardMovement;
+        }
+
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-            toPos += cameraHolder.transform.forward * -movSpeed;
+        {
+            Vector3 backwardMovement = cameraHolder.transform.forward * -movSpeed;
+            if (heatmapActive) backwardMovement.y = 0; // Prevent Y-axis movement
+            toPos += backwardMovement;
+        }
+
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            toPos += cameraHolder.transform.right * movSpeed;
+        {
+            Vector3 rightMovement = cameraHolder.transform.right * movSpeed;
+            if (heatmapActive) rightMovement.y = 0; // Prevent Y-axis movement
+            toPos += rightMovement;
+        }
+
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            toPos += cameraHolder.transform.right * -movSpeed;
+        {
+            Vector3 leftMovement = cameraHolder.transform.right * -movSpeed;
+            if (heatmapActive) leftMovement.y = 0; // Prevent Y-axis movement
+            toPos += leftMovement;
+        }
 
         //Rotation
         if (Input.GetKey(KeyCode.Q))
@@ -508,13 +538,10 @@ public class CameraController : MonoBehaviour
         {
             ToggleHeatMapView();
         }
-
-
     }
 
     private void ToggleHeatMapView()
     {
-
         Debug.Log("ToggleHeatMapView");
         // float distanceToGround = RaycastToGround();
         heatmapActive = !heatmapActive;
