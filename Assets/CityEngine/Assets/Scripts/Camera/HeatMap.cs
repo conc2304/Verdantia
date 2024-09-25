@@ -20,7 +20,6 @@ public class HeatMap : MonoBehaviour
         Vector3 currentPosition = heatMapPlane.transform.position;
         heatMapPlane.transform.position = new Vector3(currentPosition.x, 10, currentPosition.z);
 
-
         heatValues = new float[gridSizeX, gridSizeZ];
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -90,16 +89,18 @@ public class HeatMap : MonoBehaviour
         heatMapTexture = new Texture2D(gridSizeX, gridSizeZ);
         float heatMin = 0f;
         float heatMax = 100f;
+        float alphaMin = 0.2f;
+        float alphaMax = 1f;
 
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int z = 0; z < gridSizeZ; z++)
             {
                 float normalizedHeat = Mathf.InverseLerp(heatMin, heatMax + 1f, heatValues[x, z]);
-                float normalizedAlpha = NumbersUtils.Remap(heatMin, heatMax + 1f, 0f, 0.5f, heatValues[x, z]);
+                float normalizedAlpha = NumbersUtils.Remap(heatMin, heatMax + 1f, alphaMin, alphaMax, heatValues[x, z]);
                 Color heatColor = Color.Lerp(Color.blue, Color.red, normalizedHeat);
 
-                heatColor.a = normalizedAlpha;
+                heatColor.a = normalizedHeat == 0f ? 0f : normalizedAlpha;
                 print(normalizedHeat);
                 print("heat color: " + heatColor);
                 heatMapTexture.SetPixel(x, z, heatColor);
@@ -107,6 +108,9 @@ public class HeatMap : MonoBehaviour
         }
 
         heatMapTexture.Apply();
+
+        // Apply blur to smooth out hard edges
+        heatMapTexture = ApplyBlur(heatMapTexture, 0);
     }
 
     // Display the heat map texture on a plane in the scene
@@ -115,7 +119,42 @@ public class HeatMap : MonoBehaviour
         print("DisplayHeatMap");
         Renderer renderer = heatMapPlane.GetComponent<Renderer>();
         renderer.material.mainTexture = heatMapTexture;
+    }
 
-        // renderer.material.SetFloat("_Mode", 3); // 3 corresponds to Transparent mode in the Standard shader
+    private Texture2D ApplyBlur(Texture2D sourceTexture, int blurSize = 1)
+    {
+        Texture2D blurredTexture = new Texture2D(sourceTexture.width, sourceTexture.height);
+        if (blurSize == null || blurSize == 0) return sourceTexture;
+        for (int x = 0; x < sourceTexture.width; x++)
+        {
+            for (int z = 0; z < sourceTexture.height; z++)
+            {
+                Color averageColor = GetAverageColor(sourceTexture, x, z, blurSize);
+                blurredTexture.SetPixel(x, z, averageColor);
+            }
+        }
+
+        blurredTexture.Apply();
+        return blurredTexture;
+    }
+
+    private Color GetAverageColor(Texture2D texture, int x, int z, int blurSize)
+    {
+        Color sum = Color.clear;
+        int count = 0;
+
+        for (int xOffset = -blurSize; xOffset <= blurSize; xOffset++)
+        {
+            for (int zOffset = -blurSize; zOffset <= blurSize; zOffset++)
+            {
+                int newX = Mathf.Clamp(x + xOffset, 0, texture.width - 1);
+                int newZ = Mathf.Clamp(z + zOffset, 0, texture.height - 1);
+
+                sum += texture.GetPixel(newX, newZ);
+                count++;
+            }
+        }
+
+        return sum / count; // Average the colors
     }
 }
