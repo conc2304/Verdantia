@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -60,13 +61,24 @@ public class CameraController : MonoBehaviour
     private HeatMap heatMap;
     bool cityChanged = false;
 
+    private bool isTransitioning = false;
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+    private Vector3 endPosition;
+    private Quaternion endRotation;
+
+    public LayerMask groundLayer; // Define which layer is considered "ground"
+    public float maxRayDistance = 1000f; // Max distance for the raycast
+    private float distanceToGround = 0f;
+    private Boolean heatmapActive = false;
+
+
     void Awake()
     {
         buildingMenu = FindObjectOfType<BuildingsMenu>();
         roadGenerator = FindObjectOfType<RoadGenerator>();
         spawner = FindObjectOfType<Spawner>();
         saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
-        heatMap = FindObjectOfType<HeatMap>();
 
         toPos = cameraHolder.transform.position;
         toRot = cameraHolder.transform.rotation;
@@ -74,6 +86,9 @@ public class CameraController : MonoBehaviour
 
         for (int i = 0; i < forest.childCount; i++)
             forestObj.Add(forest.GetChild(i));
+
+        heatMap = FindObjectOfType<HeatMap>();
+        heatMap.UpdateHeatMap(allBuildings);
     }
 
 
@@ -252,15 +267,15 @@ public class CameraController : MonoBehaviour
             dontBuild = false;
             if (target != null)
             {
-                if (target.tag == "Road")              // spawn if road
+                if (target.CompareTag("Road"))              // spawn if road
                 {
                     SpawnRoad(target);
                 }
-                else if (target.tag == "Building")      //spawn if building
+                else if (target.CompareTag("Building"))      //spawn if building
                 {
                     SpawnBuilding(target);
                 }
-                else if (target.tag == "DeleteTool")
+                else if (target.CompareTag("DeleteTool"))
                 {
                     DeleteTarget(target);
                 }
@@ -286,7 +301,7 @@ public class CameraController : MonoBehaviour
                 for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().citizensPathTargetsToSpawn.Length; pathTargetIndex++)
                     spawner.citizensSpawnPoints.Remove(allBuildings[i].GetComponent<BuildingProperties>().citizensPathTargetsToSpawn[pathTargetIndex]);
 
-                if (allBuildings[i].tag == "Space")
+                if (allBuildings[i].CompareTag("Space"))
                 {
                     BuildingProperties spaceBuildingProperty = allBuildings[i].parent.parent.GetComponent<BuildingProperties>();
                     for (int y = 0; y < spaceBuildingProperty.additionalSpace.Length; y++)
@@ -399,7 +414,24 @@ public class CameraController : MonoBehaviour
             rotateTargetPosition = Input.mousePosition;
             Vector3 difference = rotateStartPosition - rotateTargetPosition;
             rotateStartPosition = rotateTargetPosition;
-            toRot *= Quaternion.Euler(Vector3.up * (-difference.x / 5f));
+
+            // When heatmapActive is false, apply the regular rotation (affecting all axes).
+            // When heatmapActive is true, modify only the Y rotation.
+            if (!heatmapActive)
+            {
+                // Regular rotation affecting all axes.
+                toRot *= Quaternion.Euler(Vector3.up * (-difference.x / 5f));
+            }
+            else
+            {
+                // Only change the Y rotation when the heatmap is active.
+                // Keep the X and Z rotation intact.
+                float currentY = toRot.eulerAngles.y; // Get the current Y rotation
+                float newYRotation = currentY + (-difference.x / 5f); // Calculate new Y rotation based on input
+
+                // Set the rotation with the new Y value, and keep the other axes unchanged.
+                toRot = Quaternion.Euler(toRot.eulerAngles.x, newYRotation, toRot.eulerAngles.z);
+            }
         }
 
         //rotate building
@@ -433,9 +465,37 @@ public class CameraController : MonoBehaviour
 
         //Rotation
         if (Input.GetKey(KeyCode.Q))
-            toRot *= Quaternion.Euler(Vector3.up * rotationScale);
+        {
+            if (!heatmapActive)
+            {
+                // Regular rotation affecting all axes
+                toRot *= Quaternion.Euler(Vector3.up * rotationScale);
+            }
+            else
+            {
+                // Only modify the Y-axis when the heatmap is active
+                float currentY = toRot.eulerAngles.y; // Get current Y rotation
+                float newYRotation = currentY + rotationScale; // Calculate new Y rotation
+                toRot = Quaternion.Euler(toRot.eulerAngles.x, newYRotation, toRot.eulerAngles.z); // Apply new Y rotation
+            }
+        }
+
+
         if (Input.GetKey(KeyCode.E))
-            toRot *= Quaternion.Euler(Vector3.up * -rotationScale);
+        {
+            if (!heatmapActive)
+            {
+                // Regular rotation affecting all axes
+                toRot *= Quaternion.Euler(Vector3.up * -rotationScale);
+            }
+            else
+            {
+                // Only modify the Y-axis when the heatmap is active
+                float currentY = toRot.eulerAngles.y; // Get current Y rotation
+                float newYRotation = currentY - rotationScale; // Calculate new Y rotation
+                toRot = Quaternion.Euler(toRot.eulerAngles.x, newYRotation, toRot.eulerAngles.z); // Apply new Y rotation
+            }
+        }
 
         //Zooming
         if (Input.GetKey(KeyCode.R))
@@ -443,18 +503,49 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.F))
             toZoom -= zoomScale;
 
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ToggleHeatMapView();
+        }
+
+
     }
 
-    /*  private void OnDisable()
-      {
-          saveDataTrigger.BuildingDataSave();
-      }
+    private void ToggleHeatMapView()
+    {
 
-      private void OnApplicationPause(bool pause)
-      {
-          saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
-          saveDataTrigger.BuildingDataSave();
-      }*/
+        Debug.Log("ToggleHeatMapView");
+        // float distanceToGround = RaycastToGround();
+        heatmapActive = !heatmapActive;
+
+        int topViewAngle = 45;
+        int defaultAngle = 0;
+        int nextRotAngle = heatmapActive ? topViewAngle : defaultAngle;
+        Quaternion currRot = cameraHolder.transform.rotation;
+        toRot = Quaternion.Euler(nextRotAngle, currRot.eulerAngles.y, 0); // Looking straight down
+    }
+
+    private float RaycastToGround()
+    {
+        // Create a ray from the camera's position in the forward direction (along the camera's view)
+        Ray ray = new Ray(cameraTransform.position, transform.forward);
+        RaycastHit hit;
+
+        // Perform the raycast and check if it hits something on the ground layer
+        if (Physics.Raycast(ray, out hit, maxRayDistance, groundLayer))
+        {
+            // Calculate the distance from the camera to the hit point on the ground
+            distanceToGround = hit.distance;
+
+            // Optional: Log the distance or use it for further processing
+            Debug.Log("Distance to ground: " + distanceToGround);
+            return distanceToGround;
+        }
+        Debug.Log(" No Ray Hit ");
+        return -1;
+    }
+
 
     private void OnApplicationQuit()
     {
