@@ -12,7 +12,6 @@ public class HeatMap : MonoBehaviour
     // Initialize the HeatMap by passing the grid size values from Grid.cs
     public void InitializeHeatMap(int gridX, int gridZ, float stepSize)
     {
-        print("InitializeHeatMap x: " + gridX + "  z: " + gridZ);
         gridSizeX = gridX / (int)stepSize;
         gridSizeZ = gridZ / (int)stepSize;
 
@@ -33,9 +32,6 @@ public class HeatMap : MonoBehaviour
     // Update the heat map with buildings and their contributions
     public void UpdateHeatMap(List<Transform> allBuildings)
     {
-        print("UpdateHeatMap");
-        print(allBuildings.Count);
-
         // Reset heat values before recalculating
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -45,34 +41,22 @@ public class HeatMap : MonoBehaviour
             }
         }
 
-        print("heat map reset done, Loop over buildings");
-
         // Calculate heat contributions from buildings
-
+        int rescaleVal = 10;
         foreach (Transform building in allBuildings)
         {
             BuildingProperties buildingProp = building.GetComponent<BuildingProperties>();
-            if (buildingProp == null)
-            {
-                print("--------------NO PROPS: " + building.name);
-            }
+
             if (buildingProp != null)
             {
-                print(building.name + " --- " + buildingProp.heatContribution);
-
-                int rescaleVal = 10;
                 int gridX = Mathf.RoundToInt(building.position.x / rescaleVal);
                 int gridZ = Mathf.RoundToInt(building.position.z / rescaleVal);
-
-                print("X: " + gridX + "  Z: " + gridZ);
 
                 if (gridX >= 0 && gridX < gridSizeX && gridZ >= 0 && gridZ < gridSizeZ)
                 {
 
                     int heatContribution = buildingProp.heatContribution;
-                    print("Apply HeatContribution: " + heatContribution);
                     heatValues[gridX, gridZ] += heatContribution;
-                    print(heatValues[gridX, gridZ]);
                 }
             }
         }
@@ -85,7 +69,6 @@ public class HeatMap : MonoBehaviour
     // Create the heat map texture based on heat values
     private void GenerateHeatMapTexture()
     {
-        print("GenerateHeatMapTexture || " + "X:" + gridSizeX + "   Z:" + gridSizeZ);
         heatMapTexture = new Texture2D(gridSizeX, gridSizeZ);
         float heatMin = 0f;
         float heatMax = 100f;
@@ -99,10 +82,8 @@ public class HeatMap : MonoBehaviour
                 float normalizedHeat = Mathf.InverseLerp(heatMin, heatMax + 1f, heatValues[x, z]);
                 float normalizedAlpha = NumbersUtils.Remap(heatMin, heatMax + 1f, alphaMin, alphaMax, heatValues[x, z]);
                 Color heatColor = Color.Lerp(Color.blue, Color.red, normalizedHeat);
-
                 heatColor.a = normalizedHeat == 0f ? 0f : normalizedAlpha;
-                print(normalizedHeat);
-                print("heat color: " + heatColor);
+
                 heatMapTexture.SetPixel(x, z, heatColor);
             }
         }
@@ -116,7 +97,6 @@ public class HeatMap : MonoBehaviour
     // Display the heat map texture on a plane in the scene
     private void DisplayHeatMap()
     {
-        print("DisplayHeatMap");
         Renderer renderer = heatMapPlane.GetComponent<Renderer>();
         renderer.material.mainTexture = heatMapTexture;
     }
@@ -124,7 +104,7 @@ public class HeatMap : MonoBehaviour
     private Texture2D ApplyBlur(Texture2D sourceTexture, int blurSize = 1)
     {
         Texture2D blurredTexture = new Texture2D(sourceTexture.width, sourceTexture.height);
-        if (blurSize == null || blurSize == 0) return sourceTexture;
+        if (blurSize == 0) return sourceTexture;
         for (int x = 0; x < sourceTexture.width; x++)
         {
             for (int z = 0; z < sourceTexture.height; z++)
@@ -155,6 +135,6 @@ public class HeatMap : MonoBehaviour
             }
         }
 
-        return sum / count; // Average the colors
+        return sum / count;
     }
 }
