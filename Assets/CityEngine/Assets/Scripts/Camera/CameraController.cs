@@ -557,13 +557,13 @@ public class CameraController : MonoBehaviour
         // Assumes a 45 degree right angle triangle, distance from camera to ground will be the distance from the camera to the view target
         float d = distanceToGround = Math.Abs(cameraTransform.position.y - groundPlane.transform.position.y);
         print(distanceToGround);
-        float hypotenuse = (float)Math.Sqrt(d * d + d * d);
-        float diff = Math.Abs(hypotenuse - distanceToGround);
+        float hypotenuse = heatmapActive ? (float)Math.Sqrt(d * d + d * d) : distanceToGround;
+        d = hypotenuse == distanceToGround ? (float)Math.Sqrt(Math.Pow(hypotenuse, 2) / 2) : d;
+        float vertDiff = Math.Abs(hypotenuse - d);
+        float forwardDistance = d;
         // if going to active move forward        
-        toPos += (heatmapActive ? 1f : -1f) * distanceToGround * cameraHolder.transform.forward;
-        toPos += (heatmapActive ? 1f : -1f) * diff * cameraHolder.transform.up;
-
-        // toPos.z += (hypotenuse - distanceToGround) * (heatmapActive ? 1f : -1f);
+        toPos += (heatmapActive ? 1f : -1f) * forwardDistance * cameraHolder.transform.forward;
+        toPos += (heatmapActive ? 1f : -1f) * vertDiff * cameraHolder.transform.up;
     }
 
 
