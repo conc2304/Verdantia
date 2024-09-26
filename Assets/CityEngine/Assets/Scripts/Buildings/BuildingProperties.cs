@@ -29,7 +29,7 @@ public class BuildingProperties : MonoBehaviour
     void Start()
     {
         // print("HEAT: " + heatContribution);
-        heatContribution = 100;
+        heatContribution = Random.Range(50, 101);
 
         if (gameObject.CompareTag("Space"))
         {

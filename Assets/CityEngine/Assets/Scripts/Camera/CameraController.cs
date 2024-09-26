@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class CameraController : MonoBehaviour
 {
     public Transform cameraHolder;
     public Transform cameraTransform;
+    // public Camera cameraComponent;
 
     public Transform buildingsParent;
     public Transform roadsParent;
@@ -32,6 +34,7 @@ public class CameraController : MonoBehaviour
     private Vector3 rotateStartPosition;
     private Vector3 rotateTargetPosition;
     private Quaternion toRot;
+    private Quaternion mainCamtoRot;
 
     public Vector3 zoomScale;
     private Vector3 toZoom;
@@ -59,18 +62,12 @@ public class CameraController : MonoBehaviour
     public GameObject activateMenu;
 
     private HeatMap heatMap;
-    bool cityChanged = false;
+    private bool cityChanged = false;
 
-    private bool isTransitioning = false;
-    private Vector3 startPosition;
-    private Quaternion startRotation;
-    private Vector3 endPosition;
-    private Quaternion endRotation;
+    public GameObject groundPlane;
 
-    public LayerMask groundLayer; // Define which layer is considered "ground"
-    public float maxRayDistance = 1000f; // Max distance for the raycast
     private float distanceToGround = 0f;
-    private Boolean heatmapActive = false;
+    private bool heatmapActive = false;
 
 
     void Awake()
@@ -346,23 +343,15 @@ public class CameraController : MonoBehaviour
     void SetPosition()
     {
         if (activateMenu.activeSelf == false)
+        {
             cameraHolder.transform.position = Vector3.Lerp(cameraHolder.transform.position, toPos, Time.deltaTime * 5);
+        }
+
+        toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom * 2.5f);
+        toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
 
         cameraHolder.transform.rotation = Quaternion.Lerp(cameraHolder.transform.rotation, toRot, Time.deltaTime * 5);
-
-
-        if (!heatmapActive)
-        {
-            toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, maxZoom);
-            toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
-        }
-        else
-        {
-            toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, maxZoom * 1.5f);
-        }
-
-        toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, maxZoom);
-        toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
+        cameraTransform.localRotation = Quaternion.Lerp(cameraTransform.localRotation, mainCamtoRot, Time.deltaTime * 5);
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, toZoom, Time.deltaTime * 5);
     }
 
@@ -370,7 +359,16 @@ public class CameraController : MonoBehaviour
     {
         //Scrolling
         if (Input.mouseScrollDelta.y != 0)
-            toZoom += Input.mouseScrollDelta.y * zoomScale;
+        {
+            if (!heatmapActive)
+            {
+                toZoom += Input.mouseScrollDelta.y * zoomScale;
+            }
+            else
+            {
+                toZoom.y += Input.mouseScrollDelta.y * zoomScale.y;
+            }
+        }
 
         //Mouse movement
         if (Input.touchCount != 2 && (Mathf.FloorToInt(toRot.eulerAngles.y) - Mathf.FloorToInt(cameraHolder.transform.eulerAngles.y) < 8 && Mathf.FloorToInt(toRot.eulerAngles.y) - Mathf.FloorToInt(cameraHolder.transform.eulerAngles.y) > -10))
@@ -529,7 +527,9 @@ public class CameraController : MonoBehaviour
 
         //Zooming
         if (Input.GetKey(KeyCode.R))
+        {// in
             toZoom += zoomScale;
+        }
         if (Input.GetKey(KeyCode.F))
             toZoom -= zoomScale;
 
@@ -543,35 +543,30 @@ public class CameraController : MonoBehaviour
     private void ToggleHeatMapView()
     {
         Debug.Log("ToggleHeatMapView");
-        // float distanceToGround = RaycastToGround();
+
         heatmapActive = !heatmapActive;
+        heatMap.heatMapPlane.SetActive(heatmapActive);
 
-        int topViewAngle = 45;
-        int defaultAngle = 0;
-        int nextRotAngle = heatmapActive ? topViewAngle : defaultAngle;
-        Quaternion currRot = cameraHolder.transform.rotation;
-        toRot = Quaternion.Euler(nextRotAngle, currRot.eulerAngles.y, 0); // Looking straight down
+        float topViewAngle = 90;
+        float defaultAngle = 45;
+        float nextRotAngle = heatmapActive ? topViewAngle : defaultAngle;
+        print(nextRotAngle);
+        mainCamtoRot = Quaternion.Euler(nextRotAngle, 0, 0); // Looking straight down
+
+        // calculate distance from camera to ground plane
+        // Assumes a 45 degree right angle triangle, distance from camera to ground will be the distance from the camera to the view target
+        float d = distanceToGround = Math.Abs(cameraTransform.position.y - groundPlane.transform.position.y);
+        print(distanceToGround);
+        float hypotenuse = (float)Math.Sqrt(d * d + d * d);
+        float diff = Math.Abs(hypotenuse - distanceToGround);
+        // if going to active move forward        
+        toPos += (heatmapActive ? 1f : -1f) * distanceToGround * cameraHolder.transform.forward;
+        toPos += (heatmapActive ? 1f : -1f) * diff * cameraHolder.transform.up;
+
+        // toPos.z += (hypotenuse - distanceToGround) * (heatmapActive ? 1f : -1f);
     }
 
-    private float RaycastToGround()
-    {
-        // Create a ray from the camera's position in the forward direction (along the camera's view)
-        Ray ray = new Ray(cameraTransform.position, transform.forward);
-        RaycastHit hit;
 
-        // Perform the raycast and check if it hits something on the ground layer
-        if (Physics.Raycast(ray, out hit, maxRayDistance, groundLayer))
-        {
-            // Calculate the distance from the camera to the hit point on the ground
-            distanceToGround = hit.distance;
-
-            // Optional: Log the distance or use it for further processing
-            Debug.Log("Distance to ground: " + distanceToGround);
-            return distanceToGround;
-        }
-        Debug.Log(" No Ray Hit ");
-        return -1;
-    }
 
 
     private void OnApplicationQuit()
