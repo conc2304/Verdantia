@@ -342,15 +342,28 @@ public class CameraController : MonoBehaviour
 
     void SetPosition()
     {
+        // max y at 450 = 44.48 ortho
+        // min y 40 = 8.5
+
+
+        print(toZoom.y);
+        // When heatmap view is active rotate the mainCam
         if (activateMenu.activeSelf == false)
         {
             cameraHolder.transform.position = Vector3.Lerp(cameraHolder.transform.position, toPos, Time.deltaTime * 5);
         }
 
-        toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom * 2.5f);
+        toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom * 1f);
         toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
 
-        cameraHolder.transform.rotation = Quaternion.Lerp(cameraHolder.transform.rotation, toRot, Time.deltaTime * 5);
+        if (!heatmapActive)
+        {
+            cameraHolder.transform.rotation = Quaternion.Lerp(cameraHolder.transform.rotation, toRot, Time.deltaTime * 5);
+        }
+        else
+        {
+
+        }
         cameraTransform.localRotation = Quaternion.Lerp(cameraTransform.localRotation, mainCamtoRot, Time.deltaTime * 5);
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, toZoom, Time.deltaTime * 5);
     }
@@ -435,11 +448,13 @@ public class CameraController : MonoBehaviour
             {
                 // Only change the Y rotation when the heatmap is active.
                 // Keep the X and Z rotation intact.
-                float currentY = toRot.eulerAngles.y; // Get the current Y rotation
+                Vector3 rot = mainCamtoRot.eulerAngles;
+                float currentY = mainCamtoRot.eulerAngles.y; // Get the current Y rotation
                 float newYRotation = currentY + (-difference.x / 5f); // Calculate new Y rotation based on input
 
                 // Set the rotation with the new Y value, and keep the other axes unchanged.
-                toRot = Quaternion.Euler(toRot.eulerAngles.x, newYRotation, toRot.eulerAngles.z);
+                mainCamtoRot = Quaternion.Euler(rot.x, newYRotation, rot.z);
+
             }
         }
 
@@ -556,14 +571,15 @@ public class CameraController : MonoBehaviour
         // calculate distance from camera to ground plane
         // Assumes a 45 degree right angle triangle, distance from camera to ground will be the distance from the camera to the view target
         float d = distanceToGround = Math.Abs(cameraTransform.position.y - groundPlane.transform.position.y);
-        print(distanceToGround);
         float hypotenuse = heatmapActive ? (float)Math.Sqrt(d * d + d * d) : distanceToGround;
         d = hypotenuse == distanceToGround ? (float)Math.Sqrt(Math.Pow(hypotenuse, 2) / 2) : d;
         float vertDiff = Math.Abs(hypotenuse - d);
         float forwardDistance = d;
-        // if going to active move forward        
+
+        // move camera forward/backwards to still be focused on the same target as before
         toPos += (heatmapActive ? 1f : -1f) * forwardDistance * cameraHolder.transform.forward;
         toPos += (heatmapActive ? 1f : -1f) * vertDiff * cameraHolder.transform.up;
+
     }
 
 
