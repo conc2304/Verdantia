@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &141507217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1427580212088138073, guid: 438b6a980cc1eee40884c61ad2c37965, type: 3}
+  m_PrefabInstance: {fileID: 1427580212648779765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &263530041 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3554102893352961956, guid: 6f772d9f5967d3e4aabbbcfb3f3362b0, type: 3}
@@ -307,13 +312,13 @@ GameObject:
   - component: {fileID: 304864721}
   - component: {fileID: 304864720}
   - component: {fileID: 304864723}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HeatMapPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &304864719
 Transform:
   m_ObjectHideFlags: 0
@@ -442,7 +447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0626329effa15541a831ef107bd98a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatMapPlane: {fileID: 0}
+  heatMapPlane: {fileID: 304864718}
 --- !u!4 &644762026 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4470244719671016, guid: 4347787d822ecc7439623131488ffa85, type: 3}
@@ -845,6 +850,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1078365619}
     - target: {fileID: 783540590, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
+      propertyPath: maxZoom
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 783540590, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
+      propertyPath: minZoom
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 783540590, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
+      propertyPath: groundPlane
+      value: 
+      objectReference: {fileID: 141507217}
+    - target: {fileID: 783540590, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: activateMenu
       value: 
       objectReference: {fileID: 1284878411}
@@ -856,6 +873,10 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 644762026}
+    - target: {fileID: 783540590, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 783540595, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: snow
       value: 
