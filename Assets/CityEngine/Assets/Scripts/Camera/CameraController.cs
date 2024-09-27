@@ -66,7 +66,6 @@ public class CameraController : MonoBehaviour
 
     public GameObject groundPlane;
 
-    private float distanceToGround = 0f;
     private bool heatmapActive = false;
 
 
@@ -342,8 +341,6 @@ public class CameraController : MonoBehaviour
 
     void SetPosition()
     {
-        // max y at 450 = 44.48 ortho
-        // min y 40 = 8.5
 
         if (activateMenu.activeSelf == false)
         {
@@ -563,28 +560,29 @@ public class CameraController : MonoBehaviour
 
     private void ToggleHeatMapView()
     {
+        // Updates the camera angle to point down at 90 or out at 45
+        // Update the Y and Z position of the camera to keep the current view in focus 
         Debug.Log("ToggleHeatMapView");
 
         heatmapActive = !heatmapActive;
+        // TODO - handle with a fade in or something
         heatMap.heatMapPlane.SetActive(heatmapActive);
 
         float topViewAngle = 90;
         float defaultAngle = 45;
         float nextRotAngle = heatmapActive ? topViewAngle : defaultAngle;
-        // Update X angle to point either straight down or at a 45 angle
-        mainCamtoRot = Quaternion.Euler(nextRotAngle, 0, 0); // Looking straight down
+        // Update X angle to point either straight down or out at a 45 angle
+        mainCamtoRot = Quaternion.Euler(nextRotAngle, 0, 0);
 
-        // calculate distance from camera to ground plane
-        // Assumes a 45 degree right angle triangle, distance from camera to ground will be the distance from the camera to the view target
+        // Assumes a 45 degree right angle triangle based on the initial camera angle of x = 45, 
+        // In Default Mode : The distance from camera to ground is the leg of a right triangle to calculate the hypotenuse
+        // In Heatmap Mode : The distance from the camera to the ground is the future hypotenuse of the triangle to calculate the leg/height
+        // Then the vertical difference is how much to move the camera upwards so that we maintain the same distance to the target
+        float distanceToGround;
         float d = distanceToGround = Math.Abs(cameraTransform.position.y - groundPlane.transform.position.y);
         float hypotenuse = heatmapActive ? (float)Math.Sqrt(d * d + d * d) : distanceToGround;
         d = hypotenuse == distanceToGround ? (float)Math.Sqrt(Math.Pow(hypotenuse, 2) / 2) : d;
         float vertDiff = Math.Abs(hypotenuse - d);
-        float forwardDistance = d;
-
-        // Move camera forward/backwards to still be focused on the same target as before
-        // toPos += (heatmapActive ? 1f : -1f) * forwardDistance * cameraHolder.transform.forward;
-        // toPos += (heatmapActive ? 1f : -1f) * vertDiff * cameraHolder.transform.up;
 
         Vector3 localPos = cameraTransform.localPosition;
 
