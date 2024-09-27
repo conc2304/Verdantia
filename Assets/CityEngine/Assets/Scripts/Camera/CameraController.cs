@@ -345,8 +345,6 @@ public class CameraController : MonoBehaviour
         // max y at 450 = 44.48 ortho
         // min y 40 = 8.5
 
-
-        // When heatmap view is active rotate the mainCam
         if (activateMenu.activeSelf == false)
         {
             cameraHolder.transform.position = Vector3.Lerp(
@@ -356,30 +354,23 @@ public class CameraController : MonoBehaviour
             );
         }
 
-        if (!heatmapActive)
-        {
+        toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom + 200);
+        toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
 
-            toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, maxZoom);
-            toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
-        }
-
-        // if (!heatmapActive)
-        // {
+        // Rotates the camera holder so that its always pointed at the target
         cameraHolder.transform.rotation = Quaternion.Lerp(
             cameraHolder.transform.rotation,
             toRot,
             Time.deltaTime * 5
         );
-        // }
 
-        // Use this to point the camera downward
+        // Use this to point the camera downward for heat map view and back
         cameraTransform.localRotation = Quaternion.Lerp(
             cameraTransform.localRotation,
             mainCamtoRot,
             Time.deltaTime * 5
         );
 
-        print(cameraTransform.localPosition);
         // Positions the main camera locally inside the cameraHolder
         cameraTransform.localPosition = Vector3.Lerp(
             cameraTransform.localPosition,
@@ -457,29 +448,19 @@ public class CameraController : MonoBehaviour
             Vector3 difference = rotateStartPosition - rotateTargetPosition;
             rotateStartPosition = rotateTargetPosition;
 
-            // When heatmapActive is false, apply the regular rotation (affecting all axes).
-            // When heatmapActive is true, modify only the Y rotation.
+            // When heatmap is Not Active, apply the regular rotation (affecting all axes).
+            // When heatmap IS Active, modify only the Y rotation.
             if (!heatmapActive)
             {
-                // Regular rotation affecting all axes.
+                // Regular rotation affecting Y and Z
                 toRot *= Quaternion.Euler(Vector3.up * (-difference.x / 5f));
             }
             else
             {
-
                 Vector3 rot = mainCamtoRot.eulerAngles;
-                float currentY = rot.y; // Get the current Y rotation
+                float currentY = rot.y;
                 float newYRotation = currentY + (-difference.x / 5f);
-                // Calculate new Y rotation based on input
-                // toRot.y *= 
-                // toRot
-
-                //     Vector3 rot = mainCamtoRot.eulerAngles;
-
-
-                //     // Set the rotation with the new Y value, and keep the other axes unchanged.
                 toRot *= Quaternion.Euler(0, newYRotation, 0);
-
             }
         }
 
@@ -609,16 +590,13 @@ public class CameraController : MonoBehaviour
 
         if (heatmapActive)
         {
-            toZoom = new Vector3(localPos.x, localPos.y, 0);
+            toZoom = new Vector3(localPos.x, localPos.y + vertDiff, 0);
         }
         else
         {
-            // we are going into default mode,
-            // toZoom.z = -toZoom.y
-            // Vector3(x,   y,  z)
-            // Vector3(0, -10, 10)
-            // STARTING AT Vector3(0,100,-100) constant inverse
-            float zPos = -localPos.y;
+            // Going into default mode where pos Y and Z are inverses of eachother based on the zoomScale
+            float scaleConverter = zoomScale.y / zoomScale.z;
+            float zPos = localPos.y * scaleConverter;
             toZoom = new Vector3(localPos.x, localPos.y, zPos);
         }
 
