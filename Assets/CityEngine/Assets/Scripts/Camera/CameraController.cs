@@ -346,32 +346,52 @@ public class CameraController : MonoBehaviour
         // min y 40 = 8.5
 
 
-        print(toZoom.y);
         // When heatmap view is active rotate the mainCam
         if (activateMenu.activeSelf == false)
         {
-            cameraHolder.transform.position = Vector3.Lerp(cameraHolder.transform.position, toPos, Time.deltaTime * 5);
+            cameraHolder.transform.position = Vector3.Lerp(
+                cameraHolder.transform.position,
+                toPos,
+                Time.deltaTime * 5
+            );
         }
-
-        toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom * 1f);
-        toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
 
         if (!heatmapActive)
         {
-            cameraHolder.transform.rotation = Quaternion.Lerp(cameraHolder.transform.rotation, toRot, Time.deltaTime * 5);
-        }
-        else
-        {
 
+            toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, maxZoom);
+            toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
         }
-        cameraTransform.localRotation = Quaternion.Lerp(cameraTransform.localRotation, mainCamtoRot, Time.deltaTime * 5);
-        cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, toZoom, Time.deltaTime * 5);
+
+        // if (!heatmapActive)
+        // {
+        cameraHolder.transform.rotation = Quaternion.Lerp(
+            cameraHolder.transform.rotation,
+            toRot,
+            Time.deltaTime * 5
+        );
+        // }
+
+        // Use this to point the camera downward
+        cameraTransform.localRotation = Quaternion.Lerp(
+            cameraTransform.localRotation,
+            mainCamtoRot,
+            Time.deltaTime * 5
+        );
+
+        print(cameraTransform.localPosition);
+        // Positions the main camera locally inside the cameraHolder
+        cameraTransform.localPosition = Vector3.Lerp(
+            cameraTransform.localPosition,
+            toZoom,
+            Time.deltaTime * 5
+        );
     }
 
     void MouseInput()
     {
         //Scrolling
-        if (Input.mouseScrollDelta.y != 0)
+        if (Input.mouseScrollDelta.y != 0) // Vector3(0, -10, 10)
         {
             if (!heatmapActive)
             {
@@ -446,14 +466,19 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                // Only change the Y rotation when the heatmap is active.
-                // Keep the X and Z rotation intact.
-                Vector3 rot = mainCamtoRot.eulerAngles;
-                float currentY = mainCamtoRot.eulerAngles.y; // Get the current Y rotation
-                float newYRotation = currentY + (-difference.x / 5f); // Calculate new Y rotation based on input
 
-                // Set the rotation with the new Y value, and keep the other axes unchanged.
-                mainCamtoRot = Quaternion.Euler(rot.x, newYRotation, rot.z);
+                Vector3 rot = mainCamtoRot.eulerAngles;
+                float currentY = rot.y; // Get the current Y rotation
+                float newYRotation = currentY + (-difference.x / 5f);
+                // Calculate new Y rotation based on input
+                // toRot.y *= 
+                // toRot
+
+                //     Vector3 rot = mainCamtoRot.eulerAngles;
+
+
+                //     // Set the rotation with the new Y value, and keep the other axes unchanged.
+                toRot *= Quaternion.Euler(0, newYRotation, 0);
 
             }
         }
@@ -565,7 +590,7 @@ public class CameraController : MonoBehaviour
         float topViewAngle = 90;
         float defaultAngle = 45;
         float nextRotAngle = heatmapActive ? topViewAngle : defaultAngle;
-        print(nextRotAngle);
+        // Update X angle to point either straight down or at a 45 angle
         mainCamtoRot = Quaternion.Euler(nextRotAngle, 0, 0); // Looking straight down
 
         // calculate distance from camera to ground plane
@@ -576,9 +601,26 @@ public class CameraController : MonoBehaviour
         float vertDiff = Math.Abs(hypotenuse - d);
         float forwardDistance = d;
 
-        // move camera forward/backwards to still be focused on the same target as before
-        toPos += (heatmapActive ? 1f : -1f) * forwardDistance * cameraHolder.transform.forward;
-        toPos += (heatmapActive ? 1f : -1f) * vertDiff * cameraHolder.transform.up;
+        // Move camera forward/backwards to still be focused on the same target as before
+        // toPos += (heatmapActive ? 1f : -1f) * forwardDistance * cameraHolder.transform.forward;
+        // toPos += (heatmapActive ? 1f : -1f) * vertDiff * cameraHolder.transform.up;
+
+        Vector3 localPos = cameraTransform.localPosition;
+
+        if (heatmapActive)
+        {
+            toZoom = new Vector3(localPos.x, localPos.y, 0);
+        }
+        else
+        {
+            // we are going into default mode,
+            // toZoom.z = -toZoom.y
+            // Vector3(x,   y,  z)
+            // Vector3(0, -10, 10)
+            // STARTING AT Vector3(0,100,-100) constant inverse
+            float zPos = -localPos.y;
+            toZoom = new Vector3(localPos.x, localPos.y, zPos);
+        }
 
     }
 
