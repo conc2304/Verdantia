@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour
 {
     public Transform cameraHolder;
     public Transform cameraTransform;
-    // public Camera cameraComponent;
 
     public Transform buildingsParent;
     public Transform roadsParent;
@@ -41,6 +40,9 @@ public class CameraController : MonoBehaviour
     public float minZoom;
     public float maxZoom;
 
+    public int[] xRange = new int[2] { 0, 1000 };
+    public int[] zRange = new int[2] { 0, 1000 };
+
     private BuildingsMenu buildingMenu;
     private RoadGenerator roadGenerator;
     private SaveDataTrigger saveDataTrigger;
@@ -61,6 +63,7 @@ public class CameraController : MonoBehaviour
 
     public GameObject activateMenu;
 
+    public Grid grid;
     private HeatMap heatMap;
     private bool cityChanged = false;
 
@@ -85,6 +88,12 @@ public class CameraController : MonoBehaviour
 
         heatMap = FindObjectOfType<HeatMap>();
         heatMap.UpdateHeatMap(allBuildings);
+
+        if (grid != null)
+        {
+            xRange = new int[2] { 0, grid.gridSizeX };
+            zRange = new int[] { 0, grid.gridSizeZ };
+        }
     }
 
 
@@ -341,7 +350,9 @@ public class CameraController : MonoBehaviour
 
     void SetPosition()
     {
-
+        // Limit how far a user can scroll 
+        toPos.x = Mathf.Clamp(toPos.x, xRange[0], xRange[1]);
+        toPos.z = Mathf.Clamp(toPos.z, zRange[0], zRange[1]);
         if (activateMenu.activeSelf == false)
         {
             cameraHolder.transform.position = Vector3.Lerp(
@@ -350,6 +361,8 @@ public class CameraController : MonoBehaviour
                 Time.deltaTime * 5
             );
         }
+
+
 
         toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom + 200);
         toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
@@ -562,8 +575,6 @@ public class CameraController : MonoBehaviour
     {
         // Updates the camera angle to point down at 90 or out at 45
         // Update the Y and Z position of the camera to keep the current view in focus 
-        Debug.Log("ToggleHeatMapView");
-
         heatmapActive = !heatmapActive;
         // TODO - handle with a fade in or something
         heatMap.heatMapPlane.SetActive(heatmapActive);
