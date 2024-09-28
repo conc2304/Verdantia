@@ -50,9 +50,9 @@ public class HeatMap : MonoBehaviour
         int rescaleVal = 10;
         foreach (Transform building in allBuildings)
         {
-            BuildingProperties buildingProp = building.GetComponent<BuildingProperties>();
+            SimulationStats buildingStats = building.GetComponent<SimulationStats>();
 
-            if (buildingProp != null)
+            if (buildingStats != null)
             {
                 int gridX = Mathf.RoundToInt(building.position.x / rescaleVal);
                 int gridZ = Mathf.RoundToInt(building.position.z / rescaleVal);
@@ -60,7 +60,7 @@ public class HeatMap : MonoBehaviour
                 if (gridX >= 0 && gridX < gridSizeX && gridZ >= 0 && gridZ < gridSizeZ)
                 {
 
-                    int heatContribution = buildingProp.heatContribution;
+                    int heatContribution = buildingStats.heatContribution;
                     heatValues[gridX, gridZ] += heatContribution;
                 }
             }
