@@ -172,7 +172,6 @@ public class CameraController : MonoBehaviour
         // Get Building Properties
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
 
-
         doubleClick = false;
         lastClickTime = 0;
 
@@ -353,6 +352,7 @@ public class CameraController : MonoBehaviour
         // Limit how far a user can scroll 
         toPos.x = Mathf.Clamp(toPos.x, xRange[0], xRange[1]);
         toPos.z = Mathf.Clamp(toPos.z, zRange[0], zRange[1]);
+
         if (activateMenu.activeSelf == false)
         {
             cameraHolder.transform.position = Vector3.Lerp(
@@ -361,8 +361,6 @@ public class CameraController : MonoBehaviour
                 Time.deltaTime * 5
             );
         }
-
-
 
         toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom + 200);
         toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
