@@ -1212,6 +1212,30 @@ MonoBehaviour:
   buildingHigh: 0.5
   buildingTime: 30
   spaceWidth: 2
+  buildingName: Coal-Fired Power Plant
+  zoneRequirement: 2
+  constructionCost: 300000
+  operationalCost: 3500
+  taxRevenue: 4000
+  upkeep: 2500
+  energyConsumption: 0
+  waterConsumption: 700
+  wasteProduction: 1000
+  resourceProduction: 8000
+  capacity: 800
+  jobsProvided: 800
+  happinessImpact: -20
+  healthImpact: -30
+  educationImpact: 0
+  pollutionOutput: 500
+  pollutionReduction: 0
+  heatContribution: 50
+  greenSpaceEffect: -20
+  carbonFootprint: 5000
+  taxContribution: 4000
+  jobCreation: 800
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!114 &3095412744837479016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1281,6 +1305,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &6319363023558620523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1386,6 +1434,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &7154619427325838312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,6 +1613,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8153347221091577815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,6 +1859,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8518388907409151356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,6 +1989,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1001 &148211819485164978
 PrefabInstance:
   m_ObjectHideFlags: 0

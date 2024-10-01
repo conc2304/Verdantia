@@ -246,6 +246,30 @@ MonoBehaviour:
   buildingHigh: 0.4
   buildingTime: 4
   spaceWidth: 1
+  buildingName: Residential House
+  zoneRequirement: 0
+  constructionCost: 15000
+  operationalCost: 50
+  taxRevenue: 50
+  upkeep: 15
+  energyConsumption: 50
+  waterConsumption: 40
+  wasteProduction: 20
+  resourceProduction: 0
+  capacity: 6
+  jobsProvided: 0
+  happinessImpact: 10
+  healthImpact: 5
+  educationImpact: 0
+  pollutionOutput: 5
+  pollutionReduction: 0
+  heatContribution: 3
+  greenSpaceEffect: 1
+  carbonFootprint: 60
+  taxContribution: 50
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!114 &3580955728642800891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf973eaf2ae192140ae838eecc615ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unnecery: {fileID: 5928359137962480113}
+  unnecessary: {fileID: 0}
 --- !u!1 &3702692280618965884
 GameObject:
   m_ObjectHideFlags: 0

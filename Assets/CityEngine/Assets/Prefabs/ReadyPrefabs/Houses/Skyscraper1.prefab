@@ -652,6 +652,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 6
   spaceWidth: 1
+  buildingName: Mid-rise Apartment
+  zoneRequirement: 0
+  constructionCost: 50000
+  operationalCost: 120
+  taxRevenue: 150
+  upkeep: 50
+  energyConsumption: 200
+  waterConsumption: 150
+  wasteProduction: 100
+  resourceProduction: 0
+  capacity: 100
+  jobsProvided: 3
+  happinessImpact: 0
+  healthImpact: -2
+  educationImpact: 0
+  pollutionOutput: 25
+  pollutionReduction: 0
+  heatContribution: 10
+  greenSpaceEffect: 0
+  carbonFootprint: 250
+  taxContribution: 150
+  jobCreation: 2
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!114 &4025124437981863053
 MonoBehaviour:
   m_ObjectHideFlags: 0
