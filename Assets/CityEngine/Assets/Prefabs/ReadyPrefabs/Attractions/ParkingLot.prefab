@@ -56,6 +56,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &1200924099984898703
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +136,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &2097803470436546452
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +216,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &3010632827834040516
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +296,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &3567788603933871046
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +376,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &4457244273089208584
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +492,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &5273924451734148981
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +611,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &5793062631657546409
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +705,30 @@ MonoBehaviour:
   buildingHigh: 0.25
   buildingTime: 2
   spaceWidth: 3
+  buildingName: Parking Lot
+  zoneRequirement: 1
+  constructionCost: 10000
+  operationalCost: 100
+  taxRevenue: 50
+  upkeep: 50
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 100
+  jobsProvided: 2
+  happinessImpact: 0
+  healthImpact: -5
+  educationImpact: 0
+  pollutionOutput: 50
+  pollutionReduction: 0
+  heatContribution: 50
+  greenSpaceEffect: -20
+  carbonFootprint: 100
+  taxContribution: 50
+  jobCreation: 2
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!114 &1034629162656238963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,6 +798,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8586062925742432783
 GameObject:
   m_ObjectHideFlags: 0

@@ -1926,6 +1926,30 @@ MonoBehaviour:
   buildingHigh: 1.25
   buildingTime: 30
   spaceWidth: 2
+  buildingName: Eco Office
+  zoneRequirement: 0
+  constructionCost: 250000
+  operationalCost: 100
+  taxRevenue: 300
+  upkeep: 100
+  energyConsumption: 80
+  waterConsumption: 50
+  wasteProduction: 20
+  resourceProduction: 0
+  capacity: 1800
+  jobsProvided: 1800
+  happinessImpact: 15
+  healthImpact: 10
+  educationImpact: 5
+  pollutionOutput: 5
+  pollutionReduction: 20
+  heatContribution: 2
+  greenSpaceEffect: 10
+  carbonFootprint: 50
+  taxContribution: 300
+  jobCreation: 1800
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2286,6 +2310,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2442,6 +2490,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2547,6 +2619,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0

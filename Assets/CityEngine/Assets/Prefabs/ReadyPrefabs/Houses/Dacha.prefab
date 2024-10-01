@@ -360,6 +360,30 @@ MonoBehaviour:
   buildingHigh: 0.25
   buildingTime: 10
   spaceWidth: 1
+  buildingName: Farmhouse
+  zoneRequirement: 0
+  constructionCost: 5000
+  operationalCost: 30
+  taxRevenue: 10
+  upkeep: 10
+  energyConsumption: 20
+  waterConsumption: 15
+  wasteProduction: 5
+  resourceProduction: 0
+  capacity: 4
+  jobsProvided: 0
+  happinessImpact: 5
+  healthImpact: 2
+  educationImpact: 0
+  pollutionOutput: 1
+  pollutionReduction: 0
+  heatContribution: 1
+  greenSpaceEffect: 2
+  carbonFootprint: 20
+  taxContribution: 10
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!114 &7155104198537411281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf973eaf2ae192140ae838eecc615ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unnecery: {fileID: 7628283837102228103}
+  unnecessary: {fileID: 0}
 --- !u!1 &7628283837102228103
 GameObject:
   m_ObjectHideFlags: 0

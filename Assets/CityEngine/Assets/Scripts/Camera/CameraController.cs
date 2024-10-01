@@ -71,6 +71,9 @@ public class CameraController : MonoBehaviour
 
     private bool heatmapActive = false;
 
+    private string heatmapMetric = "heatContribution";
+
+
 
     void Awake()
     {
@@ -87,7 +90,9 @@ public class CameraController : MonoBehaviour
             forestObj.Add(forest.GetChild(i));
 
         heatMap = FindObjectOfType<HeatMap>();
-        heatMap.UpdateHeatMap(allBuildings);
+        int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
+        int metricMax = buildingMenu.propertyRanges[heatmapMetric].max;
+        heatMap.UpdateHeatMap(allBuildings, heatmapMetric, metricMin, metricMax);
 
         if (grid != null)
         {
@@ -115,7 +120,12 @@ public class CameraController : MonoBehaviour
             }
             lastClickTime = Time.time;
         }
-        if (heatMap != null && cityChanged) heatMap.UpdateHeatMap(allBuildings);
+        if (heatMap != null && cityChanged)
+        {
+            int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
+            int metricMax = buildingMenu.propertyRanges[heatmapMetric].max;
+            heatMap.UpdateHeatMap(allBuildings, heatmapMetric, metricMin, metricMax);
+        }
 
         cityChanged = false;
     }

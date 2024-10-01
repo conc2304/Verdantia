@@ -1711,6 +1711,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 30
   spaceWidth: 2
+  buildingName: Glass Skyscraper Office
+  zoneRequirement: 1
+  constructionCost: 400000
+  operationalCost: 2000
+  taxRevenue: 1500
+  upkeep: 500
+  energyConsumption: 1500
+  waterConsumption: 1000
+  wasteProduction: 900
+  resourceProduction: 0
+  capacity: 4000
+  jobsProvided: 4000
+  happinessImpact: 0
+  healthImpact: -5
+  educationImpact: 10
+  pollutionOutput: 150
+  pollutionReduction: 0
+  heatContribution: 70
+  greenSpaceEffect: 0
+  carbonFootprint: 1500
+  taxContribution: 1500
+  jobCreation: 4000
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1976,6 +2000,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,6 +2180,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,6 +2393,30 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
+  buildingName: 
+  zoneRequirement: 0
+  constructionCost: 0
+  operationalCost: 0
+  taxRevenue: 0
+  upkeep: 0
+  energyConsumption: 0
+  waterConsumption: 0
+  wasteProduction: 0
+  resourceProduction: 0
+  capacity: 0
+  jobsProvided: 0
+  happinessImpact: 0
+  healthImpact: 0
+  educationImpact: 0
+  pollutionOutput: 0
+  pollutionReduction: 0
+  heatContribution: 0
+  greenSpaceEffect: 0
+  carbonFootprint: 0
+  taxContribution: 0
+  jobCreation: 0
+  coverageRadius: 0
+  serviceCapacity: 0
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0

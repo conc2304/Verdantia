@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using System.Reflection;
 
 public class HeatMap : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class HeatMap : MonoBehaviour
     private Texture2D heatMapTexture;
     public GameObject heatMapPlane;
     private Gradient heatGradient;
+
 
 
     // Initialize the HeatMap by passing the grid size values from Grid.cs
@@ -35,7 +38,7 @@ public class HeatMap : MonoBehaviour
     }
 
     // Update the heat map with buildings and their contributions
-    public void UpdateHeatMap(List<Transform> allBuildings)
+    public void UpdateHeatMap(List<Transform> allBuildings, string metricName, int metricMin, int metricMax)
     {
         // Reset heat values before recalculating
         for (int x = 0; x < gridSizeX; x++)
@@ -50,34 +53,33 @@ public class HeatMap : MonoBehaviour
         int rescaleVal = 10;
         foreach (Transform building in allBuildings)
         {
-            SimulationStats buildingStats = building.GetComponent<SimulationStats>();
+            BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
 
-            if (buildingStats != null)
+            if (buildingProps != null)
             {
                 int gridX = Mathf.RoundToInt(building.position.x / rescaleVal);
                 int gridZ = Mathf.RoundToInt(building.position.z / rescaleVal);
 
                 if (gridX >= 0 && gridX < gridSizeX && gridZ >= 0 && gridZ < gridSizeZ)
                 {
-
-                    int heatContribution = buildingStats.heatContribution;
-                    heatValues[gridX, gridZ] += heatContribution;
+                    // Use reflection to get the value of the metric dynamically
+                    int heatmapValue = GetMetricValue(buildingProps, metricName);
+                    heatValues[gridX, gridZ] += heatmapValue;
                 }
             }
         }
 
         // Generate the texture to represent the heat map
-        GenerateHeatMapTexture();
+        GenerateHeatMapTexture(metricMin, metricMax);
         DisplayHeatMap();
     }
 
 
-    private void GenerateHeatMapTexture()
+    private void GenerateHeatMapTexture(int metricMin, int metricMax)
     {
-        print("GenerateHeatMapTexture || " + "X:" + gridSizeX + "   Z:" + gridSizeZ);
         heatMapTexture = new Texture2D(gridSizeX, gridSizeZ);
-        float heatMin = 0f;
-        float heatMax = 100f;
+        float heatMin = (float)metricMin;
+        float heatMax = (float)metricMax;
         float alphaMin = 0.4f;
         float alphaMax = 0.85f;
 
@@ -117,7 +119,6 @@ public class HeatMap : MonoBehaviour
 
         // Define the color keys and alpha keys
         GradientColorKey[] colorKeys = new GradientColorKey[5];
-        // colorKeys[0].color = Color.blue;   // 0% heat
         colorKeys[0].color = Color.cyan;   // 0% heat
         colorKeys[0].time = 0.0f;
         colorKeys[1].color = Color.green;  // 25% heat
@@ -181,5 +182,26 @@ public class HeatMap : MonoBehaviour
         }
 
         return sum / count;
+    }
+
+    // Helper method to dynamically get the metric value using reflection
+    public int GetMetricValue(BuildingProperties buildingProps, string metricName)
+    {
+        // Try to find the field with the given name
+        FieldInfo field = buildingProps.GetType().GetField(metricName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        if (field != null)
+        {
+            return (int)field.GetValue(buildingProps);
+        }
+
+        // Try to find the property with the given name
+        PropertyInfo property = buildingProps.GetType().GetProperty(metricName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        if (property != null && property.CanRead)
+        {
+            return (int)property.GetValue(buildingProps);
+        }
+
+        // If the field or property is not found, throw an exception (or handle the error)
+        throw new System.Exception("No field or property found with the name: " + metricName);
     }
 }

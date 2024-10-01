@@ -1,9 +1,12 @@
 ﻿using System.Collections;
+using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
+using System.Linq;
 
 public class BuildingsMenu : MonoBehaviour
 {
@@ -46,6 +49,9 @@ public class BuildingsMenu : MonoBehaviour
 
     bool doubleClick;
 
+    public Dictionary<string, (int min, int max)> propertyRanges = new Dictionary<string, (int, int)>();
+
+
     private void Start()
     {
         cameraController = FindObjectOfType<CameraController>();
@@ -58,6 +64,8 @@ public class BuildingsMenu : MonoBehaviour
 
         activateMenu.SetActive(false);
         grid.enabled = false;
+
+        UpdatePropertyRanges();
     }
 
     private void Update()
@@ -343,6 +351,57 @@ public class BuildingsMenu : MonoBehaviour
         target.transform.GetChild(0).localPosition = new Vector3(0, 6, 0);
         cameraController.target = target;
         activateMenu.SetActive(!activateMenu.activeSelf);
+    }
+
+    Dictionary<string, (int min, int max)> UpdatePropertyRanges()
+    {
+        // Loop over Buildings Categorys
+        foreach (var buildingCategory in buildings)
+        {
+            // Loop over each building in the category
+            foreach (var building in buildingCategory.buildings)
+            {
+                building.TryGetComponent<BuildingProperties>(out var properties);
+
+                if (properties != null)
+                {
+                    // Loop over every property
+                    FieldInfo[] fields = typeof(BuildingProperties).GetFields(BindingFlags.Public | BindingFlags.Instance);
+                    foreach (FieldInfo field in fields)
+                    {
+                        // Get the name of the field (e.g., "constructionCost")
+                        string fieldName = field.Name;
+
+
+                        if (!properties.dataProps.Contains(fieldName)) continue;
+
+                        // Get the value of the field for this specific building
+                        Type fieldType = field.FieldType;
+                        if (fieldType == typeof(int) || fieldType == typeof(float) || fieldType == typeof(double) || fieldType == typeof(long))
+                        {
+
+                            int value = (int)field.GetValue(properties);
+
+                            // Check if we've already tracked this property
+                            if (!propertyRanges.ContainsKey(fieldName))
+                            {
+                                propertyRanges[fieldName] = (int.MaxValue, int.MinValue); // Initialize min/max values
+                            }
+                            print("add field : " + fieldName);
+                            // Update the min and max for the property
+                            propertyRanges[fieldName] = (
+                                Mathf.Min(propertyRanges[fieldName].min, value),
+                                Mathf.Max(propertyRanges[fieldName].max, value)
+                            );
+                        }
+                    }
+                }
+            }
+        }
+        Debug.Log("propertyRanges");
+        ObjectPrinter.PrintKeyValuePairs(propertyRanges);
+
+        return propertyRanges;
     }
 
 }
