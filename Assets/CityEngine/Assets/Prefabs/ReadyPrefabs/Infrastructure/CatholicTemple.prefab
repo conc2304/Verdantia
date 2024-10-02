@@ -913,8 +913,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &2937463744704567768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,8 +1042,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &4009151218591205241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,8 +1511,8 @@ MonoBehaviour:
   carbonFootprint: 25
   taxContribution: 0
   jobCreation: 10
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &1776457202894404208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1604,8 +1604,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &6293319912610132131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,8 +1733,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &6607300929242637581
 GameObject:
   m_ObjectHideFlags: 0
@@ -2051,8 +2051,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8103836568424127817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2273,8 +2273,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8515937822785164626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,8 +2485,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8643548988433089282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2664,8 +2664,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8896344948871049938
 GameObject:
   m_ObjectHideFlags: 0
@@ -9036,6 +9036,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776967643861646, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776967983448230, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.041
@@ -9052,6 +9056,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776967983448248, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776968163286080, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.y
       value: -2.67
@@ -9060,6 +9068,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776968163286082, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776968677305446, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.59
@@ -9076,6 +9088,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776968677305464, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969042904141, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.54
@@ -9092,6 +9108,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776969042904143, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969616309652, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.37
@@ -9108,6 +9128,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776969616309654, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969629667952, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_Name
       value: Crane2
@@ -16680,6 +16704,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776967643861646, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776967983448230, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.22
@@ -16696,6 +16724,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776967983448248, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776968163286080, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.81
@@ -16712,6 +16744,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776968163286082, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776968677305446, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.76
@@ -16728,6 +16764,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776968677305464, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969042904141, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.27
@@ -16744,6 +16784,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776969042904143, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969616309652, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.04
@@ -16760,6 +16804,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776969616309654, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969629667952, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_Name
       value: Crane2 (1)

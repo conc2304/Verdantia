@@ -323,8 +323,8 @@ MonoBehaviour:
   carbonFootprint: 100
   taxContribution: 250
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &1865229129844725689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,8 +465,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &2026911521823970683
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,8 +677,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &2454700781081638459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,8 +1547,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8650933005214006296
 GameObject:
   m_ObjectHideFlags: 0
@@ -3325,6 +3325,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4154279467277294213, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4154279467277294214, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3345,6 +3349,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4154279467891249288, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4154279467891249290, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.66
@@ -3365,6 +3373,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4154279467901341296, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4154279467901341298, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.54
@@ -3389,6 +3401,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4154279468061546916, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4154279468061546918, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.624

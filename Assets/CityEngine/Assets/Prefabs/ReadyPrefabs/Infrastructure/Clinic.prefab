@@ -935,8 +935,8 @@ MonoBehaviour:
   carbonFootprint: 200
   taxContribution: 0
   jobCreation: 200
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &8244234786447428393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,8 +1589,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8346087874753987616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,8 +1760,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,8 +1840,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8805113475485021746
 GameObject:
   m_ObjectHideFlags: 0
@@ -6813,6 +6813,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4154279467277294213, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4154279467277294215, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.83
@@ -6829,6 +6833,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4154279467891249288, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4154279467891249290, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.25
@@ -6837,6 +6845,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4154279467901341296, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4154279467901341298, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.19
@@ -6853,6 +6865,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4154279468061546916, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4154279468061546918, guid: 2087dc0e520f3714ea00bda017566bfa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.28
