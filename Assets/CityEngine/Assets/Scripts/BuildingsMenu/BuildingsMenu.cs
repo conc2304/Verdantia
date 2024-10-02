@@ -387,7 +387,7 @@ public class BuildingsMenu : MonoBehaviour
                             {
                                 propertyRanges[fieldName] = (int.MaxValue, int.MinValue); // Initialize min/max values
                             }
-                            print("add field : " + fieldName);
+
                             // Update the min and max for the property
                             propertyRanges[fieldName] = (
                                 Mathf.Min(propertyRanges[fieldName].min, value),
@@ -398,8 +398,6 @@ public class BuildingsMenu : MonoBehaviour
                 }
             }
         }
-        Debug.Log("propertyRanges");
-        ObjectPrinter.PrintKeyValuePairs(propertyRanges);
 
         return propertyRanges;
     }
