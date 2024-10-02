@@ -40,6 +40,7 @@ public class CameraController : MonoBehaviour
     private Vector3 toZoom;
     public float minZoom;
     public float maxZoom;
+    public Slider zoomSlider;
 
     public int[] xRange = new int[2] { 0, 1000 };
     public int[] zRange = new int[2] { 0, 1000 };
@@ -79,6 +80,14 @@ public class CameraController : MonoBehaviour
     private bool skipMouseInput = false;
 
 
+    void Start()
+    {
+        // Set the callback for when the slider value changes
+        zoomSlider.onValueChanged.AddListener(OnSliderValueChanged);
+
+    }
+
+
     void Awake()
     {
         buildingMenu = FindObjectOfType<BuildingsMenu>();
@@ -89,6 +98,9 @@ public class CameraController : MonoBehaviour
         toPos = cameraHolder.transform.position;
         toRot = cameraHolder.transform.rotation;
         toZoom = cameraTransform.localPosition;
+        zoomSlider.minValue = minZoom;
+        zoomSlider.maxValue = maxZoom;
+        zoomSlider.value = toZoom.y;
 
         for (int i = 0; i < forest.childCount; i++)
             forestObj.Add(forest.GetChild(i));
@@ -384,6 +396,7 @@ public class CameraController : MonoBehaviour
 
         toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom + 200);
         toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
+        // zoomSlider.value = toZoom.y;
 
         // Rotates the camera holder so that its always pointed at the target
         cameraHolder.transform.rotation = Quaternion.Lerp(
@@ -556,8 +569,8 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.E)) RotateCamera(rotationScale);
 
         // Zooming
-        if (Input.GetKey(KeyCode.R)) ZoomIn();
-        if (Input.GetKey(KeyCode.F)) ZoomOut(); ;
+        if (Input.GetKey(KeyCode.R)) ZoomIn(1);
+        if (Input.GetKey(KeyCode.F)) ZoomOut(1); ;
 
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -568,8 +581,6 @@ public class CameraController : MonoBehaviour
 
     private Quaternion RotateCamera(float rotAmount)
     {
-        print("rotate camera: " + rotAmount);
-
         if (!heatmapActive)
         {
             // Regular rotation affecting all axrotAmount
@@ -590,8 +601,28 @@ public class CameraController : MonoBehaviour
     // Public Methods for the onClick() button handlers on the touch screen display
     public void RotateCameraLeft() { RotateCamera(rotationScale * 10); }
     public void RotateCameraRight() { RotateCamera(-rotationScale * 10); }
-    public void ZoomIn() { toZoom += zoomScale * 10; }
-    public void ZoomOut() { toZoom -= zoomScale * 10; }
+    public void ZoomIn(float multiplier = 1)
+    {
+        toZoom += zoomScale * multiplier;
+        SetSliderValueWithoutCallback(toZoom.y);
+    }
+    public void ZoomOut(float multiplier = 1)
+    {
+        toZoom -= zoomScale * multiplier;
+        SetSliderValueWithoutCallback(toZoom.y);
+    }
+    public void OnSliderValueChanged(float zoomAmount)
+    {
+        toZoom.y = zoomAmount;
+        toZoom.z = -zoomAmount;
+    }
+
+    public void SetSliderValueWithoutCallback(float newValue)
+    {
+        zoomSlider.onValueChanged.RemoveListener(OnSliderValueChanged);
+        zoomSlider.value = newValue;
+        zoomSlider.onValueChanged.AddListener(OnSliderValueChanged);
+    }
 
 
     public void ToggleHeatMapView()
