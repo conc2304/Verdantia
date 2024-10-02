@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -102,18 +103,6 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void TouchInput()
-    {
-        print("TC: " + Input.touchCount);
-        // Handle Joystick input for camera movement L/R/U/D
-        Vector3 direction = cameraHolder.transform.forward * fixedJoystick.Vertical + cameraHolder.transform.right * fixedJoystick.Horizontal;
-        float magnitude = direction.magnitude * 60; // the further the joy stick is the faster they move
-        skipMouseInput = magnitude > 0;
-        Vector3 movement = magnitude * Time.deltaTime * direction;
-        if (heatmapActive) movement.y = 0; // Prevent Y-axis movement
-        toPos += movement;
-    }
-
     void Update()
     {
         TouchInput();
@@ -123,6 +112,7 @@ public class CameraController : MonoBehaviour
         SetPosition();
 
 
+        // Check for double click 
         if (Input.GetMouseButtonDown(0))
         {
             if (Time.time - lastClickTime < catchTime)
@@ -135,6 +125,8 @@ public class CameraController : MonoBehaviour
             }
             lastClickTime = Time.time;
         }
+
+        // handle heat map updates on city change 
         if (heatMap != null && cityChanged)
         {
             int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
@@ -289,6 +281,8 @@ public class CameraController : MonoBehaviour
 
 
 
+
+
     void OnGUI()
     {
         if (doubleClick)
@@ -387,6 +381,7 @@ public class CameraController : MonoBehaviour
             );
         }
 
+
         toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom + 200);
         toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
 
@@ -410,6 +405,17 @@ public class CameraController : MonoBehaviour
             toZoom,
             Time.deltaTime * 5
         );
+    }
+
+    private void TouchInput()
+    {
+        // Handle Joystick input for camera movement L/R/U/D
+        Vector3 direction = cameraHolder.transform.forward * fixedJoystick.Vertical + cameraHolder.transform.right * fixedJoystick.Horizontal;
+        float magnitude = direction.magnitude * 60; // the further the joy stick is the faster they move
+        skipMouseInput = Input.touchCount >= 1;
+        Vector3 movement = magnitude * Time.deltaTime * direction;
+        if (heatmapActive) movement.y = 0; // Prevent Y-axis movement
+        toPos += movement;
     }
 
     void MouseInput()
@@ -546,24 +552,12 @@ public class CameraController : MonoBehaviour
         }
 
         //Rotation
-        if (Input.GetKey(KeyCode.Q))
-        {
-            RotateCamera(rotationScale);
-        }
-
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            RotateCamera(-rotationScale);
-        }
+        if (Input.GetKey(KeyCode.Q)) RotateCamera(-rotationScale);
+        if (Input.GetKey(KeyCode.E)) RotateCamera(rotationScale);
 
         // Zooming
-        if (Input.GetKey(KeyCode.R))
-        {// in
-            toZoom += zoomScale;
-        }
-        if (Input.GetKey(KeyCode.F))
-            toZoom -= zoomScale;
+        if (Input.GetKey(KeyCode.R)) ZoomIn();
+        if (Input.GetKey(KeyCode.F)) ZoomOut(); ;
 
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -572,8 +566,9 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void RotateCamera(float rotAmount)
+    private Quaternion RotateCamera(float rotAmount)
     {
+        print("rotate camera: " + rotAmount);
 
         if (!heatmapActive)
         {
@@ -587,9 +582,19 @@ public class CameraController : MonoBehaviour
             float newYRotation = currentY + rotAmount; // Calculate new Y rotation
             toRot = Quaternion.Euler(toRot.eulerAngles.x, newYRotation, toRot.eulerAngles.z); // Apply new Y rotation
         }
+
+        return toRot;
     }
 
-    private void ToggleHeatMapView()
+
+    // Public Methods for the onClick() button handlers on the touch screen display
+    public void RotateCameraLeft() { RotateCamera(rotationScale * 10); }
+    public void RotateCameraRight() { RotateCamera(-rotationScale * 10); }
+    public void ZoomIn() { toZoom += zoomScale * 10; }
+    public void ZoomOut() { toZoom -= zoomScale * 10; }
+
+
+    public void ToggleHeatMapView()
     {
         // Updates the camera angle to point down at 90 or out at 45
         // Update the Y and Z position of the camera to keep the current view in focus 
