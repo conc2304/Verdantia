@@ -73,6 +73,8 @@ public class CameraController : MonoBehaviour
 
     private string heatmapMetric = "heatContribution";
 
+    public FixedJoystick fixedJoystick;
+
 
 
     void Awake()
@@ -102,11 +104,23 @@ public class CameraController : MonoBehaviour
     }
 
 
+    public void TouchInput()
+    {
+        // Handle Joystick input for camera movement L/R/U/D
+        Vector3 direction = cameraHolder.transform.forward * fixedJoystick.Vertical + cameraHolder.transform.right * fixedJoystick.Horizontal;
+        float magnitude = direction.magnitude * 60; // the further the joy stick is the faster they move
+        Vector3 movement = magnitude * Time.deltaTime * direction;
+        if (heatmapActive) movement.y = 0; // Prevent Y-axis movement
+        toPos += movement;
+    }
+
     void Update()
     {
-        MouseInput();
+        // MouseInput();
         KeyboardInput();
+        TouchInput();
         SetPosition();
+
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -564,7 +578,7 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        //Zooming
+        // Zooming
         if (Input.GetKey(KeyCode.R))
         {// in
             toZoom += zoomScale;
@@ -618,8 +632,6 @@ public class CameraController : MonoBehaviour
         }
 
     }
-
-
 
 
     private void OnApplicationQuit()
