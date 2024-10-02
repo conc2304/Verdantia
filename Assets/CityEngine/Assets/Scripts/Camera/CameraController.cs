@@ -425,7 +425,7 @@ public class CameraController : MonoBehaviour
         // Handle Joystick input for camera movement L/R/U/D
         Vector3 direction = cameraHolder.transform.forward * fixedJoystick.Vertical + cameraHolder.transform.right * fixedJoystick.Horizontal;
         float magnitude = direction.magnitude * 60; // the further the joy stick is the faster they move
-        skipMouseInput = Input.touchCount >= 1;
+        // skipMouseInput = Input.touchCount >= 1;
         Vector3 movement = magnitude * Time.deltaTime * direction;
         if (heatmapActive) movement.y = 0; // Prevent Y-axis movement
         toPos += movement;
@@ -433,6 +433,8 @@ public class CameraController : MonoBehaviour
 
     void MouseInput()
     {
+        if (Input.touchCount >= 1) return;
+
         //Scrolling
         if (Input.mouseScrollDelta.y != 0) // Vector3(0, -10, 10)
         {
