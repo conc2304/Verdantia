@@ -398,7 +398,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &3067002374638132072
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +521,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &4035709658694445694
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +861,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &4944277083065917951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,7 +1168,6 @@ MonoBehaviour:
   jobCreation: 5000
   industryBoost: 3000
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &3650275360788955524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,7 +1444,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8529055135148007190
 GameObject:
   m_ObjectHideFlags: 0
@@ -1578,7 +1573,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1001 &84194199329773055
 PrefabInstance:
   m_ObjectHideFlags: 0

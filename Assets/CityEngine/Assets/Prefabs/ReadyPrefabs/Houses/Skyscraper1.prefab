@@ -674,8 +674,8 @@ MonoBehaviour:
   carbonFootprint: 250
   taxContribution: 150
   jobCreation: 2
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &4025124437981863053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,6 +1207,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776967643861646, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776967983448230, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.16
@@ -1223,6 +1227,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776967983448248, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776968163286080, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.9300003
@@ -1239,6 +1247,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776968163286082, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776968677305446, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.1900005
@@ -1255,6 +1267,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776968677305464, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969042904141, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.63
@@ -1271,6 +1287,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776969042904143, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969616309652, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.7000003
@@ -1287,6 +1307,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210776969616309654, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3210776969629667952, guid: de9ac8277b0793745afb9b8cf94b4bd9, type: 3}
       propertyPath: m_Name
       value: Crane2

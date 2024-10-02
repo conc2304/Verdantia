@@ -179,8 +179,8 @@ MonoBehaviour:
   carbonFootprint: 275
   taxContribution: 170
   jobCreation: 5
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &3605215850848964902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,8 +648,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &4299146351718101626
 GameObject:
   m_ObjectHideFlags: 0
