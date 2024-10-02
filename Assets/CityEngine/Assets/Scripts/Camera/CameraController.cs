@@ -75,6 +75,7 @@ public class CameraController : MonoBehaviour
 
     public FixedJoystick fixedJoystick;
 
+    private bool skipMouseInput = false;
 
 
     void Awake()
@@ -92,9 +93,6 @@ public class CameraController : MonoBehaviour
             forestObj.Add(forest.GetChild(i));
 
         heatMap = FindObjectOfType<HeatMap>();
-        int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
-        int metricMax = buildingMenu.propertyRanges[heatmapMetric].max;
-        heatMap.UpdateHeatMap(allBuildings, heatmapMetric, metricMin, metricMax);
 
         if (grid != null)
         {
@@ -106,9 +104,11 @@ public class CameraController : MonoBehaviour
 
     public void TouchInput()
     {
+        print("TC: " + Input.touchCount);
         // Handle Joystick input for camera movement L/R/U/D
         Vector3 direction = cameraHolder.transform.forward * fixedJoystick.Vertical + cameraHolder.transform.right * fixedJoystick.Horizontal;
         float magnitude = direction.magnitude * 60; // the further the joy stick is the faster they move
+        skipMouseInput = magnitude > 0;
         Vector3 movement = magnitude * Time.deltaTime * direction;
         if (heatmapActive) movement.y = 0; // Prevent Y-axis movement
         toPos += movement;
@@ -116,9 +116,10 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        // MouseInput();
-        KeyboardInput();
         TouchInput();
+
+        if (!skipMouseInput) MouseInput();
+        KeyboardInput();
         SetPosition();
 
 
@@ -427,7 +428,7 @@ public class CameraController : MonoBehaviour
         }
 
         //Mouse movement
-        if (Input.touchCount != 2 && (Mathf.FloorToInt(toRot.eulerAngles.y) - Mathf.FloorToInt(cameraHolder.transform.eulerAngles.y) < 8 && Mathf.FloorToInt(toRot.eulerAngles.y) - Mathf.FloorToInt(cameraHolder.transform.eulerAngles.y) > -10))
+        if (Input.touchCount != 2 && Mathf.FloorToInt(toRot.eulerAngles.y) - Mathf.FloorToInt(cameraHolder.transform.eulerAngles.y) < 8 && Mathf.FloorToInt(toRot.eulerAngles.y) - Mathf.FloorToInt(cameraHolder.transform.eulerAngles.y) > -10)
         {
             if (findPositionAfterMuiltyIputs)
             {
@@ -547,35 +548,13 @@ public class CameraController : MonoBehaviour
         //Rotation
         if (Input.GetKey(KeyCode.Q))
         {
-            if (!heatmapActive)
-            {
-                // Regular rotation affecting all axes
-                toRot *= Quaternion.Euler(Vector3.up * rotationScale);
-            }
-            else
-            {
-                // Only modify the Y-axis when the heatmap is active
-                float currentY = toRot.eulerAngles.y; // Get current Y rotation
-                float newYRotation = currentY + rotationScale; // Calculate new Y rotation
-                toRot = Quaternion.Euler(toRot.eulerAngles.x, newYRotation, toRot.eulerAngles.z); // Apply new Y rotation
-            }
+            RotateCamera(rotationScale);
         }
 
 
         if (Input.GetKey(KeyCode.E))
         {
-            if (!heatmapActive)
-            {
-                // Regular rotation affecting all axes
-                toRot *= Quaternion.Euler(Vector3.up * -rotationScale);
-            }
-            else
-            {
-                // Only modify the Y-axis when the heatmap is active
-                float currentY = toRot.eulerAngles.y; // Get current Y rotation
-                float newYRotation = currentY - rotationScale; // Calculate new Y rotation
-                toRot = Quaternion.Euler(toRot.eulerAngles.x, newYRotation, toRot.eulerAngles.z); // Apply new Y rotation
-            }
+            RotateCamera(-rotationScale);
         }
 
         // Zooming
@@ -590,6 +569,23 @@ public class CameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ToggleHeatMapView();
+        }
+    }
+
+    private void RotateCamera(float rotAmount)
+    {
+
+        if (!heatmapActive)
+        {
+            // Regular rotation affecting all axrotAmount
+            toRot *= Quaternion.Euler(Vector3.up * rotAmount);
+        }
+        else
+        {
+            // Only modify the Y-axis when the heatmap is active
+            float currentY = toRot.eulerAngles.y; // Get current Y rotation
+            float newYRotation = currentY + rotAmount; // Calculate new Y rotation
+            toRot = Quaternion.Euler(toRot.eulerAngles.x, newYRotation, toRot.eulerAngles.z); // Apply new Y rotation
         }
     }
 
@@ -638,6 +634,7 @@ public class CameraController : MonoBehaviour
     {
         saveDataTrigger.BuildingDataSave();
     }
+
 
 
 }
