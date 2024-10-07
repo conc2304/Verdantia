@@ -293,8 +293,6 @@ public class CameraController : MonoBehaviour
 
 
 
-
-
     void OnGUI()
     {
         if (doubleClick)
@@ -396,7 +394,6 @@ public class CameraController : MonoBehaviour
 
         toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom + 200);
         toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
-        // zoomSlider.value = toZoom.y;
 
         // Rotates the camera holder so that its always pointed at the target
         cameraHolder.transform.rotation = Quaternion.Lerp(
@@ -626,12 +623,22 @@ public class CameraController : MonoBehaviour
         zoomSlider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 
+    public void SetHeatMapView(bool isActive)
+    {
+        heatmapActive = isActive;
+        UpdateHeatMapView();
+    }
 
     public void ToggleHeatMapView()
     {
+        heatmapActive = !heatmapActive;
+        UpdateHeatMapView();
+
+    }
+    public void UpdateHeatMapView()
+    {
         // Updates the camera angle to point down at 90 or out at 45
         // Update the Y and Z position of the camera to keep the current view in focus 
-        heatmapActive = !heatmapActive;
         // TODO - handle with a fade in or something
         heatMap.heatMapPlane.SetActive(heatmapActive);
 
