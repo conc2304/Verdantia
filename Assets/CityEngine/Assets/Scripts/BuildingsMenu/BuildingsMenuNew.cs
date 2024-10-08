@@ -22,7 +22,6 @@ public class BuildingsMenuNew : MonoBehaviour
     private List<GameObject> buildingsTypes = new List<GameObject>();
 
     public Camera menuCamera;
-
     public Grid grid;
     public Canvas canvas;
     public TextMeshProUGUI textPRO;
@@ -73,7 +72,6 @@ public class BuildingsMenuNew : MonoBehaviour
         grid.enabled = false;
 
         UpdatePropertyRanges();
-
         InitializeTouchGui();
     }
 
@@ -92,6 +90,7 @@ public class BuildingsMenuNew : MonoBehaviour
     {
         if (activateMenu.activeSelf)
         {
+            print("Menu is Active: HandleInput");
             // MouseInput();
             InputHandler();
 
@@ -238,26 +237,36 @@ public class BuildingsMenuNew : MonoBehaviour
         }
     }
 
-    void CreateTypes_OLD()
+
+    void CreateTypes()
     {
-        int posType = 0;
+        float buildingScale = 9;
+        print("Create Types _ New");
+        int posType = 0; // Adjust Y-axis for vertical list
         for (int i = 0; i < buildings.Length; i++)
         {
-            //types
-            GameObject type = Instantiate(buildings[i].type, new Vector3(0, 0, 0), Quaternion.identity, types);
-            type.transform.localPosition = new Vector3(0, -posType, 0);
-            type.transform.localScale = new Vector3(9, 9, 9);
+            // Building Types
+            GameObject type = Instantiate(
+                buildings[i].type,
+                new Vector3(0, 0, 0),
+                Quaternion.identity,
+                types
+            );
+
+            type.transform.localPosition = new Vector3(0, -posType, 0); // Adjust the Y-axis for vertical alignment
+            type.transform.localScale = new Vector3(buildingScale, buildingScale, buildingScale);
             type.name = buildings[i].type.name;
+
             foreach (Transform trans in type.GetComponentsInChildren<Transform>(true))
-                trans.gameObject.layer = 5; // set to UI layer
+                trans.gameObject.layer = 5;
             buildingsTypes.Add(type);
 
             TextMeshProUGUI text = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
-            text.transform.localPosition = new Vector3(8, 0, 0);
+            text.transform.localPosition = new Vector3(0, 8, 0);
             text.text = buildings[i].name;
 
             Button button = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
-            button.transform.localPosition = new Vector3(2, 0, 0);
+            button.transform.localPosition = new Vector3(0, 2, 0);
             button.onClick.AddListener(ClickCheck);
             button.gameObject.name = buildings[i].type.name;
 
@@ -272,10 +281,10 @@ public class BuildingsMenuNew : MonoBehaviour
             posType *= -1;
 
 
-            //buildings
+            // Individual Buildings
             GameObject newObj = new GameObject("new");
             GameObject parent = Instantiate(newObj, new Vector3(0, 0, 0), Quaternion.identity, types);
-            parent.transform.localPosition = new Vector3(0, 0, 0);
+            parent.transform.localPosition = new Vector3(0, -posType, 0); // Vertical alignment for the parent
             parent.name = buildings[i].type.name + "_buildings";
             Destroy(newObj.gameObject);
             buildingsParents.Add(parent);
@@ -287,9 +296,10 @@ public class BuildingsMenuNew : MonoBehaviour
             for (int u = 0; u < buildings[i].buildings.Length; u++)
             {
                 GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
-                build.transform.localPosition = new Vector3(0, -posBuild, 0);
-                build.transform.localScale = new Vector3(9, 9, 9);
+                build.transform.localPosition = new Vector3(0, -posBuild, 0); // Adjust for vertical list inside parent
+                build.transform.localScale = new Vector3(buildingScale / 2, buildingScale / 2, buildingScale / 2);
                 build.name = buildings[i].buildings[u].name;
+
                 foreach (Transform trans in build.GetComponentsInChildren<Transform>(true))
                     trans.gameObject.layer = 5;
                 parent.SetActive(false);
@@ -299,20 +309,20 @@ public class BuildingsMenuNew : MonoBehaviour
                 buttonBuild.onClick.AddListener(CreateBuilding);
                 buttonBuild.gameObject.name = buildings[i].buildings[u].name;
 
-
                 //find min and max position of each type
                 if (posBuild > buildings[i].maxPos)
                     buildings[i].maxPos = posBuild;
                 if (posBuild < buildings[i].minPos)
                     buildings[i].minPos = posBuild;
 
+
                 int add = -35;
                 try
                 {
                     for (int y = 1; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
-                        buttonBuild.transform.localPosition = new Vector3(2, buttonBuild.transform.localPosition.y + 5, 0);
-                        buttonBuild.transform.localScale = new Vector3(1, buttonBuild.transform.localScale.y + 1, 1);
+                        buttonBuild.transform.localPosition = new Vector3(buttonBuild.transform.localPosition.x + 5, 2, 0);
+                        buttonBuild.transform.localScale = new Vector3(buttonBuild.transform.localScale.x + 1, 1, 1);
                     }
                     for (int y = 0; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
@@ -349,96 +359,9 @@ public class BuildingsMenuNew : MonoBehaviour
             }
         }
 
-        //delete buildings button
-        GameObject typeDel = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity, types);
-        typeDel.transform.localPosition = new Vector3(0, -posType, 0);
-        typeDel.transform.localScale = new Vector3(9, 9, 9);
-        typeDel.name = deleteBuilding.name;
-        foreach (Transform trans in typeDel.GetComponentsInChildren<Transform>(true))
-            trans.gameObject.layer = 5;
-        buildingsTypes.Add(typeDel);
-
-        TextMeshProUGUI textDel = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, typeDel.transform);
-        textDel.transform.localPosition = new Vector3(8, 0, 0);
-        textDel.text = deleteBuilding.name;
-
-        Button buttonDel = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeDel.transform);
-        buttonDel.transform.localPosition = new Vector3(2, 0, 0);
-        buttonDel.onClick.AddListener(DeleteBuilding);
-        buttonDel.gameObject.name = deleteBuilding.name;
-
-    }
-
-    void CreateTypes()
-    {
-        int posTypeY = 0; // Adjust Y-axis for vertical list
-        for (int i = 0; i < buildings.Length; i++)
-        {
-            //types
-            GameObject type = Instantiate(buildings[i].type, new Vector3(0, 0, 0), Quaternion.identity, types);
-            type.transform.localPosition = new Vector3(0, -posTypeY, 0); // Adjust the Y-axis for vertical alignment
-            type.transform.localScale = new Vector3(9, 9, 9);
-            type.name = buildings[i].type.name;
-            foreach (Transform trans in type.GetComponentsInChildren<Transform>(true))
-                trans.gameObject.layer = 5;
-            buildingsTypes.Add(type);
-
-            TextMeshProUGUI text = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
-            text.transform.localPosition = new Vector3(0, 8, 0);
-            text.text = buildings[i].name;
-
-            Button button = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
-            button.transform.localPosition = new Vector3(0, 2, 0);
-            button.onClick.AddListener(ClickCheck);
-            button.gameObject.name = buildings[i].type.name;
-
-            // Increment Y-axis for the vertical position
-            posTypeY += 125; // Adjust this value for spacing between items
-
-            //buildings
-            GameObject newObj = new GameObject("new");
-            GameObject parent = Instantiate(newObj, new Vector3(0, 0, 0), Quaternion.identity, types);
-            parent.transform.localPosition = new Vector3(0, -posTypeY, 0); // Vertical alignment for the parent
-            parent.name = buildings[i].type.name + "_buildings";
-            Destroy(newObj.gameObject);
-            buildingsParents.Add(parent);
-
-            int posBuildY = 0;
-            previousY = 0;
-            nextY = 0;
-            changePos = true;
-            for (int u = 0; u < buildings[i].buildings.Length; u++)
-            {
-                GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
-                build.transform.localPosition = new Vector3(0, -posBuildY, 0); // Adjust for vertical list inside parent
-                build.transform.localScale = new Vector3(9, 9, 9);
-                build.name = buildings[i].buildings[u].name;
-                foreach (Transform trans in build.GetComponentsInChildren<Transform>(true))
-                    trans.gameObject.layer = 5;
-                parent.SetActive(false);
-
-                Button buttonBuild = Instantiate(buildingButton, new Vector3(0, 0, 0), Quaternion.identity, build.transform);
-                buttonBuild.transform.localPosition = new Vector3(0, 2, 0);
-                buttonBuild.onClick.AddListener(CreateBuilding);
-                buttonBuild.gameObject.name = buildings[i].buildings[u].name;
-
-                // Increment Y-axis for vertical positioning within the parent
-                posBuildY += 125; // Adjust this for spacing between buildings
-
-                try
-                {
-                    build.GetComponent<BuildingProperties>().buildConstruction.enabled = false;
-                }
-                catch
-                {
-
-                }
-            }
-        }
-
         // delete buildings button
         GameObject typeDel = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity, types);
-        typeDel.transform.localPosition = new Vector3(0, -posTypeY, 0); // Adjust to add this button to the vertical list
+        typeDel.transform.localPosition = new Vector3(0, -posType, 0); // Adjust to add this button to the vertical list
         typeDel.transform.localScale = new Vector3(9, 9, 9);
         typeDel.name = deleteBuilding.name;
         foreach (Transform trans in typeDel.GetComponentsInChildren<Transform>(true))
@@ -499,7 +422,7 @@ public class BuildingsMenuNew : MonoBehaviour
     {
 
         print("Activate Menu");
-        types.localPosition = new Vector3(0, 0, 0);
+        types.localPosition = new Vector3(0, 0, types.localPosition.z);
 
         if (cameraController.target != null)
             Destroy(cameraController.target.gameObject);
@@ -591,7 +514,8 @@ public class BuildingsMenuNew : MonoBehaviour
         Transform target = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity).transform;
         target.transform.GetChild(0).localPosition = new Vector3(0, 6, 0);
         cameraController.target = target;
-        activateMenu.SetActive(!activateMenu.activeSelf);
+        activateMenu.SetActive(false);
+        // activateMenu.SetActive(!activateMenu.activeSelf);
     }
 
     Dictionary<string, (int min, int max)> UpdatePropertyRanges()

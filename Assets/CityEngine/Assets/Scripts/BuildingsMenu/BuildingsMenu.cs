@@ -132,6 +132,7 @@ public class BuildingsMenu : MonoBehaviour
             if (posX < 0)
                 posX += Time.deltaTime * 100;
         }
+
     }
 
     void CreateTypes()
@@ -139,11 +140,18 @@ public class BuildingsMenu : MonoBehaviour
         int posType = 0;
         for (int i = 0; i < buildings.Length; i++)
         {
-            //types
-            GameObject type = Instantiate(buildings[i].type, new Vector3(0, 0, 0), Quaternion.identity, types);
+            // Building Types
+            GameObject type = Instantiate(
+                buildings[i].type,
+                new Vector3(0, 0, 0),
+                Quaternion.identity,
+                types
+            );
+
             type.transform.localPosition = new Vector3(-posType, 0, 0);
             type.transform.localScale = new Vector3(9, 9, 9);
             type.name = buildings[i].type.name;
+
             foreach (Transform trans in type.GetComponentsInChildren<Transform>(true))
                 trans.gameObject.layer = 5;
             buildingsTypes.Add(type);
@@ -168,7 +176,7 @@ public class BuildingsMenu : MonoBehaviour
             posType *= -1;
 
 
-            //buildings
+            // Individual Buildings
             GameObject newObj = new GameObject("new");
             GameObject parent = Instantiate(newObj, new Vector3(0, 0, 0), Quaternion.identity, types);
             parent.transform.localPosition = new Vector3(0, 0, 0);
@@ -186,6 +194,7 @@ public class BuildingsMenu : MonoBehaviour
                 build.transform.localPosition = new Vector3(-posBuild, 0, 0);
                 build.transform.localScale = new Vector3(9, 9, 9);
                 build.name = buildings[i].buildings[u].name;
+
                 foreach (Transform trans in build.GetComponentsInChildren<Transform>(true))
                     trans.gameObject.layer = 5;
                 parent.SetActive(false);
@@ -194,7 +203,6 @@ public class BuildingsMenu : MonoBehaviour
                 buttonBuild.transform.localPosition = new Vector3(0, 2, 0);
                 buttonBuild.onClick.AddListener(CreateBuilding);
                 buttonBuild.gameObject.name = buildings[i].buildings[u].name;
-
 
                 //find min and max position of each type
                 if (posBuild > buildings[i].maxPos)
