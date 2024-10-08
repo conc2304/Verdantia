@@ -77,8 +77,6 @@ public class CameraController : MonoBehaviour
 
     public FixedJoystick fixedJoystick;
 
-    private bool skipMouseInput = false;
-
 
     void Start()
     {
@@ -120,7 +118,7 @@ public class CameraController : MonoBehaviour
     {
         TouchInput();
 
-        if (!skipMouseInput) MouseInput();
+        MouseInput();
         KeyboardInput();
         SetPosition();
 
@@ -423,7 +421,6 @@ public class CameraController : MonoBehaviour
         // Handle Joystick input for camera movement L/R/U/D
         Vector3 direction = cameraHolder.transform.forward * fixedJoystick.Vertical + cameraHolder.transform.right * fixedJoystick.Horizontal;
         float magnitude = direction.magnitude * 60; // the further the joy stick is the faster they move
-        // skipMouseInput = Input.touchCount >= 1;
         Vector3 movement = magnitude * Time.deltaTime * direction;
         if (heatmapActive) movement.y = 0; // Prevent Y-axis movement
         toPos += movement;
@@ -431,7 +428,8 @@ public class CameraController : MonoBehaviour
 
     void MouseInput()
     {
-        if (Input.touchCount >= 1) return;
+
+        if (Input.touchCount > 0) return;
 
         //Scrolling
         if (Input.mouseScrollDelta.y != 0) // Vector3(0, -10, 10)
@@ -516,14 +514,15 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        //rotate building
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)) RotateBuilding();
+    }
+
+    public void RotateBuilding()
+    {
+        if (target != null)
         {
-            if (target != null)
-            {
-                float y = target.rotation.eulerAngles.y + 90;
-                target.rotation = Quaternion.Euler(0, y, 0);
-            }
+            float y = target.rotation.eulerAngles.y + 90;
+            target.rotation = Quaternion.Euler(0, y, 0);
         }
     }
 
@@ -634,8 +633,8 @@ public class CameraController : MonoBehaviour
     {
         heatmapActive = !heatmapActive;
         UpdateHeatMapView();
-
     }
+
     public void UpdateHeatMapView()
     {
         // Updates the camera angle to point down at 90 or out at 45
