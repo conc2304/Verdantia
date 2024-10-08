@@ -33,13 +33,13 @@ public class BuildingsMenu : MonoBehaviour
     public BuildingsAsset[] buildings;
     public GameObject deleteBuilding;
     int minTypePos, maxTypePos;
-    int minPos, maxPos;
+    public int minPos, maxPos;
     int previousX, nextX;
 
     bool changePos = false;
 
     private Vector3 toPos;
-    private float posX;
+    public float posX;
 
     private Vector3 dragStartPos;
     private Vector3 dragTargetPos;
@@ -93,6 +93,8 @@ public class BuildingsMenu : MonoBehaviour
 
     void MouseInput()
     {
+        if (Input.touchCount > 0) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             Plane plane = new Plane(Vector3.up, Vector3.zero);
@@ -102,6 +104,8 @@ public class BuildingsMenu : MonoBehaviour
             if (plane.Raycast(ray, out entry))
             {
                 dragStartPos = ray.GetPoint(entry);
+                print("DragStart_OLD: " + dragStartPos);
+
             }
         }
         if (Input.GetMouseButton(0))
@@ -113,7 +117,9 @@ public class BuildingsMenu : MonoBehaviour
             if (plane.Raycast(ray, out entry))
             {
                 dragTargetPos = ray.GetPoint(entry);
+                print("Drag Distance_OLD = " + (dragStartPos - dragTargetPos));
                 toPos = transform.position + dragStartPos - dragTargetPos;
+                print("To Pos OLD : " + toPos);
                 if (Mathf.Abs(toPos.x) > Mathf.Abs(toPos.z))
                     if (dragStartPos.z < 750)
                         posX = toPos.x;

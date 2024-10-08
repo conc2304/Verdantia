@@ -97,6 +97,7 @@ public class CameraController : MonoBehaviour
 
         toPos = cameraHolder.transform.position;
         toRot = cameraHolder.transform.rotation;
+        mainCamtoRot = cameraTransform.localRotation;
         toZoom = cameraTransform.localPosition;
         zoomSlider.minValue = minZoom;
         zoomSlider.maxValue = maxZoom;

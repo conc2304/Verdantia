@@ -30,8 +30,6 @@ public class Grid : MonoBehaviour
 
     void Awake()
     {
-        print("GRID.cs | heatMap");
-        // print(heatMap);
         if (!heatMap)
         {
             heatMap = FindObjectOfType<HeatMap>();  // Finds HeatMap in the scene
