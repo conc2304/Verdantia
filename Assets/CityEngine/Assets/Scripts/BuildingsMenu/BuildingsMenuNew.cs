@@ -22,24 +22,31 @@ public class BuildingsMenuNew : MonoBehaviour
     private List<GameObject> buildingsTypes = new List<GameObject>();
 
     public Camera menuCamera;
+
     public Grid grid;
     public Canvas canvas;
     public TextMeshProUGUI textPRO;
     public Button typeButton;
     public Button buildingButton;
     public GameObject activateMenu;
+    public GameObject mainMenu;
+    public GameObject navigationGui;
+    public GameObject homeButton;
+    public GameObject buildingStats;
+
 
     public Transform types;
     public BuildingsAsset[] buildings;
     public GameObject deleteBuilding;
+
     int minTypePos, maxTypePos;
-    int minPos, maxPos;
-    int previousX, nextX;
+    public int minPos, maxPos;
+    int previousY, nextY;
 
     bool changePos = false;
 
     private Vector3 toPos;
-    private float posX;
+    public float posY;
 
     private Vector3 dragStartPos;
     private Vector3 dragTargetPos;
@@ -66,35 +73,133 @@ public class BuildingsMenuNew : MonoBehaviour
         grid.enabled = false;
 
         UpdatePropertyRanges();
+
+        InitializeTouchGui();
     }
+
+    private void InitializeTouchGui()
+    {
+        // initial state
+        navigationGui.SetActive(true);
+        mainMenu.SetActive(true);
+        homeButton.SetActive(false);
+        buildingStats.SetActive(false);
+        activateMenu.SetActive(false);
+    }
+
 
     private void Update()
     {
         if (activateMenu.activeSelf)
         {
-            MouseInput();
+            // MouseInput();
+            InputHandler();
 
-            if (types.localPosition.x > maxPos)
+            if (types.localPosition.y > maxPos)
             {
-                types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, maxPos, Time.deltaTime), 0, 0);
-                if (posX < 0)
-                    posX = posX / 2;
+                print("types pos over max");
+                types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.y, maxPos, Time.deltaTime), 0, 0);
+                if (posY < 0)
+                    posY = posY / 2;
             }
-            if (types.localPosition.x < minPos)
+            if (types.localPosition.y < minPos)
             {
-                types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, minPos, Time.deltaTime), 0, 0);
-                if (posX > 0)
-                    posX = posX / 2;
+                print("types pos under min");
+
+                types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.y, minPos, Time.deltaTime), 0, 0);
+                if (posY > 0)
+                    posY = posY / 2;
             }
 
-            types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x + -posX * 5, Time.deltaTime), 0, 0);
+            types.localPosition = new Vector3(0, Mathf.Lerp(types.localPosition.y, types.localPosition.x + posY * 5, Time.deltaTime), 0);
         }
     }
 
+
+
+    void InputHandler()
+    {
+        // Handle both mouse and touch input
+        if (Input.touchCount > 0) // Handle touch input
+        {
+            Touch touch = Input.GetTouch(0); // Get the first touch
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                HandleDragStart(touch.position);
+            }
+            else if (touch.phase == TouchPhase.Moved)
+            {
+                HandleDragMove(touch.position);
+            }
+            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            {
+                ResetDrag();
+            }
+        }
+        else if (Input.GetMouseButtonDown(0)) // Handle mouse input
+        {
+            HandleDragStart(Input.mousePosition);
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            HandleDragMove(Input.mousePosition);
+        }
+        else
+        {
+            ResetDrag();
+        }
+    }
+
+    void HandleDragStart(Vector3 inputPosition)
+    {
+        // Print "Mouse Clicked" or "Touch Began"
+        Plane plane = new Plane(Vector3.up, Vector3.zero);
+        Ray ray = menuCamera.ScreenPointToRay(inputPosition);
+
+        float entry;
+        if (plane.Raycast(ray, out entry))
+        {
+            dragStartPos = ray.GetPoint(entry);
+            // print("DragStart: " + dragStartPos);
+        }
+
+    }
+
+    void HandleDragMove(Vector3 inputPosition)
+    {
+        // Print "Mouse Down / Drag" or "Touch Moved"
+        Plane plane = new Plane(Vector3.up, Vector3.zero);
+        Ray ray = menuCamera.ScreenPointToRay(inputPosition);
+
+        float entry;
+        if (plane.Raycast(ray, out entry))
+        {
+            dragTargetPos = ray.GetPoint(entry);
+            // print("Drag Distance_New = " + (dragStartPos - dragTargetPos));
+            toPos = transform.position + dragStartPos - dragTargetPos;
+            // print("To Pos NEW : " + toPos);
+
+            if (Mathf.Abs(toPos.y) > Mathf.Abs(toPos.z))
+                if (dragStartPos.z < 750)
+                    posY = toPos.y;
+        }
+    }
+
+    void ResetDrag()
+    {
+        // Reset drag position when there is no input
+        if (posY > 0)
+            posY -= Time.deltaTime * 100;
+        if (posY < 0)
+            posY += Time.deltaTime * 100;
+    }
     void MouseInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            // print("Mouse Clicked");
+
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             Ray ray = menuCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -102,10 +207,12 @@ public class BuildingsMenuNew : MonoBehaviour
             if (plane.Raycast(ray, out entry))
             {
                 dragStartPos = ray.GetPoint(entry);
+                print("DragStart: " + dragStartPos);
             }
         }
         if (Input.GetMouseButton(0))
         {
+            // print("Mouse Down / Drag");
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             Ray ray = menuCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -113,41 +220,44 @@ public class BuildingsMenuNew : MonoBehaviour
             if (plane.Raycast(ray, out entry))
             {
                 dragTargetPos = ray.GetPoint(entry);
+                print("Drag Distance_New = " + (dragStartPos - dragTargetPos));
                 toPos = transform.position + dragStartPos - dragTargetPos;
-                if (Mathf.Abs(toPos.x) > Mathf.Abs(toPos.z))
+                print("To Pos NEW : " + toPos);
+                if (Mathf.Abs(toPos.y) > Mathf.Abs(toPos.z))
                     if (dragStartPos.z < 750)
-                        posX = toPos.x;
+                        posY = toPos.y;
             }
         }
         else
         {
-            if (posX > 0)
-                posX -= Time.deltaTime * 100;
-            if (posX < 0)
-                posX += Time.deltaTime * 100;
+            // print("No Input / Reset");
+            if (posY > 0)
+                posY -= Time.deltaTime * 100;
+            if (posY < 0)
+                posY += Time.deltaTime * 100;
         }
     }
 
-    void CreateTypes()
+    void CreateTypes_OLD()
     {
         int posType = 0;
         for (int i = 0; i < buildings.Length; i++)
         {
             //types
             GameObject type = Instantiate(buildings[i].type, new Vector3(0, 0, 0), Quaternion.identity, types);
-            type.transform.localPosition = new Vector3(-posType, 0, 0);
+            type.transform.localPosition = new Vector3(0, -posType, 0);
             type.transform.localScale = new Vector3(9, 9, 9);
             type.name = buildings[i].type.name;
             foreach (Transform trans in type.GetComponentsInChildren<Transform>(true))
-                trans.gameObject.layer = 5;
+                trans.gameObject.layer = 5; // set to UI layer
             buildingsTypes.Add(type);
 
             TextMeshProUGUI text = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
-            text.transform.localPosition = new Vector3(0, 8, 0);
+            text.transform.localPosition = new Vector3(8, 0, 0);
             text.text = buildings[i].name;
 
             Button button = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
-            button.transform.localPosition = new Vector3(0, 2, 0);
+            button.transform.localPosition = new Vector3(2, 0, 0);
             button.onClick.AddListener(ClickCheck);
             button.gameObject.name = buildings[i].type.name;
 
@@ -171,13 +281,13 @@ public class BuildingsMenuNew : MonoBehaviour
             buildingsParents.Add(parent);
 
             int posBuild = 0;
-            previousX = 0;
-            nextX = 0;
+            previousY = 0;
+            nextY = 0;
             changePos = true;
             for (int u = 0; u < buildings[i].buildings.Length; u++)
             {
                 GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
-                build.transform.localPosition = new Vector3(-posBuild, 0, 0);
+                build.transform.localPosition = new Vector3(0, -posBuild, 0);
                 build.transform.localScale = new Vector3(9, 9, 9);
                 build.name = buildings[i].buildings[u].name;
                 foreach (Transform trans in build.GetComponentsInChildren<Transform>(true))
@@ -201,8 +311,8 @@ public class BuildingsMenuNew : MonoBehaviour
                 {
                     for (int y = 1; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
-                        buttonBuild.transform.localPosition = new Vector3(buttonBuild.transform.localPosition.x + 5, 2, 0);
-                        buttonBuild.transform.localScale = new Vector3(buttonBuild.transform.localScale.x + 1, 1, 1);
+                        buttonBuild.transform.localPosition = new Vector3(2, buttonBuild.transform.localPosition.y + 5, 0);
+                        buttonBuild.transform.localScale = new Vector3(1, buttonBuild.transform.localScale.y + 1, 1);
                     }
                     for (int y = 0; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
@@ -216,14 +326,14 @@ public class BuildingsMenuNew : MonoBehaviour
                 }
                 if (changePos)
                 {
-                    nextX += add;
-                    posBuild = nextX;
+                    nextY += add;
+                    posBuild = nextY;
                     //changePos = false;
                 }
                 else
                 {
-                    previousX -= add;
-                    posBuild = previousX;
+                    previousY -= add;
+                    posBuild = previousY;
                     changePos = true;
                 }
 
@@ -241,7 +351,94 @@ public class BuildingsMenuNew : MonoBehaviour
 
         //delete buildings button
         GameObject typeDel = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity, types);
-        typeDel.transform.localPosition = new Vector3(-posType, 0, 0);
+        typeDel.transform.localPosition = new Vector3(0, -posType, 0);
+        typeDel.transform.localScale = new Vector3(9, 9, 9);
+        typeDel.name = deleteBuilding.name;
+        foreach (Transform trans in typeDel.GetComponentsInChildren<Transform>(true))
+            trans.gameObject.layer = 5;
+        buildingsTypes.Add(typeDel);
+
+        TextMeshProUGUI textDel = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, typeDel.transform);
+        textDel.transform.localPosition = new Vector3(8, 0, 0);
+        textDel.text = deleteBuilding.name;
+
+        Button buttonDel = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeDel.transform);
+        buttonDel.transform.localPosition = new Vector3(2, 0, 0);
+        buttonDel.onClick.AddListener(DeleteBuilding);
+        buttonDel.gameObject.name = deleteBuilding.name;
+
+    }
+
+    void CreateTypes()
+    {
+        int posTypeY = 0; // Adjust Y-axis for vertical list
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            //types
+            GameObject type = Instantiate(buildings[i].type, new Vector3(0, 0, 0), Quaternion.identity, types);
+            type.transform.localPosition = new Vector3(0, -posTypeY, 0); // Adjust the Y-axis for vertical alignment
+            type.transform.localScale = new Vector3(9, 9, 9);
+            type.name = buildings[i].type.name;
+            foreach (Transform trans in type.GetComponentsInChildren<Transform>(true))
+                trans.gameObject.layer = 5;
+            buildingsTypes.Add(type);
+
+            TextMeshProUGUI text = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
+            text.transform.localPosition = new Vector3(0, 8, 0);
+            text.text = buildings[i].name;
+
+            Button button = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
+            button.transform.localPosition = new Vector3(0, 2, 0);
+            button.onClick.AddListener(ClickCheck);
+            button.gameObject.name = buildings[i].type.name;
+
+            // Increment Y-axis for the vertical position
+            posTypeY += 125; // Adjust this value for spacing between items
+
+            //buildings
+            GameObject newObj = new GameObject("new");
+            GameObject parent = Instantiate(newObj, new Vector3(0, 0, 0), Quaternion.identity, types);
+            parent.transform.localPosition = new Vector3(0, -posTypeY, 0); // Vertical alignment for the parent
+            parent.name = buildings[i].type.name + "_buildings";
+            Destroy(newObj.gameObject);
+            buildingsParents.Add(parent);
+
+            int posBuildY = 0;
+            previousY = 0;
+            nextY = 0;
+            changePos = true;
+            for (int u = 0; u < buildings[i].buildings.Length; u++)
+            {
+                GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
+                build.transform.localPosition = new Vector3(0, -posBuildY, 0); // Adjust for vertical list inside parent
+                build.transform.localScale = new Vector3(9, 9, 9);
+                build.name = buildings[i].buildings[u].name;
+                foreach (Transform trans in build.GetComponentsInChildren<Transform>(true))
+                    trans.gameObject.layer = 5;
+                parent.SetActive(false);
+
+                Button buttonBuild = Instantiate(buildingButton, new Vector3(0, 0, 0), Quaternion.identity, build.transform);
+                buttonBuild.transform.localPosition = new Vector3(0, 2, 0);
+                buttonBuild.onClick.AddListener(CreateBuilding);
+                buttonBuild.gameObject.name = buildings[i].buildings[u].name;
+
+                // Increment Y-axis for vertical positioning within the parent
+                posBuildY += 125; // Adjust this for spacing between buildings
+
+                try
+                {
+                    build.GetComponent<BuildingProperties>().buildConstruction.enabled = false;
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        // delete buildings button
+        GameObject typeDel = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity, types);
+        typeDel.transform.localPosition = new Vector3(0, -posTypeY, 0); // Adjust to add this button to the vertical list
         typeDel.transform.localScale = new Vector3(9, 9, 9);
         typeDel.name = deleteBuilding.name;
         foreach (Transform trans in typeDel.GetComponentsInChildren<Transform>(true))
@@ -256,12 +453,52 @@ public class BuildingsMenuNew : MonoBehaviour
         buttonDel.transform.localPosition = new Vector3(0, 2, 0);
         buttonDel.onClick.AddListener(DeleteBuilding);
         buttonDel.gameObject.name = deleteBuilding.name;
-
     }
 
 
+    public void OnHomeButton()
+    {
+        CloseBuildMenu();
+        CloseHeatMap();
+    }
+
+    public void OpenBuildMenu()
+    {
+        ActivateMenu();
+
+        activateMenu.SetActive(true);
+
+        // Aux Menus 
+        mainMenu.SetActive(false);
+        homeButton.SetActive(true);
+    }
+
+    public void CloseBuildMenu()
+    {
+        ActivateMenu();
+
+        activateMenu.SetActive(false);
+
+        // Aux Menus 
+        mainMenu.SetActive(true);
+        homeButton.SetActive(false);
+    }
+
+    public void OpenHeatMap()
+    {
+        cameraController.SetHeatMapView(true);
+        homeButton.SetActive(false);
+    }
+
+    public void CloseHeatMap()
+    {
+        cameraController.SetHeatMapView(false);
+    }
+
     public void ActivateMenu()
     {
+
+        print("Activate Menu");
         types.localPosition = new Vector3(0, 0, 0);
 
         if (cameraController.target != null)
@@ -279,9 +516,12 @@ public class BuildingsMenuNew : MonoBehaviour
 
         activateMenu.SetActive(!activateMenu.activeSelf);
 
-
         minPos = minTypePos;
         maxPos = maxTypePos;
+
+        print("Minpos: " + minPos);
+        print("MaxPos: " + maxPos);
+
     }
 
 
@@ -346,6 +586,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void DeleteBuilding()
     {
+        print("Delete Building");
         cameraController.moveTarget = true;
         Transform target = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity).transform;
         target.transform.GetChild(0).localPosition = new Vector3(0, 6, 0);
