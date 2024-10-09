@@ -50,12 +50,19 @@ public class BuildingsMenuNew : MonoBehaviour
     private Vector3 dragStartPos;
     private Vector3 dragTargetPos;
 
+    private bool isDragging = false;
+
+
     private CameraController cameraController;
     private RoadGenerator roadGenerator;
 
     bool doubleClick;
 
     public Dictionary<string, (int min, int max)> propertyRanges = new Dictionary<string, (int, int)>();
+
+
+    public RectTransform trackpadRect; // The rectangular UI element acting as the trackpad
+
 
 
     private void Start()
@@ -73,6 +80,8 @@ public class BuildingsMenuNew : MonoBehaviour
 
         UpdatePropertyRanges();
         InitializeTouchGui();
+
+
     }
 
     private void InitializeTouchGui()
@@ -90,9 +99,7 @@ public class BuildingsMenuNew : MonoBehaviour
     {
         if (activateMenu.activeSelf)
         {
-            print("Menu is Active: HandleInput");
-            // MouseInput();
-            InputHandler();
+            MouseInput();
 
             if (types.localPosition.y > maxPos)
             {
@@ -110,131 +117,59 @@ public class BuildingsMenuNew : MonoBehaviour
                     posY = posY / 2;
             }
 
-            types.localPosition = new Vector3(0, Mathf.Lerp(types.localPosition.y, types.localPosition.x + posY * 5, Time.deltaTime), 0);
+            types.localPosition = new Vector3(0, Mathf.Lerp(types.localPosition.y, types.localPosition.y + posY * 5, Time.deltaTime), 0);
         }
     }
 
 
 
-    void InputHandler()
-    {
-        // Handle both mouse and touch input
-        if (Input.touchCount > 0) // Handle touch input
-        {
-            Touch touch = Input.GetTouch(0); // Get the first touch
 
-            if (touch.phase == TouchPhase.Began)
-            {
-                HandleDragStart(touch.position);
-            }
-            else if (touch.phase == TouchPhase.Moved)
-            {
-                HandleDragMove(touch.position);
-            }
-            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-            {
-                ResetDrag();
-            }
-        }
-        else if (Input.GetMouseButtonDown(0)) // Handle mouse input
-        {
-            HandleDragStart(Input.mousePosition);
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            HandleDragMove(Input.mousePosition);
-        }
-        else
-        {
-            ResetDrag();
-        }
-    }
 
-    void HandleDragStart(Vector3 inputPosition)
-    {
-        // Print "Mouse Clicked" or "Touch Began"
-        Plane plane = new Plane(Vector3.up, Vector3.zero);
-        Ray ray = menuCamera.ScreenPointToRay(inputPosition);
 
-        float entry;
-        if (plane.Raycast(ray, out entry))
-        {
-            dragStartPos = ray.GetPoint(entry);
-            // print("DragStart: " + dragStartPos);
-        }
-
-    }
-
-    void HandleDragMove(Vector3 inputPosition)
-    {
-        // Print "Mouse Down / Drag" or "Touch Moved"
-        Plane plane = new Plane(Vector3.up, Vector3.zero);
-        Ray ray = menuCamera.ScreenPointToRay(inputPosition);
-
-        float entry;
-        if (plane.Raycast(ray, out entry))
-        {
-            dragTargetPos = ray.GetPoint(entry);
-            // print("Drag Distance_New = " + (dragStartPos - dragTargetPos));
-            toPos = transform.position + dragStartPos - dragTargetPos;
-            // print("To Pos NEW : " + toPos);
-
-            if (Mathf.Abs(toPos.y) > Mathf.Abs(toPos.z))
-                if (dragStartPos.z < 750)
-                    posY = toPos.y;
-        }
-    }
-
-    void ResetDrag()
-    {
-        // Reset drag position when there is no input
-        if (posY > 0)
-            posY -= Time.deltaTime * 100;
-        if (posY < 0)
-            posY += Time.deltaTime * 100;
-    }
     void MouseInput()
     {
+        // Handle mouse or touch input
         if (Input.GetMouseButtonDown(0))
         {
-            // print("Mouse Clicked");
-
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
-            Ray ray = menuCamera.ScreenPointToRay(Input.mousePosition);
-
-            float entry;
-            if (plane.Raycast(ray, out entry))
+            // Check if the drag started within the trackpad bounds
+            if (RectTransformUtility.RectangleContainsScreenPoint(trackpadRect, Input.mousePosition, menuCamera))
             {
-                dragStartPos = ray.GetPoint(entry);
-                print("DragStart: " + dragStartPos);
+                isDragging = true; // Start dragging
+                dragStartPos = Input.mousePosition;
+                Debug.Log("Drag started within trackpad bounds.");
             }
         }
-        if (Input.GetMouseButton(0))
-        {
-            // print("Mouse Down / Drag");
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
-            Ray ray = menuCamera.ScreenPointToRay(Input.mousePosition);
 
-            float entry;
-            if (plane.Raycast(ray, out entry))
-            {
-                dragTargetPos = ray.GetPoint(entry);
-                print("Drag Distance_New = " + (dragStartPos - dragTargetPos));
-                toPos = transform.position + dragStartPos - dragTargetPos;
-                print("To Pos NEW : " + toPos);
-                if (Mathf.Abs(toPos.y) > Mathf.Abs(toPos.z))
-                    if (dragStartPos.z < 750)
-                        posY = toPos.y;
-            }
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            // Continue the drag if dragging was initiated within the bounds
+            dragTargetPos = Input.mousePosition;
+            Vector3 dragDelta = dragTargetPos - dragStartPos;
+            Debug.Log($"Dragging: {dragDelta}");
+
+
+            // Do something with the dragDelta, e.g., move an object
+            toPos = dragDelta;
+            Debug.Log($"ToPos: {toPos.y}");
+
+            posY = toPos.y;
+
+            dragStartPos = dragTargetPos; // Update the start position for smooth dragging
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false; // Stop dragging when the mouse is released
+            Debug.Log("Drag ended.");
         }
         else
         {
-            // print("No Input / Reset");
             if (posY > 0)
                 posY -= Time.deltaTime * 100;
             if (posY < 0)
                 posY += Time.deltaTime * 100;
         }
+
     }
 
 
