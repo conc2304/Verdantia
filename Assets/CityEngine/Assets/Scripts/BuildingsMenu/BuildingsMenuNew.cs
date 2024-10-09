@@ -240,6 +240,7 @@ public class BuildingsMenuNew : MonoBehaviour
                 buildParent.transform.localPosition = new Vector3(-posBuild, 0, 0);
                 buildParent.transform.localScale = new Vector3(9, 9, 9);
                 buildParent.name = buildings[i].buildings[u].name;
+                Destroy(tempBuild.gameObject);
 
                 // Create building and add to building parent
                 GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, buildParent.transform);
@@ -459,7 +460,11 @@ public class BuildingsMenuNew : MonoBehaviour
     public void DeleteBuilding()
     {
         print("Delete Building");
+
+        if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
         cameraController.moveTarget = true;
+
+
         Transform target = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity).transform;
         target.transform.GetChild(0).localPosition = new Vector3(0, 6, 0);
         cameraController.target = target;
