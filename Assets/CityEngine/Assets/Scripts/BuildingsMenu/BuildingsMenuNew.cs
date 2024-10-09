@@ -243,14 +243,12 @@ public class BuildingsMenuNew : MonoBehaviour
 
                 // Create building and add to building parent
                 GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, buildParent.transform);
-                build.transform.localPosition = new Vector3(0, 0, 0);
-                // build.transform.localScale = new Vector3(9, 9, 9);
-                // add rotation to the building
+                build.transform.localPosition = new Vector3(0, 0, 0); // add rotation to the building to see it better
                 build.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
                 build.name = buildings[i].buildings[u].name;
 
                 foreach (Transform trans in build.GetComponentsInChildren<Transform>(true))
-                    trans.gameObject.layer = 5;
+                    trans.gameObject.layer = 5;     // set all to UI layer for camera culling
                 parent.SetActive(false);
 
                 // Add text to building - add to build parent
@@ -286,10 +284,8 @@ public class BuildingsMenuNew : MonoBehaviour
                     }
 
                 }
-                catch
-                {
+                catch { }
 
-                }
                 if (changePos)
                 {
                     nextX += add;
@@ -308,10 +304,7 @@ public class BuildingsMenuNew : MonoBehaviour
                 {
                     build.GetComponent<BuildingProperties>().buildConstruction.enabled = false;
                 }
-                catch
-                {
-
-                }
+                catch { }
             }
         }
 
