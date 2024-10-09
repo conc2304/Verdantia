@@ -21,6 +21,7 @@ public class BuildingsMenuNew : MonoBehaviour
     private List<GameObject> buildingsParents = new List<GameObject>();
     private List<GameObject> buildingsTypes = new List<GameObject>();
 
+    public int menuBuildingsTilt = -30;
     public Camera menuCamera;
     public Grid grid;
     public Canvas canvas;
@@ -130,7 +131,7 @@ public class BuildingsMenuNew : MonoBehaviour
             // Check if the drag started within the trackpad bounds
             if (RectTransformUtility.RectangleContainsScreenPoint(trackpadRect, Input.mousePosition, menuCamera))
             {
-                isDragging = true; // Start dragging
+                isDragging = true;
                 dragStartPos = Input.mousePosition;
             }
         }
@@ -142,18 +143,18 @@ public class BuildingsMenuNew : MonoBehaviour
             Vector3 dragDelta = dragTargetPos - dragStartPos;
 
             toPos = dragDelta * dragMultiplier;
-            posX = -toPos.x;
-            print("Drag PosX: " + posX);
+            posX = -toPos.x; // Invert direction
 
             dragStartPos = dragTargetPos; // Update the start position for smooth dragging
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            isDragging = false; // Stop dragging when the mouse is released
+            isDragging = false;
         }
         else
         {
+            // Add friction to drag
             if (posX > 0)
                 posX -= Time.deltaTime * 100;
             if (posX < 0)
@@ -169,14 +170,16 @@ public class BuildingsMenuNew : MonoBehaviour
         int posType = 0;
         for (int i = 0; i < buildings.Length; i++)
         {
-            // Building Types/Categories
+            // Loop over Building Types/Categories
 
+            // Wrapper
             GameObject tempObj = new GameObject("new");
             GameObject typeParent = Instantiate(tempObj, new Vector3(0, 0, 0), Quaternion.identity, types);
             typeParent.transform.localPosition = new Vector3(-posType, 0, 0);
             typeParent.transform.localScale = new Vector3(9, 9, 9);
+            typeParent.name = buildings[i].type.name + "";
 
-
+            // building type model
             GameObject type = Instantiate(
                 buildings[i].type,
                 new Vector3(0, 0, 0),
@@ -184,17 +187,10 @@ public class BuildingsMenuNew : MonoBehaviour
                 typeParent.transform
             );
 
-            typeParent.name = buildings[i].type.name + "";
             Destroy(tempObj.gameObject);
 
-
-
-
             type.transform.localPosition = new Vector3(0, 0, 0);
-            // type.transform.localScale = new Vector3(9, 9, 9);
-
-            type.transform.localRotation = Quaternion.Euler(-30, 0, 0);
-
+            type.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
             type.name = buildings[i].type.name;
 
             foreach (Transform trans in type.GetComponentsInChildren<Transform>(true))
@@ -226,7 +222,7 @@ public class BuildingsMenuNew : MonoBehaviour
             GameObject newObj = new GameObject("new");
             GameObject parent = Instantiate(newObj, new Vector3(0, 0, 0), Quaternion.identity, types);
             parent.transform.localPosition = new Vector3(0, 0, 0);
-            parent.name = buildings[i].type.name + "_buildings";    // Wrapper
+            parent.name = buildings[i].type.name + "_buildings";    // Collection of building types: ie all the houses
             Destroy(newObj.gameObject);
             buildingsParents.Add(parent);
 
@@ -235,18 +231,35 @@ public class BuildingsMenuNew : MonoBehaviour
             nextX = 0;
             changePos = true;
 
+            // Loop over Buildings in THIS type/category
             for (int u = 0; u < buildings[i].buildings.Length; u++)
             {
-                GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
-                build.transform.localPosition = new Vector3(-posBuild, 0, 0);
-                build.transform.localScale = new Vector3(9, 9, 9);
+                // Create wrapper/parent to hold model, text and button
+                GameObject tempBuild = new GameObject("new");
+                GameObject buildParent = Instantiate(tempObj, new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
+                buildParent.transform.localPosition = new Vector3(-posBuild, 0, 0);
+                buildParent.transform.localScale = new Vector3(9, 9, 9);
+                buildParent.name = buildings[i].buildings[u].name;
+
+                // Create building and add to building parent
+                GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, buildParent.transform);
+                build.transform.localPosition = new Vector3(0, 0, 0);
+                // build.transform.localScale = new Vector3(9, 9, 9);
+                // add rotation to the building
+                build.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
                 build.name = buildings[i].buildings[u].name;
 
                 foreach (Transform trans in build.GetComponentsInChildren<Transform>(true))
                     trans.gameObject.layer = 5;
                 parent.SetActive(false);
 
-                Button buttonBuild = Instantiate(buildingButton, new Vector3(0, 0, 0), Quaternion.identity, build.transform);
+                // Add text to building - add to build parent
+                text = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, buildParent.transform);
+                text.transform.localPosition = new Vector3(0, textPosY, 0);
+                text.text = buildings[i].buildings[u].GetComponent<BuildingProperties>().buildingName;
+
+                // Add button to building - add to build parent
+                Button buttonBuild = Instantiate(buildingButton, new Vector3(0, 0, 0), Quaternion.identity, buildParent.transform);
                 buttonBuild.transform.localPosition = new Vector3(0, 2, 0);
                 buttonBuild.onClick.AddListener(CreateBuilding);
                 buttonBuild.gameObject.name = buildings[i].buildings[u].name;
@@ -264,6 +277,8 @@ public class BuildingsMenuNew : MonoBehaviour
                     {
                         buttonBuild.transform.localPosition = new Vector3(buttonBuild.transform.localPosition.x + 5, 2, 0);
                         buttonBuild.transform.localScale = new Vector3(buttonBuild.transform.localScale.x + 1, 1, 1);
+                        text.transform.localPosition = new Vector3(text.transform.localPosition.x + 5, textPosY, 0); // center the building text
+
                     }
                     for (int y = 0; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
