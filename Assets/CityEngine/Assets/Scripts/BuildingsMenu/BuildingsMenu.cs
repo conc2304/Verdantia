@@ -95,6 +95,7 @@ public class BuildingsMenu : MonoBehaviour
     {
         if (Input.touchCount > 0) return;
 
+
         if (Input.GetMouseButtonDown(0))
         {
             Plane plane = new Plane(Vector3.up, Vector3.zero);
@@ -117,9 +118,9 @@ public class BuildingsMenu : MonoBehaviour
             if (plane.Raycast(ray, out entry))
             {
                 dragTargetPos = ray.GetPoint(entry);
-                print("Drag Distance_OLD = " + (dragStartPos - dragTargetPos));
+                // print("Drag Distance_OLD = " + (dragStartPos - dragTargetPos));
                 toPos = transform.position + dragStartPos - dragTargetPos;
-                print("To Pos OLD : " + toPos);
+                // print("To Pos OLD : " + toPos);
                 if (Mathf.Abs(toPos.x) > Mathf.Abs(toPos.z))
                     if (dragStartPos.z < 750)
                         posX = toPos.x;
