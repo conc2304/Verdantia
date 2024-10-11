@@ -3,9 +3,6 @@ using System.Collections;
 
 public class Grid : MonoBehaviour
 {
-
-    //public GameObject plane;
-
     public bool showMain = true;
     public bool showSub = false;
 
@@ -25,23 +22,6 @@ public class Grid : MonoBehaviour
     public Color mainColor = new Color(0f, 1f, 0f, 1f);
     public Color subColor = new Color(0f, 0.5f, 0f, 1f);
 
-
-    public HeatMap heatMap;  // Reference to HeatMap script
-
-    void Awake()
-    {
-        if (!heatMap)
-        {
-            heatMap = FindObjectOfType<HeatMap>();  // Finds HeatMap in the scene
-        }
-        print(heatMap);
-
-        // heatMap = 
-        if (heatMap != null)
-        {
-            heatMap.InitializeHeatMap(gridSizeX, gridSizeZ, smallStep);
-        }
-    }
 
     void CreateLineMaterial()
     {

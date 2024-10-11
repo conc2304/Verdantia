@@ -40,6 +40,7 @@ public class HeatMap : MonoBehaviour
     // Update the heat map with buildings and their contributions
     public void UpdateHeatMap(List<Transform> allBuildings, string metricName, int metricMin, int metricMax)
     {
+        Debug.Log(metricName + ", " + metricMin + ", " + metricMax); ;
         // Reset heat values before recalculating
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -50,7 +51,7 @@ public class HeatMap : MonoBehaviour
         }
 
         // Calculate heat contributions from buildings
-        int rescaleVal = 10;
+        int rescaleVal = 10; // grid size is 10
         foreach (Transform building in allBuildings)
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
