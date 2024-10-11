@@ -502,7 +502,7 @@ public class BuildingsMenuNew : MonoBehaviour
         activateMenu.SetActive(false);
     }
 
-    Dictionary<string, (int min, int max)> UpdatePropertyRanges()
+    public Dictionary<string, (int min, int max)> UpdatePropertyRanges()
     {
         // Loop over Buildings Categorys
         foreach (var buildingCategory in buildings)

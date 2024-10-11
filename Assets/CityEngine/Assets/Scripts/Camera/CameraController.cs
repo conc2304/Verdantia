@@ -102,13 +102,16 @@ public class CameraController : MonoBehaviour
         for (int i = 0; i < forest.childCount; i++)
             forestObj.Add(forest.GetChild(i));
 
-        heatMap = FindObjectOfType<HeatMap>();
-
-        if (grid != null)
+        if (!heatMap) heatMap = FindObjectOfType<HeatMap>();
+        if (heatMap != null)
         {
             xRange = new int[2] { 0, grid.gridSizeX };
             zRange = new int[] { 0, grid.gridSizeZ };
+
+            heatMap.InitializeHeatMap(grid.gridSizeX, grid.gridSizeZ, grid.smallStep);
+            UpdateHeatMap(heatmapMetric);
         }
+
     }
 
 
@@ -146,7 +149,10 @@ public class CameraController : MonoBehaviour
 
     public void UpdateHeatMap(string metricName)
     {
+        if (buildingMenu.propertyRanges.Count < 1) buildingMenu.UpdatePropertyRanges();
+
         heatmapMetric = metricName;
+
         int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
         int metricMax = buildingMenu.propertyRanges[heatmapMetric].max;
         heatMap.UpdateHeatMap(allBuildings, heatmapMetric, metricMin, metricMax);
