@@ -1948,7 +1948,7 @@ GameObject:
   - component: {fileID: 598651004}
   - component: {fileID: 598651005}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: ZoomSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3091,7 +3091,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 839865014}
         m_TargetAssemblyTypeName: BuildingsMenuNew, Assembly-CSharp
-        m_MethodName: HandleToggleHeatMapView
+        m_MethodName: OnHeatMapToggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4083,7 +4083,7 @@ RectTransform:
   m_GameObject: {fileID: 1399804650}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2917, y: 1.2917, z: 1.2917}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1061483763}
@@ -4092,7 +4092,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: 205}
+  m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!198 &1521549048 stripped
