@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public class BuildingsMenuNew : MonoBehaviour
 {
@@ -32,6 +33,13 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject mainMenu;
     public GameObject navigationGui;
     public GameObject homeButton;
+    public Toggle heatmapToggle;
+    public Color heatmapOffColor = Color.white;
+    public Color heatmapOnColor = new(1f, 0.498f, 0.055f, 1f);
+    public TMP_Dropdown heatmapDropdown;
+    private static string drowpDownLabel = "Heat Map Type";
+    private List<string> heatmapOptionsList = new List<string> { drowpDownLabel };
+
     public GameObject buildingStats;
 
 
@@ -60,12 +68,11 @@ public class BuildingsMenuNew : MonoBehaviour
 
     bool doubleClick;
 
-    public Dictionary<string, (int min, int max)> propertyRanges = new Dictionary<string, (int, int)>();
+    public Dictionary<string, (int min, int max)> propertyRanges = new();
 
 
     public RectTransform trackpadRect; // The rectangular UI element acting as the trackpad
 
-    private Rotate rotScript;
 
     private void Start()
     {
@@ -82,6 +89,14 @@ public class BuildingsMenuNew : MonoBehaviour
 
         UpdatePropertyRanges();
         InitializeTouchGui();
+        InitializeHeatmapDropdownList();
+    }
+
+    private void InitializeHeatmapDropdownList()
+    {
+        heatmapDropdown.ClearOptions();
+        heatmapOptionsList.AddRange(propertyRanges.Keys.Select(key => ConvertToLabel(key)).ToList());
+        heatmapDropdown.AddOptions(heatmapOptionsList);
     }
 
     private void InitializeTouchGui()
@@ -92,6 +107,11 @@ public class BuildingsMenuNew : MonoBehaviour
         homeButton.SetActive(false);
         buildingStats.SetActive(false);
         activateMenu.SetActive(false);
+    }
+
+    public void HandleDropDownChange()
+    {
+
     }
 
 
@@ -117,9 +137,6 @@ public class BuildingsMenuNew : MonoBehaviour
             types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x + -posX * 5, Time.deltaTime), 0, 0);
         }
     }
-
-
-
 
 
 
@@ -203,7 +220,7 @@ public class BuildingsMenuNew : MonoBehaviour
             text.text = buildings[i].name;
 
             Button button = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeParent.transform);
-            button.transform.localPosition = new Vector3(0, 2, 0);
+            button.transform.localPosition = new Vector3(0, 2, -8);
             button.onClick.AddListener(ClickCheck);
             button.gameObject.name = buildings[i].type.name;
 
@@ -333,7 +350,6 @@ public class BuildingsMenuNew : MonoBehaviour
     public void OnHomeButton()
     {
         CloseBuildMenu();
-        CloseHeatMap();
     }
 
     public void OpenBuildMenu()
@@ -358,16 +374,16 @@ public class BuildingsMenuNew : MonoBehaviour
         homeButton.SetActive(false);
     }
 
-    public void OpenHeatMap()
+    public void HandleToggleHeatMapView()
     {
-        cameraController.SetHeatMapView(true);
-        homeButton.SetActive(false);
+        cameraController.ToggleHeatMapView();
+        ColorBlock colorBlock = heatmapToggle.colors;
+        print(cameraController.heatmapActive);
+        colorBlock.normalColor = cameraController.heatmapActive ? heatmapOnColor : heatmapOffColor;
+        colorBlock.selectedColor = cameraController.heatmapActive ? heatmapOnColor : heatmapOffColor;
+        heatmapToggle.colors = colorBlock;
     }
 
-    public void CloseHeatMap()
-    {
-        cameraController.SetHeatMapView(false);
-    }
 
     public void ActivateMenu()
     {
@@ -429,6 +445,8 @@ public class BuildingsMenuNew : MonoBehaviour
         {
             cameraController.doubleClick = false;
             cameraController.lastClickTime = 0;
+            if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
+
 
             for (int i = 0; i < buildings.Length; i++)
             {
@@ -449,7 +467,7 @@ public class BuildingsMenuNew : MonoBehaviour
                 buildingsParents[i].SetActive(false);
             }
 
-            activateMenu.SetActive(!activateMenu.activeSelf);
+            // activateMenu.SetActive(!activateMenu.activeSelf);
 
             minPos = minTypePos;
             maxPos = maxTypePos;
@@ -518,6 +536,15 @@ public class BuildingsMenuNew : MonoBehaviour
         }
 
         return propertyRanges;
+    }
+
+    public static string ConvertToLabel(string camelCaseString)
+    {
+        // Add a space before each uppercase letter except the first one
+        string spacedString = Regex.Replace(camelCaseString, "(\\B[A-Z])", " $1");
+
+        // Capitalize the first letter
+        return char.ToUpper(spacedString[0]) + spacedString.Substring(1);
     }
 
 }
