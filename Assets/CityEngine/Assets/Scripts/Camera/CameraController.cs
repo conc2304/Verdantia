@@ -67,21 +67,20 @@ public class CameraController : MonoBehaviour
 
     public Grid grid;
     private HeatMap heatMap;
-    private bool cityChanged = false;
+    public bool cityChanged = false;
 
     public GameObject groundPlane;
 
     public bool heatmapActive = false;
 
-    private string heatmapMetric = "heatContribution";
+    public string heatmapMetric = "heatContribution";
 
     public FixedJoystick fixedJoystick;
 
 
     void Start()
     {
-        // Set the callback for when the slider value changes
-        zoomSlider.onValueChanged.AddListener(OnSliderValueChanged);
+        zoomSlider.onValueChanged.AddListener(OnZoomSliderChanged);
     }
 
 
@@ -117,7 +116,7 @@ public class CameraController : MonoBehaviour
     {
         TouchInput();
 
-        MouseInput();
+        // MouseInput();
         KeyboardInput();
         SetPosition();
 
@@ -139,12 +138,19 @@ public class CameraController : MonoBehaviour
         // handle heat map updates on city change 
         if (heatMap != null && cityChanged)
         {
-            int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
-            int metricMax = buildingMenu.propertyRanges[heatmapMetric].max;
-            heatMap.UpdateHeatMap(allBuildings, heatmapMetric, metricMin, metricMax);
+            UpdateHeatMap(heatmapMetric);
         }
 
         cityChanged = false;
+    }
+
+    public void UpdateHeatMap(string metricName)
+    {
+        heatmapMetric = metricName;
+        int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
+        int metricMax = buildingMenu.propertyRanges[heatmapMetric].max;
+        heatMap.UpdateHeatMap(allBuildings, heatmapMetric, metricMin, metricMax);
+
     }
 
     private void LateUpdate()
@@ -601,45 +607,69 @@ public class CameraController : MonoBehaviour
     public void RotateCameraRight() { RotateCamera(-rotationScale * 10); }
     public void ZoomIn(float multiplier = 1)
     {
-        toZoom += zoomScale * multiplier;
+        print("ZoomIn");
+        // toZoom += zoomScale * multiplier;
+
+        if (!heatmapActive)
+        {
+            toZoom += multiplier * zoomScale;
+        }
+        else
+        {
+            toZoom.y += multiplier * zoomScale.y;
+        }
+
         SetSliderValueWithoutCallback(toZoom.y);
     }
     public void ZoomOut(float multiplier = 1)
     {
-        toZoom -= zoomScale * multiplier;
+        print("ZoomOut");
+        // toZoom -= zoomScale * multiplier;
+        if (!heatmapActive)
+        {
+            toZoom -= multiplier * zoomScale;
+        }
+        else
+        {
+            toZoom.y -= multiplier * zoomScale.y;
+        }
+
         SetSliderValueWithoutCallback(toZoom.y);
     }
-    public void OnSliderValueChanged(float zoomAmount)
+
+    public void OnZoomSliderChanged(float zoomAmount)
     {
+        if (!heatmapActive) toZoom.z = -zoomAmount;
         toZoom.y = zoomAmount;
-        toZoom.z = -zoomAmount;
     }
 
     public void SetSliderValueWithoutCallback(float newValue)
     {
-        zoomSlider.onValueChanged.RemoveListener(OnSliderValueChanged);
+        zoomSlider.onValueChanged.RemoveListener(OnZoomSliderChanged);
         zoomSlider.value = newValue;
-        zoomSlider.onValueChanged.AddListener(OnSliderValueChanged);
+        zoomSlider.onValueChanged.AddListener(OnZoomSliderChanged);
     }
 
-    public void SetHeatMapView(bool isActive)
+    public void SetHeatMapView(bool isActive, string metric)
     {
+
         heatmapActive = isActive;
-        UpdateHeatMapView();
+        UpdateHeatMapCamera();
     }
 
     public void ToggleHeatMapView()
     {
         heatmapActive = !heatmapActive;
-        UpdateHeatMapView();
+        heatMap.heatMapPlane.SetActive(heatmapActive);
+        UpdateHeatMapCamera();
     }
 
-    public void UpdateHeatMapView()
+    public void UpdateHeatMapCamera()
     {
         // Updates the camera angle to point down at 90 or out at 45
         // Update the Y and Z position of the camera to keep the current view in focus 
         // TODO - handle with a fade in or something
-        heatMap.heatMapPlane.SetActive(heatmapActive);
+        // heatMap.heatMapPlane.SetActive(heatmapActive);
 
         float topViewAngle = 90;
         float defaultAngle = 45;
@@ -661,6 +691,7 @@ public class CameraController : MonoBehaviour
 
         if (heatmapActive)
         {
+
             toZoom = new Vector3(localPos.x, localPos.y + vertDiff, 0);
         }
         else
@@ -668,9 +699,8 @@ public class CameraController : MonoBehaviour
             // Going into default mode where pos Y and Z are inverses of eachother based on the zoomScale
             float scaleConverter = zoomScale.y / zoomScale.z;
             float zPos = localPos.y * scaleConverter;
-            toZoom = new Vector3(localPos.x, localPos.y, zPos);
+            toZoom = new Vector3(localPos.x, localPos.y - vertDiff, zPos);
         }
-
     }
 
 

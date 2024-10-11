@@ -8,6 +8,9 @@ using UnityEngine.EventSystems;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
+using System.Globalization;
+
 
 public class BuildingsMenuNew : MonoBehaviour
 {
@@ -90,6 +93,7 @@ public class BuildingsMenuNew : MonoBehaviour
         UpdatePropertyRanges();
         InitializeTouchGui();
         InitializeHeatmapDropdownList();
+        heatmapDropdown.onValueChanged.AddListener(OnDropdownValueChanged);
     }
 
     private void InitializeHeatmapDropdownList()
@@ -109,9 +113,18 @@ public class BuildingsMenuNew : MonoBehaviour
         activateMenu.SetActive(false);
     }
 
-    public void HandleDropDownChange()
+    public void OnDropdownValueChanged(int index)
     {
+        if (index == 0) return;
 
+        string hmLabel = heatmapOptionsList[index];
+        string hmValue = ConvertToCamelCase(hmLabel);
+
+        print(hmValue + index);
+
+        cameraController.heatmapMetric = hmValue;
+        cameraController.cityChanged = true;
+        // cameraController.UpdateHeatMapCamera();
     }
 
 
@@ -374,11 +387,11 @@ public class BuildingsMenuNew : MonoBehaviour
         homeButton.SetActive(false);
     }
 
-    public void HandleToggleHeatMapView()
+    public void OnHeatMapToggle()
     {
         cameraController.ToggleHeatMapView();
+
         ColorBlock colorBlock = heatmapToggle.colors;
-        print(cameraController.heatmapActive);
         colorBlock.normalColor = cameraController.heatmapActive ? heatmapOnColor : heatmapOffColor;
         colorBlock.selectedColor = cameraController.heatmapActive ? heatmapOnColor : heatmapOffColor;
         heatmapToggle.colors = colorBlock;
@@ -545,6 +558,23 @@ public class BuildingsMenuNew : MonoBehaviour
 
         // Capitalize the first letter
         return char.ToUpper(spacedString[0]) + spacedString.Substring(1);
+    }
+
+    public static string ConvertToCamelCase(string label)
+    {
+        // Split the string by spaces into words
+        string[] words = label.Split(' ');
+
+        // Lowercase the first word
+        string camelCaseString = words[0].ToLower();
+
+        // Capitalize the first letter of the remaining words and append them
+        for (int i = 1; i < words.Length; i++)
+        {
+            camelCaseString += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(words[i].ToLower());
+        }
+
+        return camelCaseString;
     }
 
 }
