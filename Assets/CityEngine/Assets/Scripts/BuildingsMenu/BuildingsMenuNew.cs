@@ -340,19 +340,34 @@ public class BuildingsMenuNew : MonoBehaviour
         }
 
         //delete buildings button
-        GameObject typeDel = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity, types);
-        typeDel.transform.localPosition = new Vector3(-posType, 0, 0);
-        typeDel.transform.localScale = new Vector3(9, 9, 9);
+        // Create wrapper/parent to hold model, text and button
+        GameObject tempDel = new GameObject("new");
+        GameObject typeDelParent = Instantiate(tempDel, new Vector3(0, 0, 0), Quaternion.identity, types);
+
+
+        typeDelParent.transform.localPosition = new Vector3(-posType, 0, 0);
+        typeDelParent.transform.localScale = new Vector3(9, 9, 9);
+        typeDelParent.name = deleteBuilding.name;
+
+        GameObject typeDel = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity, typeDelParent.transform);
+
+        Destroy(tempDel.gameObject);
+
+        typeDel.transform.localPosition = new Vector3(0, 0, 0);
+        typeDel.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
         typeDel.name = deleteBuilding.name;
+
+
         foreach (Transform trans in typeDel.GetComponentsInChildren<Transform>(true))
             trans.gameObject.layer = 5;
-        buildingsTypes.Add(typeDel);
 
-        TextMeshProUGUI textDel = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, typeDel.transform);
+        buildingsTypes.Add(typeDelParent);
+
+        TextMeshProUGUI textDel = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, typeDelParent.transform);
         textDel.transform.localPosition = new Vector3(0, textPosY, 0);
         textDel.text = deleteBuilding.name;
 
-        Button buttonDel = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeDel.transform);
+        Button buttonDel = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeDelParent.transform);
         buttonDel.transform.localPosition = new Vector3(0, 2, 0);
         buttonDel.onClick.AddListener(DeleteBuilding);
         buttonDel.gameObject.name = deleteBuilding.name;
