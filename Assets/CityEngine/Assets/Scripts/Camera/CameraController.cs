@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
     public int[] xRange = new int[2] { 0, 1000 };
     public int[] zRange = new int[2] { 0, 1000 };
 
-    private BuildingsMenu buildingMenu;
+    private BuildingsMenuNew buildingMenu;
     private RoadGenerator roadGenerator;
     private SaveDataTrigger saveDataTrigger;
     Spawner spawner;
@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour
 
     public GameObject groundPlane;
 
-    private bool heatmapActive = false;
+    public bool heatmapActive = false;
 
     private string heatmapMetric = "heatContribution";
 
@@ -82,13 +82,12 @@ public class CameraController : MonoBehaviour
     {
         // Set the callback for when the slider value changes
         zoomSlider.onValueChanged.AddListener(OnSliderValueChanged);
-
     }
 
 
     void Awake()
     {
-        buildingMenu = FindObjectOfType<BuildingsMenu>();
+        buildingMenu = FindObjectOfType<BuildingsMenuNew>();
         roadGenerator = FindObjectOfType<RoadGenerator>();
         spawner = FindObjectOfType<Spawner>();
         saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
