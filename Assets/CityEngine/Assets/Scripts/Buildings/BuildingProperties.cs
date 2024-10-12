@@ -107,8 +107,16 @@ public class BuildingProperties : MonoBehaviour
         // "coverageRadius",
     };
 
+    private BuildingsMenuNew buildingsMenu;
+
 
     void Start()
+    {
+        buildingsMenu = FindObjectOfType<BuildingsMenuNew>();
+        PassonBuildingProperties();
+    }
+
+    private void PassonBuildingProperties()
     {
         if (gameObject.CompareTag("Building"))
         {
@@ -167,6 +175,12 @@ public class BuildingProperties : MonoBehaviour
     {
         // This method can include any logic to update building's properties dynamically
         Debug.Log(buildingName + " properties updated!");
+    }
+
+    private Dictionary<string, (int min, int max)> GetPropertyRanges()
+    {
+        Dictionary<string, (int min, int max)> propertyRanges = buildingsMenu.GetPropertyRanges();
+        return propertyRanges;
     }
 
 

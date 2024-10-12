@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using System.Globalization;
+using UnityEditor;
 
 
 public class BuildingsMenuNew : MonoBehaviour
@@ -22,8 +23,8 @@ public class BuildingsMenuNew : MonoBehaviour
         public GameObject[] buildings;
         public int minPos, maxPos;
     }
-    private List<GameObject> buildingsParents = new List<GameObject>();
-    private List<GameObject> buildingsTypes = new List<GameObject>();
+    private List<GameObject> buildingsCategoryTypes = new List<GameObject>();
+    private List<GameObject> buildingsCategories = new List<GameObject>();
 
     public int menuBuildingsTilt = -30;
     public Camera menuCamera;
@@ -221,12 +222,14 @@ public class BuildingsMenuNew : MonoBehaviour
 
             type.transform.localPosition = new Vector3(0, 0, 0);
             type.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
+            type.transform.localScale = new Vector3(1, 1, 1);
+
             type.name = buildings[i].type.name;
 
             foreach (Transform trans in type.GetComponentsInChildren<Transform>(true))
                 trans.gameObject.layer = 5;
 
-            buildingsTypes.Add(typeParent);
+            buildingsCategories.Add(typeParent);
 
             TextMeshProUGUI text = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, typeParent.transform);
             text.transform.localPosition = new Vector3(0, textPosY, 0);
@@ -244,7 +247,7 @@ public class BuildingsMenuNew : MonoBehaviour
                 minTypePos = posType;
 
             if (posType >= 0)
-                posType += 125;
+                posType += 165;
             posType *= -1;
 
 
@@ -254,44 +257,46 @@ public class BuildingsMenuNew : MonoBehaviour
             parent.transform.localPosition = new Vector3(0, 0, 0);
             parent.name = buildings[i].type.name + "_buildings";    // Collection of building types: ie all the houses
             Destroy(newObj.gameObject);
-            buildingsParents.Add(parent);
+            buildingsCategoryTypes.Add(parent);
 
             int posBuild = 0;
             previousX = 0;
             nextX = 0;
             changePos = true;
 
-            // Loop over Buildings in THIS type/category
+            // Loop over Buildings in THIS category
             for (int u = 0; u < buildings[i].buildings.Length; u++)
             {
                 // Create wrapper/parent to hold model, text and button
-                GameObject tempBuild = new GameObject("new");
-                GameObject buildParent = Instantiate(tempObj, new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
-                buildParent.transform.localPosition = new Vector3(-posBuild, 0, 0);
-                buildParent.transform.localScale = new Vector3(9, 9, 9);
-                buildParent.name = buildings[i].buildings[u].name;
-                Destroy(tempBuild.gameObject);
+                GameObject tempCategory = new GameObject("new");
+                GameObject categoryParent = Instantiate(tempObj, new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
+                categoryParent.transform.localPosition = new Vector3(-posBuild, 0, 0);
+                categoryParent.transform.localScale = new Vector3(9, 9, 9);
+                categoryParent.name = buildings[i].buildings[u].name;
+                Destroy(tempCategory.gameObject);
 
                 // Create building and add to building parent
-                GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, buildParent.transform);
+                GameObject build = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity, categoryParent.transform);
                 build.transform.localPosition = new Vector3(0, 0, 0); // add rotation to the building to see it better
                 build.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
+                build.transform.localScale = Vector3.one;
                 build.name = buildings[i].buildings[u].name;
 
                 foreach (Transform trans in build.GetComponentsInChildren<Transform>(true))
                     trans.gameObject.layer = 5;     // set all to UI layer for camera culling
+
                 parent.SetActive(false);
 
                 // Add text to building - add to build parent
-                text = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, buildParent.transform);
+                text = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, categoryParent.transform);
                 text.transform.localPosition = new Vector3(0, textPosY, 0);
                 text.text = buildings[i].buildings[u].GetComponent<BuildingProperties>().buildingName;
 
                 // Add button to building - add to build parent
-                Button buttonBuild = Instantiate(buildingButton, new Vector3(0, 0, 0), Quaternion.identity, buildParent.transform);
+                Button buttonBuild = Instantiate(buildingButton, new Vector3(0, 0, 0), Quaternion.identity, categoryParent.transform);
                 buttonBuild.transform.localPosition = new Vector3(0, 2, 0);
                 buttonBuild.onClick.AddListener(CreateBuilding);
-                buttonBuild.gameObject.name = buildings[i].buildings[u].name;
+                buttonBuild.gameObject.name = buildings[i].buildings[u].name + "_btn";
 
                 //find min and max position of each type
                 if (posBuild > buildings[i].maxPos)
@@ -299,7 +304,7 @@ public class BuildingsMenuNew : MonoBehaviour
                 if (posBuild < buildings[i].minPos)
                     buildings[i].minPos = posBuild;
 
-                int add = -35;
+                int itemPadding = -105;
                 try
                 {
                     for (int y = 1; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
@@ -307,11 +312,10 @@ public class BuildingsMenuNew : MonoBehaviour
                         buttonBuild.transform.localPosition = new Vector3(buttonBuild.transform.localPosition.x + 5, 2, 0);
                         buttonBuild.transform.localScale = new Vector3(buttonBuild.transform.localScale.x + 1, 1, 1);
                         text.transform.localPosition = new Vector3(text.transform.localPosition.x + 5, textPosY, 0); // center the building text
-
                     }
                     for (int y = 0; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
-                        add += -90;
+                        itemPadding += -90;
                     }
 
                 }
@@ -319,13 +323,12 @@ public class BuildingsMenuNew : MonoBehaviour
 
                 if (changePos)
                 {
-                    nextX += add;
+                    nextX += itemPadding;
                     posBuild = nextX;
-                    //changePos = false;
                 }
                 else
                 {
-                    previousX -= add;
+                    previousX -= itemPadding;
                     posBuild = previousX;
                     changePos = true;
                 }
@@ -355,13 +358,14 @@ public class BuildingsMenuNew : MonoBehaviour
 
         typeDel.transform.localPosition = new Vector3(0, 0, 0);
         typeDel.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
+        typeDel.transform.localScale = Vector3.one;
         typeDel.name = deleteBuilding.name;
 
 
         foreach (Transform trans in typeDel.GetComponentsInChildren<Transform>(true))
             trans.gameObject.layer = 5;
 
-        buildingsTypes.Add(typeDelParent);
+        buildingsCategories.Add(typeDelParent);
 
         TextMeshProUGUI textDel = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, typeDelParent.transform);
         textDel.transform.localPosition = new Vector3(0, textPosY, 0);
@@ -427,10 +431,10 @@ public class BuildingsMenuNew : MonoBehaviour
         cameraController.target = null;
         cameraController.moveTarget = false;
 
-        for (int i = 0; i < buildingsParents.Count; i++)
-            buildingsParents[i].SetActive(false);
-        for (int i = 0; i < buildingsTypes.Count; i++)
-            buildingsTypes[i].SetActive(true);
+        for (int i = 0; i < buildingsCategoryTypes.Count; i++)
+            buildingsCategoryTypes[i].SetActive(false);
+        for (int i = 0; i < buildingsCategories.Count; i++)
+            buildingsCategories[i].SetActive(true);
 
         activateMenu.SetActive(!activateMenu.activeSelf);
 
@@ -443,24 +447,25 @@ public class BuildingsMenuNew : MonoBehaviour
     public void ClickCheck()
     {
         print("CLICKCHECK");
-        print(EventSystem.current.currentSelectedGameObject.name);
+        // Handle Selection
         if (cameraController.doubleClick)
         {
             cameraController.doubleClick = false;
             cameraController.lastClickTime = 0;
-            for (int i = 0; i < buildingsParents.Count; i++)
+            for (int i = 0; i < buildingsCategoryTypes.Count; i++)
             {
                 //buildingsTypes[i].SetActive(false);
-                if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsParents[i].name)
+                // On Type/Category click activate the building category group (ie residential buildings)
+                if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsCategoryTypes[i].name)
                 {
-                    buildingsParents[i].SetActive(true);
+                    buildingsCategoryTypes[i].SetActive(true);
                     minPos = buildings[i].minPos;
                     maxPos = buildings[i].maxPos;
                 }
             }
-            for (int i = 0; i < buildingsTypes.Count; i++)
+            for (int i = 0; i < buildingsCategories.Count; i++)
             {
-                buildingsTypes[i].SetActive(false);
+                buildingsCategories[i].SetActive(false);
             }
             //set active delete tool
         }
@@ -469,18 +474,21 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void CreateBuilding()
     {
+        print("Building Click");
+        print(EventSystem.current.currentSelectedGameObject.name);
         if (cameraController.doubleClick)
         {
+            print("Create Building");
             cameraController.doubleClick = false;
             cameraController.lastClickTime = 0;
-            if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
 
+            if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
 
             for (int i = 0; i < buildings.Length; i++)
             {
                 for (int u = 0; u < buildings[i].buildings.Length; u++)
                 {
-                    if (buildings[i].buildings[u].name == EventSystem.current.currentSelectedGameObject.name)
+                    if (buildings[i].buildings[u].name + "_btn" == EventSystem.current.currentSelectedGameObject.name)
                     {
                         cameraController.moveTarget = true;
                         Transform target = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity).transform;
@@ -489,16 +497,53 @@ public class BuildingsMenuNew : MonoBehaviour
                 }
             }
 
-            for (int i = 0; i < buildingsParents.Count; i++)
+            for (int i = 0; i < buildingsCategoryTypes.Count; i++)
             {
-                buildingsTypes[i].SetActive(true);
-                buildingsParents[i].SetActive(false);
+                buildingsCategories[i].SetActive(true);
+                buildingsCategoryTypes[i].SetActive(false);
             }
-
-            // activateMenu.SetActive(!activateMenu.activeSelf);
 
             minPos = minTypePos;
             maxPos = maxTypePos;
+        }
+        else
+        {
+            // Select and display clicked building's data
+            GameObject clickedBuildingBtn = EventSystem.current.currentSelectedGameObject;
+            // Reset scale of all non-selected buildings
+            for (int i = 0; i < buildingsCategoryTypes.Count; i++)
+            {
+                if (buildingsCategoryTypes[i].activeSelf)
+                {
+                    foreach (Transform building in buildingsCategoryTypes[i].transform)
+                    {
+                        building.localScale = new Vector3(9, 9, 9);
+                    }
+                };
+            }
+
+            for (int i = 0; i < buildings.Length; i++)
+            {
+                for (int u = 0; u < buildings[i].buildings.Length; u++)
+                {
+                    if (buildings[i].buildings[u].name + "_btn" == clickedBuildingBtn.name)
+                    {
+                        // Show building data and visualize selected via scale
+                        float s = 11;
+                        print("Match");
+                        GameObject selectedBuilding = buildings[i].buildings[u];
+                        BuildingProperties buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
+                        // BuildingInfoDisplay displayData = GetComponent<BuildingInfoDisplay>();
+                        // displayData.DisplayBuildingData(buildingProps);
+                        print("Selected Scale");
+                        print(clickedBuildingBtn.transform.parent.localScale);
+
+                        clickedBuildingBtn.transform.parent.transform.localScale = new Vector3(s, s, s);
+                        continue;
+                    }
+                }
+            }
+
         }
     }
 
@@ -509,7 +554,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
         cameraController.moveTarget = true;
-
 
         Transform target = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity).transform;
         target.transform.GetChild(0).localPosition = new Vector3(0, 6, 0);
@@ -566,24 +610,23 @@ public class BuildingsMenuNew : MonoBehaviour
         return propertyRanges;
     }
 
+    public Dictionary<string, (int min, int max)> GetPropertyRanges()
+    {
+        if (propertyRanges.Count > 0) return propertyRanges;
+        else return UpdatePropertyRanges();
+    }
+
     public static string ConvertToLabel(string camelCaseString)
     {
-        // Add a space before each uppercase letter except the first one
         string spacedString = Regex.Replace(camelCaseString, "(\\B[A-Z])", " $1");
-
-        // Capitalize the first letter
         return char.ToUpper(spacedString[0]) + spacedString.Substring(1);
     }
 
     public static string ConvertToCamelCase(string label)
     {
-        // Split the string by spaces into words
         string[] words = label.Split(' ');
-
-        // Lowercase the first word
         string camelCaseString = words[0].ToLower();
 
-        // Capitalize the first letter of the remaining words and append them
         for (int i = 1; i < words.Length; i++)
         {
             camelCaseString += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(words[i].ToLower());
