@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: -1
+  buildingIndex: 40
   environment: {fileID: 9170872634758128117}
   connectToRoad: 1
   carsPathTargetsToConnect:
@@ -1216,8 +1216,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 100
   jobCreation: 30
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &3095412744837479016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,8 +1309,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &6319363023558620523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,8 +1438,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &7154619427325838312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,8 +1617,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8153347221091577815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,8 +1863,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8518388907409151356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,8 +1993,8 @@ MonoBehaviour:
   carbonFootprint: 0
   taxContribution: 0
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1001 &377449481163907778
 PrefabInstance:
   m_ObjectHideFlags: 0

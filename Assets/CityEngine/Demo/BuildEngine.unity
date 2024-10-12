@@ -2054,7 +2054,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608954683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -174.6}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2065,7 +2065,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 420}
+  m_AnchoredPosition: {x: 23.3, y: 348.6}
   m_SizeDelta: {x: 180, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &608954685
@@ -2802,6 +2802,7 @@ GameObject:
   - component: {fileID: 839865012}
   - component: {fileID: 839865014}
   - component: {fileID: 839865013}
+  - component: {fileID: 839865015}
   m_Layer: 0
   m_Name: TouchGUI
   m_TagString: Untagged
@@ -2958,12 +2959,26 @@ MonoBehaviour:
     - {fileID: 1730668401964716652, guid: bc0c6e061703dff48a029ec97c7143ea, type: 3}
     minPos: 0
     maxPos: 0
-  deleteBuilding: {fileID: 3782275556453883255, guid: b994f1a45b60b8f4e91d69b76ab71f8e, type: 3}
+  deleteBuilding: {fileID: 3782275556453883255, guid: 70606cb71f95c354e812e09c4e3d2966, type: 3}
   minPos: 0
   maxPos: 0
   posX: 0
   dragMultiplier: 1.25
   trackpadRect: {fileID: 153762841}
+--- !u!114 &839865015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839865011}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698b6794fa0db284fb3f77fb891723ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labelValuePrefab: {fileID: 5942648118619701087, guid: b80a4a2e6d60106428c7c90ee8d8ac39, type: 3}
+  displayParent: {fileID: 211617116}
 --- !u!1 &849078792
 GameObject:
   m_ObjectHideFlags: 0

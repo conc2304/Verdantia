@@ -764,7 +764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: -1
+  buildingIndex: 46
   environment: {fileID: 4144757082451293284}
   connectToRoad: 0
   carsPathTargetsToConnect: []
