@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: -1
+  buildingIndex: 12
   environment: {fileID: 8337416255508903434}
   connectToRoad: 1
   carsPathTargetsToConnect: []
@@ -382,8 +382,8 @@ MonoBehaviour:
   carbonFootprint: 20
   taxContribution: 10
   jobCreation: 0
+  industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &7155104198537411281
 MonoBehaviour:
   m_ObjectHideFlags: 0

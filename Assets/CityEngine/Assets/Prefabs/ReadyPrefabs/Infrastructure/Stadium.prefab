@@ -1497,7 +1497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: -1
+  buildingIndex: 34
   environment: {fileID: 1296551417760104136}
   connectToRoad: 1
   carsPathTargetsToConnect: []
@@ -1543,7 +1543,6 @@ MonoBehaviour:
   jobCreation: 5000
   industryBoost: 5000
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!114 &1535817793563421322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1637,7 +1636,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &5846980157184479451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,7 +2032,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8102965917579531198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,7 +2112,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8376511160102156800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,7 +2241,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,7 +2321,6 @@ MonoBehaviour:
   jobCreation: 0
   industryBoost: 0
   coverageRadius: 0
-  serviceCapacity: 0
 --- !u!1 &9114106045936304712
 GameObject:
   m_ObjectHideFlags: 0
