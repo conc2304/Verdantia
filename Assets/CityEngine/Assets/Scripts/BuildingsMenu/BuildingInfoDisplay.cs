@@ -50,8 +50,7 @@ public class BuildingInfoDisplay : MonoBehaviour
     public void DisplayBuildingData(BuildingProperties buildingProps)
 
     {
-        print(buildingProps.buildingName);
-
+        // Clear the last data 
         DeleteAllChildrenFromParent(displayParent);
 
         displayParent.gameObject.SetActive(true);
@@ -76,7 +75,7 @@ public class BuildingInfoDisplay : MonoBehaviour
 
                 // Set the text
                 labelText.text = ConvertToLabel(prop);
-                string prefix = Regex.IsMatch(prop.ToLower(), "tax|cost") ? "$" : "";
+                string prefix = Regex.IsMatch(prop.ToLower(), "tax|cost|upkeed") ? "$" : "";
                 string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(value), prefix);
                 valueText.text = value != null ? formattedValue : "N/A";
             }

@@ -137,16 +137,23 @@ public class BuildingsMenuNew : MonoBehaviour
             {
                 types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, maxPos, Time.deltaTime), 0, 0);
                 if (posX < 0)
+                {
+                    print("diminish posX");
                     posX = posX / 2;
+                }
             }
             if (types.localPosition.x < minPos)
             {
                 types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, minPos, Time.deltaTime), 0, 0);
                 if (posX > 0)
+                {
+                    print("diminish posX");
                     posX = posX / 2;
+                }
             }
 
-            types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x + -posX * 5, Time.deltaTime), 0, 0);
+            types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x - posX, Time.deltaTime * 5), 0, 0);
+            // types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x - posX * 5, Time.deltaTime), 0, 0);
         }
     }
 
@@ -190,6 +197,7 @@ public class BuildingsMenuNew : MonoBehaviour
                 posX += Time.deltaTime * 100;
         }
 
+
     }
 
 
@@ -197,6 +205,7 @@ public class BuildingsMenuNew : MonoBehaviour
     {
         int textPosY = -6;
         int posType = 0;
+
         for (int i = 0; i < buildings.Length; i++)
         {
             // Loop over Building Types/Categories
@@ -376,6 +385,27 @@ public class BuildingsMenuNew : MonoBehaviour
 
     }
 
+    public void CenterBuildingType(GameObject clickedBuildingBtn)
+    {
+        Transform typesTransform = types.GetComponent<Transform>();
+        // the parent of the button has the placement position, so we scroll inversly to that position
+        Transform clickedTransform = clickedBuildingBtn.transform.parent.GetComponent<Transform>();
+
+        // Calculate the center position of the viewport (or the area where you want to center)
+
+        // Calculate the offset between the clicked building and the center
+        float clickedPosX = clickedTransform.localPosition.x;
+        Debug.Log("Clicked pos: " + clickedPosX);
+        float distanceToTarget = (types.localPosition.x + clickedPosX) / 2.5f;
+        print("Distance: " + distanceToTarget); ;
+        float toTarget = types.localPosition.x - posX * 5; // to equal negative clicked position
+
+        // Set the new position for Types to center the clicked building type
+        posX = distanceToTarget;
+        // types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x - posX * 5, Time.deltaTime), 0, 0);
+
+    }
+
 
     public void OnHomeButton()
     {
@@ -421,8 +451,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void ActivateMenu()
     {
-
-        print("Activate Menu");
         types.localPosition = new Vector3(0, 0, types.localPosition.z);
 
         if (cameraController.target != null)
@@ -448,7 +476,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void ClickCheck()
     {
-        print("CLICKCHECK");
         // Handle Selection
         if (cameraController.doubleClick)
         {
@@ -457,6 +484,7 @@ public class BuildingsMenuNew : MonoBehaviour
             for (int i = 0; i < buildingsCategoryTypes.Count; i++)
             {
                 //buildingsTypes[i].SetActive(false);
+
                 // On Type/Category click activate the building category group (ie residential buildings)
                 if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsCategoryTypes[i].name)
                 {
@@ -482,7 +510,6 @@ public class BuildingsMenuNew : MonoBehaviour
         print(EventSystem.current.currentSelectedGameObject.name);
         if (cameraController.doubleClick)
         {
-            print("Create Building");
             cameraController.doubleClick = false;
             cameraController.lastClickTime = 0;
 
@@ -519,47 +546,57 @@ public class BuildingsMenuNew : MonoBehaviour
     private void SelectBuilding()
     {
         buildingStats.SetActive(true);
-        BuildingProperties buildingProps = null;
         GameObject clickedBuildingBtn = EventSystem.current.currentSelectedGameObject;
 
-        // Select and display clicked building's data
-        // Reset scale of all buildings
-        for (int i = 0; i < buildingsCategoryTypes.Count; i++)
-        {
-            if (buildingsCategoryTypes[i].activeSelf)
-            {
-                foreach (Transform building in buildingsCategoryTypes[i].transform)
-                {
-                    building.localScale = new Vector3(9, 9, 9);
-                }
-            };
-        }
+        GameObject selectedBuilding = GetSelectedBuildingGO(clickedBuildingBtn);
+        BuildingProperties buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
 
-        for (int i = 0; i < buildings.Length; i++)
-        {
-            for (int u = 0; u < buildings[i].buildings.Length; u++)
-            {
-                if (buildings[i].buildings[u].name + "_btn" == clickedBuildingBtn.name)
-                {
-                    // Show building data and visualize selected via scale
-                    GameObject selectedBuilding = buildings[i].buildings[u];
-                    buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
-
-                    float s = 11;
-                    clickedBuildingBtn.transform.parent.transform.localScale = new Vector3(s, s, s);
-
-                    // TODO slide the building menu to center the selected item
-                    continue;
-                }
-            }
-        }
-
+        CenterBuildingType(clickedBuildingBtn);
+        ApplySelectionScale(clickedBuildingBtn);
 
         if (buildingProps != null)
         {
             BuildingInfoDisplay displayData = GetComponent<BuildingInfoDisplay>();
             displayData.DisplayBuildingData(buildingProps);
         }
+    }
+
+    private void ResetSelectionScale(int scaleSize = 9)
+    {
+        for (int i = 0; i < buildingsCategoryTypes.Count; i++)
+        {
+            if (buildingsCategoryTypes[i].activeSelf)
+            {
+                foreach (Transform building in buildingsCategoryTypes[i].transform)
+                {
+                    building.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
+                }
+            };
+        }
+    }
+
+    private void ApplySelectionScale(GameObject selectedBuildingBtn)
+    {
+        ResetSelectionScale(9);
+        float s = 11;
+        selectedBuildingBtn.transform.parent.transform.localScale = new Vector3(s, s, s);
+    }
+
+    private GameObject GetSelectedBuildingGO(GameObject selectedBuildingBtn)
+    {
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            for (int u = 0; u < buildings[i].buildings.Length; u++)
+            {
+                if (buildings[i].buildings[u].name + "_btn" == selectedBuildingBtn.name)
+                {
+                    GameObject selectedBuilding = buildings[i].buildings[u];
+                    return selectedBuilding;
+                }
+            }
+        }
+
+        return null;
     }
 
     public void DeleteBuilding()
