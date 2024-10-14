@@ -121,11 +121,9 @@ public class BuildingsMenuNew : MonoBehaviour
         string hmLabel = heatmapOptionsList[index];
         string hmValue = ConvertToCamelCase(hmLabel);
 
-        print(hmValue + index);
-
         cameraController.heatmapMetric = hmValue;
         cameraController.cityChanged = true;
-        // cameraController.UpdateHeatMapCamera();
+        cameraController.UpdateHeatMapCamera();
     }
 
 
@@ -393,6 +391,8 @@ public class BuildingsMenuNew : MonoBehaviour
         // Aux Menus 
         mainMenu.SetActive(false);
         homeButton.SetActive(true);
+        buildingStats.SetActive(false);
+
     }
 
     public void CloseBuildMenu()
@@ -404,6 +404,8 @@ public class BuildingsMenuNew : MonoBehaviour
         // Aux Menus 
         mainMenu.SetActive(true);
         homeButton.SetActive(false);
+        buildingStats.SetActive(false);
+
     }
 
     public void OnHeatMapToggle()
@@ -474,6 +476,8 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void CreateBuilding()
     {
+        buildingStats.SetActive(false);
+
         print("Building Click");
         print(EventSystem.current.currentSelectedGameObject.name);
         if (cameraController.doubleClick)
@@ -508,48 +512,60 @@ public class BuildingsMenuNew : MonoBehaviour
         }
         else
         {
-            // Select and display clicked building's data
-            GameObject clickedBuildingBtn = EventSystem.current.currentSelectedGameObject;
-            // Reset scale of all non-selected buildings
-            for (int i = 0; i < buildingsCategoryTypes.Count; i++)
-            {
-                if (buildingsCategoryTypes[i].activeSelf)
-                {
-                    foreach (Transform building in buildingsCategoryTypes[i].transform)
-                    {
-                        building.localScale = new Vector3(9, 9, 9);
-                    }
-                };
-            }
-
-            for (int i = 0; i < buildings.Length; i++)
-            {
-                for (int u = 0; u < buildings[i].buildings.Length; u++)
-                {
-                    if (buildings[i].buildings[u].name + "_btn" == clickedBuildingBtn.name)
-                    {
-                        // Show building data and visualize selected via scale
-                        float s = 11;
-                        print("Match");
-                        GameObject selectedBuilding = buildings[i].buildings[u];
-                        BuildingProperties buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
-                        // BuildingInfoDisplay displayData = GetComponent<BuildingInfoDisplay>();
-                        // displayData.DisplayBuildingData(buildingProps);
-                        print("Selected Scale");
-                        print(clickedBuildingBtn.transform.parent.localScale);
-
-                        clickedBuildingBtn.transform.parent.transform.localScale = new Vector3(s, s, s);
-                        continue;
-                    }
-                }
-            }
-
+            SelectBuilding();
         }
     }
 
+    private void SelectBuilding()
+    {
+        buildingStats.SetActive(true);
+        BuildingProperties buildingProps = null;
+        GameObject clickedBuildingBtn = EventSystem.current.currentSelectedGameObject;
+
+        // Select and display clicked building's data
+        // Reset scale of all buildings
+        for (int i = 0; i < buildingsCategoryTypes.Count; i++)
+        {
+            if (buildingsCategoryTypes[i].activeSelf)
+            {
+                foreach (Transform building in buildingsCategoryTypes[i].transform)
+                {
+                    building.localScale = new Vector3(9, 9, 9);
+                }
+            };
+        }
+
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            for (int u = 0; u < buildings[i].buildings.Length; u++)
+            {
+                if (buildings[i].buildings[u].name + "_btn" == clickedBuildingBtn.name)
+                {
+                    // Show building data and visualize selected via scale
+                    GameObject selectedBuilding = buildings[i].buildings[u];
+                    buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
+
+                    float s = 11;
+                    clickedBuildingBtn.transform.parent.transform.localScale = new Vector3(s, s, s);
+
+                    // TODO slide the building menu to center the selected item
+                    continue;
+                }
+            }
+        }
+
+
+        if (buildingProps != null)
+        {
+            BuildingInfoDisplay displayData = GetComponent<BuildingInfoDisplay>();
+            displayData.DisplayBuildingData(buildingProps);
+        }
+    }
 
     public void DeleteBuilding()
     {
+        buildingStats.SetActive(false);
+
         print("Delete Building");
 
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
