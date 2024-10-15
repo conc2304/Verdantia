@@ -135,12 +135,12 @@ public class BuildingsMenuNew : MonoBehaviour
         {
             MouseInput();
 
+            // Clamp scroll to bounds
             if (types.localPosition.x > maxPos)
             {
                 types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, maxPos, Time.deltaTime), 0, 0);
                 if (posX < 0)
                 {
-                    print("diminish posX");
                     posX = posX / 2;
                 }
             }
@@ -149,17 +149,16 @@ public class BuildingsMenuNew : MonoBehaviour
                 types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, minPos, Time.deltaTime), 0, 0);
                 if (posX > 0)
                 {
-                    print("diminish posX");
                     posX = posX / 2;
                 }
             }
 
             types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x - posX, Time.deltaTime * 5), 0, 0);
+
             // Slow to a Stop
             if (Math.Abs(posX) < 0.5) { posX = 0; }
             else if (!isDragging && Time.time - timeOfLastDrag < 2f)
             {
-                print("Slow to a stop");
                 posX -= Time.deltaTime * 10;
             }
         }
@@ -430,14 +429,12 @@ public class BuildingsMenuNew : MonoBehaviour
     public void CloseBuildMenu()
     {
         ActivateMenu();
-
         activateMenu.SetActive(false);
 
         // Aux Menus 
         mainMenu.SetActive(true);
         homeButton.SetActive(false);
         buildingStats.SetActive(false);
-
     }
 
     public void OnHeatMapToggle()
@@ -513,35 +510,11 @@ public class BuildingsMenuNew : MonoBehaviour
         HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
 
         buildingStats.SetActive(false);
-        print("Building Click");
-        print(EventSystem.current.currentSelectedGameObject.name);
 
         if (holdToSelect.hasSelected)
         {
-
-            if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
-
-            for (int i = 0; i < buildings.Length; i++)
-            {
-                for (int u = 0; u < buildings[i].buildings.Length; u++)
-                {
-                    if (buildings[i].buildings[u].name + "_btn" == EventSystem.current.currentSelectedGameObject.name)
-                    {
-                        cameraController.moveTarget = true;
-                        Transform target = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity).transform;
-                        cameraController.target = target;
-                    }
-                }
-            }
-
-            for (int i = 0; i < buildingsCategoryTypes.Count; i++)
-            {
-                buildingsCategories[i].SetActive(true);
-                buildingsCategoryTypes[i].SetActive(false);
-            }
-
-            minPos = minTypePos;
-            maxPos = maxTypePos;
+            CreateBuilding();
+            CloseBuildMenu();
         }
         else
         {
@@ -549,21 +522,46 @@ public class BuildingsMenuNew : MonoBehaviour
         }
     }
 
+    private void CreateBuilding()
+    {
+        if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
+
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            for (int u = 0; u < buildings[i].buildings.Length; u++)
+            {
+                if (buildings[i].buildings[u].name + "_btn" == EventSystem.current.currentSelectedGameObject.name)
+                {
+                    cameraController.moveTarget = true;
+                    Transform target = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity).transform;
+                    cameraController.target = target;
+                }
+            }
+        }
+
+        for (int i = 0; i < buildingsCategoryTypes.Count; i++)
+        {
+            buildingsCategories[i].SetActive(true);
+            buildingsCategoryTypes[i].SetActive(false);
+        }
+
+        minPos = minTypePos;
+        maxPos = maxTypePos;
+    }
+
     private void SelectBuilding()
     {
-        buildingStats.SetActive(true);
         GameObject clickedBuildingBtn = EventSystem.current.currentSelectedGameObject;
-
         GameObject selectedBuilding = GetSelectedBuildingGO(clickedBuildingBtn);
-        BuildingProperties buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
-
         CenterBuildingType(clickedBuildingBtn);
         ApplySelectionScale(clickedBuildingBtn);
 
+        BuildingProperties buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
         if (buildingProps != null)
         {
             BuildingInfoDisplay displayData = GetComponent<BuildingInfoDisplay>();
             displayData.DisplayBuildingData(buildingProps);
+            buildingStats.SetActive(true);
         }
     }
 
@@ -607,13 +605,17 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void DeleteBuilding()
     {
-        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
-        if (!holdToSelect.hasSelected) return;
-        holdToSelect.ResetHold();
+        // There is only a 
+        HoldToSelect holdToSelect;
+        EventSystem.current.currentSelectedGameObject.TryGetComponent<HoldToSelect>(out holdToSelect);
+        if (holdToSelect != null)
+        {
+            if (!holdToSelect.hasSelected) return;
+            holdToSelect.ResetHold();
+        }
+
 
         buildingStats.SetActive(false);
-
-        print("Delete Building");
 
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
         cameraController.moveTarget = true;
