@@ -65,7 +65,7 @@ public class BuildingsMenuNew : MonoBehaviour
     public float dragMultiplier = 1.25f;
 
     private bool isDragging = false;
-
+    private float timeOfLastDrag = 0;
 
     private CameraController cameraController;
     private RoadGenerator roadGenerator;
@@ -155,7 +155,13 @@ public class BuildingsMenuNew : MonoBehaviour
             }
 
             types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x - posX, Time.deltaTime * 5), 0, 0);
-            // types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x - posX * 5, Time.deltaTime), 0, 0);
+            // Slow to a Stop
+            if (Math.Abs(posX) < 0.5) { posX = 0; }
+            else if (!isDragging && Time.time - timeOfLastDrag < 2f)
+            {
+                print("Slow to a stop");
+                posX -= Time.deltaTime * 10;
+            }
         }
     }
 
@@ -189,6 +195,7 @@ public class BuildingsMenuNew : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             isDragging = false;
+            timeOfLastDrag = Time.time;
         }
         else
         {
@@ -320,8 +327,11 @@ public class BuildingsMenuNew : MonoBehaviour
                 {
                     for (int y = 1; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
-                        buttonBuild.transform.localPosition = new Vector3(buttonBuild.transform.localPosition.x + 5, 2, 0);
-                        buttonBuild.transform.localScale = new Vector3(buttonBuild.transform.localScale.x + 1, 1, 1);
+                        buttonBuild.transform.localPosition = new Vector3(buttonBuild.transform.localPosition.x + 5, buttonBuild.transform.localPosition.y, buttonBuild.transform.localPosition.z);
+                        // buttonBuild.transform.localScale = new Vector3(buttonBuild.transform.localScale.x + 1, 1, 1);
+                        RectTransform rectTransform = buttonBuild.GetComponent<RectTransform>();
+                        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + 10, rectTransform.sizeDelta.y);
+
                         text.transform.localPosition = new Vector3(text.transform.localPosition.x + 5, textPosY, 0); // center the building text
                     }
                     for (int y = 0; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
@@ -480,7 +490,6 @@ public class BuildingsMenuNew : MonoBehaviour
         for (int i = 0; i < buildingsCategoryTypes.Count; i++)
         {
             //buildingsTypes[i].SetActive(false);
-            print(buildingsCategoryTypes[i].name);
 
             // On Type/Category click activate the building category group (ie residential buildings)
             if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsCategoryTypes[i].name)
@@ -502,14 +511,12 @@ public class BuildingsMenuNew : MonoBehaviour
     {
 
         HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
-        if (!holdToSelect.hasSelected) return;
-
 
         buildingStats.SetActive(false);
         print("Building Click");
         print(EventSystem.current.currentSelectedGameObject.name);
 
-        if (!holdToSelect.hasSelected)
+        if (holdToSelect.hasSelected)
         {
 
             if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
