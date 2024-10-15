@@ -7,51 +7,55 @@ using System;
 public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     public Image progressBar;
-    public float holdTime = 2f;
+    public float holdTime = 1.5f;
+    public float delayTime = 0.1f;
+    private float delayTimer = 0;
     private float holdTimer;
     private bool isHolding = false;
     public bool hasSelected = false;
 
     private Coroutine holdCoroutine;
-    private Button button; // Reference to the Button component
+    private Button button;
 
 
     void Start()
     {
-        if (progressBar != null) progressBar.fillAmount = 0; // Start the progress bar as empty
-        button = GetComponent<Button>();  // Get the Button component
+        if (progressBar != null) progressBar.fillAmount = 0;
+        button = GetComponent<Button>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        print("OnPointerDown");
         if (!hasSelected)
         {
-            // Start the hold coroutine when the pointer is down
             holdCoroutine = StartCoroutine(HoldSelection());
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        print("OnPointerUp");
-        // Reset the hold if the user releases the button before selecting the item
         ResetHold();
-        print("Reset Select");
-
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // Reset the hold if the pointer exits the button area
         ResetHold();
-        print("Reset Select");
     }
 
     IEnumerator HoldSelection()
     {
-        isHolding = true;
         holdTimer = 0;
+        delayTimer = 0;
+        isHolding = true;
+
+        // Wait for the delay before starting the hold timer
+        while (delayTimer < delayTime)
+        {
+            delayTimer += Time.deltaTime;
+            yield return null;
+        }
+
+
 
         // While the hold timer is less than the required hold time, keep updating the timer and progress bar
         while (holdTimer < holdTime)
@@ -67,10 +71,9 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void ResetHold()
     {
-        print("Reset Hold");
-
         if (isHolding)
         {
+            delayTimer = 0;
             isHolding = false;
             StopCoroutine(holdCoroutine);
             holdTimer = 0;
@@ -80,29 +83,20 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     private void OnSelect(Action callback = null)
     {
-        print("OnSelect");
         hasSelected = true;
         isHolding = false;
-        progressBar.fillAmount = 1; // Set progress bar to full
+        progressBar.fillAmount = 1;
 
-        Debug.Log($"it has been selected!");
-
-        if (callback != null)
-        {
-            callback.Invoke(); // Call the callback function
-        }
-
-        // Manually trigger the ClickCheck function
-        // ResetHold();
-        button.onClick.Invoke();  // Invoke the event listener on the button (which should trigger ClickCheck)
+        callback?.Invoke();
+        button.onClick?.Invoke();
     }
 
     public void ResetState()
     {
         isHolding = false;
         hasSelected = false;
+        delayTimer = 0;
         if (progressBar != null) progressBar.fillAmount = 0; // Start the progress bar as empty
-
     }
 }
 
