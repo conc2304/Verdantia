@@ -246,7 +246,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
             Button button = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeParent.transform);
             button.transform.localPosition = new Vector3(0, 2, -8);
-            button.onClick.AddListener(ClickCheck);
+            button.onClick.AddListener(OnBuildingTypeClicked);
             button.gameObject.name = buildings[i].type.name;
 
             //find min and max position of type menu
@@ -304,9 +304,10 @@ public class BuildingsMenuNew : MonoBehaviour
                 // Add button to building - add to build parent
                 Button buttonBuild = Instantiate(buildingButton, new Vector3(0, 0, 0), Quaternion.identity, categoryParent.transform);
                 buttonBuild.transform.localPosition = new Vector3(0, 2, 0);
-                buttonBuild.onClick.AddListener(CreateBuilding);
+                buttonBuild.onClick.AddListener(OnBuildingClicked);
                 buttonBuild.gameObject.name = buildings[i].buildings[u].name + "_btn";
-                buttonBuild.AddComponent<HoldToSelect>();
+                buttonBuild.transform.localPosition = new Vector3(0, 2, -8);
+
 
                 //find min and max position of each type
                 if (posBuild > buildings[i].maxPos)
@@ -382,10 +383,9 @@ public class BuildingsMenuNew : MonoBehaviour
         textDel.text = deleteBuilding.name;
 
         Button buttonDel = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeDelParent.transform);
-        buttonDel.transform.localPosition = new Vector3(0, 2, 0);
+        buttonDel.transform.localPosition = new Vector3(0, 2, -8);
         buttonDel.onClick.AddListener(DeleteBuilding);
         buttonDel.gameObject.name = deleteBuilding.name;
-
     }
 
     public void CenterBuildingType(GameObject clickedBuildingBtn)
@@ -466,44 +466,51 @@ public class BuildingsMenuNew : MonoBehaviour
     }
 
 
-    public void ClickCheck()
-    {
-        // Handle Selection
-        if (cameraController.doubleClick)
-        {
-            cameraController.doubleClick = false;
-            cameraController.lastClickTime = 0;
-            for (int i = 0; i < buildingsCategoryTypes.Count; i++)
-            {
-                //buildingsTypes[i].SetActive(false);
+    public void OnBuildingTypeClicked()
 
-                // On Type/Category click activate the building category group (ie residential buildings)
-                if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsCategoryTypes[i].name)
-                {
-                    buildingsCategoryTypes[i].SetActive(true);
-                    minPos = buildings[i].minPos;
-                    maxPos = buildings[i].maxPos;
-                }
-            }
-            for (int i = 0; i < buildingsCategories.Count; i++)
+    {
+        // Handle Building Type Selection
+        print("OnBuildingTypeClick");
+        print(EventSystem.current.currentSelectedGameObject.name);
+
+        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
+        if (!holdToSelect.hasSelected) return;
+        holdToSelect.ResetState();
+
+        for (int i = 0; i < buildingsCategoryTypes.Count; i++)
+        {
+            //buildingsTypes[i].SetActive(false);
+            print(buildingsCategoryTypes[i].name);
+
+            // On Type/Category click activate the building category group (ie residential buildings)
+            if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsCategoryTypes[i].name)
             {
-                buildingsCategories[i].SetActive(false);
+                buildingsCategoryTypes[i].SetActive(true);
+                minPos = buildings[i].minPos;
+                maxPos = buildings[i].maxPos;
             }
-            //set active delete tool
         }
+        for (int i = 0; i < buildingsCategories.Count; i++)
+        {
+            buildingsCategories[i].SetActive(false);
+        }
+
     }
 
 
-    public void CreateBuilding()
+    public void OnBuildingClicked()
     {
-        buildingStats.SetActive(false);
 
+        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
+        if (!holdToSelect.hasSelected) return;
+
+
+        buildingStats.SetActive(false);
         print("Building Click");
         print(EventSystem.current.currentSelectedGameObject.name);
-        if (cameraController.doubleClick)
+
+        if (!holdToSelect.hasSelected)
         {
-            cameraController.doubleClick = false;
-            cameraController.lastClickTime = 0;
 
             if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
 
@@ -593,6 +600,10 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void DeleteBuilding()
     {
+        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
+        if (!holdToSelect.hasSelected) return;
+        holdToSelect.ResetHold();
+
         buildingStats.SetActive(false);
 
         print("Delete Building");

@@ -10,13 +10,16 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public float holdTime = 2f;
     private float holdTimer;
     private bool isHolding = false;
-    private bool hasSelected = false;
+    public bool hasSelected = false;
 
     private Coroutine holdCoroutine;
+    private Button button; // Reference to the Button component
+
 
     void Start()
     {
-        progressBar.fillAmount = 0; // Start the progress bar as empty
+        if (progressBar != null) progressBar.fillAmount = 0; // Start the progress bar as empty
+        button = GetComponent<Button>();  // Get the Button component
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -43,7 +46,6 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         // Reset the hold if the pointer exits the button area
         ResetHold();
         print("Reset Select");
-
     }
 
     IEnumerator HoldSelection()
@@ -63,7 +65,7 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         OnSelect();
     }
 
-    private void ResetHold()
+    public void ResetHold()
     {
         print("Reset Hold");
 
@@ -79,7 +81,6 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     private void OnSelect(Action callback = null)
     {
         print("OnSelect");
-        // Set item as selected
         hasSelected = true;
         isHolding = false;
         progressBar.fillAmount = 1; // Set progress bar to full
@@ -91,5 +92,17 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             callback.Invoke(); // Call the callback function
         }
 
+        // Manually trigger the ClickCheck function
+        // ResetHold();
+        button.onClick.Invoke();  // Invoke the event listener on the button (which should trigger ClickCheck)
+    }
+
+    public void ResetState()
+    {
+        isHolding = false;
+        hasSelected = false;
+        if (progressBar != null) progressBar.fillAmount = 0; // Start the progress bar as empty
+
     }
 }
+
