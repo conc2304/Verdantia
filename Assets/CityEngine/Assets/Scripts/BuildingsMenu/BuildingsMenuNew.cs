@@ -72,6 +72,8 @@ public class BuildingsMenuNew : MonoBehaviour
 
     bool doubleClick;
 
+    public GameObject holdToSelect;
+
     public Dictionary<string, (int min, int max)> propertyRanges = new();
 
 
@@ -304,6 +306,7 @@ public class BuildingsMenuNew : MonoBehaviour
                 buttonBuild.transform.localPosition = new Vector3(0, 2, 0);
                 buttonBuild.onClick.AddListener(CreateBuilding);
                 buttonBuild.gameObject.name = buildings[i].buildings[u].name + "_btn";
+                buttonBuild.AddComponent<HoldToSelect>();
 
                 //find min and max position of each type
                 if (posBuild > buildings[i].maxPos)
@@ -387,23 +390,12 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void CenterBuildingType(GameObject clickedBuildingBtn)
     {
-        Transform typesTransform = types.GetComponent<Transform>();
-        // the parent of the button has the placement position, so we scroll inversly to that position
+        // The parent of the button has the placement position via CreateTypes, 
+        // so scroll inversly to that position
         Transform clickedTransform = clickedBuildingBtn.transform.parent.GetComponent<Transform>();
-
-        // Calculate the center position of the viewport (or the area where you want to center)
-
-        // Calculate the offset between the clicked building and the center
         float clickedPosX = clickedTransform.localPosition.x;
-        Debug.Log("Clicked pos: " + clickedPosX);
         float distanceToTarget = (types.localPosition.x + clickedPosX) / 2.5f;
-        print("Distance: " + distanceToTarget); ;
-        float toTarget = types.localPosition.x - posX * 5; // to equal negative clicked position
-
-        // Set the new position for Types to center the clicked building type
         posX = distanceToTarget;
-        // types.localPosition = new Vector3(Mathf.Lerp(types.localPosition.x, types.localPosition.x - posX * 5, Time.deltaTime), 0, 0);
-
     }
 
 
