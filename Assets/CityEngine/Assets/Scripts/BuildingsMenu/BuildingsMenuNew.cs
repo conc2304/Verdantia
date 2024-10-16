@@ -73,7 +73,7 @@ public class BuildingsMenuNew : MonoBehaviour
     private CameraController cameraController;
     private RoadGenerator roadGenerator;
 
-    public GameObject holdToSelect;
+    // public GameObject holdToSelect;
 
     public Dictionary<string, (int min, int max)> propertyRanges = new();
 
@@ -476,11 +476,8 @@ public class BuildingsMenuNew : MonoBehaviour
 
 
     public void OnBuildingTypeClicked()
-
     {
         // Handle Building Type Selection
-        print("OnBuildingTypeClick");
-        print(EventSystem.current.currentSelectedGameObject.name);
 
         HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
         if (!holdToSelect.hasSelected) return;
@@ -508,11 +505,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void OnBuildingClicked()
     {
-
         HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
-
-        buildingStats.SetActive(false);
-
         if (holdToSelect.hasSelected)
         {
             CreateBuilding();
@@ -522,6 +515,9 @@ public class BuildingsMenuNew : MonoBehaviour
         {
             SelectBuilding();
         }
+
+        buildingStats.SetActive(false);
+
     }
 
     public void OpenPlacementGUI(TrackpadTargetType targetType)
@@ -541,7 +537,7 @@ public class BuildingsMenuNew : MonoBehaviour
     private void CreateBuilding()
     {
 
-        if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
+        UnsetTarget();
 
         for (int i = 0; i < buildings.Length; i++)
         {
@@ -636,7 +632,7 @@ public class BuildingsMenuNew : MonoBehaviour
         // Update UI
         OpenPlacementGUI(TrackpadTargetType.Demolish);
 
-        if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
+        UnsetTarget();
         cameraController.moveTarget = true;
 
         Transform target = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity).transform;
@@ -719,4 +715,51 @@ public class BuildingsMenuNew : MonoBehaviour
         return camelCaseString;
     }
 
+    public void OnPlacementCancel()
+    {
+        if (trackPad.isTracking) return; // prevent accidental click
+
+        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
+        if (!holdToSelect.hasSelected) return;
+
+        UnsetTarget();
+        InitializeTouchGui();
+    }
+
+    public void OnPlacementConfirm()
+    {
+        if (trackPad.isTracking) return; // prevent accidental click
+        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
+        if (!holdToSelect.hasSelected) return;
+
+
+        Transform target = cameraController.target;
+        if (target != null)
+        {
+            if (target.CompareTag("Road"))              // spawn if road
+            {
+                cameraController.SpawnRoad(target);
+            }
+            else if (target.CompareTag("Building"))      //spawn if building
+            {
+                cameraController.SpawnBuilding(target);
+            }
+            else if (target.CompareTag("DeleteTool"))
+            {
+                cameraController.DeleteTarget(target);
+            }
+        }
+
+        print(cameraController.target);
+        // Delete and Roads let you keep going, but Buildings have to be reselected
+        if (cameraController.target == null || !cameraController.moveTarget)
+        {
+            InitializeTouchGui();
+        }
+    }
+
+    private void UnsetTarget()
+    {
+        if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
+    }
 }

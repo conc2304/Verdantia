@@ -89,6 +89,7 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
         callback?.Invoke();
         button.onClick?.Invoke();
+        ResetState();
     }
 
     public void ResetState()
