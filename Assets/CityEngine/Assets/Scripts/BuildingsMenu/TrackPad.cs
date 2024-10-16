@@ -3,14 +3,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler
+public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    private bool isTracking = false;
+    public bool isTracking = false;
     private Vector2 mousePosition;
     public Image buildBullseye;
     public Image demolishBullseye;
     public Image backgroundIcon;
     public RectTransform trackpadRect;
+    private float mouseYFix = -72.5f;
 
     private Image target;
 
@@ -49,17 +50,13 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerExitHandler,
         MoveBullseye(mousePosition);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        print("Pointer Exit");
 
-    }
+    // public void OnPointerEnter(PointerEventData eventData)
+    // {
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        print("Pointer Enter");
-        isTracking = true;
-    }
+    //     target.gameObject.SetActive(true);
+    //     isTracking = true;
+    // }
 
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -95,7 +92,7 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerExitHandler,
 
     private void MoveBullseye(Vector2 mousePosition)
     {
-        target.rectTransform.localPosition = mousePosition;
+        target.rectTransform.localPosition = new Vector2(mousePosition.x, mousePosition.y + mouseYFix);
     }
 
     public void SetTarget(TrackpadTargetType targetType)
@@ -110,7 +107,5 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerExitHandler,
             target = demolishBullseye;
             buildBullseye.gameObject.SetActive(false);
         }
-
-        target.gameObject.SetActive(true);
     }
 }

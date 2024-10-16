@@ -76,6 +76,7 @@ public class CameraController : MonoBehaviour
     public string heatmapMetric = "heatContribution";
 
     public FixedJoystick fixedJoystick;
+    public TrackPad placementTrackpad;
 
 
     void Start()
@@ -161,22 +162,51 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        print("--   " + Input.mousePosition);
 
         if (moveTarget)
         {
+            Vector3 trackpadPos = TrackpadToMainCamera();
+
             float planeY = 0;
             Plane plane = new Plane(Vector3.up, Vector3.up * planeY); // ground plane
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(trackpadPos);
 
             float distance; // the distance from the ray origin to the ray intersection of the plane
             if (plane.Raycast(ray, out distance))
             {
                 // target.position = ray.GetPoint(distance).x;
-                target.position = Vector3.Lerp(target.position, new Vector3(Mathf.Floor((ray.GetPoint(distance).x + gridSize / 2) / gridSize) * gridSize,
-                   0, Mathf.Floor((ray.GetPoint(distance).z + gridSize / 2) / gridSize) * gridSize), Time.deltaTime * 50);
+                target.position = Vector3.Lerp(
+                    target.position,
+                    new Vector3(Mathf.Floor((ray.GetPoint(distance).x + gridSize / 2) / gridSize) * gridSize,
+                    0,
+                    Mathf.Floor((ray.GetPoint(distance).z + gridSize / 2) / gridSize) * gridSize),
+                    Time.deltaTime * 50
+                );
             }
         }
 
+    }
+
+    public Vector3 TrackpadToMainCamera()
+    {
+        Vector2 trackpadPos = placementTrackpad.GetTargetPosition();
+
+        // Get the trackpad's size
+        float trackpadWidth = placementTrackpad.trackpadRect.sizeDelta.x;
+        float trackpadHeight = placementTrackpad.trackpadRect.sizeDelta.y;
+
+        // Normalize the trackpad position to values between 0 and 1
+        float normalizedX = (trackpadPos.x + trackpadWidth / 2) / trackpadWidth; // Local position ranges from -width/2 to +width/2
+        float normalizedY = (trackpadPos.y + trackpadHeight / 2) / trackpadHeight; // Local position ranges from -height/2 to +height/2
+
+        // Map the normalized trackpad position to the main display's screen resolution
+        // Hardcoded for now
+        float screenX = normalizedX * 1920;
+        float screenY = normalizedY * 1080;
+
+        Vector3 screenPos = new Vector3(screenX, screenY, 0);
+        return screenPos;
     }
 
 
