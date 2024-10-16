@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using System.Globalization;
 using UnityEditor;
+// using Enums;
 
 
 public class BuildingsMenuNew : MonoBehaviour
@@ -34,6 +35,8 @@ public class BuildingsMenuNew : MonoBehaviour
     public Button typeButton;
     public Button buildingButton;
     public GameObject activateMenu;
+    public RectTransform buildMenuTrackpad; // The rectangular UI element acting as the trackpad
+
     public GameObject mainMenu;
     public GameObject navigationGui;
     public GameObject homeButton;
@@ -70,14 +73,14 @@ public class BuildingsMenuNew : MonoBehaviour
     private CameraController cameraController;
     private RoadGenerator roadGenerator;
 
-    bool doubleClick;
-
     public GameObject holdToSelect;
 
     public Dictionary<string, (int min, int max)> propertyRanges = new();
 
 
-    public RectTransform trackpadRect; // The rectangular UI element acting as the trackpad
+    public GameObject placementUI;
+    public TrackPad trackPad;
+
 
 
     private void Start()
@@ -114,6 +117,7 @@ public class BuildingsMenuNew : MonoBehaviour
         homeButton.SetActive(false);
         buildingStats.SetActive(false);
         activateMenu.SetActive(false);
+        placementUI.SetActive(false);
     }
 
     public void OnDropdownValueChanged(int index)
@@ -172,7 +176,7 @@ public class BuildingsMenuNew : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // Check if the drag started within the trackpad bounds
-            if (RectTransformUtility.RectangleContainsScreenPoint(trackpadRect, Input.mousePosition, menuCamera))
+            if (RectTransformUtility.RectangleContainsScreenPoint(buildMenuTrackpad, Input.mousePosition, menuCamera))
             {
                 isDragging = true;
                 dragStartPos = Input.mousePosition;
@@ -204,8 +208,6 @@ public class BuildingsMenuNew : MonoBehaviour
             if (posX < 0)
                 posX += Time.deltaTime * 100;
         }
-
-
     }
 
 
@@ -435,6 +437,7 @@ public class BuildingsMenuNew : MonoBehaviour
         mainMenu.SetActive(true);
         homeButton.SetActive(false);
         buildingStats.SetActive(false);
+        placementUI.SetActive(false);
     }
 
     public void OnHeatMapToggle()
@@ -469,7 +472,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
         minPos = minTypePos;
         maxPos = maxTypePos;
-
     }
 
 
@@ -514,7 +516,7 @@ public class BuildingsMenuNew : MonoBehaviour
         if (holdToSelect.hasSelected)
         {
             CreateBuilding();
-            CloseBuildMenu();
+            OpenPlacementGUI(TrackpadTargetType.Build);
         }
         else
         {
@@ -522,8 +524,23 @@ public class BuildingsMenuNew : MonoBehaviour
         }
     }
 
+    public void OpenPlacementGUI(TrackpadTargetType targetType)
+    {
+        placementUI.SetActive(true);
+        trackPad.SetTarget(targetType);
+
+        TextMeshProUGUI textLabel = placementUI.transform.Find("ConfirmBtn").Find("Label").GetComponent<TextMeshProUGUI>();
+        textLabel.text = targetType.ToString();
+
+        homeButton.SetActive(true);
+        activateMenu.SetActive(false);
+        mainMenu.SetActive(false);
+        buildingStats.SetActive(false);
+    }
+
     private void CreateBuilding()
     {
+
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
 
         for (int i = 0; i < buildings.Length; i++)
@@ -605,6 +622,8 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void DeleteBuilding()
     {
+        print("DeleteBuilding");
+
         // There is only a 
         HoldToSelect holdToSelect;
         EventSystem.current.currentSelectedGameObject.TryGetComponent<HoldToSelect>(out holdToSelect);
@@ -614,8 +633,8 @@ public class BuildingsMenuNew : MonoBehaviour
             holdToSelect.ResetHold();
         }
 
-
-        buildingStats.SetActive(false);
+        // Update UI
+        OpenPlacementGUI(TrackpadTargetType.Demolish);
 
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
         cameraController.moveTarget = true;
