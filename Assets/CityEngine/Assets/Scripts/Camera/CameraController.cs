@@ -162,8 +162,6 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        print("--   " + Input.mousePosition);
-
         if (moveTarget)
         {
             Vector3 trackpadPos = TrackpadToMainCamera();
@@ -185,7 +183,6 @@ public class CameraController : MonoBehaviour
                 );
             }
         }
-
     }
 
     public Vector3 TrackpadToMainCamera()
@@ -214,8 +211,7 @@ public class CameraController : MonoBehaviour
     {
         targetNew.parent = roadsParent;
         targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
-        bool roadSpawnWasSuccessful = true;
-        roadSpawnWasSuccessful = roadGenerator.CheckRoadType(targetNew);
+        bool roadSpawnWasSuccessful = roadGenerator.CheckRoadType(targetNew);
         if (roadSpawnWasSuccessful)
         {
 
@@ -241,8 +237,8 @@ public class CameraController : MonoBehaviour
         // Get Building Properties
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
 
-        doubleClick = false;
-        lastClickTime = 0;
+        // doubleClick = false;
+        // lastClickTime = 0;
 
         targetNew.parent = buildingsParent;
         for (int i = 0; i < allBuildings.Count; i++)
@@ -356,7 +352,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    void DeleteTarget(Transform target)
+    public void DeleteTarget(Transform target)
     {
         doubleClick = false;
         lastClickTime = 0;
@@ -422,14 +418,12 @@ public class CameraController : MonoBehaviour
         toPos.x = Mathf.Clamp(toPos.x, xRange[0], xRange[1]);
         toPos.z = Mathf.Clamp(toPos.z, zRange[0], zRange[1]);
 
-        if (activateMenu.activeSelf == false)
-        {
-            cameraHolder.transform.position = Vector3.Lerp(
-                cameraHolder.transform.position,
-                toPos,
-                Time.deltaTime * 5
-            );
-        }
+
+        cameraHolder.transform.position = Vector3.Lerp(
+            cameraHolder.transform.position,
+            toPos,
+            Time.deltaTime * 5
+        );
 
 
         toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom + 200);
@@ -643,9 +637,6 @@ public class CameraController : MonoBehaviour
     public void RotateCameraRight() { RotateCamera(-rotationScale * 10); }
     public void ZoomIn(float multiplier = 1)
     {
-        print("ZoomIn");
-        // toZoom += zoomScale * multiplier;
-
         if (!heatmapActive)
         {
             toZoom += multiplier * zoomScale;
@@ -659,7 +650,6 @@ public class CameraController : MonoBehaviour
     }
     public void ZoomOut(float multiplier = 1)
     {
-        print("ZoomOut");
         // toZoom -= zoomScale * multiplier;
         if (!heatmapActive)
         {
