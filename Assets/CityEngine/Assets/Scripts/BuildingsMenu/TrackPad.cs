@@ -15,6 +15,9 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     private Image target;
 
+    public Button confirmButton;
+    public Button cancelButton;
+
 
     private void Start()
     {
@@ -22,17 +25,11 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         buildBullseye.gameObject.SetActive(false);
         demolishBullseye.gameObject.SetActive(false);
         backgroundIcon.gameObject.SetActive(true);
-        // target = buildBullseye;
     }
 
-    private void OnEnable()
-    {
-        // if (target != null) target.gameObject.SetActive(true);
-    }
 
     private void OnDisable()
     {
-        // target = null;
         buildBullseye.gameObject.SetActive(false);
         demolishBullseye.gameObject.SetActive(false);
         backgroundIcon.gameObject.SetActive(true);
@@ -48,23 +45,21 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         mousePosition = GetMousePosition(eventData);
         MoveBullseye(mousePosition);
+
+        confirmButton.interactable = false;
+        cancelButton.interactable = false;
     }
-
-
-    // public void OnPointerEnter(PointerEventData eventData)
-    // {
-
-    //     target.gameObject.SetActive(true);
-    //     isTracking = true;
-    // }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         isTracking = false;
+        confirmButton.interactable = true;
+        cancelButton.interactable = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+
         bool pointerInBounds = RectTransformUtility.RectangleContainsScreenPoint(trackpadRect, Input.mousePosition, eventData.pressEventCamera);
         isTracking = pointerInBounds;
         if (isTracking)
