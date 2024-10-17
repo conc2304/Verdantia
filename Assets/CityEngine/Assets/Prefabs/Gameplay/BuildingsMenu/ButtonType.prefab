@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 7427056121792578915}
-  holdTime: 1
+  holdTime: 0.6
   delayTime: 0.2
   hasSelected: 0
 --- !u!1 &4426379348226383393
