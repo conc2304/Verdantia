@@ -162,7 +162,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (moveTarget)
+        if (moveTarget && target != null)
         {
             Vector3 trackpadPos = TrackpadToMainCamera();
 

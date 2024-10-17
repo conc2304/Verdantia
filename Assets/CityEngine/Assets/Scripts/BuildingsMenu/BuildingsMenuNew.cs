@@ -11,7 +11,6 @@ using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using System.Globalization;
 using UnityEditor;
-// using Enums;
 
 
 public class BuildingsMenuNew : MonoBehaviour
@@ -81,6 +80,10 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject placementUI;
     public TrackPad trackPad;
 
+    public GameObject navInfoToggleParent;
+    public Button NavToggleBtn;
+    public Button InfoToggleBtn;
+
 
 
     private void Start()
@@ -118,6 +121,8 @@ public class BuildingsMenuNew : MonoBehaviour
         buildingStats.SetActive(false);
         activateMenu.SetActive(false);
         placementUI.SetActive(false);
+        navInfoToggleParent.SetActive(false);
+
     }
 
     public void OnDropdownValueChanged(int index)
@@ -166,6 +171,8 @@ public class BuildingsMenuNew : MonoBehaviour
                 posX -= Time.deltaTime * 10;
             }
         }
+
+
     }
 
 
@@ -412,7 +419,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void OnHomeButton()
     {
-        CloseBuildMenu();
+        InitializeTouchGui();
     }
 
     public void OpenBuildMenu()
@@ -425,7 +432,7 @@ public class BuildingsMenuNew : MonoBehaviour
         mainMenu.SetActive(false);
         homeButton.SetActive(true);
         buildingStats.SetActive(false);
-
+        navInfoToggleParent.SetActive(false);
     }
 
     public void CloseBuildMenu()
@@ -438,6 +445,7 @@ public class BuildingsMenuNew : MonoBehaviour
         homeButton.SetActive(false);
         buildingStats.SetActive(false);
         placementUI.SetActive(false);
+        navInfoToggleParent.SetActive(false);
     }
 
     public void OnHeatMapToggle()
@@ -510,13 +518,15 @@ public class BuildingsMenuNew : MonoBehaviour
         {
             CreateBuilding();
             OpenPlacementGUI(TrackpadTargetType.Build);
+            navigationGui.SetActive(true);
+            buildingStats.SetActive(false);
+            navInfoToggleParent.SetActive(false);
         }
         else
         {
             SelectBuilding();
         }
 
-        buildingStats.SetActive(false);
 
     }
 
@@ -532,11 +542,11 @@ public class BuildingsMenuNew : MonoBehaviour
         activateMenu.SetActive(false);
         mainMenu.SetActive(false);
         buildingStats.SetActive(false);
+        navInfoToggleParent.SetActive(false);
     }
 
     private void CreateBuilding()
     {
-
         UnsetTarget();
 
         for (int i = 0; i < buildings.Length; i++)
@@ -575,6 +585,10 @@ public class BuildingsMenuNew : MonoBehaviour
             BuildingInfoDisplay displayData = GetComponent<BuildingInfoDisplay>();
             displayData.DisplayBuildingData(buildingProps);
             buildingStats.SetActive(true);
+            navigationGui.SetActive(false);
+            navInfoToggleParent.SetActive(true);
+            NavToggleBtn.interactable = true;
+            InfoToggleBtn.interactable = false;
         }
     }
 
@@ -629,16 +643,21 @@ public class BuildingsMenuNew : MonoBehaviour
             holdToSelect.ResetHold();
         }
 
+
         // Update UI
         OpenPlacementGUI(TrackpadTargetType.Demolish);
+        activateMenu.SetActive(false);
+        navigationGui.SetActive(true);
+        navInfoToggleParent.SetActive(false);
 
         UnsetTarget();
         cameraController.moveTarget = true;
-
         Transform target = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity).transform;
         target.transform.GetChild(0).localPosition = new Vector3(0, 6, 0);
         cameraController.target = target;
-        activateMenu.SetActive(false);
+
+
+
     }
 
     public Dictionary<string, (int min, int max)> UpdatePropertyRanges()
@@ -750,7 +769,6 @@ public class BuildingsMenuNew : MonoBehaviour
             }
         }
 
-        print(cameraController.target);
         // Delete and Roads let you keep going, but Buildings have to be reselected
         if (cameraController.target == null || !cameraController.moveTarget)
         {
@@ -761,5 +779,23 @@ public class BuildingsMenuNew : MonoBehaviour
     private void UnsetTarget()
     {
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
+    }
+
+    public void OnInfoTabClick()
+    {
+        buildingStats.SetActive(true);
+        navigationGui.SetActive(false);
+
+        NavToggleBtn.interactable = true;
+        InfoToggleBtn.interactable = false;
+    }
+
+    public void OnNavTabClick()
+    {
+        buildingStats.SetActive(false);
+        navigationGui.SetActive(true);
+
+        NavToggleBtn.interactable = false;
+        InfoToggleBtn.interactable = true;
     }
 }
