@@ -7,9 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Unity.VisualScripting;
-using System.Globalization;
 using UnityEditor;
 
 
@@ -54,13 +52,13 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject deleteBuilding;
 
     int minTypePos, maxTypePos;
-    public int minPos, maxPos;
+    private int minPos, maxPos;
     int previousX, nextX;
 
     bool changePos = false;
 
     private Vector3 toPos;
-    public float posX;
+    private float posX;
 
     private Vector3 dragStartPos;
     private Vector3 dragTargetPos;
@@ -83,6 +81,9 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject navInfoToggleParent;
     public Button NavToggleBtn;
     public Button InfoToggleBtn;
+    public GameObject cityMetricsBtnGO;
+
+    public GameObject cityMetricsDisplay;
 
 
 
@@ -108,7 +109,7 @@ public class BuildingsMenuNew : MonoBehaviour
     private void InitializeHeatmapDropdownList()
     {
         heatmapDropdown.ClearOptions();
-        heatmapOptionsList.AddRange(propertyRanges.Keys.Select(key => ConvertToLabel(key)).ToList());
+        heatmapOptionsList.AddRange(propertyRanges.Keys.Select(key => StringsUtils.ConvertToLabel(key)).ToList());
         heatmapDropdown.AddOptions(heatmapOptionsList);
     }
 
@@ -122,7 +123,8 @@ public class BuildingsMenuNew : MonoBehaviour
         activateMenu.SetActive(false);
         placementUI.SetActive(false);
         navInfoToggleParent.SetActive(false);
-
+        cityMetricsBtnGO.SetActive(true);
+        cityMetricsDisplay.SetActive(false);
     }
 
     public void OnDropdownValueChanged(int index)
@@ -130,7 +132,7 @@ public class BuildingsMenuNew : MonoBehaviour
         if (index == 0) return;
 
         string hmLabel = heatmapOptionsList[index];
-        string hmValue = ConvertToCamelCase(hmLabel);
+        string hmValue = StringsUtils.ConvertToCamelCase(hmLabel);
 
         cameraController.heatmapMetric = hmValue;
         cameraController.cityChanged = true;
@@ -433,6 +435,8 @@ public class BuildingsMenuNew : MonoBehaviour
         homeButton.SetActive(true);
         buildingStats.SetActive(false);
         navInfoToggleParent.SetActive(false);
+        cityMetricsBtnGO.SetActive(false);
+
     }
 
     public void CloseBuildMenu()
@@ -446,6 +450,8 @@ public class BuildingsMenuNew : MonoBehaviour
         buildingStats.SetActive(false);
         placementUI.SetActive(false);
         navInfoToggleParent.SetActive(false);
+        cityMetricsBtnGO.SetActive(true);
+
     }
 
     public void OnHeatMapToggle()
@@ -543,6 +549,8 @@ public class BuildingsMenuNew : MonoBehaviour
         mainMenu.SetActive(false);
         buildingStats.SetActive(false);
         navInfoToggleParent.SetActive(false);
+        cityMetricsBtnGO.SetActive(false);
+        navigationGui.SetActive(true);
     }
 
     private void CreateBuilding()
@@ -646,18 +654,12 @@ public class BuildingsMenuNew : MonoBehaviour
 
         // Update UI
         OpenPlacementGUI(TrackpadTargetType.Demolish);
-        activateMenu.SetActive(false);
-        navigationGui.SetActive(true);
-        navInfoToggleParent.SetActive(false);
 
         UnsetTarget();
         cameraController.moveTarget = true;
         Transform target = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity).transform;
         target.transform.GetChild(0).localPosition = new Vector3(0, 6, 0);
         cameraController.target = target;
-
-
-
     }
 
     public Dictionary<string, (int min, int max)> UpdatePropertyRanges()
@@ -715,24 +717,7 @@ public class BuildingsMenuNew : MonoBehaviour
         else return UpdatePropertyRanges();
     }
 
-    public static string ConvertToLabel(string camelCaseString)
-    {
-        string spacedString = Regex.Replace(camelCaseString, "(\\B[A-Z])", " $1");
-        return char.ToUpper(spacedString[0]) + spacedString.Substring(1);
-    }
 
-    public static string ConvertToCamelCase(string label)
-    {
-        string[] words = label.Split(' ');
-        string camelCaseString = words[0].ToLower();
-
-        for (int i = 1; i < words.Length; i++)
-        {
-            camelCaseString += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(words[i].ToLower());
-        }
-
-        return camelCaseString;
-    }
 
     public void OnPlacementCancel()
     {
@@ -797,5 +782,10 @@ public class BuildingsMenuNew : MonoBehaviour
 
         NavToggleBtn.interactable = false;
         InfoToggleBtn.interactable = true;
+    }
+
+    public void OnCityStatsClick()
+    {
+
     }
 }
