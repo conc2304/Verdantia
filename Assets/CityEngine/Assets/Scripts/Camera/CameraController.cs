@@ -187,6 +187,7 @@ public class CameraController : MonoBehaviour
 
     public Vector3 TrackpadToMainCamera()
     {
+
         Vector2 trackpadPos = placementTrackpad.GetTargetPosition();
 
         // Get the trackpad's size
@@ -199,8 +200,9 @@ public class CameraController : MonoBehaviour
 
         // Map the normalized trackpad position to the main display's screen resolution
         // Hardcoded for now
+        float topBarHight = 100;
         float screenX = normalizedX * 1920;
-        float screenY = normalizedY * 1080;
+        float screenY = normalizedY * (1080 - topBarHight);
 
         Vector3 screenPos = new Vector3(screenX, screenY, 0);
         return screenPos;
