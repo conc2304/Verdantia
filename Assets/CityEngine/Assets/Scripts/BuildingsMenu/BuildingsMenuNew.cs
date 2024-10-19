@@ -786,6 +786,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void OnCityStatsClick()
     {
-
+        // just overlays the whole thing on top of everything like a modal
+        cityMetricsDisplay.SetActive(true);
     }
 }
