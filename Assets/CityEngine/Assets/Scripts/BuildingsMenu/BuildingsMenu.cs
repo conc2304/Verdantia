@@ -163,7 +163,7 @@ public class BuildingsMenu : MonoBehaviour
 
             Button button = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, type.transform);
             button.transform.localPosition = new Vector3(0, 2, 0);
-            button.onClick.AddListener(ClickCheck);
+            // button.onClick.AddListener(ClickCheck);
             button.gameObject.name = buildings[i].type.name;
 
             //find min and max position of type menu
@@ -300,37 +300,38 @@ public class BuildingsMenu : MonoBehaviour
     }
 
 
-    public void ClickCheck()
-    {
-        if (cameraController.doubleClick)
-        {
-            cameraController.doubleClick = false;
-            cameraController.lastClickTime = 0;
-            for (int i = 0; i < buildingsParents.Count; i++)
-            {
-                //buildingsTypes[i].SetActive(false);
-                if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsParents[i].name)
-                {
-                    buildingsParents[i].SetActive(true);
-                    minPos = buildings[i].minPos;
-                    maxPos = buildings[i].maxPos;
-                }
-            }
-            for (int i = 0; i < buildingsTypes.Count; i++)
-            {
-                buildingsTypes[i].SetActive(false);
-            }
-            //set active delete tool
-        }
-    }
+    // public void ClickCheck()
+    // {
+    //     if (cameraController.doubleClick)
+    //     {
+    //         cameraController.doubleClick = false;
+    //         cameraController.lastClickTime = 0;
+    //         for (int i = 0; i < buildingsParents.Count; i++)
+    //         {
+    //             //buildingsTypes[i].SetActive(false);
+    //             if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsParents[i].name)
+    //             {
+    //                 buildingsParents[i].SetActive(true);
+    //                 minPos = buildings[i].minPos;
+    //                 maxPos = buildings[i].maxPos;
+    //             }
+    //         }
+    //         for (int i = 0; i < buildingsTypes.Count; i++)
+    //         {
+    //             buildingsTypes[i].SetActive(false);
+    //         }
+    //         //set active delete tool
+    //     }
+    // }
 
 
     public void CreateBuilding()
     {
-        if (cameraController.doubleClick)
+        if (true)
+        // if (cameraController.doubleClick)
         {
-            cameraController.doubleClick = false;
-            cameraController.lastClickTime = 0;
+            // cameraController.doubleClick = false;
+            // cameraController.lastClickTime = 0;
 
             for (int i = 0; i < buildings.Length; i++)
             {

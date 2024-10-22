@@ -5,7 +5,7 @@ using UnityEngine;
 public class CityMetricsManager : MonoBehaviour
 {
 
-    public static CityMetricsManager Instance { get; private set; }
+    // public static CityMetricsManager Instance { get; private set; }
 
     // Global city metrics
     public int population { get; private set; }
@@ -40,19 +40,19 @@ public class CityMetricsManager : MonoBehaviour
         UpdateCityMetrics();
     }
 
-    void Awake()
-    {
-        // Implement the Singleton pattern
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Makes sure the object isn't destroyed on scene load
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    // void Awake()
+    // {
+    //     // Implement the Singleton pattern
+    //     if (Instance == null)
+    //     {
+    //         Instance = this;
+    //         DontDestroyOnLoad(gameObject); // Makes sure the object isn't destroyed on scene load
+    //     }
+    //     else
+    //     {
+    //         Destroy(gameObject);
+    //     }
+    // }
 
     void Update()
     {
