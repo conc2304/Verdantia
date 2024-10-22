@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 
 [ExecuteAlways] // Allows this to work both at runtime and in the Editor
-public class PrefabComponent : MonoBehaviour
+public class CityMetricUIItem : MonoBehaviour
 {
     // Public fields to be set in the Unity Editor
     [Header("UI Components")]
@@ -42,4 +42,11 @@ public class PrefabComponent : MonoBehaviour
             valueText.text = valuePrefix + value + valueSuffix;
         }
     }
+
+    public void UpdateValue(string newValue)
+    {
+        value = newValue;
+        valueText.text = valuePrefix + value + valueSuffix;
+    }
+
 }

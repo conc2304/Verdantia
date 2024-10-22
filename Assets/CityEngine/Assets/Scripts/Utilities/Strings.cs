@@ -21,6 +21,21 @@ public static class StringsUtils
 
         return camelCaseString;
     }
+
+    public static string GetMonthAbbreviation(int month)
+    {
+        string[] monthNames = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+        // Subtract 1 because arrays are 0-indexed but months are 1-12
+        if (month >= 1 && month <= 12)
+        {
+            return monthNames[month - 1];
+        }
+        else
+        {
+            return "Invalid Month";
+        }
+    }
 }
 
 

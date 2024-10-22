@@ -649,7 +649,7 @@ MonoBehaviour:
   - {fileID: 522143304254316781}
   additionalSpace: []
   buildConstruction: {fileID: 182836062321077121}
-  buildingHigh: 1
+  buildingHigh: 2
   buildingTime: 6
   spaceWidth: 1
   buildingName: Mid-rise Apartment

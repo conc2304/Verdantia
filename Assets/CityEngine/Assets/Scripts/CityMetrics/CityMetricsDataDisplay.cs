@@ -7,11 +7,45 @@ using Unity.VisualScripting;
 
 public class CityMetricsDataDisplay : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public CityMetricsManager cityMetricsManager;
     public GameObject modal;
     public TMP_Text modalTitle;
     public TMP_Text modalBodyText;
     public List<MetricModalItem> items = new List<MetricModalItem>();
+
+    public CityMetricUIItem populationUIItem;
+    public CityMetricUIItem happinessUIItem;
+    public CityMetricUIItem budgetUIItem;
+    public CityMetricUIItem greenSpaceUIItem;
+    public CityMetricUIItem urbanHeatUIItem;
+    public CityMetricUIItem pollutionUIItem;
+    public CityMetricUIItem energyUIItem;
+    public CityMetricUIItem carbonEmissionUIItem;
+    public CityMetricUIItem revenueUIItem;
+    public CityMetricUIItem incomeUIItem;
+    public CityMetricUIItem expensesUIItem;
+
+
+    void Start()
+    {
+        cityMetricsManager.OnMetricsUpdate += UpdateMetrics;
+    }
+
+    public void UpdateMetrics()
+    {
+        populationUIItem.UpdateValue(cityMetricsManager.population.ToString());
+        happinessUIItem.UpdateValue(cityMetricsManager.happiness.ToString());
+        budgetUIItem.UpdateValue(cityMetricsManager.budget.ToString());
+        greenSpaceUIItem.UpdateValue(cityMetricsManager.greenSpace.ToString());
+        urbanHeatUIItem.UpdateValue(cityMetricsManager.urbanHeat.ToString());
+        pollutionUIItem.UpdateValue(cityMetricsManager.pollution.ToString());
+        energyUIItem.UpdateValue(cityMetricsManager.energy.ToString());
+        carbonEmissionUIItem.UpdateValue(cityMetricsManager.carbonEmission.ToString());
+        revenueUIItem.UpdateValue(cityMetricsManager.revenue.ToString());
+        incomeUIItem.UpdateValue(cityMetricsManager.income.ToString());
+        expensesUIItem.UpdateValue(cityMetricsManager.expenses.ToString());
+    }
+
 
     public void OnMetricClick(MetricTitle metricTitle)
     {
