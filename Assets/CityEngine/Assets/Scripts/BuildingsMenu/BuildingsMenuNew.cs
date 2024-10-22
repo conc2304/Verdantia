@@ -84,6 +84,9 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject cityMetricsBtnGO;
 
     public GameObject cityMetricsDisplay;
+    public Button cityStatsNavToggleBtn;
+    public Button cityStatsInfoToggleBtn;
+    public GameObject cityStatsBottomPanel;
 
 
 
@@ -118,7 +121,7 @@ public class BuildingsMenuNew : MonoBehaviour
         // initial state
         navigationGui.SetActive(true);
         mainMenu.SetActive(true);
-        homeButton.SetActive(false);
+        // homeButton.SetActive(false);
         buildingStats.SetActive(false);
         activateMenu.SetActive(false);
         placementUI.SetActive(false);
@@ -432,7 +435,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
         // Aux Menus 
         mainMenu.SetActive(false);
-        homeButton.SetActive(true);
+        // homeButton.SetActive(true);
         buildingStats.SetActive(false);
         navInfoToggleParent.SetActive(false);
         cityMetricsBtnGO.SetActive(false);
@@ -446,7 +449,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
         // Aux Menus 
         mainMenu.SetActive(true);
-        homeButton.SetActive(false);
+        // homeButton.SetActive(false);
         buildingStats.SetActive(false);
         placementUI.SetActive(false);
         navInfoToggleParent.SetActive(false);
@@ -513,7 +516,6 @@ public class BuildingsMenuNew : MonoBehaviour
         {
             buildingsCategories[i].SetActive(false);
         }
-
     }
 
 
@@ -544,7 +546,9 @@ public class BuildingsMenuNew : MonoBehaviour
         TextMeshProUGUI textLabel = placementUI.transform.Find("ConfirmBtn").Find("Label").GetComponent<TextMeshProUGUI>();
         textLabel.text = targetType.ToString();
 
-        homeButton.SetActive(true);
+        GameObject buildingRotBtn = placementUI.transform.Find("BuildingRotBtn").gameObject;
+        buildingRotBtn.SetActive(targetType == TrackpadTargetType.Build);
+        // homeButton.SetActive(true);
         activateMenu.SetActive(false);
         mainMenu.SetActive(false);
         buildingStats.SetActive(false);
@@ -738,13 +742,14 @@ public class BuildingsMenuNew : MonoBehaviour
 
 
         Transform target = cameraController.target;
+        print(target.tag);
         if (target != null)
         {
-            if (target.CompareTag("Road"))              // spawn if road
+            if (target.CompareTag("Road"))
             {
                 cameraController.SpawnRoad(target);
             }
-            else if (target.CompareTag("Building"))      //spawn if building
+            else if (target.CompareTag("Building"))
             {
                 cameraController.SpawnBuilding(target);
             }
@@ -788,5 +793,30 @@ public class BuildingsMenuNew : MonoBehaviour
     {
         // just overlays the whole thing on top of everything like a modal
         cityMetricsDisplay.SetActive(true);
+        mainMenu.SetActive(false);
+        navigationGui.SetActive(false);
+        // homeButton.SetActive(false);
+
+        cityStatsNavToggleBtn.interactable = true;
+        cityStatsInfoToggleBtn.interactable = false;
+    }
+
+    public void OnCityStatsNavClick()
+    {
+
+        cityStatsBottomPanel.SetActive(false);
+        navigationGui.SetActive(true);
+
+        cityStatsNavToggleBtn.interactable = false;
+        cityStatsInfoToggleBtn.interactable = true;
+    }
+
+    public void OnCityStatsInfoClick()
+    {
+        cityStatsBottomPanel.SetActive(true);
+        navigationGui.SetActive(false);
+
+        cityStatsNavToggleBtn.interactable = true;
+        cityStatsInfoToggleBtn.interactable = false;
     }
 }

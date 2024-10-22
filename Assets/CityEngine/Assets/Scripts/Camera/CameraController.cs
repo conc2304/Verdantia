@@ -57,8 +57,8 @@ public class CameraController : MonoBehaviour
     public Transform forest;
     List<Transform> forestObj = new List<Transform>();
 
-    public bool doubleClick;
-    public float lastClickTime;
+    // public bool doubleClick;
+    // public float lastClickTime;
     float catchTime = 0.3f;
 
     bool findPositionAfterMuiltyIputs;
@@ -77,6 +77,7 @@ public class CameraController : MonoBehaviour
 
     public FixedJoystick fixedJoystick;
     public TrackPad placementTrackpad;
+    public CityMetricsManager cityMetricsManager;
 
 
     void Start()
@@ -121,23 +122,23 @@ public class CameraController : MonoBehaviour
         TouchInput();
 
         // MouseInput();
-        KeyboardInput();
+        // KeyboardInput();
         SetPosition();
 
 
         // Check for double click 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Time.time - lastClickTime < catchTime)
-            {
-                doubleClick = true;
-            }
-            else
-            {
-                doubleClick = false;
-            }
-            lastClickTime = Time.time;
-        }
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     if (Time.time - lastClickTime < catchTime)
+        //     {
+        //         doubleClick = true;
+        //     }
+        //     else
+        //     {
+        //         doubleClick = false;
+        //     }
+        //     lastClickTime = Time.time;
+        // }
 
         // handle heat map updates on city change 
         if (heatMap != null && cityChanged)
@@ -147,7 +148,7 @@ public class CameraController : MonoBehaviour
 
         if (cityChanged)
         {
-            CityMetricsManager.Instance.UpdateCityMetrics();
+            cityMetricsManager.UpdateCityMetrics();
 
         }
 
@@ -235,9 +236,9 @@ public class CameraController : MonoBehaviour
             Transform target1 = Instantiate(targetNew, new Vector3(0, 0, 0), Quaternion.identity).transform;
             target = target1;
             cityChanged = true;
-            lastClickTime = 0;
+            // lastClickTime = 0;
         }
-        doubleClick = false;
+        // doubleClick = false;
     }
 
     public void SpawnBuilding(Transform targetNew)
@@ -287,28 +288,28 @@ public class CameraController : MonoBehaviour
             }
         }
         // Check if the building is adjacent to a road
-        if (roadGenerator.allRoads.Count == 0) dontBuild = true;
-        for (int i = 0; i < roadGenerator.allRoads.Count; i++)
-        {
+        // if (roadGenerator.allRoads.Count == 0) dontBuild = true;
+        // for (int i = 0; i < roadGenerator.allRoads.Count; i++)
+        // {
 
-            Vector3 roadPos = roadGenerator.allRoads[i].position;
+        //     Vector3 roadPos = roadGenerator.allRoads[i].position;
 
-            // Check the four cardinal directions around the building's position
-            if (Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round((targetNew.position.x + 10) / 10) * 10 && Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10 ||
-                Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round((targetNew.position.x - 10) / 10) * 10 && Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10 ||
-                Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round((targetNew.position.z + 10) / 10) * 10 && Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10 ||
-                Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round((targetNew.position.z - 10) / 10) * 10 && Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10)
-            {
-                isNextToRoad = true;
-                break;
-            }
-        }
+        //     // Check the four cardinal directions around the building's position
+        //     if (Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round((targetNew.position.x + 10) / 10) * 10 && Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10 ||
+        //         Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round((targetNew.position.x - 10) / 10) * 10 && Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10 ||
+        //         Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round((targetNew.position.z + 10) / 10) * 10 && Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10 ||
+        //         Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round((targetNew.position.z - 10) / 10) * 10 && Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10)
+        //     {
+        //         isNextToRoad = true;
+        //         break;
+        //     }
+        // }
 
-        if (!isNextToRoad)
-        {
-            Debug.Log("Building placement failed: not adjacent to any road.");
-            dontBuild = true;
-        }
+        // if (!isNextToRoad)
+        // {
+        //     Debug.Log("Building placement failed: not adjacent to any road.");
+        //     dontBuild = true;
+        // }
 
         if (dontBuild == false)
         {
@@ -363,39 +364,41 @@ public class CameraController : MonoBehaviour
 
 
 
-    void OnGUI()
-    {
-        if (doubleClick)
-        {
-            dontBuild = false;
-            if (target != null)
-            {
-                if (target.CompareTag("Road"))              // spawn if road
-                {
-                    SpawnRoad(target);
-                }
-                else if (target.CompareTag("Building"))      //spawn if building
-                {
-                    SpawnBuilding(target);
-                }
-                else if (target.CompareTag("DeleteTool"))
-                {
-                    DeleteTarget(target);
-                }
-            }
-        }
-    }
+    // void OnGUI()
+    // {
+    //     if (doubleClick)
+    //     {
+    //         dontBuild = false;
+    //         if (target != null)
+    //         {
+    //             if (target.CompareTag("Road"))              // spawn if road
+    //             {
+    //                 SpawnRoad(target);
+    //             }
+    //             else if (target.CompareTag("Building"))      //spawn if building
+    //             {
+    //                 SpawnBuilding(target);
+    //             }
+    //             else if (target.CompareTag("DeleteTool"))
+    //             {
+    //                 DeleteTarget(target);
+    //             }
+    //         }
+    //     }
+    // }
 
     public void DeleteTarget(Transform target)
     {
-        doubleClick = false;
-        lastClickTime = 0;
+        print("Delete Target");
+        // doubleClick = false;
+        // lastClickTime = 0;
 
         for (int i = 0; i < allBuildings.Count; i++)
         {
             if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(target.position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(target.position.z / 10) * 10)
             {
+                // print()
                 cityChanged = true;
 
                 for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect.Length; pathTargetIndex++)
@@ -421,17 +424,19 @@ public class CameraController : MonoBehaviour
                 else
                 {
                     for (int y = 0; y < allBuildings[i].GetComponent<BuildingProperties>().additionalSpace.Length; y++)
+                    {
                         allBuildings.Remove(allBuildings[i].GetComponent<BuildingProperties>().additionalSpace[y]);
+                    }
 
                     Destroy(allBuildings[i].gameObject);
                     allBuildings.Remove(allBuildings[i]);
                     cityChanged = true;
-
                 }
 
                 break;
             }
         }
+
         for (int i = 0; i < roadGenerator.allRoads.Count; i++)
         {
             if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(target.position.x) &&
