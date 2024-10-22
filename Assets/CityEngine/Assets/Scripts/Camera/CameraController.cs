@@ -42,8 +42,8 @@ public class CameraController : MonoBehaviour
     public float maxZoom;
     public Slider zoomSlider;
 
-    public int[] xRange = new int[2] { 0, 1000 };
-    public int[] zRange = new int[2] { 0, 1000 };
+    private int[] xRange = new int[2] { 0, 1000 };
+    private int[] zRange = new int[2] { 0, 1000 };
 
     private BuildingsMenuNew buildingMenu;
     private RoadGenerator roadGenerator;
@@ -145,6 +145,12 @@ public class CameraController : MonoBehaviour
             UpdateHeatMap(heatmapMetric);
         }
 
+        if (cityChanged)
+        {
+            CityMetricsManager.Instance.UpdateCityMetrics();
+
+        }
+
         cityChanged = false;
     }
 
@@ -239,9 +245,8 @@ public class CameraController : MonoBehaviour
         // Get Building Properties
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
 
-        // doubleClick = false;
-        // lastClickTime = 0;
-
+        dontBuild = false;
+        bool isNextToRoad = false;
         targetNew.parent = buildingsParent;
         for (int i = 0; i < allBuildings.Count; i++)
         {
@@ -281,6 +286,29 @@ public class CameraController : MonoBehaviour
                 }
             }
         }
+        // Check if the building is adjacent to a road
+        if (roadGenerator.allRoads.Count == 0) dontBuild = true;
+        for (int i = 0; i < roadGenerator.allRoads.Count; i++)
+        {
+
+            Vector3 roadPos = roadGenerator.allRoads[i].position;
+
+            // Check the four cardinal directions around the building's position
+            if (Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round((targetNew.position.x + 10) / 10) * 10 && Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10 ||
+                Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round((targetNew.position.x - 10) / 10) * 10 && Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10 ||
+                Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round((targetNew.position.z + 10) / 10) * 10 && Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10 ||
+                Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round((targetNew.position.z - 10) / 10) * 10 && Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10)
+            {
+                isNextToRoad = true;
+                break;
+            }
+        }
+
+        if (!isNextToRoad)
+        {
+            Debug.Log("Building placement failed: not adjacent to any road.");
+            dontBuild = true;
+        }
 
         if (dontBuild == false)
         {
@@ -308,10 +336,14 @@ public class CameraController : MonoBehaviour
             for (int i = 0; i < targetBuildProp.additionalSpace.Length; i++)
                 allBuildings.Add(targetBuildProp.additionalSpace[i].transform);
 
-            targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
+            targetNew.position = new Vector3(
+                Mathf.Round(targetNew.position.x / 10) * 10,
+                0,
+                Mathf.Round(targetNew.position.z / 10) * 10
+            );
 
-            //if (target.GetComponent<BuildingProperties>().connectToRoad)
-            //   roadGenerator.ConnectBuildingToRoad(target);
+            // if (target.GetComponent<BuildingProperties>().connectToRoad)
+            // //   roadGenerator.ConnectBuildingToRoad(target);
 
             //building animation
             BuildConstruction buildConstProp = targetBuildProp.buildConstruction.GetComponent<BuildConstruction>();
@@ -455,9 +487,10 @@ public class CameraController : MonoBehaviour
 
     private void TouchInput()
     {
+        float joystickSpeed = NumbersUtils.Remap(minZoom, maxZoom, 60, 120, toZoom.y); // move faster at futher zooms
         // Handle Joystick input for camera movement L/R/U/D
         Vector3 direction = cameraHolder.transform.forward * fixedJoystick.Vertical + cameraHolder.transform.right * fixedJoystick.Horizontal;
-        float magnitude = direction.magnitude * 60; // the further the joy stick is the faster they move
+        float magnitude = direction.magnitude * joystickSpeed; // the further the joy stick is the faster they move
         Vector3 movement = magnitude * Time.deltaTime * direction;
         if (heatmapActive) movement.y = 0; // Prevent Y-axis movement
         toPos += movement;
