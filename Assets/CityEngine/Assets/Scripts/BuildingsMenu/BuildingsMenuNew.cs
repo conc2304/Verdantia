@@ -527,7 +527,6 @@ public class BuildingsMenuNew : MonoBehaviour
                     buildingName = buildingParent.name;
                     Transform building = buildingParent.Find(buildingName);
                     BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
-                    print(buildingName + ": " + buildingProps.constructionCost);
 
                     if (buildingProps.constructionCost > cityMetricsManager.budget)
                     {

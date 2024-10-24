@@ -73,8 +73,6 @@ public class CityMetricsManager : MonoBehaviour
         // Notify any systems 
         OnMetricsUpdate?.Invoke();
         OnTimeUpdated?.Invoke(currentMonth, currentYear);
-
-        Debug.Log($"Time updated: Month: {currentMonth}, Year: {currentYear}");
     }
 
     // Update budget based on revenue and expenses (done every "month")
@@ -88,8 +86,6 @@ public class CityMetricsManager : MonoBehaviour
 
         // Update the budget by subtracting expenses from income
         budget += monthlyIncome - monthlyExpenses;
-
-        Debug.Log($"budget updated: Income = {monthlyIncome}, Expenses = {monthlyExpenses}, New budget = {budget}");
     }
 
     // Update city metrics based on all buildings
