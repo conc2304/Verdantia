@@ -8,6 +8,11 @@ public class CityMetricsManager : MonoBehaviour
     // public static CityMetricsManager Instance { get; private set; }
 
     // Global city metrics
+    public int startingBudget = 1000;
+    // public int startingBudget = 500000;
+    public float startingTemp = 72.0f;
+    private string tempSuffix = "°F";
+    public float cityTemp = 72.0f;
     public int population { get; private set; }
     public float happiness { get; private set; } // Store as float for calculation
     public int budget { get; private set; }
@@ -19,9 +24,6 @@ public class CityMetricsManager : MonoBehaviour
     public int revenue { get; private set; }
     public int income { get; private set; }
     public int expenses { get; private set; }
-
-    // Reference to all buildings in the city
-    // public List<BuildingProperties> allBuildings = new List<BuildingProperties>();
     public CameraController cameraController;
 
     // Time-keeping variables
@@ -32,27 +34,16 @@ public class CityMetricsManager : MonoBehaviour
 
     public event Action<int, int> OnTimeUpdated; // (month, year)
     public event Action OnMetricsUpdate;
+    public event Action OnTempUpdated;
 
 
     void Start()
     {
-        // Initialize metrics
+        budget = startingBudget;
         UpdateCityMetrics();
+        OnMetricsUpdate?.Invoke();
     }
 
-    // void Awake()
-    // {
-    //     // Implement the Singleton pattern
-    //     if (Instance == null)
-    //     {
-    //         Instance = this;
-    //         DontDestroyOnLoad(gameObject); // Makes sure the object isn't destroyed on scene load
-    //     }
-    //     else
-    //     {
-    //         Destroy(gameObject);
-    //     }
-    // }
 
     void Update()
     {
@@ -66,6 +57,7 @@ public class CityMetricsManager : MonoBehaviour
             monthTimer = 0f;
         }
     }
+
     void AdvanceMonth()
     {
         // Advance the month
@@ -78,7 +70,7 @@ public class CityMetricsManager : MonoBehaviour
             currentYear++; // Move to the next year
         }
 
-        // Notify any systems (if needed)
+        // Notify any systems 
         OnMetricsUpdate?.Invoke();
         OnTimeUpdated?.Invoke(currentMonth, currentYear);
 
@@ -106,7 +98,6 @@ public class CityMetricsManager : MonoBehaviour
         // Reset all metrics before recalculating them
         ResetMetrics();
 
-
         foreach (Transform building in cameraController.allBuildings)
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
@@ -117,7 +108,7 @@ public class CityMetricsManager : MonoBehaviour
             greenSpace += buildingProps.greenSpaceEffect;
             urbanHeat += buildingProps.heatContribution;
             pollution += buildingProps.pollutionOutput - buildingProps.pollutionReduction; // Net pollution after reduction
-            energy += buildingProps.energyConsumption;
+            energy += buildingProps.resourceProduction - buildingProps.energyConsumption;
             carbonEmission += buildingProps.carbonFootprint;
             revenue += buildingProps.taxContribution;
             income += buildingProps.taxRevenue;

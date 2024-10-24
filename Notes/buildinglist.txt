@@ -1,0 +1,25 @@
+Large Campus Office, Eco High-Rise Apartment, Farmhouse, Residential House, Mid-rise Apartment, Mid-rise Apartment, High-Rise with Garden + Parking, Small Office, Wind Farm, Chemical Plant, Nuclear Power PLant, , Coal-Fired Power Plant, Oil Derrick, Factory, Recycling and Repair Station, Airport, Bank, Cafe, Church, Health Clinic, Hospital, Mosque, Nightclub, Stadium, Theater, University, Medium Park, Large Park, Small Park, Solar Farm, Dense Forest, , Glass Skyscraper Office, Shopping Mall, Parking Lot, Dense Forest, 
+
+Dictionary Properties:
+Key: constructionCost, Min: 0, Max: 3000000
+Key: demolitionCost, Min: 0, Max: 0
+Key: operationalCost, Min: 0, Max: 15000
+Key: taxRevenue, Min: 0, Max: 5000
+Key: upkeep, Min: 0, Max: 10000
+Key: energyConsumption, Min: 0, Max: 6000
+Key: waterConsumption, Min: 0, Max: 5000
+Key: wasteProduction, Min: -100, Max: 3000
+Key: resourceProduction, Min: 0, Max: 10000
+Key: capacity, Min: 0, Max: 70000
+Key: jobsProvided, Min: 0, Max: 5000
+Key: happinessImpact, Min: -20, Max: 50
+Key: healthImpact, Min: -30, Max: 50
+Key: educationImpact, Min: 0, Max: 100
+Key: pollutionOutput, Min: -100, Max: 700
+Key: pollutionReduction, Min: 0, Max: 100
+Key: heatContribution, Min: -50, Max: 100
+Key: greenSpaceEffect, Min: -50, Max: 150
+Key: carbonFootprint, Min: -500, Max: 5000
+Key: taxContribution, Min: 0, Max: 5000
+Key: jobCreation, Min: 0, Max: 5000
+Key: coverageRadius, Min: 0, Max: 0

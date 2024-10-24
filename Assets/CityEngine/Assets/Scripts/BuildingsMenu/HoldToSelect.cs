@@ -3,10 +3,15 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System;
+using TMPro;
 
 public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     public Image progressBar;
+    public Image disableIcon; // Icon to show when the button is disabled
+    public bool disabled = false; // Whether the button is disabled
+    public string disabledMsg = "";
+    public TMP_Text disabledText;
     public float holdTime = 1.5f;
     public float delayTime = 0.1f;
     private float delayTimer = 0;
@@ -22,11 +27,13 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         if (progressBar != null) progressBar.fillAmount = 0;
         button = GetComponent<Button>();
+
+        UpdateButtonState(); // Update button appearance based on initial state
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!hasSelected)
+        if (!hasSelected && !disabled)
         {
             holdCoroutine = StartCoroutine(HoldSelection());
         }
@@ -55,8 +62,6 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             yield return null;
         }
 
-
-
         // While the hold timer is less than the required hold time, keep updating the timer and progress bar
         while (holdTimer < holdTime)
         {
@@ -83,6 +88,8 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     private void OnSelect(Action callback = null)
     {
+        if (disabled) return; // Do nothing if the button is disabled
+
         hasSelected = true;
         isHolding = false;
         progressBar.fillAmount = 1;
@@ -97,7 +104,42 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         isHolding = false;
         hasSelected = false;
         delayTimer = 0;
+        disabled = false; // Reset disabled state when resetting
         if (progressBar != null) progressBar.fillAmount = 0; // Start the progress bar as empty
+        UpdateButtonState(); // Update the button state based on the disabled status
+    }
+
+    // This method enables or disables the button, updating its appearance accordingly
+    public void SetDisabled(bool isDisabled, string msgText = "")
+    {
+        disabled = isDisabled;
+
+        disabledMsg = msgText;
+        UpdateButtonState();
+    }
+
+    // Update the button's appearance based on whether it's disabled or not
+    private void UpdateButtonState()
+    {
+        if (disabled)
+        {
+            if (disableIcon != null)
+            {
+
+                disabledText.gameObject.SetActive(true);
+                disableIcon.gameObject.SetActive(true); // Show the disable icon if present
+                disabledText.text = disabledMsg;
+            }
+
+        }
+        else
+        {
+            // Enable the button and hide the disable icon
+            if (disableIcon != null)
+            {
+                disabledText.gameObject.SetActive(false);
+                disableIcon.gameObject.SetActive(false); // Hide the disable icon if present
+            }
+        }
     }
 }
-

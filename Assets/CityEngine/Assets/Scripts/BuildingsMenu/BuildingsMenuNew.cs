@@ -13,6 +13,8 @@ using UnityEditor;
 
 public class BuildingsMenuNew : MonoBehaviour
 {
+
+
     [System.Serializable]
     public class BuildingsAsset
     {
@@ -36,7 +38,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public GameObject mainMenu;
     public GameObject navigationGui;
-    public GameObject homeButton;
     public Toggle heatmapToggle;
     public Color heatmapOffColor = Color.white;
     public Color heatmapOnColor = new(1f, 0.498f, 0.055f, 1f);
@@ -70,8 +71,6 @@ public class BuildingsMenuNew : MonoBehaviour
     private CameraController cameraController;
     private RoadGenerator roadGenerator;
 
-    // public GameObject holdToSelect;
-
     public Dictionary<string, (int min, int max)> propertyRanges = new();
 
 
@@ -87,6 +86,7 @@ public class BuildingsMenuNew : MonoBehaviour
     public Button cityStatsNavToggleBtn;
     public Button cityStatsInfoToggleBtn;
     public GameObject cityStatsBottomPanel;
+    public CityMetricsManager cityMetricsManager;
 
 
 
@@ -104,6 +104,7 @@ public class BuildingsMenuNew : MonoBehaviour
         grid.enabled = false;
 
         UpdatePropertyRanges();
+        PrintDictionary(propertyRanges);
         InitializeTouchGui();
         InitializeHeatmapDropdownList();
         heatmapDropdown.onValueChanged.AddListener(OnDropdownValueChanged);
@@ -121,7 +122,6 @@ public class BuildingsMenuNew : MonoBehaviour
         // initial state
         navigationGui.SetActive(true);
         mainMenu.SetActive(true);
-        // homeButton.SetActive(false);
         buildingStats.SetActive(false);
         activateMenu.SetActive(false);
         placementUI.SetActive(false);
@@ -132,6 +132,8 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void OnDropdownValueChanged(int index)
     {
+        print("OnDropdownValueChanged");
+
         if (index == 0) return;
 
         string hmLabel = heatmapOptionsList[index];
@@ -139,7 +141,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
         cameraController.heatmapMetric = hmValue;
         cameraController.cityChanged = true;
-        cameraController.UpdateHeatMapCamera();
+        // cameraController.UpdateHeatMapCamera();
     }
 
 
@@ -176,8 +178,6 @@ public class BuildingsMenuNew : MonoBehaviour
                 posX -= Time.deltaTime * 10;
             }
         }
-
-
     }
 
 
@@ -267,7 +267,7 @@ public class BuildingsMenuNew : MonoBehaviour
             Button button = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeParent.transform);
             button.transform.localPosition = new Vector3(0, 2, -8);
             button.onClick.AddListener(OnBuildingTypeClicked);
-            button.gameObject.name = buildings[i].type.name;
+            button.gameObject.name = buildings[i].type.name + "_btn";
 
             //find min and max position of type menu
             if (posType > maxTypePos)
@@ -346,6 +346,8 @@ public class BuildingsMenuNew : MonoBehaviour
                         rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + 10, rectTransform.sizeDelta.y);
 
                         text.transform.localPosition = new Vector3(text.transform.localPosition.x + 5, textPosY, 0); // center the building text
+                        text.rectTransform.sizeDelta = new Vector2(text.rectTransform.sizeDelta.x + 5, text.rectTransform.sizeDelta.y);
+
                     }
                     for (int y = 0; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
@@ -411,12 +413,13 @@ public class BuildingsMenuNew : MonoBehaviour
         buttonDel.gameObject.name = deleteBuilding.name;
     }
 
-    public void CenterBuildingType(GameObject clickedBuildingBtn)
+    public void CenterBuildingType(GameObject clickedBuildingBtn, int spaceWidth)
     {
         // The parent of the button has the placement position via CreateTypes, 
         // so scroll inversly to that position
         Transform clickedTransform = clickedBuildingBtn.transform.parent.GetComponent<Transform>();
-        float clickedPosX = clickedTransform.localPosition.x;
+        int spaceWidthOffset = Math.Max(0, (spaceWidth - 1) * 45); // half of the item padding of 90- from CreateTypes()
+        float clickedPosX = clickedTransform.localPosition.x + spaceWidthOffset;
         float distanceToTarget = (types.localPosition.x + clickedPosX) / 2.5f;
         posX = distanceToTarget;
     }
@@ -435,11 +438,9 @@ public class BuildingsMenuNew : MonoBehaviour
 
         // Aux Menus 
         mainMenu.SetActive(false);
-        // homeButton.SetActive(true);
         buildingStats.SetActive(false);
         navInfoToggleParent.SetActive(false);
         cityMetricsBtnGO.SetActive(false);
-
     }
 
     public void CloseBuildMenu()
@@ -449,7 +450,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
         // Aux Menus 
         mainMenu.SetActive(true);
-        // homeButton.SetActive(false);
         buildingStats.SetActive(false);
         placementUI.SetActive(false);
         navInfoToggleParent.SetActive(false);
@@ -492,24 +492,59 @@ public class BuildingsMenuNew : MonoBehaviour
     }
 
 
+
     public void OnBuildingTypeClicked()
     {
         // Handle Building Type Selection
 
-        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
+        GameObject clickedBtn = EventSystem.current.currentSelectedGameObject;
+        HoldToSelect holdToSelect = clickedBtn.GetComponent<HoldToSelect>();
         if (!holdToSelect.hasSelected) return;
         holdToSelect.ResetState();
+        string buildingCategoryName = clickedBtn.name.Replace("_btn", "");
+
 
         for (int i = 0; i < buildingsCategoryTypes.Count; i++)
         {
             //buildingsTypes[i].SetActive(false);
 
             // On Type/Category click activate the building category group (ie residential buildings)
-            if (EventSystem.current.currentSelectedGameObject.name + "_buildings" == buildingsCategoryTypes[i].name)
+            if (buildingCategoryName + "_buildings" == buildingsCategoryTypes[i].name)
             {
+
                 buildingsCategoryTypes[i].SetActive(true);
                 minPos = buildings[i].minPos;
                 maxPos = buildings[i].maxPos;
+
+                // Check if building is available based on cost, or energy consumption  ...
+                // parent contains btn with click hander, the model, and text label
+                string buildingName;
+                bool buildingUnavailable;
+                string msgText = "";
+                foreach (Transform buildingParent in buildingsCategoryTypes[i].transform)
+                {
+                    buildingUnavailable = false;
+                    buildingName = buildingParent.name;
+                    Transform building = buildingParent.Find(buildingName);
+                    BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
+                    print(buildingName + ": " + buildingProps.constructionCost);
+
+                    if (buildingProps.constructionCost > cityMetricsManager.budget)
+                    {
+                        buildingUnavailable = true;
+                        msgText = "Over budget";
+
+                    }
+                    if (buildingProps.energyConsumption > cityMetricsManager.energy)
+                    {
+                        buildingUnavailable = true;
+                        msgText = "Insufficient Energy";
+                    }
+
+                    Transform buildingBtn = buildingParent.Find(buildingName + "_btn");
+                    buildingBtn.GetComponent<HoldToSelect>().SetDisabled(buildingUnavailable, msgText);
+
+                }
             }
         }
         for (int i = 0; i < buildingsCategories.Count; i++)
@@ -519,6 +554,7 @@ public class BuildingsMenuNew : MonoBehaviour
     }
 
 
+    // Selecting a building from the the type/category list
     public void OnBuildingClicked()
     {
         HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
@@ -534,8 +570,6 @@ public class BuildingsMenuNew : MonoBehaviour
         {
             SelectBuilding();
         }
-
-
     }
 
     public void OpenPlacementGUI(TrackpadTargetType targetType)
@@ -548,7 +582,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
         GameObject buildingRotBtn = placementUI.transform.Find("BuildingRotBtn").gameObject;
         buildingRotBtn.SetActive(targetType == TrackpadTargetType.Build);
-        // homeButton.SetActive(true);
         activateMenu.SetActive(false);
         mainMenu.SetActive(false);
         buildingStats.SetActive(false);
@@ -588,7 +621,8 @@ public class BuildingsMenuNew : MonoBehaviour
     {
         GameObject clickedBuildingBtn = EventSystem.current.currentSelectedGameObject;
         GameObject selectedBuilding = GetSelectedBuildingGO(clickedBuildingBtn);
-        CenterBuildingType(clickedBuildingBtn);
+        int spaceWidth = selectedBuilding.GetComponent<BuildingProperties>().spaceWidth;
+        CenterBuildingType(clickedBuildingBtn, spaceWidth);
         ApplySelectionScale(clickedBuildingBtn);
 
         BuildingProperties buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
@@ -613,6 +647,8 @@ public class BuildingsMenuNew : MonoBehaviour
                 foreach (Transform building in buildingsCategoryTypes[i].transform)
                 {
                     building.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
+                    // Adjust disabled text position
+                    building.Find(building.name + "_btn").Find("DisabledText").transform.localPosition = new Vector3(0, -24, 0);
                 }
             };
         }
@@ -623,6 +659,9 @@ public class BuildingsMenuNew : MonoBehaviour
         ResetSelectionScale(9);
         float s = 11;
         selectedBuildingBtn.transform.parent.transform.localScale = new Vector3(s, s, s);
+        // Adjust disabled text position
+        selectedBuildingBtn.transform.Find("DisabledText").transform.localPosition = new Vector3(0, -22, 0);
+
     }
 
     private GameObject GetSelectedBuildingGO(GameObject selectedBuildingBtn)
@@ -644,8 +683,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void DeleteBuilding()
     {
-        print("DeleteBuilding");
-
         // There is only a 
         HoldToSelect holdToSelect;
         EventSystem.current.currentSelectedGameObject.TryGetComponent<HoldToSelect>(out holdToSelect);
@@ -654,7 +691,6 @@ public class BuildingsMenuNew : MonoBehaviour
             if (!holdToSelect.hasSelected) return;
             holdToSelect.ResetHold();
         }
-
 
         // Update UI
         OpenPlacementGUI(TrackpadTargetType.Demolish);
@@ -701,6 +737,7 @@ public class BuildingsMenuNew : MonoBehaviour
                                 propertyRanges[fieldName] = (int.MaxValue, int.MinValue); // Initialize min/max values
                             }
 
+
                             // Update the min and max for the property
                             propertyRanges[fieldName] = (
                                 Mathf.Min(propertyRanges[fieldName].min, value),
@@ -719,6 +756,16 @@ public class BuildingsMenuNew : MonoBehaviour
     {
         if (propertyRanges.Count > 0) return propertyRanges;
         else return UpdatePropertyRanges();
+    }
+
+    void PrintDictionary(Dictionary<string, (int min, int max)> dict)
+    {
+        string result = "Dictionary Properties:\n";
+        foreach (var kvp in dict)
+        {
+            result += $"Key: {kvp.Key}, Min: {kvp.Value.min}, Max: {kvp.Value.max}\n";
+        }
+        Debug.Log(result);
     }
 
 
@@ -742,7 +789,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
 
         Transform target = cameraController.target;
-        print(target.tag);
         if (target != null)
         {
             if (target.CompareTag("Road"))
@@ -795,7 +841,6 @@ public class BuildingsMenuNew : MonoBehaviour
         cityMetricsDisplay.SetActive(true);
         mainMenu.SetActive(false);
         navigationGui.SetActive(false);
-        // homeButton.SetActive(false);
 
         cityStatsNavToggleBtn.interactable = true;
         cityStatsInfoToggleBtn.interactable = false;
