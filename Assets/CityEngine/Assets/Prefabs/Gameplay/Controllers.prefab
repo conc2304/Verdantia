@@ -23,12 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283021290}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1462640282}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &728635247
 GameObject:
@@ -53,12 +54,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728635247}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -585.43604, y: -1.065093, z: -267.45786}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1462640282}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1101898827
 GameObject:
@@ -83,12 +85,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101898827}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1462640282}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1432390751
 GameObject:
@@ -113,12 +116,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432390751}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -585.43604, y: -1.065093, z: -267.45786}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1462640282}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1462640281
 GameObject:
@@ -143,16 +147,17 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462640281}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 585.43604, y: 1.065093, z: 267.45786}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1432390752}
   - {fileID: 728635248}
   - {fileID: 283021291}
   - {fileID: 1101898828}
   m_Father: {fileID: 1024400442031631239}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1024400442031631237
 GameObject:
@@ -163,12 +168,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1024400442031631239}
+  - component: {fileID: 7962657566462079142}
   - component: {fileID: 1024400442031631236}
   - component: {fileID: 1024400442031631238}
   - component: {fileID: 277078930}
   - component: {fileID: 783540589}
   - component: {fileID: 783540590}
   - component: {fileID: 783540595}
+  - component: {fileID: 4596873504838643656}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -183,14 +190,34 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024400442031631237}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1462640282}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7962657566462079142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e674f7311334b48addba323c4d144e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingBudget: 500000
+  startingTemp: 72
+  cityTemp: 72
+  cameraController: {fileID: 783540590}
+  currentMonth: 1
+  currentYear: 2024
+  monthDuration: 30
 --- !u!114 &1024400442031631236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,10 +367,18 @@ MonoBehaviour:
   zoomScale: {x: 0, y: -10, z: 10}
   minZoom: -80
   maxZoom: 300
+  zoomSlider: {fileID: 0}
   allBuildings: []
   forest: {fileID: 0}
-  doubleClick: 0
-  lastClickTime: 0
+  activateMenu: {fileID: 0}
+  grid: {fileID: 0}
+  cityChanged: 0
+  groundPlane: {fileID: 0}
+  heatmapActive: 0
+  heatmapMetric: heatContribution
+  fixedJoystick: {fileID: 0}
+  placementTrackpad: {fileID: 0}
+  cityMetricsManager: {fileID: 0}
 --- !u!114 &783540595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,3 +393,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winterWeather: 0
   snow: {fileID: 0}
+--- !u!114 &4596873504838643656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0626329effa15541a831ef107bd98a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatMapPlane: {fileID: 0}

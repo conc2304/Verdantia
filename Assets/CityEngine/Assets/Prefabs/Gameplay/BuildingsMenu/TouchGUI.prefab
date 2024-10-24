@@ -336,6 +336,7 @@ MonoBehaviour:
   cityStatsNavToggleBtn: {fileID: 6411936899308389098}
   cityStatsInfoToggleBtn: {fileID: 7552622456383483242}
   cityStatsBottomPanel: {fileID: 3550677830221205489}
+  cityMetricsManager: {fileID: 0}
 --- !u!114 &9040222469351622205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,6 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelValuePrefab: {fileID: 340245143721886808, guid: 61a8e3d954897ac41b2567575a60361c, type: 3}
   displayParent: {fileID: 8963045662623098035}
+  buildingNameText: {fileID: 0}
 --- !u!1 &468902433675786471
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +532,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 5357390973865206468}
+  disableIcon: {fileID: 0}
+  disabled: 0
+  disabledMsg: 
+  disabledText: {fileID: 0}
   holdTime: 0.6
   delayTime: 0.1
   hasSelected: 0
@@ -6131,6 +6137,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 6884595394099414565}
+  disableIcon: {fileID: 0}
+  disabled: 0
+  disabledMsg: 
+  disabledText: {fileID: 0}
   holdTime: 0.6
   delayTime: 0.1
   hasSelected: 0
@@ -10344,7 +10354,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: -17}
+  m_SizeDelta: {x: 35, y: -17}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &7556103681139960421
 CanvasRenderer:
@@ -10367,7 +10377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5174439, g: 0.6415094, b: 0.53164923, a: 0.79607844}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -7,14 +7,12 @@ using System;
 
 public class BuildingInfoDisplay : MonoBehaviour
 {
-    // Reference to the building's data
-    private BuildingProperties building; // Reference to a BuildingProperties script or similar component
 
-    // Prefab for the label-value display (can be a simple UI text pair)
     public GameObject labelValuePrefab;
 
     // The parent transform where the labels and values will be displayed (e.g., a vertical layout group)
     public Transform displayParent;
+    public GameObject buildingNameText;
 
     // List of properties (you can fetch this from the building itself if necessary)
     public readonly string[] dataProps = {
@@ -55,6 +53,9 @@ public class BuildingInfoDisplay : MonoBehaviour
 
         displayParent.gameObject.SetActive(true);
 
+        GameObject buildingNameGO = Instantiate(buildingNameText, displayParent);
+        buildingNameGO.GetComponent<TMP_Text>().text = buildingProps.buildingName;
+
         foreach (string prop in dataProps)
         {
             // Get the value from the building using reflection
@@ -75,7 +76,7 @@ public class BuildingInfoDisplay : MonoBehaviour
 
                 // Set the text
                 labelText.text = ConvertToLabel(prop);
-                string prefix = Regex.IsMatch(prop.ToLower(), "tax|cost|upkeed") ? "$" : "";
+                string prefix = Regex.IsMatch(prop.ToLower(), "tax|cost|upkeep") ? "$" : "";
                 string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(value), prefix);
                 valueText.text = value != null ? formattedValue : "N/A";
             }
