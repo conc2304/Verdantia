@@ -8,11 +8,15 @@ public class TimeDisplay : MonoBehaviour
 
     void Start()
     {
-        // Subscribe to the OnTimeUpdated event
-        cityMetricsManager.OnTimeUpdated += UpdateTimeText;
-
         // Initialize the time text with the current time
         timeText.text = GetFormattedDate();
+        print("TimeDisplay");
+    }
+
+    private void Awake()
+    {
+        // Subscribe to the OnTimeUpdated event
+        cityMetricsManager.OnTimeUpdated += UpdateTimeText;
     }
 
     // Update the UI text when the month/year changes

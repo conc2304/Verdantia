@@ -31,6 +31,13 @@ public class CityMetricsDataDisplay : MonoBehaviour
         cityMetricsManager.OnMetricsUpdate += UpdateMetrics;
     }
 
+    void OnDestroy()
+    {
+
+        cityMetricsManager.OnMetricsUpdate -= UpdateMetrics;
+
+    }
+
     public void UpdateMetrics()
     {
         populationUIItem.UpdateValue(cityMetricsManager.population.ToString());

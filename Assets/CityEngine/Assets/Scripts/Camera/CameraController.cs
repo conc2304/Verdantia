@@ -120,25 +120,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         TouchInput();
-
-        // MouseInput();
-        // KeyboardInput();
         SetPosition();
-
-
-        // Check for double click 
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     if (Time.time - lastClickTime < catchTime)
-        //     {
-        //         doubleClick = true;
-        //     }
-        //     else
-        //     {
-        //         doubleClick = false;
-        //     }
-        //     lastClickTime = Time.time;
-        // }
 
         // handle heat map updates on city change 
         if (heatMap != null && cityChanged)
@@ -148,8 +130,7 @@ public class CameraController : MonoBehaviour
 
         if (cityChanged)
         {
-            cityMetricsManager.UpdateCityMetrics();
-
+            cityMetricsManager.UpdateCityMetrics(); // TODO is this correct
         }
 
         cityChanged = false;
@@ -216,7 +197,7 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void SpawnRoad(Transform targetNew)
+    public void SpawnRoad(Transform targetNew, bool updateBudget = true)
     {
         targetNew.parent = roadsParent;
         targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
@@ -237,11 +218,14 @@ public class CameraController : MonoBehaviour
             target = target1;
             cityChanged = true;
             // lastClickTime = 0;
+
+            int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
+            if (updateBudget) cityMetricsManager.DeductExpenses(constructionCost);
         }
         // doubleClick = false;
     }
 
-    public void SpawnBuilding(Transform targetNew)
+    public void SpawnBuilding(Transform targetNew, bool updateBudget = true)
     {
         // Get Building Properties
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
@@ -287,32 +271,10 @@ public class CameraController : MonoBehaviour
                 }
             }
         }
-        // Check if the building is adjacent to a road
-        // if (roadGenerator.allRoads.Count == 0) dontBuild = true;
-        // for (int i = 0; i < roadGenerator.allRoads.Count; i++)
-        // {
-
-        //     Vector3 roadPos = roadGenerator.allRoads[i].position;
-
-        //     // Check the four cardinal directions around the building's position
-        //     if (Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round((targetNew.position.x + 10) / 10) * 10 && Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10 ||
-        //         Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round((targetNew.position.x - 10) / 10) * 10 && Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10 ||
-        //         Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round((targetNew.position.z + 10) / 10) * 10 && Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10 ||
-        //         Mathf.Round(roadPos.z / 10) * 10 == Mathf.Round((targetNew.position.z - 10) / 10) * 10 && Mathf.Round(roadPos.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10)
-        //     {
-        //         isNextToRoad = true;
-        //         break;
-        //     }
-        // }
-
-        // if (!isNextToRoad)
-        // {
-        //     Debug.Log("Building placement failed: not adjacent to any road.");
-        //     dontBuild = true;
-        // }
-
         if (dontBuild == false)
         {
+
+            // Clear Background Forest
             for (int i = 0; i < forestObj.Count; i++)
             {
                 if (forestObj[i].position == targetNew.position)
@@ -333,6 +295,9 @@ public class CameraController : MonoBehaviour
             spawner.carsCount += 1;
             spawner.citizensCount += 2;
             allBuildings.Add(targetNew);
+
+            int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
+            if (updateBudget) cityMetricsManager.DeductExpenses(constructionCost);
 
             for (int i = 0; i < targetBuildProp.additionalSpace.Length; i++)
                 allBuildings.Add(targetBuildProp.additionalSpace[i].transform);
@@ -364,42 +329,24 @@ public class CameraController : MonoBehaviour
 
 
 
-    // void OnGUI()
-    // {
-    //     if (doubleClick)
-    //     {
-    //         dontBuild = false;
-    //         if (target != null)
-    //         {
-    //             if (target.CompareTag("Road"))              // spawn if road
-    //             {
-    //                 SpawnRoad(target);
-    //             }
-    //             else if (target.CompareTag("Building"))      //spawn if building
-    //             {
-    //                 SpawnBuilding(target);
-    //             }
-    //             else if (target.CompareTag("DeleteTool"))
-    //             {
-    //                 DeleteTarget(target);
-    //             }
-    //         }
-    //     }
-    // }
-
     public void DeleteTarget(Transform target)
     {
         print("Delete Target");
         // doubleClick = false;
         // lastClickTime = 0;
 
+        // Checck all buildings to see if it intersects demolition target and remove building 
         for (int i = 0; i < allBuildings.Count; i++)
         {
             if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(target.position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(target.position.z / 10) * 10)
             {
-                // print()
                 cityChanged = true;
+
+                // deduct demolition cost from budget 
+                int demolitionCost = allBuildings[i].gameObject.GetComponent<BuildingProperties>().demolitionCost;
+                cityMetricsManager.DeductExpenses(demolitionCost);
+
 
                 for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect.Length; pathTargetIndex++)
                     spawner.carsSpawnPoints.Remove(allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect[pathTargetIndex].GetComponent<PathTarget>().previousPathTarget.transform);
@@ -419,7 +366,6 @@ public class CameraController : MonoBehaviour
                     Destroy(spaceBuildingProperty.gameObject);
                     allBuildings.Remove(spaceBuildingProperty.transform);
                     cityChanged = true;
-
                 }
                 else
                 {

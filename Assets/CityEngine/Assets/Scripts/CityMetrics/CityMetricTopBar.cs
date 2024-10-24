@@ -21,4 +21,10 @@ public class CityMetricTopBar : MonoBehaviour
         greenSpaceUIItem.UpdateValue(cityMetricsManager.greenSpace.ToString());
         urbanHeatUIItem.UpdateValue(cityMetricsManager.urbanHeat.ToString());
     }
+
+    void OnDestroy()
+    {
+        // Unsubscribe from the event to avoid memory leaks
+        cityMetricsManager.OnMetricsUpdate -= UpdateMetrics;
+    }
 }

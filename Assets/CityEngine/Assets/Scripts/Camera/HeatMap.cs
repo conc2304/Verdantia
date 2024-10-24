@@ -37,10 +37,9 @@ public class HeatMap : MonoBehaviour
         InitializeGradient();
     }
 
-    // Update the heat map with buildings and their contributions
+    // Update the heat map with buildings and their given metric
     public void UpdateHeatMap(List<Transform> allBuildings, string metricName, int metricMin, int metricMax)
     {
-        Debug.Log(metricName + ", " + metricMin + ", " + metricMax); ;
         // Reset heat values before recalculating
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -96,8 +95,8 @@ public class HeatMap : MonoBehaviour
                 Color heatColor = heatGradient.Evaluate(normalizedHeat);
                 heatColor.a = normalizedHeat == 0f ? 0.1f : normalizedAlpha;
 
-                // Optionally set alpha based on normalized heat
-                heatColor.a = 0.55f; // You can adjust this for transparency
+                // Set alpha based on normalized heat
+                heatColor.a = 0.55f;
 
                 // Set the pixel color in the texture
                 heatMapTexture.SetPixel(x, z, heatColor);
