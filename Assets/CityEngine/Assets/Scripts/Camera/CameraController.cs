@@ -129,14 +129,15 @@ public class CameraController : MonoBehaviour
         TouchInput();
         SetPosition();
 
+
         // handle heat map updates on city change 
 
         cityTempTimer += Time.deltaTime;
-        // if (cityTempTimer >= cityTempUpdateRate)
-        if (toggleRestartTemp)
+        // if (cityTempTimer >= cityTempUpdateRate)     // TODO reinstate this
+        if (toggleRestartTemp)      // TODO remove this after testing
         {
             float[,] cityTemps = cityMetricsManager.GetCityTemperatures();
-            heatMap.TemperatureHeatMap(cityTemps, 0, 80);
+            heatMap.TemperatureHeatMap(cityTemps, 0, 80);  // TODO investigate if this needs to change 
             cityTempTimer = 0f;
             toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
         }
@@ -144,22 +145,12 @@ public class CameraController : MonoBehaviour
 
         if (heatMap != null && cityChanged)
         {
-
-            if (heatmapMetric == "cityTemperature")
-            {
-                return;
-            }
-            else
-            {
-
-                UpdateHeatMap(heatmapMetric);
-            }
+            if (heatmapMetric == "cityTemperature") return; // city temp is computed and rendered differently
+            else UpdateHeatMap(heatmapMetric);
         }
 
-        if (cityChanged)
-        {
-            cityMetricsManager.UpdateCityMetrics(); // TODO is this correct
-        }
+        if (cityChanged) cityMetricsManager.UpdateCityMetrics(); // TODO is this correct
+
 
         cityChanged = false;
     }
