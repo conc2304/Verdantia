@@ -213,11 +213,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingBudget: 500000
   startingTemp: 72
-  cityTemp: 72
+  tempSensitivity: 0.05
   cameraController: {fileID: 783540590}
+  buildingsMenu: {fileID: 0}
   currentMonth: 1
   currentYear: 2024
   monthDuration: 30
+  grid: {fileID: 0}
+  takeStep: 0
+  toggleRestartTemp: 0
+  play: 0
+  pause: 1
+  heatDiffusionRate: 0.1
+  heatDissipationRate: 0.1
+  sizeExtra: 2
 --- !u!114 &1024400442031631236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,6 +388,10 @@ MonoBehaviour:
   fixedJoystick: {fileID: 0}
   placementTrackpad: {fileID: 0}
   cityMetricsManager: {fileID: 0}
+  cameraController: {fileID: 0}
+  toggleRestartTemp: 0
+  playTemp: 0
+  timeSteps: 10
 --- !u!114 &783540595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,3 +419,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heatMapPlane: {fileID: 0}
+  cityMetricsManager: {fileID: 0}

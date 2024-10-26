@@ -528,17 +528,17 @@ public class BuildingsMenuNew : MonoBehaviour
                     Transform building = buildingParent.Find(buildingName);
                     BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
 
-                    if (buildingProps.constructionCost > cityMetricsManager.budget)
-                    {
-                        buildingUnavailable = true;
-                        msgText = "Over budget";
+                    // if (buildingProps.constructionCost > cityMetricsManager.budget)
+                    // {
+                    //     buildingUnavailable = true;
+                    //     msgText = "Over budget";
 
-                    }
-                    if (buildingProps.energyConsumption > cityMetricsManager.energy)
-                    {
-                        buildingUnavailable = true;
-                        msgText = "Insufficient Energy";
-                    }
+                    // }
+                    // if (buildingProps.energyConsumption > cityMetricsManager.energy)
+                    // {
+                    //     buildingUnavailable = true;
+                    //     msgText = "Insufficient Energy";
+                    // }
 
                     Transform buildingBtn = buildingParent.Find(buildingName + "_btn");
                     buildingBtn.GetComponent<HoldToSelect>().SetDisabled(buildingUnavailable, msgText);

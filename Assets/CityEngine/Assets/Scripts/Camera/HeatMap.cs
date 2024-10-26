@@ -112,7 +112,7 @@ public class HeatMap : MonoBehaviour
 
                 // Set alpha based on normalized heat
                 heatColor.a = 0.55f;
-                heatColor.a = 1; // TODO REMOVE
+                // heatColor.a = 1; // TODO REMOVE
 
                 // Set the pixel color in the texture
                 heatMapTexture.SetPixel(x, z, heatColor);

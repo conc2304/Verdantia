@@ -53,10 +53,17 @@ public class CityMetricsManager : MonoBehaviour
 
     public bool takeStep = false;
     public bool toggleRestartTemp = false;
+    private int runCount = 0;
 
-    public float heatDiffusionRate = 0f; // todo remove ALPHA
-    public float heatDissipationRate = 0.1f; // todo remove ALPHA
+    public bool play = false;
+    public bool pause = true;
+
+    public float heatDiffusionRate = 0.1f; // todo remove ALPHA
+    public float heatDissipationRate = 0.1f; // todo remove 
     public int sizeExtra = 2;
+
+    public float sunHeatBase = 1;
+    float[,] sinkSourcesGrid;
 
 
 
@@ -71,22 +78,38 @@ public class CityMetricsManager : MonoBehaviour
         gridSizeX = (grid.gridSizeX / 10) + gridPadding;
         gridSizeZ = (grid.gridSizeZ / 10) + gridPadding;
 
-        InitializeGrid();
+        RestartSimulation();
     }
 
     public void InitializeGrid()
     {
-        temps = ArrayFill(gridSizeX, gridSizeZ, 0);
-        temps[gridSizeX / 2, gridSizeZ / 2] = 80f; // TODO remove later
+        temps = ArrayFill(gridSizeX, gridSizeZ, startingTemp);
+
+        // temps[gridSizeX / 2, gridSizeZ / 2] = 80f; // TODO remove later
+        // for (int i = -sizeExtra; i < sizeExtra; i++)
+        // {
+        //     for (int j = -sizeExtra; j < sizeExtra; j++)
+        //     {
+        //         temps[gridSizeX / 2 + i, gridSizeZ / 2 + j] = 80f;
+        //     }
+        // }
+
+    }
+
+    public void InitSinkSourcesToGrid()
+    {
+
+        int heatMax = 100;
+        int tempSize = 25;
+
+        sinkSourcesGrid = ArrayFill(gridSizeX, gridSizeZ, sunHeatBase);
         for (int i = -sizeExtra; i < sizeExtra; i++)
         {
             for (int j = -sizeExtra; j < sizeExtra; j++)
             {
-                temps[gridSizeX / 2 + i, gridSizeZ / 2 + j] = 80f;
+                sinkSourcesGrid[gridSizeX / 2 + i, gridSizeZ / 2 + j] += heatMax / tempSize;
             }
         }
-
-        initialTemps = temps;
     }
 
 
@@ -103,6 +126,20 @@ public class CityMetricsManager : MonoBehaviour
             monthTimer = 0f;
         }
 
+        if (pause)
+        {
+            cameraController.toggleRestartTemp = false;
+            cameraController.playTemp = false;
+            play = false;
+        }
+        if (play)
+        {
+            cameraController.toggleRestartTemp = true;
+            cameraController.playTemp = true;
+            pause = false;
+        }
+
+
         if (toggleRestartTemp)
         {
             RestartSimulation();
@@ -113,13 +150,15 @@ public class CityMetricsManager : MonoBehaviour
             cameraController.toggleRestartTemp = true;
             takeStep = false;
         }
-
     }
 
     [ContextMenu("Trigger My Function")]
     public void RestartSimulation()
     {
+        runCount = 0;
+        InitSinkSourcesToGrid();
         InitializeGrid();
+        GetCityTemperatures();
     }
 
     void AdvanceMonth()
@@ -180,7 +219,7 @@ public class CityMetricsManager : MonoBehaviour
 
             // Only apply additional feedback if temperature is above base
             // Update metric value based on temperature difference
-            if (tempDifference > 0)
+            if (tempDifference != 0)
             {
                 adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
                 adjustedCarbonFootprint += adjustedCarbonFootprint * tempDifference * tempSensitivity;
@@ -234,66 +273,9 @@ public class CityMetricsManager : MonoBehaviour
 
 
     //   Key: carbonFootprint, Min: -500, Max: 5000
+    //   Key: heatContribution, Min: -50, Max: 100
 
-    public float[,] GetCityTemperatures()
-    {
-        List<Transform> allBuildings = cameraController.allBuildings;
-        Dictionary<string, (int min, int max)> propertyRanges = buildingsMenu.propertyRanges;
 
-        float[,] outputTemps = ArrayFill(gridSizeX, gridSizeZ, 0);
-
-        float epsilon = 1f; // Small constant to prevent division by zero
-        float maxCarbonEmission = propertyRanges["carbonFootprint"].max;
-        float deltaTime = 1;
-        float deltaX = 1;
-
-        // float heatDiffusionRate = (float)(deltaTime / Math.Pow(deltaX, 2));             // Alpha
-        // heatDiffusionRate = 0.249999999999f;             // Alpha
-
-        // float heatDissipationRate = 1 / ((carbonEmission / maxCarbonEmission) + epsilon); // Beta
-
-        // float b = 1 -deltaTime * heatDissipationRate - 4 * heatDiffusionRate;          // part of formula for finite differences PDE
-
-        float clampedRate = Math.Clamp((4 * heatDiffusionRate) + heatDissipationRate, 0, 1);
-        print($"clampedRate {clampedRate}");
-        float bk = 1 - clampedRate;
-
-        // float bk = 0.5f;
-
-        // Boundary Conditions
-        for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
-        {
-            temps[0, z] = temps[1, z];
-            temps[gridSizeX - 1, z] = temps[gridSizeX - 2, z];
-        }
-
-        for (int x = 0; x < gridSizeX - (gridPadding / 2); x++)
-        {
-            temps[x, 0] = temps[x, 1];
-            temps[x, gridSizeZ - 1] = temps[x, gridSizeZ - 2];
-        }
-
-        // Build output temps matrix
-        for (int x = 1; x < gridSizeX - (gridPadding / 2); x++)
-        {
-            for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
-            {
-                outputTemps[x, z] =
-                    (bk * temps[x, z])
-                    + (heatDiffusionRate * (
-                        temps[x + 1, z]
-                        + temps[x - 1, z]
-                        + temps[x, z + 1]
-                        + temps[x, z - 1]
-                    ));
-
-                // if (temps[x, z] > 0) print($"X: {x} Z: {z} @ {outputTemps[x, z]} for {temps[x, z]}");
-            }
-        }
-
-        temps = outputTemps;
-        return outputTemps;
-    }
 
     public float[,] ArrayFill(int sizeX, int sizeY, float initialValue)
     {
@@ -371,5 +353,67 @@ public class CityMetricsManager : MonoBehaviour
         }
 
         return sum / count;
+    }
+
+    public float[,] GetCityTemperatures()
+    {
+        print("Run | GetCItyTemp : " + runCount);
+        runCount++;
+
+        List<Transform> allBuildings = cameraController.allBuildings;
+        Dictionary<string, (int min, int max)> propertyRanges = buildingsMenu.propertyRanges;
+
+        float[,] outputTemps = ArrayFill(gridSizeX, gridSizeZ, 0);
+
+        float epsilon = 1f; // Small constant to prevent division by zero
+        float maxCarbonEmission = propertyRanges["carbonFootprint"].max;
+        float deltaTime = 1;
+        float deltaX = 1;
+
+        // float heatDiffusionRate = (float)(deltaTime / Math.Pow(deltaX, 2));             // Alpha
+        // heatDiffusionRate = 0.249999999999f;             // Alpha
+
+        // float heatDissipationRate = 1 / ((carbonEmission / maxCarbonEmission) + epsilon); // Beta
+
+        // float b = 1 -deltaTime * heatDissipationRate - 4 * heatDiffusionRate;          // part of formula for finite differences PDE
+
+        float clampedRate = Math.Clamp((4 * heatDiffusionRate) + heatDissipationRate, 0, 0.98f);
+        print($"clampedRate {clampedRate}");
+        float bk = 1 - clampedRate;
+
+        // float bk = 0.5f;
+
+        // Boundary Conditions
+        for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
+        {
+            temps[0, z] = temps[1, z];
+            temps[gridSizeX - 1, z] = temps[gridSizeX - 2, z];
+        }
+        for (int x = 0; x < gridSizeX - (gridPadding / 2); x++)
+        {
+            temps[x, 0] = temps[x, 1];
+            temps[x, gridSizeZ - 1] = temps[x, gridSizeZ - 2];
+        }
+
+        // Build output temps matrix: Heat Diffusion/Dissipation Forumla
+        for (int x = 1; x < gridSizeX - (gridPadding / 2); x++)
+        {
+            for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
+            {
+                outputTemps[x, z] =
+                    (bk * temps[x, z]) + sinkSourcesGrid[x, z]
+                    + (heatDiffusionRate
+                        * (
+                            temps[x + 1, z]
+                            + temps[x - 1, z]
+                            + temps[x, z + 1]
+                            + temps[x, z - 1]
+                        )
+                    );
+            }
+        }
+
+        temps = outputTemps;
+        return outputTemps;
     }
 }
