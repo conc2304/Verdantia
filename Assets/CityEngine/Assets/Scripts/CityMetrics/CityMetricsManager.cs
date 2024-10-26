@@ -14,7 +14,9 @@ public class CityMetricsManager : MonoBehaviour
     public int startingBudget = 1000000;
     // public int startingBudget = 500000;
     public float startingTemp = 69.0f;
+
     public float cityTemp { get; private set; }
+    public float tempSensitivity = 0.05f; // Sensitivity factor for how much extra heat affects energy and emissions
     private string tempSuffix = "°F";
     public int population { get; private set; }
     public float happiness { get; private set; } // Store as float for calculation
@@ -46,6 +48,7 @@ public class CityMetricsManager : MonoBehaviour
     private int gridPadding = 2;
     public float[,] temps;
     public float[,] initialTemps;
+
 
 
     public bool takeStep = false;
@@ -156,18 +159,39 @@ public class CityMetricsManager : MonoBehaviour
         ResetMetrics();
 
 
+        float tempDifference = cityTemp - startingTemp;
+
+
         foreach (Transform building in cameraController.allBuildings)
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
+
+            // Population and economic metrics
             population += buildingProps.capacity;
             happiness += buildingProps.happinessImpact;
-            budget -= buildingProps.operationalCost; // Decrease budget based on operational costs
-            budget += buildingProps.taxRevenue; // Increase budget by tax revenue
+            budget -= buildingProps.operationalCost;
+            budget += buildingProps.taxRevenue;
             greenSpace += buildingProps.greenSpaceEffect;
-            urbanHeat += buildingProps.heatContribution;
-            pollution += buildingProps.pollutionOutput - buildingProps.pollutionReduction; // Net pollution after reduction
-            energy += buildingProps.resourceProduction - buildingProps.energyConsumption;
-            carbonEmission += buildingProps.carbonFootprint;
+
+            // Environmental metrics
+            float adjustedHeatContribution = buildingProps.heatContribution;
+            float adjustedEnergyConsumption = buildingProps.energyConsumption;
+            float adjustedCarbonFootprint = buildingProps.carbonFootprint;
+
+            // Only apply additional feedback if temperature is above base
+            // Update metric value based on temperature difference
+            if (tempDifference > 0)
+            {
+                adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
+                adjustedCarbonFootprint += adjustedCarbonFootprint * tempDifference * tempSensitivity;
+                adjustedHeatContribution += adjustedHeatContribution * tempDifference * tempSensitivity;
+            }
+
+            // Apply adjusted metrics
+            urbanHeat += (int)adjustedHeatContribution;
+            pollution += buildingProps.pollutionOutput - buildingProps.pollutionReduction;
+            energy += (int)(buildingProps.resourceProduction - adjustedEnergyConsumption);
+            carbonEmission += (int)adjustedCarbonFootprint;
             revenue += buildingProps.taxContribution;
             income += buildingProps.taxRevenue;
             expenses += buildingProps.upkeep;
@@ -176,9 +200,6 @@ public class CityMetricsManager : MonoBehaviour
         // Adjust happiness to be averaged over all buildings
         happiness = cameraController.allBuildings.Count > 0 ? (happiness / cameraController.allBuildings.Count) : 0;
         happiness = (float)Math.Truncate((double)happiness * 100 / 100);
-
-        // If greenSpace is in percentage (e.g., out of 100% max coverage), you can adjust based on area.
-        // Adjust accordingly depending on game design.
     }
 
     // Method to reset all metrics to initial state before recalculation
