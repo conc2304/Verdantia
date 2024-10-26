@@ -12,6 +12,8 @@ public class HeatMap : MonoBehaviour
     public GameObject heatMapPlane;
     private Gradient heatGradient;
 
+    public CityMetricsManager cityMetricsManager;
+
 
 
     // Initialize the HeatMap by passing the grid size values from Grid.cs
@@ -40,6 +42,12 @@ public class HeatMap : MonoBehaviour
     // Update the heat map with buildings and their given metric
     public void UpdateHeatMap(List<Transform> allBuildings, string metricName, int metricMin, int metricMax)
     {
+        if (metricName == "cityTemperature")
+        {
+            Debug.LogError("Function for Heat Map not bypassed: " + metricName);
+            return;
+        }
+
         // Reset heat values before recalculating
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -74,6 +82,13 @@ public class HeatMap : MonoBehaviour
         DisplayHeatMap();
     }
 
+    public void TemperatureHeatMap(float[,] matrix, int metricMin, int metricMax)
+    {
+        heatValues = matrix;
+        GenerateHeatMapTexture(metricMin, metricMax);
+        DisplayHeatMap();
+    }
+
 
     private void GenerateHeatMapTexture(int metricMin, int metricMax)
     {
@@ -93,10 +108,11 @@ public class HeatMap : MonoBehaviour
 
                 // Use the gradient to get the color at the normalized heat value
                 Color heatColor = heatGradient.Evaluate(normalizedHeat);
-                heatColor.a = normalizedHeat == 0f ? 0.1f : normalizedAlpha;
+                // heatColor.a = normalizedHeat == 0f ? 0.1f : normalizedAlpha;
 
                 // Set alpha based on normalized heat
                 heatColor.a = 0.55f;
+                heatColor.a = 1; // TODO REMOVE
 
                 // Set the pixel color in the texture
                 heatMapTexture.SetPixel(x, z, heatColor);
@@ -107,7 +123,7 @@ public class HeatMap : MonoBehaviour
         heatMapTexture.Apply();
 
         // Assign the texture to the heatmap plane
-        heatMapTexture = ApplyBlur(heatMapTexture, 0);
+        // heatMapTexture = ApplyBlur(heatMapTexture, 0);
         heatMapPlane.GetComponent<Renderer>().material.mainTexture = heatMapTexture;
     }
 
@@ -147,21 +163,27 @@ public class HeatMap : MonoBehaviour
         renderer.material.mainTexture = heatMapTexture;
     }
 
-    private Texture2D ApplyBlur(Texture2D sourceTexture, int blurSize = 1)
+    private float[,] ApplyBlur(float[,] matrix, int blurSize = 1)
     {
-        Texture2D blurredTexture = new Texture2D(sourceTexture.width, sourceTexture.height);
-        if (blurSize == 0) return sourceTexture;
-        for (int x = 0; x < sourceTexture.width; x++)
+        // Texture2D blurredTexture = new Texture2D(matrix.width, sourceTexture.height);
+        int rows = matrix.GetLength(0);    // Number of rows
+        int columns = matrix.GetLength(1);  // Number of columns
+        float[,] blurredMatrix = new float[rows, columns];
+
+        if (blurSize == 0) return matrix;
+        for (int x = 0; x < columns; x++)
         {
-            for (int z = 0; z < sourceTexture.height; z++)
+            for (int z = 0; z < rows; z++)
             {
-                Color averageColor = GetAverageColor(sourceTexture, x, z, blurSize);
-                blurredTexture.SetPixel(x, z, averageColor);
+                float avgVal = GetAverageNumber(matrix, x, z, blurSize);
+                // Color averageColor = GetAverageColor(sourceTexture, x, z, blurSize);
+                // blurredTexture.SetPixel(x, z, averageColor);
+                blurredMatrix[x, z] = avgVal;
             }
         }
 
-        blurredTexture.Apply();
-        return blurredTexture;
+        // blurredTexture.Apply();
+        return blurredMatrix;
     }
 
     private Color GetAverageColor(Texture2D texture, int x, int z, int blurSize)
@@ -177,6 +199,26 @@ public class HeatMap : MonoBehaviour
                 int newZ = Mathf.Clamp(z + zOffset, 0, texture.height - 1);
 
                 sum += texture.GetPixel(newX, newZ);
+                count++;
+            }
+        }
+
+        return sum / count;
+    }
+
+    private float GetAverageNumber(float[,] matrix, int x, int z, int blurSize)
+    {
+        float sum = 0f;
+        int count = 0;
+
+        for (int xOffset = -blurSize; xOffset <= blurSize; xOffset++)
+        {
+            for (int zOffset = -blurSize; zOffset <= blurSize; zOffset++)
+            {
+                int newX = Mathf.Clamp(x + xOffset, 0, matrix.GetLength(0) - 1);
+                int newZ = Mathf.Clamp(z + zOffset, 0, matrix.GetLength(1) - 1);
+
+                sum += matrix[newX, newZ];
                 count++;
             }
         }

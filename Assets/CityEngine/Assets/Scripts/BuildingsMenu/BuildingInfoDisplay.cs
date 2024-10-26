@@ -12,7 +12,12 @@ public class BuildingInfoDisplay : MonoBehaviour
 
     // The parent transform where the labels and values will be displayed (e.g., a vertical layout group)
     public Transform displayParent;
-    public GameObject buildingNameText;
+    public GameObject modal;
+    public TMP_Text buildingNameText;
+    public TMP_Text modalTitle;
+    public TMP_Text modalBodyText;
+    public GameObject infoNavToggle;
+    public GameObject menuBuildings;
 
     // List of properties (you can fetch this from the building itself if necessary)
     public readonly string[] dataProps = {
@@ -39,11 +44,7 @@ public class BuildingInfoDisplay : MonoBehaviour
         "industryBoost"
     };
 
-    void Start()
-    {
-        // Create and display each label-value pair for each property
-        // DisplayBuildingData();
-    }
+
 
     public void DisplayBuildingData(BuildingProperties buildingProps)
 
@@ -52,9 +53,13 @@ public class BuildingInfoDisplay : MonoBehaviour
         DeleteAllChildrenFromParent(displayParent);
 
         displayParent.gameObject.SetActive(true);
+        modal.SetActive(false);
+        modalBodyText.text = buildingProps.buildingDescription;
+        modalTitle.text = buildingProps.buildingName;
 
-        GameObject buildingNameGO = Instantiate(buildingNameText, displayParent);
-        buildingNameGO.GetComponent<TMP_Text>().text = buildingProps.buildingName;
+        // GameObject buildingNameGO = Instantiate(buildingNameInfoGO, displayParent);
+        // buildingNameGO.transform.Find("BuildingName").GetComponent<TMP_Text>().text = buildingProps.buildingName;
+        buildingNameText.text = buildingProps.buildingName;
 
         foreach (string prop in dataProps)
         {
@@ -75,19 +80,12 @@ public class BuildingInfoDisplay : MonoBehaviour
                 TMP_Text valueText = textParent.transform.Find("Value")?.GetComponent<TMP_Text>();
 
                 // Set the text
-                labelText.text = ConvertToLabel(prop);
+                labelText.text = StringsUtils.ConvertToLabel(prop);
                 string prefix = Regex.IsMatch(prop.ToLower(), "tax|cost|upkeep") ? "$" : "";
                 string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(value), prefix);
                 valueText.text = value != null ? formattedValue : "N/A";
             }
         }
-    }
-
-    // Converts camelCase to a more readable format like "Construction Cost"
-    string ConvertToLabel(string camelCaseString)
-    {
-        string spacedString = Regex.Replace(camelCaseString, "(\\B[A-Z])", " $1");
-        return char.ToUpper(spacedString[0]) + spacedString.Substring(1);
     }
 
     public void DeleteAllChildrenFromParent(Transform parentTransform)
@@ -104,5 +102,20 @@ public class BuildingInfoDisplay : MonoBehaviour
         {
             DestroyImmediate(parentTransform.GetChild(0).gameObject);
         }
+    }
+
+    public void OnModalClose()
+    {
+        modal.SetActive(false);
+        infoNavToggle.SetActive(true);
+        menuBuildings.SetActive(true);
+    }
+    public void OnMoreInfoClick()
+    {
+        if (modal.activeSelf) return;
+        modal.SetActive(true);
+        infoNavToggle.SetActive(false);
+        menuBuildings.SetActive(false);
+
     }
 }
