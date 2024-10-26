@@ -19,7 +19,7 @@ Key: pollutionOutput, Min: -100, Max: 700
 Key: pollutionReduction, Min: 0, Max: 100
 Key: heatContribution, Min: -50, Max: 100
 Key: greenSpaceEffect, Min: -50, Max: 150
-Key: carbonFootprint, Min: -500, Max: 5000
+  Key: carbonFootprint, Min: -500, Max: 5000
 Key: taxContribution, Min: 0, Max: 5000
 Key: jobCreation, Min: 0, Max: 5000
 Key: coverageRadius, Min: 0, Max: 0

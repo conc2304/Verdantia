@@ -8,9 +8,7 @@ public class TimeDisplay : MonoBehaviour
 
     void Start()
     {
-        // Initialize the time text with the current time
         timeText.text = GetFormattedDate();
-        print("TimeDisplay");
     }
 
     private void Awake()

@@ -43,7 +43,7 @@ public class BuildingsMenuNew : MonoBehaviour
     public Color heatmapOnColor = new(1f, 0.498f, 0.055f, 1f);
     public TMP_Dropdown heatmapDropdown;
     private static string drowpDownLabel = "Heat Map Type";
-    private List<string> heatmapOptionsList = new List<string> { drowpDownLabel };
+    private List<string> heatmapOptionsList = new List<string> { drowpDownLabel, "City Temperature" };
 
     public GameObject buildingStats;
 

@@ -73,12 +73,17 @@ public class CameraController : MonoBehaviour
 
     public bool heatmapActive = false;
 
-    public string heatmapMetric = "heatContribution";
+    public string heatmapMetric = "cityTemperature";
 
     public FixedJoystick fixedJoystick;
     public TrackPad placementTrackpad;
     public CityMetricsManager cityMetricsManager;
+    public CameraController cameraController;
 
+
+    private float cityTempUpdateRate = 1.0f;
+    private float cityTempTimer = 0f;
+    public bool toggleRestartTemp = false;
 
     void Start()
     {
@@ -114,6 +119,8 @@ public class CameraController : MonoBehaviour
             UpdateHeatMap(heatmapMetric);
         }
 
+        // TODO REMOVE
+        ToggleHeatMapView();
     }
 
 
@@ -123,9 +130,30 @@ public class CameraController : MonoBehaviour
         SetPosition();
 
         // handle heat map updates on city change 
+
+        cityTempTimer += Time.deltaTime;
+        // if (cityTempTimer >= cityTempUpdateRate)
+        if (toggleRestartTemp)
+        {
+            float[,] cityTemps = cityMetricsManager.GetCityTemperatures();
+            heatMap.TemperatureHeatMap(cityTemps, 0, 80);
+            cityTempTimer = 0f;
+            toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
+        }
+
+
         if (heatMap != null && cityChanged)
         {
-            UpdateHeatMap(heatmapMetric);
+
+            if (heatmapMetric == "cityTemperature")
+            {
+                return;
+            }
+            else
+            {
+
+                UpdateHeatMap(heatmapMetric);
+            }
         }
 
         if (cityChanged)
@@ -145,7 +173,6 @@ public class CameraController : MonoBehaviour
         int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
         int metricMax = buildingMenu.propertyRanges[heatmapMetric].max;
         heatMap.UpdateHeatMap(allBuildings, heatmapMetric, metricMin, metricMax);
-
     }
 
     private void LateUpdate()

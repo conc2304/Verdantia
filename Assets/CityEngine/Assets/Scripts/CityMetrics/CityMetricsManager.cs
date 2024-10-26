@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
+using UnityEditor;
 using UnityEngine;
 
 public class CityMetricsManager : MonoBehaviour
@@ -8,11 +11,11 @@ public class CityMetricsManager : MonoBehaviour
     // public static CityMetricsManager Instance { get; private set; }
 
     // Global city metrics
-    public int startingBudget = 1000;
+    public int startingBudget = 1000000;
     // public int startingBudget = 500000;
-    public float startingTemp = 72.0f;
+    public float startingTemp = 69.0f;
+    public float cityTemp { get; private set; }
     private string tempSuffix = "°F";
-    public float cityTemp = 72.0f;
     public int population { get; private set; }
     public float happiness { get; private set; } // Store as float for calculation
     public int budget { get; private set; }
@@ -25,6 +28,7 @@ public class CityMetricsManager : MonoBehaviour
     public int income { get; private set; }
     public int expenses { get; private set; }
     public CameraController cameraController;
+    public BuildingsMenuNew buildingsMenu;
 
     // Time-keeping variables
     public int currentMonth = 1; // January starts as 1
@@ -36,13 +40,52 @@ public class CityMetricsManager : MonoBehaviour
     public event Action OnMetricsUpdate;
     public event Action OnTempUpdated;
 
+    public Grid grid;
+    private int gridSizeX;
+    private int gridSizeZ;
+    private int gridPadding = 2;
+    public float[,] temps;
+    public float[,] initialTemps;
+
+
+    public bool takeStep = false;
+    public bool toggleRestartTemp = false;
+
+    public float heatDiffusionRate = 0f; // todo remove ALPHA
+    public float heatDissipationRate = 0.1f; // todo remove ALPHA
+    public int sizeExtra = 2;
+
+
+
 
     void Start()
     {
+        cityTemp = startingTemp;
         budget = startingBudget;
         UpdateCityMetrics();
         OnMetricsUpdate?.Invoke();
+
+        gridSizeX = (grid.gridSizeX / 10) + gridPadding;
+        gridSizeZ = (grid.gridSizeZ / 10) + gridPadding;
+
+        InitializeGrid();
     }
+
+    public void InitializeGrid()
+    {
+        temps = ArrayFill(gridSizeX, gridSizeZ, 0);
+        temps[gridSizeX / 2, gridSizeZ / 2] = 80f; // TODO remove later
+        for (int i = -sizeExtra; i < sizeExtra; i++)
+        {
+            for (int j = -sizeExtra; j < sizeExtra; j++)
+            {
+                temps[gridSizeX / 2 + i, gridSizeZ / 2 + j] = 80f;
+            }
+        }
+
+        initialTemps = temps;
+    }
+
 
 
     void Update()
@@ -56,6 +99,24 @@ public class CityMetricsManager : MonoBehaviour
             AdvanceMonth();
             monthTimer = 0f;
         }
+
+        if (toggleRestartTemp)
+        {
+            RestartSimulation();
+            toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
+        }
+        if (takeStep)
+        {
+            cameraController.toggleRestartTemp = true;
+            takeStep = false;
+        }
+
+    }
+
+    [ContextMenu("Trigger My Function")]
+    public void RestartSimulation()
+    {
+        InitializeGrid();
     }
 
     void AdvanceMonth()
@@ -93,6 +154,7 @@ public class CityMetricsManager : MonoBehaviour
     {
         // Reset all metrics before recalculating them
         ResetMetrics();
+
 
         foreach (Transform building in cameraController.allBuildings)
         {
@@ -147,5 +209,146 @@ public class CityMetricsManager : MonoBehaviour
     {
         budget -= amount;
         Debug.Log($"Expenses deducted: {amount}, New budget: {budget}");
+    }
+
+
+    //   Key: carbonFootprint, Min: -500, Max: 5000
+
+    public float[,] GetCityTemperatures()
+    {
+        List<Transform> allBuildings = cameraController.allBuildings;
+        Dictionary<string, (int min, int max)> propertyRanges = buildingsMenu.propertyRanges;
+
+        float[,] outputTemps = ArrayFill(gridSizeX, gridSizeZ, 0);
+
+        float epsilon = 1f; // Small constant to prevent division by zero
+        float maxCarbonEmission = propertyRanges["carbonFootprint"].max;
+        float deltaTime = 1;
+        float deltaX = 1;
+
+        // float heatDiffusionRate = (float)(deltaTime / Math.Pow(deltaX, 2));             // Alpha
+        // heatDiffusionRate = 0.249999999999f;             // Alpha
+
+        // float heatDissipationRate = 1 / ((carbonEmission / maxCarbonEmission) + epsilon); // Beta
+
+        // float b = 1 -deltaTime * heatDissipationRate - 4 * heatDiffusionRate;          // part of formula for finite differences PDE
+
+        float clampedRate = Math.Clamp((4 * heatDiffusionRate) + heatDissipationRate, 0, 1);
+        print($"clampedRate {clampedRate}");
+        float bk = 1 - clampedRate;
+
+        // float bk = 0.5f;
+
+        // Boundary Conditions
+        for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
+        {
+            temps[0, z] = temps[1, z];
+            temps[gridSizeX - 1, z] = temps[gridSizeX - 2, z];
+        }
+
+        for (int x = 0; x < gridSizeX - (gridPadding / 2); x++)
+        {
+            temps[x, 0] = temps[x, 1];
+            temps[x, gridSizeZ - 1] = temps[x, gridSizeZ - 2];
+        }
+
+        // Build output temps matrix
+        for (int x = 1; x < gridSizeX - (gridPadding / 2); x++)
+        {
+            for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
+            {
+                outputTemps[x, z] =
+                    (bk * temps[x, z])
+                    + (heatDiffusionRate * (
+                        temps[x + 1, z]
+                        + temps[x - 1, z]
+                        + temps[x, z + 1]
+                        + temps[x, z - 1]
+                    ));
+
+                // if (temps[x, z] > 0) print($"X: {x} Z: {z} @ {outputTemps[x, z]} for {temps[x, z]}");
+            }
+        }
+
+        temps = outputTemps;
+        return outputTemps;
+    }
+
+    public float[,] ArrayFill(int sizeX, int sizeY, float initialValue)
+    {
+        float[,] grid = new float[sizeX, sizeY];
+
+        // Optional: Explicitly setting all values to 0 (not necessary as default for int is 0)
+        for (int i = 0; i < sizeX; i++)
+        {
+            for (int j = 0; j < sizeY; j++)
+            {
+                grid[i, j] = initialValue;
+            }
+        }
+
+        return grid;
+    }
+
+    public static int[,] RotateMatrix90DegreesClockwise(int[,] matrix)
+    {
+        int n = matrix.GetLength(0);  // Number of rows
+        int m = matrix.GetLength(1);  // Number of columns
+
+        // Create a new matrix to hold the rotated values
+        int[,] rotatedMatrix = new int[m, n];
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                rotatedMatrix[j, n - 1 - i] = matrix[i, j];
+            }
+        }
+
+        return rotatedMatrix;
+    }
+
+    private float[,] ApplyBlur(float[,] matrix, int blurSize = 1)
+    {
+        // Texture2D blurredTexture = new Texture2D(matrix.width, sourceTexture.height);
+        int rows = matrix.GetLength(0);    // Number of rows
+        int columns = matrix.GetLength(1);  // Number of columns
+        float[,] blurredMatrix = new float[rows, columns];
+
+        if (blurSize == 0) return matrix;
+        for (int x = 0; x < columns; x++)
+        {
+            for (int z = 0; z < rows; z++)
+            {
+                float avgVal = GetAverageNumber(matrix, x, z, blurSize);
+                // Color averageColor = GetAverageColor(sourceTexture, x, z, blurSize);
+                // blurredTexture.SetPixel(x, z, averageColor);
+                blurredMatrix[x, z] = avgVal;
+            }
+        }
+
+        // blurredTexture.Apply();
+        return blurredMatrix;
+    }
+
+    private float GetAverageNumber(float[,] matrix, int x, int z, int blurSize)
+    {
+        float sum = 0f;
+        int count = 0;
+
+        for (int xOffset = -blurSize; xOffset <= blurSize; xOffset++)
+        {
+            for (int zOffset = -blurSize; zOffset <= blurSize; zOffset++)
+            {
+                int newX = Mathf.Clamp(x + xOffset, 0, matrix.GetLength(0) - 1);
+                int newZ = Mathf.Clamp(z + zOffset, 0, matrix.GetLength(1) - 1);
+
+                sum += matrix[newX, newZ];
+                count++;
+            }
+        }
+
+        return sum / count;
     }
 }
