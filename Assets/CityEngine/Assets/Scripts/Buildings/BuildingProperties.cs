@@ -126,8 +126,8 @@ public class BuildingProperties : MonoBehaviour
         // "educationImpact",
         "pollutionOutput",
         "pollutionReduction",
-        "heatContribution",
         "greenSpaceEffect",
+        "heatContribution",
         "carbonFootprint",
         "taxContribution",
         // "jobCreation",
@@ -141,9 +141,12 @@ public class BuildingProperties : MonoBehaviour
     void Start()
     {
         buildingsMenu = FindObjectOfType<BuildingsMenuNew>();
-        PassonBuildingProperties();
+
+        heatContribution /= 1 + additionalSpace.Length;
+
         demolitionCost = demolitionCost != 0 ? demolitionCost : (int)(constructionCost * 0.25f);
         ApplyBoostToNearbyBuildings();
+        PassonBuildingProperties();
     }
 
 

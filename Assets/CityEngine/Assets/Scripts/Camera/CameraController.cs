@@ -84,6 +84,9 @@ public class CameraController : MonoBehaviour
     private float cityTempUpdateRate = 1.0f;
     private float cityTempTimer = 0f;
     public bool toggleRestartTemp = false;
+    public bool playTemp = false;
+
+    public int timeSteps = 10;
 
     void Start()
     {
@@ -133,11 +136,19 @@ public class CameraController : MonoBehaviour
         // handle heat map updates on city change 
 
         cityTempTimer += Time.deltaTime;
+        if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
         // if (cityTempTimer >= cityTempUpdateRate)     // TODO reinstate this
-        if (toggleRestartTemp)      // TODO remove this after testing
+        // if (cityTempTimer >= cityTempUpdateRate)     // TODO reinstate this
         {
-            float[,] cityTemps = cityMetricsManager.GetCityTemperatures();
-            heatMap.TemperatureHeatMap(cityTemps, 0, 80);  // TODO investigate if this needs to change 
+            print("RUN | CameraController | Update City Temp");
+            // float[,] cityTemps = new float[grid.gridSizeX, grid.gridSizeZ]; // this is reinitilizing evertything to 0;
+            float[,] cityTemps = cityMetricsManager.temps;
+
+            heatMap.TemperatureHeatMap(cityTemps, 32, 120);  // TODO investigate if this needs to change 
+            for (int i = 0; i < timeSteps; i++)
+            {
+                cityTemps = cityMetricsManager.GetCityTemperatures();
+            }
             cityTempTimer = 0f;
             toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
         }
@@ -240,7 +251,6 @@ public class CameraController : MonoBehaviour
             int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
             if (updateBudget) cityMetricsManager.DeductExpenses(constructionCost);
         }
-        // doubleClick = false;
     }
 
     public void SpawnBuilding(Transform targetNew, bool updateBudget = true)
@@ -251,8 +261,10 @@ public class CameraController : MonoBehaviour
         dontBuild = false;
         bool isNextToRoad = false;
         targetNew.parent = buildingsParent;
+
         for (int i = 0; i < allBuildings.Count; i++)
         {
+            // Check for new building overlapping existing building
             if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10)
             {
@@ -260,6 +272,7 @@ public class CameraController : MonoBehaviour
                 break;
             }
 
+            // Check for additionalSpace overlap with existing building
             for (int u = 0; u < targetBuildProp.additionalSpace.Length; u++)
             {
                 if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.x / 10) * 10 &&
@@ -270,6 +283,8 @@ public class CameraController : MonoBehaviour
                 }
             }
         }
+
+        // Check foir new building overlapping with existing roads
         for (int i = 0; i < roadGenerator.allRoads.Count; i++)
         {
             if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(targetNew.position.x) &&
@@ -278,7 +293,7 @@ public class CameraController : MonoBehaviour
                 dontBuild = true;
                 break;
             }
-
+            // Check foir new building's additionalSpace overlapping with existing roads
             for (int u = 0; u < targetBuildProp.additionalSpace.Length; u++)
             {
                 if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.x / 10) * 10 &&
@@ -289,9 +304,10 @@ public class CameraController : MonoBehaviour
                 }
             }
         }
+
+        //  Do the building phase 
         if (dontBuild == false)
         {
-
             // Clear Background Forest
             for (int i = 0; i < forestObj.Count; i++)
             {
@@ -349,10 +365,6 @@ public class CameraController : MonoBehaviour
 
     public void DeleteTarget(Transform target)
     {
-        print("Delete Target");
-        // doubleClick = false;
-        // lastClickTime = 0;
-
         // Checck all buildings to see if it intersects demolition target and remove building 
         for (int i = 0; i < allBuildings.Count; i++)
         {
