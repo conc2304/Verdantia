@@ -18,3 +18,276 @@ Key: pollutionReduction, Min: 0, Max: 100
 Key: greenSpaceEffect, Min: -50, Max: 150
         Key: carbonFootprint, Min: -500, Max: 5000
 Key: taxContribution, Min: 0, Max: 5000
+
+
+
+The Large Campus Office is a significant contributor to both the city's economy and job opportunities, boosting city happiness through employment. However, its expansive structure and materials contribute to the urban heat island effect, increasing surrounding temperatures. While it offers green spaces on campus that help counteract heat and add aesthetic value, it also generates pollution and has a considerable carbon footprint due to high energy demands. Balancing these environmental impacts with its economic benefits is key to maintaining a healthy, thriving city.
+ {
+  "buildingName": "Large Campus Office",
+  "buildingSize": 4,
+  "constructionCost": 300000,
+  "demolitionCost": 0,
+  "operationalCost": 1500,
+  "taxRevenue": 1000,
+  "upkeep": 300,
+  "energyConsumption": 1000,
+  "resourceProduction": 0,
+  "capacity": 2500,
+  "happinessImpact": 10,
+  "healthImpact": 0,
+  "pollutionOutput": 100,
+  "pollutionReduction": 0,
+  "greenSpaceEffect": 10,
+  "heatContribution": 50,
+  "carbonFootprint": 1000,
+  "taxContribution": 1000,
+  "coverageRadius": 0
+}
+
+
+**Eco High-Rise Apartment**:
+
+The Eco High-Rise Apartment exemplifies sustainable urban living, incorporating vegetation on its facade to naturally cool the building and its surroundings. This “green wall” design draws inspiration from Singapore’s urban heat management strategies, where plants are integrated into high-rise architecture to absorb sunlight, reduce heat, and improve air quality. This vegetation not only helps mitigate the urban heat island effect by cooling nearby areas but also enhances resident happiness and health by creating a more natural and serene environment. With minimal pollution output and a low carbon footprint, this building aligns perfectly with eco-friendly, future-focused urban planning.
+{
+  "buildingName": "Eco High-Rise Apartment",
+  "buildingSize": 4,
+  "constructionCost": 150000,
+  "demolitionCost": 0,
+  "operationalCost": 100,
+  "taxRevenue": 250,
+  "upkeep": 50,
+  "energyConsumption": 100,
+  "resourceProduction": 0,
+  "capacity": 350,
+  "happinessImpact": 15,
+  "healthImpact": 10,
+  "pollutionOutput": 5,
+  "pollutionReduction": 10,
+  "greenSpaceEffect": 5,
+  "heatContribution": 2,
+  "carbonFootprint": 100,
+  "taxContribution": 250,
+  "coverageRadius": 0
+}
+
+
+The Farmhouse/Dacha offers a quaint, countryside appeal within the city, enhancing resident happiness with its charm and connection to nature. Its small structure has minimal impact on the urban heat island effect and a very low heat contribution, making it a naturally cooling element in the urban landscape. While it generates a negligible amount of pollution, its presence promotes a greener environment, adding a touch of green space and contributing to a more sustainable, balanced urban ecosystem. With a low carbon footprint, the farmhouse embodies a simpler, eco-friendly lifestyle within the bustling city.
+{
+  "buildingName": "Farmhouse/Dacha",
+  "buildingSize": 1,
+  "constructionCost": 5000,
+  "demolitionCost": 0,
+  "operationalCost": 30,
+  "taxRevenue": 10,
+  "upkeep": 10,
+  "energyConsumption": 20,
+  "resourceProduction": 0,
+  "capacity": 4,
+  "happinessImpact": 5,
+  "healthImpact": 2,
+  "pollutionOutput": 1,
+  "pollutionReduction": 0,
+  "greenSpaceEffect": 2,
+  "heatContribution": 1,
+  "carbonFootprint": 20,
+  "taxContribution": 10,
+  "coverageRadius": 0
+}
+
+
+The Residential House provides comfortable living with a modest impact on the environment. Its compact structure has a minimal heat contribution, helping to maintain a balanced temperature in surrounding areas and limiting its effect on the urban heat island. While it generates some pollution and a small carbon footprint, its lower energy consumption and positive influence on happiness make it a favorable choice for a sustainable neighborhood. Surrounded by small green spaces, this house contributes to a pleasant environment that supports both well-being and ecological goals in the city.
+{
+  "buildingName": "Residential House",
+  "buildingSize": 1,
+  "constructionCost": 15000,
+  "demolitionCost": 0,
+  "operationalCost": 50,
+  "taxRevenue": 50,
+  "upkeep": 15,
+  "energyConsumption": 50,
+  "resourceProduction": 0,
+  "capacity": 6,
+  "happinessImpact": 10,
+  "healthImpact": 5,
+  "pollutionOutput": 5,
+  "pollutionReduction": 0,
+  "greenSpaceEffect": 1,
+  "heatContribution": 3,
+  "carbonFootprint": 60,
+  "taxContribution": 50,
+  "coverageRadius": 0
+}
+
+
+
+{
+  "buildingName": "Mid-rise Apartment",
+  "buildingSize": 1,
+  "constructionCost": 50000,
+  "demolitionCost": 0,
+  "operationalCost": 120,
+  "taxRevenue": 150,
+  "upkeep": 50,
+  "energyConsumption": 200,
+  "resourceProduction": 0,
+  "capacity": 100,
+  "happinessImpact": 0,
+  "healthImpact": -2,
+  "pollutionOutput": 25,
+  "pollutionReduction": 0,
+  "greenSpaceEffect": 0,
+  "heatContribution": 10,
+  "carbonFootprint": 250,
+  "taxContribution": 150,
+  "coverageRadius": 0
+}
+Mid-rise Apartment:
+The Mid-rise Apartment provides essential housing for urban residents but has a moderate impact on the environment. Its structure contributes to the urban heat island effect, as the building materials absorb and retain heat, raising local temperatures. This apartment type also generates a moderate amount of pollution and has a notable carbon footprint due to its energy consumption, which can affect both air quality and public health. Although it lacks green spaces, upgrading to eco-friendly building materials and adding rooftop gardens or green facades could mitigate some of its environmental impact, aligning it more closely with sustainable urban goals.
+
+
+{
+  "buildingName": "Mid-rise Apartment w/ Park and Parking",
+  "buildingSize": 1,
+  "constructionCost": 50000,
+  "demolitionCost": 0,
+  "operationalCost": 120,
+  "taxRevenue": 150,
+  "upkeep": 50,
+  "energyConsumption": 200,
+  "resourceProduction": 0,
+  "capacity": 100,
+  "happinessImpact": 0,
+  "healthImpact": -2,
+  "pollutionOutput": 25,
+  "pollutionReduction": 0,
+  "greenSpaceEffect": 0,
+  "heatContribution": 10,
+  "carbonFootprint": 250,
+  "taxContribution": 150,
+  "coverageRadius": 0
+}
+Mid-rise Apartment w/ Park and Parking:
+The Mid-rise Apartment with an integrated park offers urban living with added green space, which helps reduce the local urban heat island effect by providing shade and absorbing heat. While the building itself has a moderate heat contribution and carbon footprint due to its energy needs and materials, the attached park offsets some environmental impact by improving air quality and adding greenery. This balance between residential density and green space positively impacts citizen well-being and makes this building more aligned with sustainable city planning.
+
+
+{
+  "buildingName": "High-Rise with Garden + Parking",
+  "buildingSize": 4,
+  "constructionCost": 150000,
+  "demolitionCost": 0,
+  "operationalCost": 500,
+  "taxRevenue": 800,
+  "upkeep": 300,
+  "energyConsumption": 400,
+  "resourceProduction": 0,
+  "capacity": 450,
+  "happinessImpact": 30,
+  "healthImpact": 15,
+  "pollutionOutput": 30,
+  "pollutionReduction": 15,
+  "greenSpaceEffect": 40,
+  "heatContribution": 10,
+  "carbonFootprint": 300,
+  "taxContribution": 800,
+  "coverageRadius": 0
+}
+High-Rise with Garden + Parking:
+The High-Rise with Garden and Parking combines urban density with eco-friendly design, incorporating extensive green space to enhance city livability. The garden area helps counter the urban heat island effect by absorbing sunlight, reducing local temperatures, and promoting biodiversity. This building has a positive effect on citizen happiness and health, thanks to the greenery and improved air quality from pollution reduction measures. Despite its energy consumption and moderate carbon footprint, the building’s green spaces make it an environmentally conscious choice, balancing high capacity with sustainable features.
+
+{
+  "buildingName": "Small Office",
+  "buildingSize": 2,
+  "constructionCost": 50000,
+  "demolitionCost": 0,
+  "operationalCost": 200,
+  "taxRevenue": 100,
+  "upkeep": 50,
+  "energyConsumption": 150,
+  "resourceProduction": 0,
+  "capacity": 75,
+  "happinessImpact": 5,
+  "healthImpact": 0,
+  "pollutionOutput": 10,
+  "pollutionReduction": 0,
+  "greenSpaceEffect": 2,
+  "heatContribution": 5,
+  "carbonFootprint": 100,
+  "taxContribution": 100,
+  "coverageRadius": 0
+}
+Small Office:
+The Small Office offers workspace with a modest impact on the urban environment. Its compact design contributes minimally to the urban heat island effect, and its low pollution output makes it a relatively eco-friendly option for commercial growth. While it has a small carbon footprint due to energy usage, the building’s positive impact on citizen happiness and slight green space addition make it a balanced choice for supporting a thriving, sustainable city. Upgrading to energy-efficient features could further reduce its environmental footprint.
+
+
+{
+  "buildingName": "Wind Farm",
+  "buildingSize": 1,
+  "constructionCost": 100000,
+  "demolitionCost": 0,
+  "operationalCost": 100,
+  "taxRevenue": 50,
+  "upkeep": 50,
+  "energyConsumption": 0,
+  "resourceProduction": 300,
+  "capacity": 50,
+  "happinessImpact": 5,
+  "healthImpact": 5,
+  "pollutionOutput": 0,
+  "pollutionReduction": 50,
+  "greenSpaceEffect": 0,
+  "heatContribution": 0,
+  "carbonFootprint": 0,
+  "taxContribution": 50,
+  "coverageRadius": 0
+}
+Wind Farm:
+The Wind Farm is a clean energy source that produces no pollution or heat, making it an ideal choice for reducing the city's carbon footprint and supporting environmental health. By providing renewable energy, it significantly reduces dependency on fossil fuels, contributing to a healthier atmosphere and lowering overall pollution. This green energy facility also positively impacts citizen happiness, as it promotes sustainable growth and cleaner air, making it a valuable asset in building an eco-friendly city.
+
+{
+  "buildingName": "Chemical Plant",
+  "prefabName": "ChemicalPlant",
+  "buildingSize": 1,
+  "constructionCost": 200000,
+  "demolitionCost": 0,
+  "operationalCost": 3000,
+  "taxRevenue": 2000,
+  "upkeep": 1000,
+  "energyConsumption": 1200,
+  "resourceProduction": 0,
+  "capacity": 500,
+  "happinessImpact": -10,
+  "healthImpact": -20,
+  "pollutionOutput": 300,
+  "pollutionReduction": 0,
+  "greenSpaceEffect": -10,
+  "heatContribution": 20,
+  "carbonFootprint": 500,
+  "taxContribution": 2000,
+  "coverageRadius": 0
+}
+Chemical Plant:
+The Chemical Plant provides substantial tax revenue but has a significant environmental impact on the city. Its high energy consumption and pollution output contribute to a large carbon footprint, which negatively affects air quality and public health. Additionally, the plant’s heat contribution intensifies the urban heat island effect, raising temperatures in surrounding areas. The negative impact on green space further exacerbates environmental concerns, making it essential to manage its effects carefully or consider eco-upgrades to mitigate its pollution and energy demands where possible.
+
+
+{
+  "buildingName": "Eco-Friendly Factory with Green Roof",
+  "prefabName": "EcoFactoryGreenRoof",
+  "buildingSize": 4,
+  "constructionCost": 200000,
+  "demolitionCost": 0,
+  "operationalCost": 1500,
+  "taxRevenue": 2200,
+  "upkeep": 1000,
+  "energyConsumption": 900,
+  "resourceProduction": 0,
+  "capacity": 500,
+  "happinessImpact": 5,
+  "healthImpact": 10,
+  "pollutionOutput": 50,
+  "pollutionReduction": 20,
+  "greenSpaceEffect": 15,
+  "heatContribution": 5,
+  "carbonFootprint": 500,
+  "taxContribution": 2200,
+  "coverageRadius": 0
+}

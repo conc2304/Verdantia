@@ -247,8 +247,17 @@ MonoBehaviour:
   buildingTime: 4
   spaceWidth: 1
   buildingName: Residential House
+  buildingDescription: The Residential House provides comfortable living with a modest
+    impact on the environment. Its compact structure has a minimal heat contribution,
+    helping to maintain a balanced temperature in surrounding areas and limiting
+    its effect on the urban heat island. While it generates some pollution and a
+    small carbon footprint, its lower energy consumption and positive influence on
+    happiness make it a favorable choice for a sustainable neighborhood. Surrounded
+    by small green spaces, this house contributes to a pleasant environment that
+    supports both well-being and ecological goals in the city.
   zoneRequirement: 0
   constructionCost: 15000
+  demolitionCost: 0
   operationalCost: 50
   taxRevenue: 50
   upkeep: 15
@@ -267,8 +276,7 @@ MonoBehaviour:
   greenSpaceEffect: 1
   carbonFootprint: 60
   taxContribution: 50
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &3580955728642800891
 MonoBehaviour:

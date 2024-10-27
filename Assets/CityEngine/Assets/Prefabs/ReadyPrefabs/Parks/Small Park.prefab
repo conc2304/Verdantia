@@ -772,8 +772,17 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: Small Park
+  buildingDescription: "The Small Park offers a refreshing green space that enhances
+    city happiness and health, providing a peaceful spot for residents to enjoy nature.
+    Though modest in size, it plays an important role in pollution reduction and
+    lowering the city\u2019s carbon footprint. The park\u2019s greenery also helps
+    counteract the urban heat island effect, bringing a slight cooling benefit to
+    its immediate surroundings. As a cost-effective option with both environmental
+    and social benefits, the Small Park is an excellent addition to support a balanced,
+    eco-friendly urban landscape."
   zoneRequirement: 2
   constructionCost: 10000
+  demolitionCost: 0
   operationalCost: 100
   taxRevenue: 0
   upkeep: 50
@@ -792,8 +801,7 @@ MonoBehaviour:
   greenSpaceEffect: 20
   carbonFootprint: -50
   taxContribution: 0
-  jobCreation: 5
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &785666070005489605
 MonoBehaviour:

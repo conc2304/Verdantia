@@ -1213,8 +1213,17 @@ MonoBehaviour:
   buildingTime: 30
   spaceWidth: 2
   buildingName: Coal-Fired Power Plant
+  buildingDescription: "The Coal-Fired Power Plant produces substantial energy and
+    tax revenue but at a high environmental and social cost. Its heavy pollution
+    output significantly impacts air quality, leading to a high carbon footprint
+    and negatively affecting public health. The plant\u2019s heat contribution intensifies
+    the urban heat island effect, raising temperatures in nearby areas, while its
+    large footprint reduces green space, further exacerbating environmental concerns.
+    Although it boosts city revenue, this plant requires careful management or upgrades
+    to mitigate its adverse effects on happiness, health, and sustainability."
   zoneRequirement: 2
   constructionCost: 300000
+  demolitionCost: 0
   operationalCost: 3500
   taxRevenue: 4000
   upkeep: 2500
@@ -1233,8 +1242,7 @@ MonoBehaviour:
   greenSpaceEffect: -20
   carbonFootprint: 5000
   taxContribution: 4000
-  jobCreation: 800
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &3095412744837479016
 MonoBehaviour:
@@ -1306,8 +1314,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1326,8 +1336,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &6319363023558620523
 GameObject:
@@ -1435,8 +1444,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1455,8 +1466,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &7154619427325838312
 GameObject:
@@ -1614,8 +1624,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1634,8 +1646,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8153347221091577815
 GameObject:
@@ -1860,8 +1871,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1880,8 +1893,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8518388907409151356
 GameObject:
@@ -1990,8 +2002,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2010,8 +2024,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1001 &148211819485164978
 PrefabInstance:

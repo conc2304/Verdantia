@@ -374,8 +374,18 @@ MonoBehaviour:
   buildingTime: 30
   spaceWidth: 2
   buildingName: Recycling and Repair Station
+  buildingDescription: "The Recycling and Repair Station is a model of sustainable
+    urban development, contributing positively to both the environment and citizen
+    well-being. This facility actively reduces pollution by recycling materials and
+    repairing goods, which lowers waste and minimizes environmental impact. Its operations
+    help to offset the city's carbon footprint, and the building\u2019s green space
+    further improves local air quality and provides a cooling effect to counter the
+    urban heat island. Beyond environmental benefits, the station also enhances city
+    happiness by promoting eco-friendly practices and reducing waste, making it a
+    valuable addition to any forward-thinking, sustainable city."
   zoneRequirement: 0
   constructionCost: 75000
+  demolitionCost: 0
   operationalCost: 500
   taxRevenue: 500
   upkeep: 200
@@ -394,8 +404,7 @@ MonoBehaviour:
   greenSpaceEffect: 5
   carbonFootprint: -100
   taxContribution: 500
-  jobCreation: 100
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &2613454741967033339
 MonoBehaviour:
@@ -731,8 +740,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -751,8 +762,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8506510547524147695
 GameObject:
@@ -811,8 +821,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -831,8 +843,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8561735233303364898
 GameObject:
@@ -930,8 +941,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -950,8 +963,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8642678617078988365
 GameObject:

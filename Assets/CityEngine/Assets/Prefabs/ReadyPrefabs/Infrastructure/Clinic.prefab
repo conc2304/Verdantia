@@ -914,8 +914,17 @@ MonoBehaviour:
   buildingTime: 15
   spaceWidth: 2
   buildingName: Health Clinic
+  buildingDescription: The Health Clinic is a vital facility that significantly improves
+    public health and citizen happiness by providing essential medical services.
+    Although it has a moderate carbon footprint and some pollution output due to
+    its energy demands, its contribution to the urban heat island effect is minimal.
+    Adding eco-friendly features, such as energy-efficient systems or a small green
+    space around the clinic, could further reduce its environmental impact. The Health
+    Clinic is a crucial asset for maintaining a healthy, resilient community while
+    balancing urban growth and sustainability.
   zoneRequirement: 3
   constructionCost: 200000
+  demolitionCost: 0
   operationalCost: 1000
   taxRevenue: 0
   upkeep: 800
@@ -934,8 +943,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 200
   taxContribution: 0
-  jobCreation: 200
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &8244234786447428393
 MonoBehaviour:
@@ -1568,8 +1576,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1588,8 +1598,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8346087874753987616
 GameObject:
@@ -1739,8 +1748,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1759,8 +1770,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8624051617236475548
 GameObject:
@@ -1819,8 +1829,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1839,8 +1851,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8805113475485021746
 GameObject:

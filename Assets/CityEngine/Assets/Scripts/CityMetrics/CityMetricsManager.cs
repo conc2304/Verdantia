@@ -12,14 +12,12 @@ public class CityMetricsManager : MonoBehaviour
 
     // Global city metrics
     public int startingBudget = 1000000;
-    // public int startingBudget = 500000;
     public float startingTemp = 69.0f;
 
-    public float cityTemp { get; private set; }
     public float tempSensitivity = 0.05f; // Sensitivity factor for how much extra heat affects energy and emissions
-    private string tempSuffix = "°F";
+    public float cityTemperature { get; private set; }
     public int population { get; private set; }
-    public float happiness { get; private set; } // Store as float for calculation
+    public float happiness { get; private set; }
     public int budget { get; private set; }
     public float greenSpace { get; private set; }
     public int urbanHeat { get; private set; }
@@ -29,6 +27,10 @@ public class CityMetricsManager : MonoBehaviour
     public int revenue { get; private set; }
     public int income { get; private set; }
     public int expenses { get; private set; }
+
+    private Dictionary<MetricTitle, float> metrics;
+
+
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
 
@@ -50,7 +52,7 @@ public class CityMetricsManager : MonoBehaviour
     public float[,] initialTemps;
 
 
-
+    [Header("Heat Map Debug")]
     public bool takeStep = false;
     public bool toggleRestartTemp = false;
     private int runCount = 0;
@@ -63,22 +65,42 @@ public class CityMetricsManager : MonoBehaviour
     public int sizeExtra = 2;
 
     public float sunHeatBase = 1;
-    float[,] sinkSourcesGrid;
+    private float[,] sinkSourcesGrid;
 
 
 
 
     void Start()
     {
-        cityTemp = startingTemp;
+        cityTemperature = startingTemp;
         budget = startingBudget;
         UpdateCityMetrics();
         OnMetricsUpdate?.Invoke();
+
+        // Initialize the dictionary for easier access
+        metrics = new Dictionary<MetricTitle, float>
+        {
+            { MetricTitle.CityTemperature, cityTemperature },
+            { MetricTitle.UrbanHeat, urbanHeat },
+            { MetricTitle.GreenSpace, greenSpace },
+            { MetricTitle.Budget, budget },
+            { MetricTitle.Happiness, happiness },
+            { MetricTitle.Pollution, pollution },
+            { MetricTitle.Population, population },
+            { MetricTitle.CarbonEmission, carbonEmission },
+            { MetricTitle.Income, income },
+            { MetricTitle.Expenses, expenses }
+        };
 
         gridSizeX = (grid.gridSizeX / 10) + gridPadding;
         gridSizeZ = (grid.gridSizeZ / 10) + gridPadding;
 
         RestartSimulation();
+    }
+
+    public float GetMetricValue(MetricTitle metricName)
+    {
+        return metrics.ContainsKey(metricName) ? metrics[metricName] : 0f;
     }
 
     public void InitializeGrid()
@@ -143,7 +165,7 @@ public class CityMetricsManager : MonoBehaviour
         if (toggleRestartTemp)
         {
             RestartSimulation();
-            toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
+            toggleRestartTemp = false;
         }
         if (takeStep)
         {
@@ -198,7 +220,7 @@ public class CityMetricsManager : MonoBehaviour
         ResetMetrics();
 
 
-        float tempDifference = cityTemp - startingTemp;
+        float tempDifference = cityTemperature - startingTemp;
 
 
         foreach (Transform building in cameraController.allBuildings)
@@ -246,7 +268,6 @@ public class CityMetricsManager : MonoBehaviour
     {
         population = 0;
         happiness = 0;
-        budget = 0;
         greenSpace = 0;
         urbanHeat = 0;
         pollution = 0;

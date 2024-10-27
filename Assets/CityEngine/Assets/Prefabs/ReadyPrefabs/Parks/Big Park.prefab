@@ -156,8 +156,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -176,8 +178,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &924503880932423349
 GameObject:
@@ -445,8 +446,17 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 2
   buildingName: Large Park
+  buildingDescription: "The Large Park is a substantial green oasis that brings immense
+    happiness and health benefits to the city by providing a beautiful, natural space
+    for recreation and relaxation. Its extensive greenery actively improves air quality
+    and offsets pollution, making it a powerful tool for reducing the city\u2019s
+    carbon footprint. Additionally, the park\u2019s cooling effect significantly
+    counters the urban heat island, lowering temperatures in surrounding areas. With
+    its positive impact on both the environment and community well-being, the Large
+    Park is an invaluable asset in creating a sustainable, livable city."
   zoneRequirement: 2
   constructionCost: 800000
+  demolitionCost: 0
   operationalCost: 500
   taxRevenue: 0
   upkeep: 300
@@ -465,8 +475,7 @@ MonoBehaviour:
   greenSpaceEffect: 100
   carbonFootprint: -200
   taxContribution: 0
-  jobCreation: 30
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &1027435996179414172
 MonoBehaviour:
@@ -833,8 +842,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -853,8 +864,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &3244725724182146805
 GameObject:
@@ -1900,8 +1910,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1920,8 +1932,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &7042528004188080150
 GameObject:
@@ -2116,8 +2127,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2136,8 +2149,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &7851172037209588594
 GameObject:
@@ -2344,8 +2356,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2364,8 +2378,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8792205642593579246
 GameObject:

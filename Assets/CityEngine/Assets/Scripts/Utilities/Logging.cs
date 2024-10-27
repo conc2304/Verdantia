@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using UnityEngine;
+using System.Text;
 
 public static class ObjectPrinter
 {
@@ -45,5 +47,65 @@ public static class ObjectPrinter
                 Console.WriteLine($"{field.Name}: Unable to get value ({ex.Message})");
             }
         }
+    }
+
+    public static void PrintBuildingDataAsJson(BuildingProperties buildingProps)
+    {
+        // Use StringBuilder for efficient string concatenation
+        StringBuilder jsonBuilder = new StringBuilder();
+        jsonBuilder.Append("{\n");
+
+
+        jsonBuilder.AppendFormat("  \"{0}\": {1}", "buildingName", FormatValue(buildingProps.buildingName));
+        jsonBuilder.Append(",");
+        jsonBuilder.Append("\n");
+
+        jsonBuilder.AppendFormat("  \"{0}\": {1}", "prefabName", FormatValue(buildingProps.gameObject.name));
+        jsonBuilder.Append(",");
+        jsonBuilder.Append("\n");
+
+        jsonBuilder.AppendFormat("  \"{0}\": {1}", "buildingSize", FormatValue(buildingProps.additionalSpace.Length + 1));
+        jsonBuilder.Append(",");
+        jsonBuilder.Append("\n");
+
+
+        // Iterate over each property in dataProps
+        for (int i = 0; i < buildingProps.dataProps.Length; i++)
+        {
+            string propName = buildingProps.dataProps[i];
+            FieldInfo fieldInfo = buildingProps.GetType().GetField(propName, BindingFlags.Public | BindingFlags.Instance);
+
+            if (fieldInfo != null)
+            {
+                // Get the value of the property
+                object value = fieldInfo.GetValue(buildingProps);
+
+                // Append the property and its value to the JSON string
+                jsonBuilder.AppendFormat("  \"{0}\": {1}", propName, FormatValue(value));
+
+                // Add a comma if it's not the last item
+                if (i < buildingProps.dataProps.Length - 1)
+                {
+                    jsonBuilder.Append(",");
+                }
+                jsonBuilder.Append("\n");
+            }
+        }
+
+        jsonBuilder.Append("}");
+
+        // Print the JSON-like string
+        Debug.Log(jsonBuilder.ToString());
+    }
+
+    // Format the value to be JSON-compatible
+    private static string FormatValue(object value)
+    {
+        if (value == null)
+            return "\"N/A\"";
+        else if (value is string)
+            return $"\"{value}\"";
+        else
+            return value.ToString();
     }
 }

@@ -1195,8 +1195,17 @@ MonoBehaviour:
   buildingTime: 30
   spaceWidth: 2
   buildingName: Solar Farm
+  buildingDescription: "The Solar Farm is a clean energy powerhouse that significantly
+    contributes to reducing the city\u2019s carbon footprint without adding pollution
+    or heat to the urban environment. By generating renewable energy, it reduces
+    the city\u2019s reliance on fossil fuels and improves air quality, positively
+    impacting public health and happiness. The Solar Farm aligns well with sustainability
+    goals, helping the city move toward carbon neutrality while offering a low-impact
+    solution to energy needs. This facility is an invaluable asset in building a
+    resilient and eco-friendly urban landscape."
   zoneRequirement: 2
   constructionCost: 120000
+  demolitionCost: 0
   operationalCost: 100
   taxRevenue: 100
   upkeep: 100
@@ -1215,8 +1224,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 100
-  jobCreation: 30
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &3095412744837479016
 MonoBehaviour:
@@ -1288,8 +1296,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1308,8 +1318,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &6319363023558620523
 GameObject:
@@ -1417,8 +1426,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1437,8 +1448,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &7154619427325838312
 GameObject:
@@ -1596,8 +1606,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1616,8 +1628,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8153347221091577815
 GameObject:
@@ -1842,8 +1853,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1862,8 +1875,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8518388907409151356
 GameObject:
@@ -1972,8 +1984,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1992,8 +2006,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1001 &377449481163907778
 PrefabInstance:

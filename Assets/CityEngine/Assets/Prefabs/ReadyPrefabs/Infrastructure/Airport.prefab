@@ -57,8 +57,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -77,8 +79,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &1200924099984898703
 GameObject:
@@ -137,8 +138,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -157,8 +160,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &2097803470436546452
 GameObject:
@@ -217,8 +219,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -237,8 +241,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &3010632827834040516
 GameObject:
@@ -297,8 +300,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -317,8 +322,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &3567788603933871046
 GameObject:
@@ -377,8 +381,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -397,8 +403,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &4457244273089208584
 GameObject:
@@ -494,8 +499,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -514,8 +521,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &5273924451734148981
 GameObject:
@@ -613,8 +619,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -633,8 +641,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &5793062631657546409
 GameObject:
@@ -706,8 +713,20 @@ MonoBehaviour:
   buildingTime: 100
   spaceWidth: 3
   buildingName: Airport
+  buildingDescription: "The Airport serves as a major economic hub, generating substantial
+    tax revenue and improving city happiness by enhancing connectivity and travel
+    options. However, its operations have a significant environmental impact. High
+    energy consumption, pollution output, and a large carbon footprint contribute
+    to air quality concerns, while its expansive paved surfaces intensify the urban
+    heat island effect, raising local temperatures. Additionally, the Airport\u2019s
+    footprint reduces green space in the area, which can affect nearby residents\u2019
+    health and overall environmental quality. Balancing its economic benefits with
+    eco-friendly initiatives\u2014such as implementing renewable energy sources or
+    increasing green buffers around the facility\u2014can help mitigate its environmental
+    impact."
   zoneRequirement: 2
   constructionCost: 1000000
+  demolitionCost: 0
   operationalCost: 10000
   taxRevenue: 5000
   upkeep: 7000
@@ -726,8 +745,7 @@ MonoBehaviour:
   greenSpaceEffect: -50
   carbonFootprint: 4000
   taxContribution: 5000
-  jobCreation: 5000
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &81862229850383422
 MonoBehaviour:
@@ -799,8 +817,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -819,8 +839,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1001 &292837686419520677
 PrefabInstance:

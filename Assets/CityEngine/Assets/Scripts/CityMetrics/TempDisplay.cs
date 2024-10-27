@@ -9,7 +9,7 @@ public class TempDisplay : MonoBehaviour
     void Start()
     {
         // Initialize the time text with the current time
-        tempText.text = cityMetricsManager.cityTemp.ToString();
+        tempText.text = cityMetricsManager.cityTemperature.ToString();
     }
 
     private void Awake()
@@ -21,7 +21,7 @@ public class TempDisplay : MonoBehaviour
     // Update the UI text when the month/year changes
     void UpdateTempText()
     {
-        tempText.text = cityMetricsManager.cityTemp.ToString();
+        tempText.text = cityMetricsManager.cityTemperature.ToString();
     }
 
     void OnDestroy()

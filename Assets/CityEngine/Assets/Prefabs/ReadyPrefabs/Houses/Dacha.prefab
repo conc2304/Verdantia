@@ -361,8 +361,18 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: Farmhouse
+  buildingDescription: The Farmhouse/Dacha offers a quaint, countryside appeal within
+    the city, enhancing resident happiness with its charm and connection to nature.
+    Its small structure has minimal impact on the urban heat island effect and a
+    very low heat contribution, making it a naturally cooling element in the urban
+    landscape. While it generates a negligible amount of pollution, its presence
+    promotes a greener environment, adding a touch of green space and contributing
+    to a more sustainable, balanced urban ecosystem. With a low carbon footprint,
+    the farmhouse embodies a simpler, eco-friendly lifestyle within the bustling
+    city.
   zoneRequirement: 0
   constructionCost: 5000
+  demolitionCost: 0
   operationalCost: 30
   taxRevenue: 10
   upkeep: 10
@@ -381,8 +391,7 @@ MonoBehaviour:
   greenSpaceEffect: 2
   carbonFootprint: 20
   taxContribution: 10
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &7155104198537411281
 MonoBehaviour:

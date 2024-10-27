@@ -157,9 +157,18 @@ MonoBehaviour:
   buildingHigh: 1
   buildingTime: 20
   spaceWidth: 2
-  buildingName: Mid-rise Apartment
+  buildingName: Mid-rise Apartment w/ Park and Parking
+  buildingDescription: The Mid-rise Apartment with an integrated park offers urban
+    living with added green space, which helps reduce the local urban heat island
+    effect by providing shade and absorbing heat. While the building itself has a
+    moderate heat contribution and carbon footprint due to its energy needs and materials,
+    the attached park offsets some environmental impact by improving air quality
+    and adding greenery. This balance between residential density and green space
+    positively impacts citizen well-being and makes this building more aligned with
+    sustainable city planning.
   zoneRequirement: 0
   constructionCost: 60000
+  demolitionCost: 0
   operationalCost: 150
   taxRevenue: 150
   upkeep: 50
@@ -178,8 +187,7 @@ MonoBehaviour:
   greenSpaceEffect: -5
   carbonFootprint: 275
   taxContribution: 170
-  jobCreation: 5
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &3605215850848964902
 MonoBehaviour:
@@ -627,8 +635,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -647,8 +657,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &4299146351718101626
 GameObject:

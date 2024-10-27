@@ -1752,8 +1752,18 @@ MonoBehaviour:
   buildingTime: 30
   spaceWidth: 2
   buildingName: High-Rise with Garden + Parking
+  buildingDescription: "The High-Rise with Garden and Parking combines urban density
+    with eco-friendly design, incorporating extensive green space to enhance city
+    livability. The garden area helps counter the urban heat island effect by absorbing
+    sunlight, reducing local temperatures, and promoting biodiversity. This building
+    has a positive effect on citizen happiness and health, thanks to the greenery
+    and improved air quality from pollution reduction measures. Despite its energy
+    consumption and moderate carbon footprint, the building\u2019s green spaces make
+    it an environmentally conscious choice, balancing high capacity with sustainable
+    features."
   zoneRequirement: 0
   constructionCost: 150000
+  demolitionCost: 0
   operationalCost: 500
   taxRevenue: 800
   upkeep: 300
@@ -1772,8 +1782,7 @@ MonoBehaviour:
   greenSpaceEffect: 40
   carbonFootprint: 300
   taxContribution: 800
-  jobCreation: 50
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &6004032861037003687
 MonoBehaviour:
@@ -2124,8 +2133,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2144,8 +2155,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8161172973872829999
 GameObject:
@@ -2304,8 +2314,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2324,8 +2336,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8509036438469127679
 GameObject:
@@ -2433,8 +2444,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2453,8 +2466,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8837194073898992501
 GameObject:

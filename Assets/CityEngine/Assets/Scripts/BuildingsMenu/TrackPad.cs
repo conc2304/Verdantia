@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     public bool isTracking = false;
-    private Vector2 mousePosition;
+    public Vector2 mousePosition;
     public Image buildBullseye;
     public Image demolishBullseye;
     public Image backgroundIcon;
     public RectTransform trackpadRect;
-    private float mouseYFix = -72.5f;
+    private readonly float mouseYFix = -72.5f;
 
     private Image target;
 
@@ -88,6 +88,7 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private void MoveBullseye(Vector2 mousePosition)
     {
         target.rectTransform.localPosition = new Vector2(mousePosition.x, mousePosition.y + mouseYFix);
+        print(mousePosition);
     }
 
     public void SetTarget(TrackpadTargetType targetType)
