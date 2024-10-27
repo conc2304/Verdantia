@@ -194,8 +194,17 @@ MonoBehaviour:
   buildingTime: 20
   spaceWidth: 2
   buildingName: Oil Derrick
+  buildingDescription: The Oil Derrick provides a high level of resource production
+    and tax revenue, but its environmental impact is substantial. The extraction
+    and processing operations contribute significantly to pollution and carbon emissions,
+    negatively affecting air quality and public health. Its presence also reduces
+    green space and contributes to the urban heat island effect, raising temperatures
+    in nearby areas. While financially beneficial, the Oil Derrick poses challenges
+    for sustainability and citizen happiness, making it essential to balance its
+    economic gains with environmental mitigation efforts.
   zoneRequirement: 2
   constructionCost: 250000
+  demolitionCost: 0
   operationalCost: 2000
   taxRevenue: 3000
   upkeep: 1500
@@ -214,8 +223,7 @@ MonoBehaviour:
   greenSpaceEffect: -30
   carbonFootprint: 4000
   taxContribution: 3000
-  jobCreation: 500
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &7226382225563357934
 MonoBehaviour:
@@ -536,8 +544,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -556,8 +566,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1001 &150861345646391902
 PrefabInstance:

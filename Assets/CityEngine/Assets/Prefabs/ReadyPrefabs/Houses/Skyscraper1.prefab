@@ -653,8 +653,18 @@ MonoBehaviour:
   buildingTime: 6
   spaceWidth: 1
   buildingName: Mid-rise Apartment
+  buildingDescription: The Mid-rise Apartment provides essential housing for urban
+    residents but has a moderate impact on the environment. Its structure contributes
+    to the urban heat island effect, as the building materials absorb and retain
+    heat, raising local temperatures. This apartment type also generates a moderate
+    amount of pollution and has a notable carbon footprint due to its energy consumption,
+    which can affect both air quality and public health. Although it lacks green
+    spaces, upgrading to eco-friendly building materials and adding rooftop gardens
+    or green facades could mitigate some of its environmental impact, aligning it
+    more closely with sustainable urban goals.
   zoneRequirement: 0
   constructionCost: 50000
+  demolitionCost: 0
   operationalCost: 120
   taxRevenue: 150
   upkeep: 50
@@ -673,8 +683,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 250
   taxContribution: 150
-  jobCreation: 2
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &4025124437981863053
 MonoBehaviour:

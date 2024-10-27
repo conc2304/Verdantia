@@ -57,10 +57,6 @@ public class CameraController : MonoBehaviour
     public Transform forest;
     List<Transform> forestObj = new List<Transform>();
 
-    // public bool doubleClick;
-    // public float lastClickTime;
-    float catchTime = 0.3f;
-
     bool findPositionAfterMuiltyIputs;
 
     public GameObject activateMenu;
@@ -226,7 +222,7 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void SpawnRoad(Transform targetNew, bool updateBudget = true)
+    public void SpawnRoad(Transform targetNew, bool isInitializing = false)
     {
         targetNew.parent = roadsParent;
         targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
@@ -249,18 +245,18 @@ public class CameraController : MonoBehaviour
             // lastClickTime = 0;
 
             int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
-            if (updateBudget) cityMetricsManager.DeductExpenses(constructionCost);
+            if (!isInitializing) cityMetricsManager.DeductExpenses(constructionCost);
         }
     }
 
-    public void SpawnBuilding(Transform targetNew, bool updateBudget = true)
+    public string SpawnBuilding(Transform targetNew, bool isInitializing = false)
     {
         // Get Building Properties
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
 
         dontBuild = false;
-        bool isNextToRoad = false;
         targetNew.parent = buildingsParent;
+        string errorMsg = "";
 
         for (int i = 0; i < allBuildings.Count; i++)
         {
@@ -268,8 +264,9 @@ public class CameraController : MonoBehaviour
             if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10)
             {
+                errorMsg = "Can't build over an existing building";
                 dontBuild = true;
-                break;
+                return errorMsg;
             }
 
             // Check for additionalSpace overlap with existing building
@@ -278,11 +275,23 @@ public class CameraController : MonoBehaviour
                 if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.z / 10) * 10)
                 {
+                    errorMsg = "Can't build over an existing building";
                     dontBuild = true;
-                    break;
+                    return errorMsg;
                 }
             }
         }
+
+        // if we are initializing the game, 
+        // then we dont care if the building is next to a road
+        //  if we are not initializing the game, then check if the building is next to a road
+        if (!isInitializing && !IsBuildingNextToRoad(targetNew))
+        {
+            dontBuild = true;
+            errorMsg = "Must be placed next to a road";
+            return errorMsg;
+        }
+
 
         // Check foir new building overlapping with existing roads
         for (int i = 0; i < roadGenerator.allRoads.Count; i++)
@@ -291,7 +300,9 @@ public class CameraController : MonoBehaviour
                 Mathf.Round(roadGenerator.allRoads[i].position.z / 10) * 10 == Mathf.Round(targetNew.position.z))
             {
                 dontBuild = true;
-                break;
+                errorMsg = "Can't build over an existing road";
+
+                return errorMsg;
             }
             // Check foir new building's additionalSpace overlapping with existing roads
             for (int u = 0; u < targetBuildProp.additionalSpace.Length; u++)
@@ -300,12 +311,13 @@ public class CameraController : MonoBehaviour
                 Mathf.Round(roadGenerator.allRoads[i].position.z / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.z / 10) * 10)
                 {
                     dontBuild = true;
-                    break;
+                    errorMsg = "Can't build over an existing road";
+                    return errorMsg;
                 }
             }
         }
 
-        //  Do the building phase 
+        //  Do the building phase if conditions met
         if (dontBuild == false)
         {
             // Clear Background Forest
@@ -330,8 +342,11 @@ public class CameraController : MonoBehaviour
             spawner.citizensCount += 2;
             allBuildings.Add(targetNew);
 
-            int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
-            if (updateBudget) cityMetricsManager.DeductExpenses(constructionCost);
+            if (!isInitializing)
+            {
+                int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
+                cityMetricsManager.DeductExpenses(constructionCost);
+            }
 
             for (int i = 0; i < targetBuildProp.additionalSpace.Length; i++)
                 allBuildings.Add(targetBuildProp.additionalSpace[i].transform);
@@ -359,7 +374,44 @@ public class CameraController : MonoBehaviour
             target = null;
             cityChanged = true;
         }
+        return errorMsg;
     }
+
+    public bool IsBuildingNextToRoad(Transform targetNew)
+    {
+        BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
+
+        // Check if the building itself is next to a road
+        foreach (Transform road in roadGenerator.allRoads)
+        {
+            if (IsAdjacent(targetNew.position, road.position))
+            {
+                return true;
+            }
+        }
+
+        // Check if any additional spaces of the building are next to a road
+        foreach (Transform space in targetBuildProp.additionalSpace)
+        {
+            foreach (Transform road in roadGenerator.allRoads)
+            {
+                if (IsAdjacent(space.position, road.position))
+                {
+                    return true;
+                }
+            }
+        }
+
+        // No adjacent road found for the building or additional spaces
+        return false;
+    }
+
+    // Helper function to determine if two positions are adjacent (10 units apart on either x or z axis)
+    private bool IsAdjacent(Vector3 posA, Vector3 posB, int tolerance = 10)
+    {
+        return (Mathf.Abs(posA.x - posB.x) <= tolerance && posA.z == posB.z) || (Mathf.Abs(posA.z - posB.z) <= tolerance && posA.x == posB.x);
+    }
+
 
 
 
@@ -477,97 +529,6 @@ public class CameraController : MonoBehaviour
         toPos += movement;
     }
 
-    void MouseInput()
-    {
-
-        if (Input.touchCount > 0) return;
-
-        //Scrolling
-        if (Input.mouseScrollDelta.y != 0) // Vector3(0, -10, 10)
-        {
-            if (!heatmapActive)
-            {
-                toZoom += Input.mouseScrollDelta.y * zoomScale;
-            }
-            else
-            {
-                toZoom.y += Input.mouseScrollDelta.y * zoomScale.y;
-            }
-        }
-
-        //Mouse movement
-        if (Input.touchCount != 2 && Mathf.FloorToInt(toRot.eulerAngles.y) - Mathf.FloorToInt(cameraHolder.transform.eulerAngles.y) < 8 && Mathf.FloorToInt(toRot.eulerAngles.y) - Mathf.FloorToInt(cameraHolder.transform.eulerAngles.y) > -10)
-        {
-            if (findPositionAfterMuiltyIputs)
-            {
-                Plane plane = new Plane(Vector3.up, Vector3.zero);
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                float entry;
-                if (plane.Raycast(ray, out entry))
-                {
-                    dragStartPos = ray.GetPoint(entry);
-                }
-
-                findPositionAfterMuiltyIputs = false;
-            }
-
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                Plane plane = new Plane(Vector3.up, Vector3.zero);
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                float entry;
-                if (plane.Raycast(ray, out entry))
-                {
-                    dragStartPos = ray.GetPoint(entry);
-                }
-            }
-            if (Input.GetMouseButton(0))
-            {
-                Plane plane = new Plane(Vector3.up, Vector3.zero);
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                float entry;
-                if (plane.Raycast(ray, out entry))
-                {
-                    dragTargetPos = ray.GetPoint(entry);
-                    toPos = cameraHolder.transform.position + dragStartPos - dragTargetPos;
-                }
-            }
-        }
-
-        //Mouse rotation
-        if (Input.GetMouseButtonDown(2))
-        {
-            rotateStartPosition = Input.mousePosition;
-        }
-        if (Input.GetMouseButton(2))
-        {
-            rotateTargetPosition = Input.mousePosition;
-            Vector3 difference = rotateStartPosition - rotateTargetPosition;
-            rotateStartPosition = rotateTargetPosition;
-
-            // When heatmap is Not Active, apply the regular rotation (affecting all axes).
-            // When heatmap IS Active, modify only the Y rotation.
-            if (!heatmapActive)
-            {
-                // Regular rotation affecting Y and Z
-                toRot *= Quaternion.Euler(Vector3.up * (-difference.x / 5f));
-            }
-            else
-            {
-                Vector3 rot = mainCamtoRot.eulerAngles;
-                float currentY = rot.y;
-                float newYRotation = currentY + (-difference.x / 5f);
-                toRot *= Quaternion.Euler(0, newYRotation, 0);
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1)) RotateBuilding();
-    }
-
     public void RotateBuilding()
     {
         if (target != null)
@@ -577,57 +538,6 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    void KeyboardInput()
-    {
-        //Shifting
-        if (Input.GetKey(KeyCode.LeftShift))
-            movSpeed = fastSpeed;
-        else
-            movSpeed = normalSpeed;
-
-        //Movement
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        {
-            Vector3 forwardMovement = cameraHolder.transform.forward * movSpeed;
-            if (heatmapActive) forwardMovement.y = 0; // Prevent Y-axis movement
-            toPos += forwardMovement;
-        }
-
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            Vector3 backwardMovement = cameraHolder.transform.forward * -movSpeed;
-            if (heatmapActive) backwardMovement.y = 0; // Prevent Y-axis movement
-            toPos += backwardMovement;
-        }
-
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            Vector3 rightMovement = cameraHolder.transform.right * movSpeed;
-            if (heatmapActive) rightMovement.y = 0; // Prevent Y-axis movement
-            toPos += rightMovement;
-        }
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            Vector3 leftMovement = cameraHolder.transform.right * -movSpeed;
-            if (heatmapActive) leftMovement.y = 0; // Prevent Y-axis movement
-            toPos += leftMovement;
-        }
-
-        //Rotation
-        if (Input.GetKey(KeyCode.Q)) RotateCamera(-rotationScale);
-        if (Input.GetKey(KeyCode.E)) RotateCamera(rotationScale);
-
-        // Zooming
-        if (Input.GetKey(KeyCode.R)) ZoomIn(1);
-        if (Input.GetKey(KeyCode.F)) ZoomOut(1); ;
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ToggleHeatMapView();
-        }
-    }
 
     private Quaternion RotateCamera(float rotAmount)
     {
@@ -666,7 +576,6 @@ public class CameraController : MonoBehaviour
     }
     public void ZoomOut(float multiplier = 1)
     {
-        // toZoom -= zoomScale * multiplier;
         if (!heatmapActive)
         {
             toZoom -= multiplier * zoomScale;
@@ -694,7 +603,6 @@ public class CameraController : MonoBehaviour
 
     public void SetHeatMapView(bool isActive, string metric)
     {
-
         heatmapActive = isActive;
         UpdateHeatMapCamera();
     }

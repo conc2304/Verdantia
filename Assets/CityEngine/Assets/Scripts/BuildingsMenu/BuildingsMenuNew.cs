@@ -75,6 +75,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
 
     public GameObject placementUI;
+    public TMP_Text errorText;
     public TrackPad trackPad;
 
     public GameObject navInfoToggleParent;
@@ -87,6 +88,9 @@ public class BuildingsMenuNew : MonoBehaviour
     public Button cityStatsInfoToggleBtn;
     public GameObject cityStatsBottomPanel;
     public CityMetricsManager cityMetricsManager;
+
+    public Button missionModalBtn;
+    public GameObject missionsModal;
 
 
 
@@ -128,6 +132,8 @@ public class BuildingsMenuNew : MonoBehaviour
         navInfoToggleParent.SetActive(false);
         cityMetricsBtnGO.SetActive(true);
         cityMetricsDisplay.SetActive(false);
+        errorText.text = "";
+        errorText.gameObject.SetActive(false);
     }
 
     public void OnDropdownValueChanged(int index)
@@ -177,6 +183,13 @@ public class BuildingsMenuNew : MonoBehaviour
             {
                 posX -= Time.deltaTime * 10;
             }
+        }
+
+        // remove error message on new placement track pad touch 
+        if (errorText.gameObject.activeSelf && errorText.text != "" && trackPad.isTracking)
+        {
+            errorText.gameObject.SetActive(false);
+            errorText.text = "";
         }
     }
 
@@ -785,7 +798,7 @@ public class BuildingsMenuNew : MonoBehaviour
         if (trackPad.isTracking) return; // prevent accidental click
         HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
         if (!holdToSelect.hasSelected) return;
-
+        string errorMsg = "";
 
         Transform target = cameraController.target;
         if (target != null)
@@ -796,7 +809,7 @@ public class BuildingsMenuNew : MonoBehaviour
             }
             else if (target.CompareTag("Building"))
             {
-                cameraController.SpawnBuilding(target);
+                errorMsg = cameraController.SpawnBuilding(target);
             }
             else if (target.CompareTag("DeleteTool"))
             {
@@ -808,6 +821,18 @@ public class BuildingsMenuNew : MonoBehaviour
         if (cameraController.target == null || !cameraController.moveTarget)
         {
             InitializeTouchGui();
+        }
+
+        if (errorMsg != "")
+        {
+            // put error message on opposite side of target icon
+            errorText.transform.localPosition = trackPad.mousePosition.y > 0 ? new Vector3(0, -150, 0) : new Vector3(0, 150, 0);
+            errorText.text = errorMsg;
+            errorText.gameObject.SetActive(true);
+        }
+        else
+        {
+            errorText.gameObject.SetActive(false);
         }
     }
 
@@ -862,5 +887,19 @@ public class BuildingsMenuNew : MonoBehaviour
 
         cityStatsNavToggleBtn.interactable = true;
         cityStatsInfoToggleBtn.interactable = false;
+    }
+
+    public void OnMissionViewClick()
+    {
+        missionsModal.SetActive(true);
+        mainMenu.SetActive(false);
+        navigationGui.SetActive(false);
+    }
+
+    public void OnMissionModalCose()
+    {
+        missionsModal.SetActive(false);
+        mainMenu.SetActive(true);
+        navigationGui.SetActive(true);
     }
 }

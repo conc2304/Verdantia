@@ -424,8 +424,18 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: Hospital
+  buildingDescription: "The Hospital is an essential institution that greatly enhances
+    public health and happiness, offering extensive medical services to support community
+    well-being. However, its high energy consumption and pollution output contribute
+    to a sizable carbon footprint, and the building\u2019s materials add moderately
+    to the urban heat island effect. To balance these environmental impacts, integrating
+    energy-efficient systems and adding nearby green spaces could reduce its carbon
+    and heat contributions. Despite its environmental costs, the Hospital\u2019s
+    role in ensuring a healthy, thriving city makes it an invaluable part of urban
+    infrastructure."
   zoneRequirement: 3
   constructionCost: 500000
+  demolitionCost: 0
   operationalCost: 5000
   taxRevenue: 0
   upkeep: 4000
@@ -444,8 +454,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 800
   taxContribution: 0
-  jobCreation: 1500
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &4746778654929554520
 MonoBehaviour:

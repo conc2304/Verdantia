@@ -470,8 +470,17 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: Nightclub
+  buildingDescription: The Nightclub brings energy and entertainment to the city,
+    providing a boost to citizen happiness and nightlife. However, its high energy
+    consumption and moderate pollution output contribute to a noticeable carbon footprint,
+    impacting local air quality and health. The building materials add to the urban
+    heat island effect, increasing temperatures in the surrounding area. Adding eco-friendly
+    upgrades, like energy-efficient lighting or small green areas around the structure,
+    could help reduce its environmental impact while maintaining its role as a lively
+    social venue.
   zoneRequirement: 1
   constructionCost: 150000
+  demolitionCost: 0
   operationalCost: 1000
   taxRevenue: 500
   upkeep: 200
@@ -490,8 +499,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 200
   taxContribution: 500
-  jobCreation: 100
-  industryBoost: 200
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &4992570464852695727
 MonoBehaviour:

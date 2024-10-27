@@ -484,8 +484,17 @@ MonoBehaviour:
   buildingTime: 15
   spaceWidth: 1
   buildingName: Chemical Plant
+  buildingDescription: "The Chemical Plant provides substantial tax revenue but has
+    a significant environmental impact on the city. Its high energy consumption and
+    pollution output contribute to a large carbon footprint, which negatively affects
+    air quality and public health. Additionally, the plant\u2019s heat contribution
+    intensifies the urban heat island effect, raising temperatures in surrounding
+    areas. The negative impact on green space further exacerbates environmental concerns,
+    making it essential to manage its effects carefully or consider eco-upgrades
+    to mitigate its pollution and energy demands where possible."
   zoneRequirement: 2
   constructionCost: 200000
+  demolitionCost: 0
   operationalCost: 3000
   taxRevenue: 2000
   upkeep: 1000
@@ -504,8 +513,7 @@ MonoBehaviour:
   greenSpaceEffect: -10
   carbonFootprint: 500
   taxContribution: 2000
-  jobCreation: 500
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &8663378879950882710
 MonoBehaviour:

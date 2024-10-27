@@ -1117,8 +1117,17 @@ MonoBehaviour:
   buildingTime: 20
   spaceWidth: 2
   buildingName: Small Office
+  buildingDescription: "The Small Office offers workspace with a modest impact on
+    the urban environment. Its compact design contributes minimally to the urban
+    heat island effect, and its low pollution output makes it a relatively eco-friendly
+    option for commercial growth. While it has a small carbon footprint due to energy
+    usage, the building\u2019s positive impact on citizen happiness and slight green
+    space addition make it a balanced choice for supporting a thriving, sustainable
+    city. Upgrading to energy-efficient features could further reduce its environmental
+    footprint."
   zoneRequirement: 1
   constructionCost: 50000
+  demolitionCost: 0
   operationalCost: 200
   taxRevenue: 100
   upkeep: 50
@@ -1137,8 +1146,7 @@ MonoBehaviour:
   greenSpaceEffect: 2
   carbonFootprint: 100
   taxContribution: 100
-  jobCreation: 75
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &9009391232856852927
 MonoBehaviour:
@@ -1623,8 +1631,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1643,8 +1653,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8939596189235884654
 GameObject:

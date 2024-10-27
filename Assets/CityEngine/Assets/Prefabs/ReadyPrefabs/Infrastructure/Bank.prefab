@@ -513,8 +513,17 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: Bank
+  buildingDescription: "The Bank provides essential financial services and boosts
+    city happiness by supporting economic growth and stability. With a relatively
+    low environmental footprint, it generates only minimal pollution and has a small
+    carbon footprint, making it one of the more eco-friendly commercial buildings.
+    However, its materials contribute slightly to the urban heat island effect by
+    absorbing and retaining heat. Incorporating sustainable features, like energy-efficient
+    lighting or a small green space, could further enhance its environmental impact
+    while maintaining its role as a cornerstone of the city\u2019s economy."
   zoneRequirement: 1
   constructionCost: 100000
+  demolitionCost: 0
   operationalCost: 500
   taxRevenue: 800
   upkeep: 300
@@ -533,8 +542,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 50
   taxContribution: 800
-  jobCreation: 200
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &840075109517472774
 MonoBehaviour:
@@ -721,8 +729,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -741,8 +751,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1001 &30780436825762262
 PrefabInstance:

@@ -6,6 +6,7 @@ public enum TrackpadTargetType
 
 public enum MetricTitle
 {
+    CityTemperature,
     Population,
     Happiness,
     Budget,

@@ -709,9 +709,18 @@ MonoBehaviour:
   buildingHigh: 0.4
   buildingTime: 30
   spaceWidth: 2
-  buildingName: Nuclear Power PLant
+  buildingName: Nuclear Power Plant
+  buildingDescription: "The Nuclear Power Plant is a high-output energy facility
+    that provides an immense amount of clean energy without direct pollution or carbon
+    emissions, helping reduce the city's reliance on fossil fuels. Although it has
+    no heat contribution or impact on the urban heat island effect, its presence
+    can slightly affect public health and happiness due to safety concerns. However,
+    the plant\u2019s ability to generate large-scale, low-carbon energy makes it
+    a valuable asset in advancing sustainable city growth and supporting eco-friendly
+    power infrastructure."
   zoneRequirement: 2
   constructionCost: 500000
+  demolitionCost: 0
   operationalCost: 4000
   taxRevenue: 5000
   upkeep: 3000
@@ -730,8 +739,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 5000
-  jobCreation: 1000
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &3944007841880845247
 MonoBehaviour:
@@ -973,8 +981,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -993,8 +1003,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8381377062413157345
 GameObject:
@@ -1136,8 +1145,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1156,8 +1167,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8624051617236475548
 GameObject:
@@ -1216,8 +1226,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1236,8 +1248,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1001 &148221960665240512
 PrefabInstance:

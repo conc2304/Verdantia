@@ -361,8 +361,16 @@ MonoBehaviour:
   buildingTime: 3
   spaceWidth: 1
   buildingName: Cafe
+  buildingDescription: The Cafe is a cozy addition to the city, boosting happiness
+    by offering a social space for residents to gather and relax. Its environmental
+    impact is minimal, with low energy consumption, a small carbon footprint, and
+    minimal pollution output. While it has a slight heat contribution due to its
+    structure and materials, the Cafe remains a low-impact, community-friendly building.
+    Adding greenery around the exterior could enhance its appeal, reduce heat absorption,
+    and further contribute to an eco-conscious urban landscape.
   zoneRequirement: 1
   constructionCost: 25000
+  demolitionCost: 0
   operationalCost: 200
   taxRevenue: 100
   upkeep: 50
@@ -381,8 +389,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 20
   taxContribution: 100
-  jobCreation: 15
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &1573302049676483977
 MonoBehaviour:

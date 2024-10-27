@@ -57,8 +57,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -77,8 +79,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &1200924099984898703
 GameObject:
@@ -137,8 +138,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -157,8 +160,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &2097803470436546452
 GameObject:
@@ -217,8 +219,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -237,8 +241,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &3010632827834040516
 GameObject:
@@ -297,8 +300,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -317,8 +322,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &3567788603933871046
 GameObject:
@@ -377,8 +381,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -397,8 +403,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &4457244273089208584
 GameObject:
@@ -493,8 +498,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -513,8 +520,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &5273924451734148981
 GameObject:
@@ -612,8 +618,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -632,8 +640,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &5793062631657546409
 GameObject:
@@ -705,8 +712,18 @@ MonoBehaviour:
   buildingTime: 15
   spaceWidth: 3
   buildingName: Shopping Mall
+  buildingDescription: "The Shopping Mall is a bustling commercial hub that boosts
+    city happiness and provides economic benefits through substantial tax revenue.
+    However, its large footprint and high energy consumption contribute to a significant
+    carbon footprint and pollution output. The building\u2019s expansive structure
+    and heat-retaining materials also add to the urban heat island effect, raising
+    temperatures in nearby areas. To mitigate its environmental impact, eco-friendly
+    enhancements\u2014such as green roofs, energy-efficient systems, or solar panels\u2014could
+    reduce its heat contribution and pollution, making the mall a more sustainable
+    asset for the city."
   zoneRequirement: 1
   constructionCost: 500000
+  demolitionCost: 0
   operationalCost: 3000
   taxRevenue: 2000
   upkeep: 800
@@ -725,8 +742,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 3000
   taxContribution: 2000
-  jobCreation: 3000
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &1034629162656238963
 MonoBehaviour:
@@ -798,8 +814,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -818,8 +836,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1001 &292837686419520677
 PrefabInstance:

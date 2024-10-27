@@ -375,8 +375,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -395,8 +397,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &3067002374638132072
 GameObject:
@@ -498,8 +499,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -518,8 +521,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &4035709658694445694
 GameObject:
@@ -838,8 +840,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -858,8 +862,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &4944277083065917951
 GameObject:
@@ -1145,8 +1148,18 @@ MonoBehaviour:
   buildingTime: 40
   spaceWidth: 3
   buildingName: University
+  buildingDescription: "The University is a cornerstone of education and innovation,
+    enhancing city happiness and contributing to public health by fostering a well-educated
+    community. However, its high energy consumption and moderate pollution output
+    result in a significant carbon footprint, while its large structure adds to the
+    urban heat island effect. The University\u2019s green space provides a small
+    cooling effect and enhances the campus environment, but eco-friendly upgrades\u2014such
+    as renewable energy sources, green rooftops, or expanded gardens\u2014could further
+    reduce its environmental impact. The University\u2019s educational and social
+    value make it a vital part of a thriving, forward-thinking city."
   zoneRequirement: 2
   constructionCost: 3000000
+  demolitionCost: 0
   operationalCost: 10000
   taxRevenue: 0
   upkeep: 8000
@@ -1165,8 +1178,7 @@ MonoBehaviour:
   greenSpaceEffect: 5
   carbonFootprint: 4000
   taxContribution: 0
-  jobCreation: 5000
-  industryBoost: 3000
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &3650275360788955524
 MonoBehaviour:
@@ -1421,8 +1433,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1441,8 +1455,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8529055135148007190
 GameObject:
@@ -1550,8 +1563,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1570,8 +1585,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1001 &84194199329773055
 PrefabInstance:

@@ -37,10 +37,12 @@ public class SaveDataTrigger : MonoBehaviour
         string buildingsStr = "";
         for (int i = 0; i < buildingsPropertiesForIndex.Length; i++)
         {
+
             buildingsStr += buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>().buildingName + ", ";
             try
             {
                 buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>().buildingIndex = i;
+                ObjectPrinter.PrintBuildingDataAsJson(buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>());
             }
             catch
             {
@@ -94,7 +96,7 @@ public class SaveDataTrigger : MonoBehaviour
 
     public void BuildingDataLoad()
     {
-        bool updateBudget = false;
+        bool spawnInitialization = true;
         data = SaveSystem.LoadBuildings();
         if (data != null)
         {
@@ -112,7 +114,7 @@ public class SaveDataTrigger : MonoBehaviour
 
                         building.GetComponent<BuildingProperties>().buildConstruction.timer = data.timer[i];
 
-                        cameraController.SpawnBuilding(building.transform, updateBudget);
+                        cameraController.SpawnBuilding(building.transform, spawnInitialization);
                     }
                     else
                     {
@@ -123,7 +125,7 @@ public class SaveDataTrigger : MonoBehaviour
                 {
                     building = Instantiate(road);
                     SetPosition(i);
-                    cameraController.SpawnRoad(building.transform, updateBudget);
+                    cameraController.SpawnRoad(building.transform, spawnInitialization);
                     Destroy(cameraController.target.gameObject);
                 }
             }

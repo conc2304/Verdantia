@@ -66,6 +66,7 @@ public class BuildingProperties : MonoBehaviour
     [Header("General Building Properties")]
 
     public string buildingName;
+    [TextArea]
     public string buildingDescription;
     public ZoneType zoneRequirement;
     public int constructionCost;
@@ -131,8 +132,8 @@ public class BuildingProperties : MonoBehaviour
         "carbonFootprint",
         "taxContribution",
         // "jobCreation",
-        // "industryBoost",
-        // "coverageRadius",
+        "industryBoost",
+        "coverageRadius",
     };
 
     private BuildingsMenuNew buildingsMenu;

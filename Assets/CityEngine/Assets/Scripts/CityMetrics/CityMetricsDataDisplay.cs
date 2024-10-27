@@ -31,11 +31,14 @@ public class CityMetricsDataDisplay : MonoBehaviour
         cityMetricsManager.OnMetricsUpdate += UpdateMetrics;
     }
 
+    void Awake()
+    {
+        UpdateMetrics();
+    }
+
     void OnDestroy()
     {
-
         cityMetricsManager.OnMetricsUpdate -= UpdateMetrics;
-
     }
 
     public void UpdateMetrics()

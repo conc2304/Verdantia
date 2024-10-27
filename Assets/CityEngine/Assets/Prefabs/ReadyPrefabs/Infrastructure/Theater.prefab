@@ -752,8 +752,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -772,8 +774,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &6019004004815959016
 GameObject:
@@ -967,8 +968,17 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: Theater
+  buildingDescription: "The Theater enriches city culture and provides a substantial
+    boost to happiness, serving as a space for artistic expression and community
+    events. However, its moderate energy consumption and pollution output contribute
+    to a noticeable carbon footprint, and its structure adds slightly to the urban
+    heat island effect. By incorporating sustainable practices\u2014such as energy-efficient
+    lighting, green space enhancements, or solar energy\u2014the Theater could further
+    support environmental goals while continuing to foster cultural growth and community
+    engagement within the city."
   zoneRequirement: 0
   constructionCost: 500000
+  demolitionCost: 0
   operationalCost: 5000
   taxRevenue: 1500
   upkeep: 3000
@@ -987,8 +997,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 800
   taxContribution: 1500
-  jobCreation: 200
-  industryBoost: 500
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &1141662597171751843
 MonoBehaviour:

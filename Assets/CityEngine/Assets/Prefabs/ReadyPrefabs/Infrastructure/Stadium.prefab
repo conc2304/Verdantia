@@ -1520,8 +1520,18 @@ MonoBehaviour:
   buildingTime: 15
   spaceWidth: 2
   buildingName: Stadium
+  buildingDescription: "The Stadium is a major entertainment hub, greatly enhancing
+    city happiness by hosting events that bring the community together. However,
+    its large size and high energy consumption contribute to pollution and a considerable
+    carbon footprint. The structure\u2019s heat-absorbing materials intensify the
+    urban heat island effect, raising local temperatures. To balance its environmental
+    impact, integrating sustainable features, such as solar panels or green space
+    around the facility, could help reduce its carbon and heat contributions. Despite
+    these challenges, the Stadium is a valuable asset, supporting both city morale
+    and economic growth."
   zoneRequirement: 1
   constructionCost: 2000000
+  demolitionCost: 0
   operationalCost: 15000
   taxRevenue: 5000
   upkeep: 10000
@@ -1540,8 +1550,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 400
   taxContribution: 5000
-  jobCreation: 5000
-  industryBoost: 5000
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &1535817793563421322
 MonoBehaviour:
@@ -1613,8 +1622,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1633,8 +1644,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &5846980157184479451
 GameObject:
@@ -2009,8 +2019,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2029,8 +2041,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8102965917579531198
 GameObject:
@@ -2089,8 +2100,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2109,8 +2122,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8376511160102156800
 GameObject:
@@ -2218,8 +2230,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2238,8 +2252,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8624051617236475548
 GameObject:
@@ -2298,8 +2311,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -2318,8 +2333,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &9114106045936304712
 GameObject:

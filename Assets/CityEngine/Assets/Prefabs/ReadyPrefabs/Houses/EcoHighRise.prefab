@@ -302,8 +302,19 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 2
   buildingName: Eco High-Rise Apartment
+  buildingDescription: "The Eco High-Rise Apartment exemplifies sustainable urban
+    living, incorporating vegetation on its facade to naturally cool the building
+    and its surroundings. This \u201Cgreen wall\u201D design draws inspiration from
+    Singapore\u2019s urban heat management strategies, where plants are integrated
+    into high-rise architecture to absorb sunlight, reduce heat, and improve air
+    quality. This vegetation not only helps mitigate the urban heat island effect
+    by cooling nearby areas but also enhances resident happiness and health by creating
+    a more natural and serene environment. With minimal pollution output and a low
+    carbon footprint, this building aligns perfectly with eco-friendly, future-focused
+    urban planning."
   zoneRequirement: 0
   constructionCost: 150000
+  demolitionCost: 0
   operationalCost: 100
   taxRevenue: 250
   upkeep: 50
@@ -322,8 +333,7 @@ MonoBehaviour:
   greenSpaceEffect: 5
   carbonFootprint: 100
   taxContribution: 250
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &1865229129844725689
 MonoBehaviour:
@@ -444,8 +454,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -464,8 +476,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &2026911521823970683
 GameObject:
@@ -656,8 +667,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -676,8 +689,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &2454700781081638459
 GameObject:
@@ -1526,8 +1538,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1546,8 +1560,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8650933005214006296
 GameObject:

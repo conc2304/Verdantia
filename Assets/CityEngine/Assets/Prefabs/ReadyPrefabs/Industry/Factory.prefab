@@ -627,8 +627,17 @@ MonoBehaviour:
   buildingTime: 30
   spaceWidth: 2
   buildingName: Factory
+  buildingDescription: The Factory drives economic growth by generating tax revenue
+    and employment, but its industrial operations come with environmental costs.
+    It produces significant pollution and has a sizable carbon footprint, impacting
+    air quality and public health. The factory also contributes to the urban heat
+    island effect, with its structure and energy use increasing local temperatures.
+    Additionally, its footprint reduces surrounding green space, making it essential
+    to balance its economic benefits with sustainable practices to mitigate its environmental
+    impact.
   zoneRequirement: 2
   constructionCost: 150000
+  demolitionCost: 0
   operationalCost: 2000
   taxRevenue: 2500
   upkeep: 1200
@@ -647,8 +656,7 @@ MonoBehaviour:
   greenSpaceEffect: -10
   carbonFootprint: 2000
   taxContribution: 2500
-  jobCreation: 500
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &4482589422383155611
 MonoBehaviour:
@@ -803,8 +811,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -823,8 +833,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8381377062413157345
 GameObject:
@@ -1003,8 +1012,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1023,8 +1034,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8624051617236475548
 GameObject:
@@ -1083,8 +1093,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1103,8 +1115,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8712104553124349172
 GameObject:

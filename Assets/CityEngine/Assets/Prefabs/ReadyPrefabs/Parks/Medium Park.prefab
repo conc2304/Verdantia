@@ -317,8 +317,17 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 2
   buildingName: Medium Park
+  buildingDescription: "The Medium Park is a valuable green space that greatly enhances
+    city happiness and public health by providing a natural retreat for residents.
+    As a pollution-reducing area, it improves air quality and helps mitigate the
+    urban heat island effect, offering a cooling influence that benefits nearby areas.
+    The park\u2019s significant green space contribution lowers the city\u2019s carbon
+    footprint, making it an eco-friendly asset that fosters a healthier, more livable
+    environment. This combination of environmental and social benefits makes the
+    Medium Park a crucial addition to sustainable urban development."
   zoneRequirement: 2
   constructionCost: 50000
+  demolitionCost: 0
   operationalCost: 200
   taxRevenue: 0
   upkeep: 100
@@ -337,8 +346,7 @@ MonoBehaviour:
   greenSpaceEffect: 50
   carbonFootprint: -100
   taxContribution: 0
-  jobCreation: 10
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &1877011945644225424
 MonoBehaviour:
@@ -609,8 +617,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -629,8 +639,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &3452942712651756831
 GameObject:
@@ -1312,8 +1321,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1332,8 +1343,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8305319051889978367
 GameObject:
@@ -1442,8 +1452,10 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
+  buildingDescription: 
   zoneRequirement: 0
   constructionCost: 0
+  demolitionCost: 0
   operationalCost: 0
   taxRevenue: 0
   upkeep: 0
@@ -1462,8 +1474,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &8842301719114871633
 GameObject:

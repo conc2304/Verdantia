@@ -60,8 +60,16 @@ MonoBehaviour:
   buildingTime: 12
   spaceWidth: 1
   buildingName: Wind Farm
+  buildingDescription: The Wind Farm is a clean energy source that produces no pollution
+    or heat, making it an ideal choice for reducing the city's carbon footprint and
+    supporting environmental health. By providing renewable energy, it significantly
+    reduces dependency on fossil fuels, contributing to a healthier atmosphere and
+    lowering overall pollution. This green energy facility also positively impacts
+    citizen happiness, as it promotes sustainable growth and cleaner air, making
+    it a valuable asset in building an eco-friendly city.
   zoneRequirement: 2
   constructionCost: 100000
+  demolitionCost: 0
   operationalCost: 100
   taxRevenue: 50
   upkeep: 50
@@ -80,8 +88,7 @@ MonoBehaviour:
   greenSpaceEffect: 0
   carbonFootprint: 0
   taxContribution: 50
-  jobCreation: 50
-  industryBoost: 0
+  industryBoosts: []
   coverageRadius: 0
 --- !u!114 &3991768247306095651
 MonoBehaviour:
@@ -1128,62 +1135,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5489459833831925945}
     m_Modifications:
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.059999943
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.000000021855694
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 402499891700314314, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+    - target: {fileID: 402499891700314314, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
       propertyPath: m_Name
-      value: base10x10gray (1)
+      value: base10x10green
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
 --- !u!4 &8504840970436542290 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 402499891700018410, guid: fd7c25c133a065e44a9ca2f6b34565a0, type: 3}
+  m_CorrespondingSourceObject: {fileID: 402499891700018410, guid: a385d54e44cd96a498a010a8eae37730, type: 3}
   m_PrefabInstance: {fileID: 8327916888883942328}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9000319500768824009
