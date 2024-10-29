@@ -6,6 +6,7 @@ namespace GreenCityBuilder.Missions
     {
         public static List<Mission> AllMissions { get; } = new List<Mission>
         {
+            new ParksAndRecMission(),
             new CoolTheCityDownMission(),
             new GreenSpaceRenaissanceMission(),
             new BudgetBalanceMission(),

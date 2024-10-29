@@ -4,9 +4,11 @@ using TMPro;
 public class MissionManager : MonoBehaviour
 {
     public CityMetricsManager cityMetricsManager;
+
+    [HideInInspector]
     public Mission currentMission;
-    public TextMeshProUGUI missionBriefUI;
-    public TextMeshProUGUI missionStatusUI;
+    // public TextMeshProUGUI missionBriefUI;
+    // public TextMeshProUGUI missionStatusUI;
 
     private bool missionInProgress = false;
 
@@ -18,13 +20,13 @@ public class MissionManager : MonoBehaviour
     public void StartMission(Mission mission)
     {
         currentMission = mission;
-        mission.missionBrief = $"Mission Started: {mission.missionName}\n" + mission.missionBrief;
+        // mission.missionBrief = $"Mission Started: {mission.missionName}\n" + mission.missionBrief;
         mission.startMonth = cityMetricsManager.currentMonth;
         mission.startYear = cityMetricsManager.currentYear;
         missionInProgress = true;
 
-        missionBriefUI.text = mission.missionBrief;
-        missionStatusUI.text = "Mission in Progress";
+        //     missionBriefUI.text = mission.missionBrief;
+        //     missionStatusUI.text = "Mission in Progress";
     }
 
     private void OnTimeUpdated(int currentMonth, int currentYear)
@@ -45,13 +47,17 @@ public class MissionManager : MonoBehaviour
     private void OnMissionSuccess()
     {
         missionInProgress = false;
-        missionStatusUI.text = "Mission Completed!";
+        // missionStatusUI.text = "Mission Completed!";
+        print("Mission Success");
     }
 
     private void OnMissionFailure()
     {
         missionInProgress = false;
-        missionStatusUI.text = "Mission Failed!";
+        // missionStatusUI.text = "Mission Failed!";
+
+        print("Mission Failed");
+
     }
 
     private void OnDestroy()

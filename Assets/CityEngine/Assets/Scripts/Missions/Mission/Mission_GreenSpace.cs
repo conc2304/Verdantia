@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace GreenCityBuilder.Missions
 {
     public class GreenSpaceRenaissanceMission : Mission
@@ -10,22 +12,22 @@ namespace GreenCityBuilder.Missions
             missionMetrics = "Green Space, Pollution, Happiness";
             timeLimitInMonths = 5 * 12;
             startingBudget = 2000000;
+            missionIcon = Resources.Load<Sprite>("Missions/mission_icon-green_space");
+            difficulty = 3; // hard
+
             objectives = new MissionObjective[]
             {
-                new MissionObjective
-                {
+                new() {
                     metricName = MetricTitle.GreenSpace,
                     objectiveType = MissionObjective.ObjectiveType.IncreaseByPercentage,
                     comparisonPercentage = 30
                 },
-                new MissionObjective
-                {
+                new() {
                     metricName = MetricTitle.Pollution,
                     objectiveType = MissionObjective.ObjectiveType.MaintainBelow,
                     targetValue = 50
                 },
-                new MissionObjective
-                {
+                new() {
                     metricName = MetricTitle.Happiness,
                     objectiveType = MissionObjective.ObjectiveType.IncreaseByPercentage,
                     comparisonPercentage = 10

@@ -1,3 +1,4 @@
+using UnityEngine;
 
 namespace GreenCityBuilder.Missions
 {
@@ -6,11 +7,14 @@ namespace GreenCityBuilder.Missions
         public PollutionControlMission()
         {
             missionName = "Pollution Control Challenge";
-            missionObjective = "Reduce pollution by 40% within a set timeframe, while maintaining positive revenue and population growth.";
+            missionObjective = "Reduce pollution by 40% while maintaining positive revenue and population growth.";
             missionBrief = "With rising pollution levels, the city is facing public health and environmental crises. Take decisive action to cut pollution by switching to green energy sources, upgrading factories to eco-friendly versions, and increasing green infrastructure. Ensure that revenue sources are maintained to cover the costs of these upgrades and attract more residents by creating a healthier city.";
             missionMetrics = "Pollution, Revenue, Population, Health Impact";
             timeLimitInMonths = 3 * 12;
             startingBudget = 27000000;
+            missionIcon = Resources.Load<Sprite>("Missions/mission_icon-pollution_control");
+            difficulty = 4; //very hard
+
             objectives = new MissionObjective[]
             {
                 new MissionObjective
