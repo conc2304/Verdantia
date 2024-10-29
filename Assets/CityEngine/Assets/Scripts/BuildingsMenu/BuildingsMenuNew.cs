@@ -89,7 +89,9 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject cityStatsBottomPanel;
     public CityMetricsManager cityMetricsManager;
     public GameObject missionSelector;
-
+    public GameObject introSequenceGO;
+    public GameObject gameUIContainerGO;
+    public GameObject heroTitleBar;
 
 
     private void Start()
@@ -107,7 +109,21 @@ public class BuildingsMenuNew : MonoBehaviour
 
         UpdatePropertyRanges();
         PrintDictionary(propertyRanges);
-        InitializeTouchGui();
+        print("Building Menu Start } Mission Selected : " + IsMissionSelected());
+
+        if (!IsMissionSelected())
+        {
+            introSequenceGO.SetActive(true);
+            gameUIContainerGO.SetActive(false);
+            heroTitleBar.SetActive(false);
+            mainMenu.SetActive(false);
+            navigationGui.SetActive(false);
+        }
+        else
+        {
+            InitializeTouchGui();
+        }
+
         InitializeHeatmapDropdownList();
         heatmapDropdown.onValueChanged.AddListener(OnDropdownValueChanged);
     }
@@ -119,11 +135,20 @@ public class BuildingsMenuNew : MonoBehaviour
         heatmapDropdown.AddOptions(heatmapOptionsList);
     }
 
+    private bool IsMissionSelected()
+    {
+        return FindObjectOfType<MissionManager>() != null && FindObjectOfType<MissionManager>().currentMission != null && FindObjectOfType<MissionManager>().currentMission.missionName != null;
+    }
+
     private void InitializeTouchGui()
     {
         // initial state
+        print("InitializeGuii");
+
         navigationGui.SetActive(true);
+        gameUIContainerGO.SetActive(true);
         mainMenu.SetActive(true);
+
         buildingStats.SetActive(false);
         activateMenu.SetActive(false);
         placementUI.SetActive(false);
@@ -133,6 +158,22 @@ public class BuildingsMenuNew : MonoBehaviour
         errorText.text = "";
         errorText.gameObject.SetActive(false);
         missionSelector.SetActive(false);
+        introSequenceGO.SetActive(false);
+
+        print("Mission Status: " + IsMissionSelected());
+
+        if (!IsMissionSelected())
+        {
+            missionSelector.SetActive(true);
+            mainMenu.SetActive(false);
+            navigationGui.SetActive(false);
+            heroTitleBar.SetActive(false);
+
+        }
+        else
+        {
+            heroTitleBar.SetActive(true);
+        }
     }
 
     public void OnDropdownValueChanged(int index)
@@ -146,7 +187,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
         cameraController.heatmapMetric = hmValue;
         cameraController.cityChanged = true;
-        // cameraController.UpdateHeatMapCamera();
     }
 
 
@@ -540,17 +580,17 @@ public class BuildingsMenuNew : MonoBehaviour
                     Transform building = buildingParent.Find(buildingName);
                     BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
 
-                    // if (buildingProps.constructionCost > cityMetricsManager.budget)
-                    // {
-                    //     buildingUnavailable = true;
-                    //     msgText = "Over budget";
+                    if (buildingProps.constructionCost > cityMetricsManager.budget)
+                    {
+                        buildingUnavailable = true;
+                        msgText = "Over budget";
 
-                    // }
-                    // if (buildingProps.energyConsumption > cityMetricsManager.energy)
-                    // {
-                    //     buildingUnavailable = true;
-                    //     msgText = "Insufficient Energy";
-                    // }
+                    }
+                    if (buildingProps.energyConsumption > cityMetricsManager.energy)
+                    {
+                        buildingUnavailable = true;
+                        msgText = "Insufficient Energy";
+                    }
 
                     Transform buildingBtn = buildingParent.Find(buildingName + "_btn");
                     buildingBtn.GetComponent<HoldToSelect>().SetDisabled(buildingUnavailable, msgText);

@@ -721,6 +721,8 @@ MonoBehaviour:
   cityStatsBottomPanel: {fileID: 3550677830221205489}
   cityMetricsManager: {fileID: 0}
   missionSelector: {fileID: 8790289272023359984}
+  introSequenceGO: {fileID: 8970040614510026363}
+  gameUIContainerGO: {fileID: 5234955664147290296}
 --- !u!114 &9040222469351622205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9175,6 +9177,78 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &4471667497479439169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3747241452382526540}
+  - component: {fileID: 201203003359243267}
+  - component: {fileID: 8451618207664004194}
+  m_Layer: 5
+  m_Name: RawImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3747241452382526540
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471667497479439169}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1544776540662861786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &201203003359243267
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471667497479439169}
+  m_CullTransparentMesh: 1
+--- !u!114 &8451618207664004194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471667497479439169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 8600000, guid: 38098ee7c0f4fde499461e9cbb36610e, type: 2}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &4479461972556893194
 GameObject:
   m_ObjectHideFlags: 0
@@ -15176,6 +15250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7490356937907897776}
   - component: {fileID: 1910126540607986095}
+  - component: {fileID: 6998393170371340694}
   m_Layer: 0
   m_Name: Video Player
   m_TagString: Untagged
@@ -15194,7 +15269,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1544776540662861786}
   m_Father: {fileID: 8399379709621000929}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -15210,20 +15286,20 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7092768129364090671}
   m_Enabled: 1
-  m_VideoClip: {fileID: 0}
+  m_VideoClip: {fileID: 32900000, guid: e63dd40ccce421849b84325701f51b52, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
-  m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 0}
+  m_TargetCamera: {fileID: 4594340904507393017}
+  m_TargetTexture: {fileID: 8600000, guid: 38098ee7c0f4fde499461e9cbb36610e, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
-  m_AspectRatio: 2
+  m_AspectRatio: 5
   m_DataSource: 0
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
-  m_AudioOutputMode: 2
+  m_AudioOutputMode: 0
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
@@ -15234,10 +15310,36 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
-  m_Looping: 0
+  m_Looping: 1
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &6998393170371340694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092768129364090671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &7099181570727453894
 GameObject:
   m_ObjectHideFlags: 0
@@ -17866,6 +17968,7 @@ MonoBehaviour:
   missionListParent: {fileID: 34356522642168624}
   currentMissionTitle: {fileID: 474179881405993365}
   missionOverviewModal: {fileID: 7305782293716460439}
+  missionCloseBtn: {fileID: 4600680571387964051}
 --- !u!222 &3778943116519524705
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17927,6 +18030,123 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!1 &8823664149867884418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1544776540662861786}
+  - component: {fileID: 2745297777456152566}
+  - component: {fileID: 2244384822493551611}
+  - component: {fileID: 4105760802017137044}
+  - component: {fileID: 766539824921696004}
+  m_Layer: 0
+  m_Name: Mask
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1544776540662861786
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823664149867884418}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 3747241452382526540}
+  m_Father: {fileID: 7490356937907897776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2745297777456152566
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823664149867884418}
+  m_CullTransparentMesh: 1
+--- !u!114 &2244384822493551611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823664149867884418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 1a0986b251f682f4abfdd813439b9a1a, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4105760802017137044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823664149867884418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
+--- !u!114 &766539824921696004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823664149867884418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -18305,7 +18525,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainGameUI: {fileID: 5234955664147290296}
+  missionSelector: {fileID: 8790289272023359984}
   visualImage: {fileID: 0}
+  videoPlayer: {fileID: 1910126540607986095}
   narrationText: {fileID: 3709603230570177892}
   nextButton: {fileID: 284441741497593137}
   continueBtnText: Continue
@@ -18313,33 +18535,34 @@ MonoBehaviour:
   startBtnText: Let's Build!
   startBtnIcon: {fileID: 21300000, guid: 67086bc7b2998a745962bc70f3add385, type: 3}
   sequenceSteps:
-  - visual: {fileID: 0}
+  - videoClip: {fileID: 0}
     narration: As the new City Planner, your vision will shape its future. But every
       choice has an impact, from the air we breathe to the green spaces we cherish.
     displayDuration: 0
-  - visual: {fileID: 0}
+  - videoClip: {fileID: 0}
     narration: 'Verdantia faces challenges common to cities worldwide: pollution,
       urban heat, a demand for green space, and economic balance. Each decision you
       make will either bring relief or amplify these issues. Can you find the balance
       that ensures prosperity and sustainability?'
     displayDuration: 0
-  - visual: {fileID: 0}
+  - videoClip: {fileID: 0}
     narration: "As you progress, you\u2019ll face diverse missions with unique objectives.
       You\u2019ll create green spaces, manage finances, reduce pollution, and promote
       happiness across Verdantia\u2019s neighborhoods."
     displayDuration: 0
-  - visual: {fileID: 0}
+  - videoClip: {fileID: 0}
     narration: "Track your progress through the city\u2019s vital metrics. Happiness
       and green spaces tell us how the people feel. The budget shows how efficiently
       the city thrives. And urban heat, pollution, and carbon emissions reveal the
       health of our environment."
     displayDuration: 0
-  - visual: {fileID: 0}
+  - videoClip: {fileID: 0}
     narration: "Verdantia\u2019s future rests in your hands. Build a thriving city
       where innovation and nature coexist, where every neighborhood prospers. Are
       you ready to shape a greener, happier tomorrow?\n\nStart your first mission
       and lead Verdantia to prosperity."
     displayDuration: 0
+  introCompleted: 0
 --- !u!114 &9107757423670903051
 MonoBehaviour:
   m_ObjectHideFlags: 0

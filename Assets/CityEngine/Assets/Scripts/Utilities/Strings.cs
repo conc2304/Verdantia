@@ -38,15 +38,15 @@ public static class StringsUtils
         }
     }
 
-    public static string DifficultyToString(int difficultyLevel)
+    public static string DifficultyToString(DifficultyLevel difficultyLevel)
     {
-        var difficultyMap = new Dictionary<int, string>
+        var difficultyMap = new Dictionary<DifficultyLevel, string>
     {
-        { 0, "Easy" },
-        { 1, "Medium" },
-        { 2, "Hard" },
-        { 3, "Very Hard" },
-        { 4, "Extreme" }
+        { DifficultyLevel.Easy, "Easy" },
+        { DifficultyLevel.Medium, "Medium" },
+        { DifficultyLevel.Hard, "Hard" },
+        { DifficultyLevel.VeryHard, "Very Hard" },
+        { DifficultyLevel.Extreme, "Extreme" }
     };
 
         return difficultyMap.ContainsKey(difficultyLevel) ? difficultyMap[difficultyLevel] : "Unknown";

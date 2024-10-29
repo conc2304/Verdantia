@@ -12,7 +12,7 @@ namespace GreenCityBuilder.Missions
             missionMetrics = "Budget, Carbon Emissions, Happiness, Income, Expenses";
             timeLimitInMonths = 4 * 12;
             startingBudget = 1700000;
-            difficulty = 1; // medium;
+            difficulty = DifficultyLevel.Medium;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-budget_balance");
 
             objectives = new MissionObjective[]

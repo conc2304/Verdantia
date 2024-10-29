@@ -2,11 +2,13 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class IntroSequenceManager : MonoBehaviour
 {
     public GameObject mainGameUI;
-    public Image visualImage;
+    public GameObject missionSelector;
+    public VideoPlayer videoPlayer;
     public TMP_Text narrationText;
     public Button nextButton;
     public string continueBtnText = "Continue";
@@ -17,7 +19,7 @@ public class IntroSequenceManager : MonoBehaviour
     [System.Serializable]
     public class SequenceStep
     {
-        public Sprite visual;
+        public VideoClip videoClip;
         [TextArea]
         public string narration;
         public float displayDuration;
@@ -26,7 +28,7 @@ public class IntroSequenceManager : MonoBehaviour
 
 
     private int currentStep = 0;
-
+    public bool introCompleted = false;
 
     void Start()
     {
@@ -39,12 +41,11 @@ public class IntroSequenceManager : MonoBehaviour
     private void InitializeSequence()
     {
         currentStep = 0;
-        nextButton.GetComponentInChildren<Text>().color = Color.black;
-        nextButton.GetComponentInChildren<Text>().text = continueBtnText;
+        nextButton.GetComponentInChildren<TMP_Text>(true).color = Color.black;
+        nextButton.GetComponentInChildren<TMP_Text>(true).text = continueBtnText;
 
-        nextButton.GetComponentInChildren<Image>().color = Color.black;
-        nextButton.GetComponentInChildren<Image>().sprite = continueBtnIcon;
-
+        nextButton.transform.Find("Icon").transform.GetComponent<Image>().color = Color.black;
+        nextButton.transform.Find("Icon").transform.GetComponent<Image>().sprite = continueBtnIcon;
     }
 
     private void OnEnable()
@@ -61,16 +62,20 @@ public class IntroSequenceManager : MonoBehaviour
     {
         // Set visual and narration text for the current step
 
-        visualImage.sprite = sequenceSteps[currentStep].visual;
+        // Load and play the video clip in the VideoPlayer
+        videoPlayer.clip = sequenceSteps[currentStep].videoClip;
+        videoPlayer.Play();
+
         narrationText.text = sequenceSteps[currentStep].narration;
 
         // Update button look for last step
         if (currentStep == sequenceSteps.Length - 1)
         {
-            nextButton.GetComponentInChildren<Text>().color = Color.white;
-            nextButton.GetComponentInChildren<Text>().text = startBtnText;
-            nextButton.GetComponentInChildren<Image>().color = Color.white;
-            nextButton.GetComponentInChildren<Image>().sprite = startBtnIcon;
+            nextButton.GetComponentInChildren<TMP_Text>().color = Color.white;
+            nextButton.GetComponentInChildren<TMP_Text>().text = startBtnText;
+
+            nextButton.transform.Find("Icon").transform.GetComponent<Image>().color = Color.white;
+            nextButton.transform.Find("Icon").transform.GetComponent<Image>().sprite = startBtnIcon;
         }
 
         // Check if displayDuration is set for auto-advance
@@ -103,7 +108,10 @@ public class IntroSequenceManager : MonoBehaviour
     private void EndIntroSequence()
     {
         // Hide the modal and transition to the game interface
+        introCompleted = true;
+
         gameObject.SetActive(false);
         mainGameUI.SetActive(true);
+        missionSelector.SetActive(true);
     }
 }

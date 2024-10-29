@@ -13,7 +13,7 @@ namespace GreenCityBuilder.Missions
             timeLimitInMonths = 3 * 12;
             startingBudget = 27000000;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-pollution_control");
-            difficulty = 4; //very hard
+            difficulty = DifficultyLevel.Extreme;
 
             objectives = new MissionObjective[]
             {

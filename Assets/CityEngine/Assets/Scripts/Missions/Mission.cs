@@ -13,7 +13,7 @@ public class Mission
     public int timeLimitInMonths;
     public int startMonth;
     public int startYear;
-    public int difficulty;
+    public DifficultyLevel difficulty;
     public Sprite missionIcon;
 
 
