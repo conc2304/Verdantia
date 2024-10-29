@@ -76,6 +76,7 @@ public class CityMetricsManager : MonoBehaviour
         budget = startingBudget;
         UpdateCityMetrics();
         OnMetricsUpdate?.Invoke();
+        OnTempUpdated?.Invoke();
 
         // Initialize the dictionary for easier access
         metrics = new Dictionary<MetricTitle, float>
@@ -197,6 +198,7 @@ public class CityMetricsManager : MonoBehaviour
 
         // Notify any systems 
         OnMetricsUpdate?.Invoke();
+        OnTempUpdated?.Invoke();
         OnTimeUpdated?.Invoke(currentMonth, currentYear);
     }
 

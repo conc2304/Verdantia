@@ -35,7 +35,7 @@ namespace GreenCityBuilder.Missions
 
         private void OnCatalogItemClick(Mission mission)
         {
-            // open mission overview modal with selected mission
+            // open mission overview modal with selected mission data
             missionOverviewModal.SetActive(true);
             selectedMission = mission;
 
@@ -57,6 +57,7 @@ namespace GreenCityBuilder.Missions
         public void OnAcceptMission()
         {
             FindObjectOfType<MissionManager>().StartMission(selectedMission);
+            currentMissionTitle.text = missionSelectedText + selectedMission.missionName;
         }
 
         public void OnMissionOverviewClose()
