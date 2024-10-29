@@ -1,3 +1,6 @@
+using UnityEngine;
+
+
 [System.Serializable]
 public class Mission
 {
@@ -10,6 +13,9 @@ public class Mission
     public int timeLimitInMonths;
     public int startMonth;
     public int startYear;
+    public int difficulty;
+    public Sprite missionIcon;
+
 
     public bool IsWithinTimeLimit(int currentMonth, int currentYear)
     {
@@ -29,5 +35,32 @@ public class Mission
             }
         }
         return true;
+    }
+
+    public string GetFormattedTimeLimit()
+    {
+        string formattedTimeLimit;
+
+        int years = timeLimitInMonths / 12;
+        int months = timeLimitInMonths % 12;
+
+        if (years > 0 && months > 0)
+        {
+            formattedTimeLimit = $"{years} {(years == 1 ? "Year" : "Years")} and {months} {(months == 1 ? "Month" : "Months")}";
+        }
+        else if (years > 0)
+        {
+            formattedTimeLimit = $"{years} {(years == 1 ? "Year" : "Years")}";
+        }
+        else
+        {
+            formattedTimeLimit = $"{months} {(months == 1 ? "Month" : "Months")}";
+        }
+        return formattedTimeLimit;
+    }
+
+    public string GetFormattedDifficuly()
+    {
+        return StringsUtils.DifficultyToString(difficulty);
     }
 }

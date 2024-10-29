@@ -88,9 +88,7 @@ public class BuildingsMenuNew : MonoBehaviour
     public Button cityStatsInfoToggleBtn;
     public GameObject cityStatsBottomPanel;
     public CityMetricsManager cityMetricsManager;
-
-    public Button missionModalBtn;
-    public GameObject missionsModal;
+    public GameObject missionSelector;
 
 
 
@@ -134,6 +132,7 @@ public class BuildingsMenuNew : MonoBehaviour
         cityMetricsDisplay.SetActive(false);
         errorText.text = "";
         errorText.gameObject.SetActive(false);
+        missionSelector.SetActive(false);
     }
 
     public void OnDropdownValueChanged(int index)
@@ -891,14 +890,14 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void OnMissionViewClick()
     {
-        missionsModal.SetActive(true);
+        missionSelector.SetActive(true);
         mainMenu.SetActive(false);
         navigationGui.SetActive(false);
     }
 
     public void OnMissionModalCose()
     {
-        missionsModal.SetActive(false);
+        missionSelector.SetActive(false);
         mainMenu.SetActive(true);
         navigationGui.SetActive(true);
     }

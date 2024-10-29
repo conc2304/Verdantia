@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Collections.Generic;
 
 public static class StringsUtils
 {
@@ -35,6 +36,20 @@ public static class StringsUtils
         {
             return "Invalid Month";
         }
+    }
+
+    public static string DifficultyToString(int difficultyLevel)
+    {
+        var difficultyMap = new Dictionary<int, string>
+    {
+        { 0, "Easy" },
+        { 1, "Medium" },
+        { 2, "Hard" },
+        { 3, "Very Hard" },
+        { 4, "Extreme" }
+    };
+
+        return difficultyMap.ContainsKey(difficultyLevel) ? difficultyMap[difficultyLevel] : "Unknown";
     }
 }
 
