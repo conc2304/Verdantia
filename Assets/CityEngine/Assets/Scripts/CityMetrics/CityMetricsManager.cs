@@ -221,25 +221,32 @@ public class CityMetricsManager : MonoBehaviour
         // Reset all metrics before recalculating them
         ResetMetrics();
 
-
         float tempDifference = cityTemperature - startingTemp;
 
+        int cityArea = 0;
 
         foreach (Transform building in cameraController.allBuildings)
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
+            cityArea += buildingProps.additionalSpace.Length + 1;
 
             // Population and economic metrics
             population += buildingProps.capacity;
-            happiness += buildingProps.happinessImpact;
+            // happiness += buildingProps.happinessImpact;
             budget -= buildingProps.operationalCost;
             budget += buildingProps.taxRevenue;
             greenSpace += buildingProps.greenSpaceEffect;
+
+            revenue += buildingProps.taxContribution;
+            income += buildingProps.taxRevenue;
+            expenses += buildingProps.upkeep;
 
             // Environmental metrics
             float adjustedHeatContribution = buildingProps.heatContribution;
             float adjustedEnergyConsumption = buildingProps.energyConsumption;
             float adjustedCarbonFootprint = buildingProps.carbonFootprint;
+            float adjustedHappiness = buildingProps.happinessImpact;
+
 
             // Only apply additional feedback if temperature is above base
             // Update metric value based on temperature difference
@@ -248,20 +255,21 @@ public class CityMetricsManager : MonoBehaviour
                 adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
                 adjustedCarbonFootprint += adjustedCarbonFootprint * tempDifference * tempSensitivity;
                 adjustedHeatContribution += adjustedHeatContribution * tempDifference * tempSensitivity;
+                adjustedHappiness += adjustedHappiness * tempDifference * tempSensitivity;
             }
 
             // Apply adjusted metrics
+            happiness += (int)adjustedHappiness;
             urbanHeat += (int)adjustedHeatContribution;
             pollution += buildingProps.pollutionOutput - buildingProps.pollutionReduction;
             energy += (int)(buildingProps.resourceProduction - adjustedEnergyConsumption);
             carbonEmission += (int)adjustedCarbonFootprint;
-            revenue += buildingProps.taxContribution;
-            income += buildingProps.taxRevenue;
-            expenses += buildingProps.upkeep;
         }
 
         // Adjust happiness to be averaged over all buildings
         happiness = cameraController.allBuildings.Count > 0 ? (happiness / cameraController.allBuildings.Count) : 0;
+        greenSpace = cityArea > 0 ? (greenSpace / cityArea) : 0;
+        print("Happiness: " + happiness);
         happiness = (float)Math.Truncate((double)happiness * 100 / 100);
     }
 

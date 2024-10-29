@@ -13,7 +13,7 @@ namespace GreenCityBuilder.Missions
             timeLimitInMonths = 5 * 12;
             startingBudget = 2000000;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-green_space");
-            difficulty = 3; // hard
+            difficulty = DifficultyLevel.Hard;
 
             objectives = new MissionObjective[]
             {

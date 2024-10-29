@@ -1224,7 +1224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: -1
+  buildingIndex: 3
   environment: {fileID: 0}
   connectToRoad: 0
   carsPathTargetsToConnect: []
@@ -1237,8 +1237,16 @@ MonoBehaviour:
   buildingTime: 2
   spaceWidth: 1
   buildingName: Road
+  buildingDescription: "Roads are vital for connecting different parts of the city,
+    but their materials tend to absorb and retain heat, contributing to the urban
+    heat island effect. They also reduce surrounding green space, limiting natural
+    cooling in the city. Additionally, roads increase pollution levels, which can
+    negatively impact the air quality and overall health of nearby residents. While
+    they don\u2019t directly influence happiness, the combined effect on heat and
+    pollution can indirectly affect city livability over time."
   zoneRequirement: 4
   constructionCost: 1000
+  demolitionCost: 0
   operationalCost: 20
   taxRevenue: 0
   upkeep: 10
@@ -1257,8 +1265,7 @@ MonoBehaviour:
   greenSpaceEffect: -5
   carbonFootprint: 0
   taxContribution: 0
-  jobCreation: 0
-  industryBoost: 50
+  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &7358976786566942640
 GameObject:

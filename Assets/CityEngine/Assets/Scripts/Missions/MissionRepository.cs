@@ -10,7 +10,8 @@ namespace GreenCityBuilder.Missions
             new CoolTheCityDownMission(),
             new GreenSpaceRenaissanceMission(),
             new BudgetBalanceMission(),
-            new PollutionControlMission()
+            new PollutionControlMission(),
+            new FreePlayMission(),
         };
 
         public static Mission GetMissionByName(string name)

@@ -125,6 +125,10 @@ MonoBehaviour:
   image: {fileID: 6696017966124593407}
   title: {fileID: 5146763992784694113}
   difficulty: {fileID: 1963176822775036108}
+  isSelected: 0
+  border: {fileID: 4890733584128972905}
+  borderColorDefault: {r: 0, g: 0.3764706, b: 0.03137255, a: 1}
+  borderColorSelected: {r: 0.99607843, g: 0.8, b: 0, a: 1}
 --- !u!1 &3825116186748589118
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +407,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 1a0986b251f682f4abfdd813439b9a1a, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -766,7 +770,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 1a0986b251f682f4abfdd813439b9a1a, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

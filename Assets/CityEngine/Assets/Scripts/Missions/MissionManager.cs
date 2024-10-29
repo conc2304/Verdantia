@@ -1,21 +1,25 @@
 using UnityEngine;
-using TMPro;
 
 public class MissionManager : MonoBehaviour
 {
     public CityMetricsManager cityMetricsManager;
 
-    [HideInInspector]
-    public Mission currentMission;
+    public Mission currentMission = null;
     // public TextMeshProUGUI missionBriefUI;
     // public TextMeshProUGUI missionStatusUI;
 
     private bool missionInProgress = false;
 
+    private void Awake()
+    {
+        currentMission = null;
+    }
+
     private void Start()
     {
         cityMetricsManager.OnTimeUpdated += OnTimeUpdated;
     }
+
 
     public void StartMission(Mission mission)
     {
@@ -32,6 +36,8 @@ public class MissionManager : MonoBehaviour
     private void OnTimeUpdated(int currentMonth, int currentYear)
     {
         if (!missionInProgress) return;
+
+        if (currentMission != null && currentMission.missionName == "Free Play") return;
 
         // Check if mission objectives are met
         if (currentMission.CheckMissionStatus(cityMetricsManager, currentMonth, currentYear))

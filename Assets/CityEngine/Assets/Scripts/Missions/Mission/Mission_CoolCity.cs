@@ -12,7 +12,8 @@ namespace GreenCityBuilder.Missions
             missionMetrics = "City Temperature, Urban Heat, Happiness";
             timeLimitInMonths = 6 * 12;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-cool_the_city");
-            difficulty = 1; //
+            startingBudget = 1300000;
+            difficulty = DifficultyLevel.Medium;
 
             objectives = new MissionObjective[]
             {

@@ -20,28 +20,30 @@ public class BuildingInfoDisplay : MonoBehaviour
     public GameObject menuBuildings;
 
     // List of properties (you can fetch this from the building itself if necessary)
-    public readonly string[] dataProps = {
+    public readonly string[] dataProps ={
         "constructionCost",
+        "demolitionCost",
         "operationalCost",
         "taxRevenue",
         "upkeep",
         "energyConsumption",
-        "waterConsumption",
-        "wasteProduction",
+        // "waterConsumption",
+        // "wasteProduction",
         "resourceProduction",
         "capacity",
-        "jobsProvided",
+        // "jobsProvided",
         "happinessImpact",
         "healthImpact",
-        "educationImpact",
+        // "educationImpact",
         "pollutionOutput",
         "pollutionReduction",
-        "heatContribution",
         "greenSpaceEffect",
+        "heatContribution",
         "carbonFootprint",
         "taxContribution",
-        "jobCreation",
-        "industryBoost"
+        // "jobCreation",
+        "industryBoost",
+        "coverageRadius",
     };
 
 

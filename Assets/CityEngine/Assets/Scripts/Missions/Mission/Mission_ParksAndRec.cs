@@ -13,7 +13,7 @@ namespace GreenCityBuilder.Missions
             startingBudget = 500000;
             timeLimitInMonths = 24;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-parks_and_rec");
-            difficulty = 0; // easy
+            difficulty = DifficultyLevel.Easy;
 
             objectives = new MissionObjective[]
             {

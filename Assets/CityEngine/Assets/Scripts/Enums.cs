@@ -19,3 +19,12 @@ public enum MetricTitle
     Income,
     Expenses,
 }
+
+public enum DifficultyLevel
+{
+    Easy,
+    Medium,
+    Hard,
+    VeryHard,
+    Extreme,
+}
