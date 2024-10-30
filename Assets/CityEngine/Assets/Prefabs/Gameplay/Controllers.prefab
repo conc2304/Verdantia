@@ -225,10 +225,11 @@ MonoBehaviour:
   toggleRestartTemp: 0
   play: 0
   pause: 1
-  heatDiffusionRate: 0.1
-  heatDissipationRate: 0.1
+  heatDiffusionRate: 0.25
+  heatDissipationRate: 0.999
   sizeExtra: 2
-  sunHeatBase: 1
+  sunHeatBase: 0.06
+  heatAddRange: 0.05
 --- !u!114 &1024400442031631236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,6 +423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heatMapPlane: {fileID: 0}
   cityMetricsManager: {fileID: 0}
+  heatMapTransparency: 0.55
 --- !u!114 &4792170062877596470
 MonoBehaviour:
   m_ObjectHideFlags: 0

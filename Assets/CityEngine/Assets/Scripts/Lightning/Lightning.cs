@@ -24,7 +24,7 @@ public class Lightning : MonoBehaviour
         Shader.SetGlobalFloat("_NightEmission", 0);
     }
 
-   
+
     void Update()
     {
         timer += Time.deltaTime;
@@ -41,6 +41,7 @@ public class Lightning : MonoBehaviour
                 //Shader.SetGlobalFloat("_NightEmission", 5);
                 StartCoroutine(DissableLight());
             }
+
             else
             {
                 //Shader.SetGlobalFloat("_NightEmission", 0);
@@ -57,12 +58,12 @@ public class Lightning : MonoBehaviour
     {
         float timerActivate = Mathf.FloorToInt(directionalLight.intensity);
 
-        while(directionalLight.intensity > 0.4f)
+        while (directionalLight.intensity > 0.4f)
         {
             timerActivate -= Time.deltaTime;
             directionalLight.intensity = timerActivate;
 
-            if(Shader.GetGlobalFloat("_NightEmission") < 1)
+            if (Shader.GetGlobalFloat("_NightEmission") < 1)
                 Shader.SetGlobalFloat("_NightEmission", 1);
 
             yield return new WaitForSeconds(.1f);

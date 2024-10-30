@@ -140,7 +140,9 @@ public class CameraController : MonoBehaviour
             // float[,] cityTemps = new float[grid.gridSizeX, grid.gridSizeZ]; // this is reinitilizing evertything to 0;
             float[,] cityTemps = cityMetricsManager.temps;
 
-            heatMap.TemperatureHeatMap(cityTemps, 32, 120);  // TODO investigate if this needs to change 
+            int minTemp = 50;
+            int maxTemp = 85;
+            heatMap.TemperatureHeatMap(cityTemps, minTemp, maxTemp);  // TODO investigate if this needs to change 
             for (int i = 0; i < timeSteps; i++)
             {
                 cityTemps = cityMetricsManager.GetCityTemperatures();

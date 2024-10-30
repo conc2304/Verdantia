@@ -14,6 +14,8 @@ public class HeatMap : MonoBehaviour
 
     public CityMetricsManager cityMetricsManager;
 
+    [Range(0f, 1f)]
+    public float heatMapTransparency = 0.55f;
 
 
     // Initialize the HeatMap by passing the grid size values from Grid.cs
@@ -111,7 +113,7 @@ public class HeatMap : MonoBehaviour
                 // heatColor.a = normalizedHeat == 0f ? 0.1f : normalizedAlpha;
 
                 // Set alpha based on normalized heat
-                heatColor.a = 0.55f;
+                heatColor.a = heatMapTransparency;
                 // heatColor.a = 1; // TODO REMOVE
 
                 // Set the pixel color in the texture
