@@ -1,13 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-
-[System.Serializable]
 public class Mission
 {
     public string missionName;
     public string missionObjective;
     public string missionBrief;
-    public string missionMetrics;
     public int startingBudget;
     public MissionObjective[] objectives;
     public int timeLimitInMonths;
@@ -15,6 +13,25 @@ public class Mission
     public int startYear;
     public DifficultyLevel difficulty;
     public Sprite missionIcon;
+
+    // List of metric displays
+    public List<MetricDisplay> missionMetrics;
+
+    private Dictionary<MetricTitle, Sprite> metricIcons;
+
+    public Mission(Dictionary<MetricTitle, Sprite> icons)
+    {
+        metricIcons = icons;
+        missionMetrics = new List<MetricDisplay>();
+    }
+
+    public void AddMetric(MetricTitle metricTitle)
+    {
+        if (metricIcons.ContainsKey(metricTitle))
+        {
+            missionMetrics.Add(new MetricDisplay(metricTitle, metricIcons[metricTitle]));
+        }
+    }
 
 
     public bool IsWithinTimeLimit(int currentMonth, int currentYear)
@@ -62,5 +79,18 @@ public class Mission
     public string GetFormattedDifficuly()
     {
         return StringsUtils.DifficultyToString(difficulty);
+    }
+    // Method to retrieve icon for a given MetricTitle
+    public Sprite GetMetricIcon(MetricTitle metricTitle)
+    {
+        if (metricIcons != null && metricIcons.ContainsKey(metricTitle))
+        {
+            return metricIcons[metricTitle];
+        }
+        else
+        {
+            Debug.LogWarning($"Icon for {metricTitle} not found.");
+            return null; // or a default icon if you have one
+        }
     }
 }

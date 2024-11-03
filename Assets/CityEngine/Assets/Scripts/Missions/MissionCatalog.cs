@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace GreenCityBuilder.Missions
@@ -13,6 +12,7 @@ namespace GreenCityBuilder.Missions
         public TMP_Text currentMissionTitle;
 
         public GameObject missionOverviewModal;
+        public GameObject metricItemPrefab;   // Prefab with Image and Text for each metric
 
         private readonly string missionSelectedText = "<b>Current Mission:</b><br>";
         private readonly string missionNotSelectedText = "Select a Mission";
@@ -30,7 +30,6 @@ namespace GreenCityBuilder.Missions
         {
             string missionTitle = FindObjectOfType<MissionManager>().currentMission == null ? "" : FindObjectOfType<MissionManager>().currentMission.missionName;
             currentMissionTitle.text = missionTitle != "" ? missionSelectedText + missionTitle : missionNotSelectedText;
-
 
             MissionRepository.AllMissions.Sort((a, b) =>
             {
@@ -54,14 +53,11 @@ namespace GreenCityBuilder.Missions
 
         private void OnEnable()
         {
-            // print("ON ENABLE | " + )
             missionCloseBtn.gameObject.SetActive(selectedMission != null);
             if (selectedMission == null) return;
 
-            print("MissionCatalog | ON ENABLE");
             foreach (Transform child in missionListParent)
             {
-                print(selectedMission.missionName + " vs " + child.GetComponent<MissionItem>().title.text);
                 bool isSelected = selectedMission != null && selectedMission.missionName == child.GetComponent<MissionItem>().title.text;
                 child.GetComponent<MissionItem>().SetSelected(isSelected);
             }
@@ -71,19 +67,36 @@ namespace GreenCityBuilder.Missions
 
         private void OnCatalogItemClick(Mission mission)
         {
-            // open mission overview modal with selected mission data
+            // Open mission overview modal with selected mission data
             missionOverviewModal.SetActive(true);
             selectedMission = mission;
 
             // Update Modal Text
-            missionOverviewModal.GetComponent<MissionOverviewModal>().Title.text = "<b>Mission</b><br>" + mission.missionName;
-            missionOverviewModal.GetComponent<MissionOverviewModal>().ObjectiveText.text = "<b>Objective: </b>" + mission.missionObjective;
-            missionOverviewModal.GetComponent<MissionOverviewModal>().TimeLimitText.text = "<b>Time Limit: </b>" + mission.GetFormattedTimeLimit();
-            missionOverviewModal.GetComponent<MissionOverviewModal>().DifficultyText.text = "<b>Difficulty: </b>" + mission.GetFormattedDifficuly();
-            missionOverviewModal.GetComponent<MissionOverviewModal>().MissionBriefText.text = "<b>Mission Brief: </b>" + mission.missionBrief;
-            missionOverviewModal.GetComponent<MissionOverviewModal>().KeyMetricsText.text = "<b>Key Metrics: </b>" + mission.missionMetrics;
-        }
+            MissionOverviewModal modal = missionOverviewModal.GetComponent<MissionOverviewModal>();
+            modal.Title.text = "<b>Mission</b><br>" + mission.missionName;
+            modal.ObjectiveText.text = "<b>Objective: </b>" + mission.missionObjective;
+            modal.TimeLimitText.text = "<b>Time Limit: </b>" + mission.GetFormattedTimeLimit();
+            modal.DifficultyText.text = "<b>Difficulty: </b>" + mission.GetFormattedDifficuly();
+            modal.MissionBriefText.text = "<b>Mission Brief: </b>" + mission.missionBrief;
 
+            if (mission.missionMetrics.Count == 0 || mission.missionName.ToLower().Contains("free play")) modal.KeyMetricsText.text = "<b>Key Metrics: </b><br>You decide what is important!";
+
+            // Clear any previous metrics in the container
+            foreach (Transform child in modal.KeyMetricsContainer.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            // Populate key metrics icons and titles
+            foreach (MetricDisplay metric in mission.missionMetrics)
+            {
+                GameObject metricItem = Instantiate(metricItemPrefab, modal.KeyMetricsContainer.transform);
+                metricItem.GetComponentInChildren<Image>().sprite = metric.icon;
+                metricItem.GetComponentInChildren<TMP_Text>().text = StringsUtils.ConvertToLabel(metric.metricTitle.ToString());
+            }
+
+
+        }
 
         public void OnCatalogClose()
         {

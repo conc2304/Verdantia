@@ -315,9 +315,9 @@ MonoBehaviour:
     they don\u2019t directly influence happiness, the combined effect on heat and
     pollution can indirectly affect city livability over time."
   zoneRequirement: 4
-  constructionCost: 1000
+  constructionCost: 600
   demolitionCost: 0
-  operationalCost: 20
+  operationalCost: 0
   taxRevenue: 0
   upkeep: 10
   energyConsumption: 0
