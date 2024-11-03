@@ -82,11 +82,12 @@ public class CameraController : MonoBehaviour
     public bool toggleRestartTemp = false;
     public bool playTemp = false;
 
-    public int timeSteps = 10;
+    public int timeSteps = 5;
 
     void Start()
     {
         zoomSlider.onValueChanged.AddListener(OnZoomSliderChanged);
+        cityTempUpdateRate = cityMetricsManager.monthDuration / 10;
     }
 
 
@@ -119,7 +120,7 @@ public class CameraController : MonoBehaviour
         }
 
         // TODO REMOVE
-        ToggleHeatMapView();
+        // ToggleHeatMapView();
     }
 
 
@@ -132,11 +133,10 @@ public class CameraController : MonoBehaviour
         // handle heat map updates on city change 
 
         cityTempTimer += Time.deltaTime;
-        if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
+        // if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
         // if (cityTempTimer >= cityTempUpdateRate)     // TODO reinstate this
-        // if (cityTempTimer >= cityTempUpdateRate)     // TODO reinstate this
+        if (cityTempTimer >= cityTempUpdateRate)     // TODO reinstate this
         {
-            print("RUN | CameraController | Update City Temp");
             // float[,] cityTemps = new float[grid.gridSizeX, grid.gridSizeZ]; // this is reinitilizing evertything to 0;
             float[,] cityTemps = cityMetricsManager.temps;
 
