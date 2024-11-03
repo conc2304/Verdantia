@@ -479,6 +479,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void OnHomeButton()
     {
+        UnsetTarget();
         InitializeTouchGui();
     }
 

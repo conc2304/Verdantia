@@ -677,9 +677,9 @@ MonoBehaviour:
   - name: Parks
     type: {fileID: 6729065792135710501, guid: 6b7a72e5bfc57db468686e8d216ac607, type: 3}
     buildings:
+    - {fileID: 6729065792135710501, guid: 6b7a72e5bfc57db468686e8d216ac607, type: 3}
     - {fileID: 1268100822294927193, guid: 9295f064480ac884ab6cecfca5cff18f, type: 3}
     - {fileID: 1268100822294927193, guid: c445095dafe584147918ca9685b690fe, type: 3}
-    - {fileID: 6729065792135710501, guid: 6b7a72e5bfc57db468686e8d216ac607, type: 3}
     - {fileID: 5793062631657546409, guid: b9a2534eb29b7e545b24239f7aa8ef5a, type: 3}
     minPos: 0
     maxPos: 0
