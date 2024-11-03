@@ -14,7 +14,13 @@ public class IntroSequenceManager : MonoBehaviour
     public string continueBtnText = "Continue";
     public Sprite continueBtnIcon;
     public string startBtnText = "Let's Build!";
+    public Button backButton;
     public Sprite startBtnIcon;
+
+    public GameObject paginationPanel;
+    public Sprite activeDotSprite;
+    public Sprite inactiveDotSprite;
+    private Image[] paginationDots;
 
     [System.Serializable]
     public class SequenceStep
@@ -33,7 +39,9 @@ public class IntroSequenceManager : MonoBehaviour
     void Start()
     {
         nextButton.onClick.AddListener(AdvanceSequence);
+        backButton.onClick.AddListener(PreviousSequence);
         InitializeSequence();
+        InitializePagination();
         ShowCurrentStep();
     }
 
@@ -48,9 +56,39 @@ public class IntroSequenceManager : MonoBehaviour
         nextButton.transform.Find("Icon").transform.GetComponent<Image>().sprite = continueBtnIcon;
     }
 
+    private void InitializePagination()
+    {
+        // Clear any existing pagination dots
+        foreach (Transform child in paginationPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        paginationDots = new Image[sequenceSteps.Length];
+
+        for (int i = 0; i < sequenceSteps.Length; i++)
+        {
+            GameObject dot = new GameObject("Dot", typeof(Image));
+            dot.transform.SetParent(paginationPanel.transform, false);
+            dot.GetComponent<Image>().sprite = inactiveDotSprite;
+            paginationDots[i] = dot.GetComponent<Image>();
+        }
+
+        UpdatePaginationDots();
+    }
+
+    private void UpdatePaginationDots()
+    {
+        for (int i = 0; i < paginationDots.Length; i++)
+        {
+            paginationDots[i].sprite = (i == currentStep) ? activeDotSprite : inactiveDotSprite;
+        }
+    }
+
     private void OnEnable()
     {
         InitializeSequence();
+        InitializePagination();
     }
     private void OnDisable()
     {
@@ -67,6 +105,10 @@ public class IntroSequenceManager : MonoBehaviour
         videoPlayer.Play();
 
         narrationText.text = sequenceSteps[currentStep].narration;
+        UpdatePaginationDots();  // Update pagination indicators
+
+        backButton.gameObject.SetActive(currentStep != 0);
+
 
         // Update button look for last step
         if (currentStep == sequenceSteps.Length - 1)
@@ -102,6 +144,16 @@ public class IntroSequenceManager : MonoBehaviour
         else
         {
             EndIntroSequence();
+        }
+    }
+
+    public void PreviousSequence()
+    {
+        // Move to the previous step 
+        if (currentStep > 0)
+        {
+            currentStep--;
+            ShowCurrentStep();
         }
     }
 

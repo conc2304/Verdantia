@@ -41,7 +41,6 @@ public class Lightning : MonoBehaviour
                 //Shader.SetGlobalFloat("_NightEmission", 5);
                 StartCoroutine(DissableLight());
             }
-
             else
             {
                 //Shader.SetGlobalFloat("_NightEmission", 0);
