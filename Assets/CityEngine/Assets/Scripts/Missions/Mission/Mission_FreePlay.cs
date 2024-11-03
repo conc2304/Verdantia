@@ -1,15 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GreenCityBuilder.Missions
 {
     public class FreePlayMission : Mission
     {
-        public FreePlayMission()
+        public FreePlayMission(Dictionary<MetricTitle, Sprite> metricIcons) : base(metricIcons)
         {
             missionName = "Free Play Mode";
             missionObjective = "Enjoy a limitless city-building experience without objectives or time constraints.";
             missionBrief = "Build and manage the city at your pace. Experiment with different designs and layouts, manage your budget, and watch the city grow.";
-            missionMetrics = "You decide what is important!";
+            // missionMetrics = "You decide what is important!";
             timeLimitInMonths = 0;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-free_play");
             difficulty = DifficultyLevel.Medium;

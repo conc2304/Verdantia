@@ -10,4 +10,5 @@ public class MissionOverviewModal : MonoBehaviour
     public TMP_Text DifficultyText;
     public TMP_Text MissionBriefText;
     public TMP_Text KeyMetricsText;
+    public GameObject KeyMetricsContainer;
 }

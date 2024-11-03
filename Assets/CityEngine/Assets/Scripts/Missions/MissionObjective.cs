@@ -1,12 +1,14 @@
+using UnityEngine;
+
 [System.Serializable]
 public class MissionObjective
 {
-    public MetricTitle metricName;       // Name of the metric to monitor (e.g., "Temperature", "GreenSpace")
-    public float targetValue;       // Target value for the objective (e.g., reduce to 20)
+    public MetricTitle metricName;
+    public float targetValue;
     public ObjectiveType objectiveType; // How the metric should be evaluated
-    public float comparisonPercentage = 0; // The percentage change to target (if required)
-    public bool allowDecrease;      // Indicates if metric can fall below target after meeting it
-
+    public float comparisonPercentage = 0;
+    public bool allowDecrease;
+    public Sprite icon;
     public enum ObjectiveType
     {
         ReduceByPercentage,   // Objective to reduce metric by X%
