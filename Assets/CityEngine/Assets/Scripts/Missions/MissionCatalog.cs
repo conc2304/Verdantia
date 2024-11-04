@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace GreenCityBuilder.Missions
@@ -18,8 +20,8 @@ namespace GreenCityBuilder.Missions
         private readonly string missionNotSelectedText = "Select a Mission";
         private Mission selectedMission = null;
 
-        private bool isFirstLoad = true;
         public Button missionCloseBtn;
+        public event Action<Mission> OnMissionAccepted;
 
         private void Awake()
         {
@@ -94,8 +96,6 @@ namespace GreenCityBuilder.Missions
                 metricItem.GetComponentInChildren<Image>().sprite = metric.icon;
                 metricItem.GetComponentInChildren<TMP_Text>().text = StringsUtils.ConvertToLabel(metric.metricTitle.ToString());
             }
-
-
         }
 
         public void OnCatalogClose()
@@ -109,6 +109,7 @@ namespace GreenCityBuilder.Missions
             FindObjectOfType<MissionManager>().StartMission(selectedMission);
             currentMissionTitle.text = missionSelectedText + selectedMission.missionName;
             OnCatalogClose();
+            OnMissionAccepted?.Invoke(selectedMission);
         }
 
         public void OnMissionOverviewClose()

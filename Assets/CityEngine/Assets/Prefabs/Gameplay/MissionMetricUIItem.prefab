@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 4262808647586693909}
   - component: {fileID: 3332866364650934833}
   m_Layer: 0
-  m_Name: TopCityStat
+  m_Name: MissionMetricUIItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,7 +5,7 @@ namespace GreenCityBuilder.Missions
 {
     public static class MissionRepository
     {
-        private static readonly Dictionary<MetricTitle, Sprite> metricIcons = new Dictionary<MetricTitle, Sprite>
+        public static readonly Dictionary<MetricTitle, Sprite> metricIcons = new Dictionary<MetricTitle, Sprite>
         {
             { MetricTitle.CityTemperature, Resources.Load<Sprite>("MetricIcons/city-temperature") },
             { MetricTitle.Population, Resources.Load<Sprite>("MetricIcons/population") },
