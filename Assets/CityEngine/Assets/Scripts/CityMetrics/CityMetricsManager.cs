@@ -1,18 +1,28 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
-using UnityEditor;
 using UnityEngine;
 
 public class CityMetricsManager : MonoBehaviour
 {
 
-    // public static CityMetricsManager Instance { get; private set; }
 
     // Global city metrics
     public int startingBudget = 1000000;
     public float startingTemp = 69.0f;
+
+    // Time-keeping variables
+    public int currentMonth = 1; // January starts as 1
+    public int currentYear = 2024; // Set the starting year
+    public float monthDuration = 30.0f; // Duration of a "month" in seconds (for testing purposes)
+    private float monthTimer = 0f;
+
+    public event Action<int, int> OnTimeUpdated; // (month, year)
+    public event Action OnMetricsUpdate;
+    public event Action OnTempUpdated;
+
+    // Metric Setter and Getters
+    private Dictionary<MetricTitle, float> metrics;
+    private Dictionary<string, (int min, int max)> propertyRanges;
 
     public float tempSensitivity = 0.05f; // Sensitivity factor for how much extra heat affects energy and emissions
     public float cityTemperature { get; private set; }
@@ -27,53 +37,34 @@ public class CityMetricsManager : MonoBehaviour
     public int revenue { get; private set; }
     public int income { get; private set; }
     public int expenses { get; private set; }
-
-    private Dictionary<MetricTitle, float> metrics;
-
-
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
 
-    // Time-keeping variables
-    public int currentMonth = 1; // January starts as 1
-    public int currentYear = 2024; // Set the starting year
-    public float monthDuration = 30.0f; // Duration of a "month" in seconds (for testing purposes)
-    private float monthTimer = 0f;
 
-    public event Action<int, int> OnTimeUpdated; // (month, year)
-    public event Action OnMetricsUpdate;
-    public event Action OnTempUpdated;
-
+    // City Grid Plane
     public Grid grid;
     private int gridSizeX;
     private int gridSizeZ;
     private readonly int gridPadding = 2;
-    public float[,] temps;
-    public float[,] initialTemps;
-    private Dictionary<string, (int min, int max)> propertyRanges;
+    private float cityBoarderMinX = float.MaxValue;
+    private float cityBoarderMaxX = float.MinValue;
+    private float cityBoarderMinZ = float.MaxValue;
+    private float cityBoarderMaxZ = float.MinValue;
 
+
+    // City Temperature Heat Diffusion 
+    public float[,] temps { get; private set; }
+    // NOTE these values are stable
+    public float heatDiffusionRate = 0.25f;
+    public float heatDissipationRate = 0.999f; // todo remove 
+    public float sunHeatBase = 0.06f;
+    public float heatAddRange = 0.05f;
 
     [Header("Heat Map Debug")]
     public bool takeStep = false;
     public bool toggleRestartTemp = false;
-    private int runCount = 0;
-
     public bool play = false;
     public bool pause = true;
-
-    // NOTE these values are stable
-    public float heatDiffusionRate = 0.25f;
-    public float heatDissipationRate = 0.999f; // todo remove 
-
-    public float sunHeatBase = 0.06f;
-
-    public float heatAddRange = 0.05f;
-
-    private float minX = float.MaxValue;
-    private float maxX = float.MinValue;
-    private float minZ = float.MaxValue;
-    private float maxZ = float.MinValue;
-
 
 
     void Start()
@@ -440,10 +431,10 @@ public class CityMetricsManager : MonoBehaviour
     {
         int rescaleVal = 10; // grid size is 10
 
-        minX = float.MaxValue;
-        maxX = float.MinValue;
-        minZ = float.MaxValue;
-        maxZ = float.MinValue;
+        cityBoarderMinX = float.MaxValue;
+        cityBoarderMaxX = float.MinValue;
+        cityBoarderMinZ = float.MaxValue;
+        cityBoarderMaxZ = float.MinValue;
 
         foreach (Transform building in cameraController.allBuildings)
         {
@@ -466,10 +457,10 @@ public class CityMetricsManager : MonoBehaviour
             tempsGrid[gridX, gridZ] += adjustedHeatContribution;
 
             // Update min and max boundaries based on the building position
-            minX = Mathf.Min(minX, gridX);
-            maxX = Mathf.Max(maxX, gridX);
-            minZ = Mathf.Min(minZ, gridZ);
-            maxZ = Mathf.Max(maxZ, gridZ);
+            cityBoarderMinX = Mathf.Min(cityBoarderMinX, gridX);
+            cityBoarderMaxX = Mathf.Max(cityBoarderMaxX, gridX);
+            cityBoarderMinZ = Mathf.Min(cityBoarderMinZ, gridZ);
+            cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, gridZ);
 
             // Check any additional spaces associated with the building
             foreach (Transform additionalSpace in buildingProps.additionalSpace)
@@ -479,10 +470,10 @@ public class CityMetricsManager : MonoBehaviour
                 tempsGrid[gridX, gridZ] += adjustedHeatContribution;
 
                 // Update boundaries for additional space positions
-                minX = Mathf.Min(minX, gridX);
-                maxX = Mathf.Max(maxX, gridX);
-                minZ = Mathf.Min(minZ, gridZ);
-                maxZ = Mathf.Max(maxZ, gridZ);
+                cityBoarderMinX = Mathf.Min(cityBoarderMinX, gridX);
+                cityBoarderMaxX = Mathf.Max(cityBoarderMaxX, gridX);
+                cityBoarderMinZ = Mathf.Min(cityBoarderMinZ, gridZ);
+                cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, gridZ);
             }
         }
 
@@ -492,10 +483,10 @@ public class CityMetricsManager : MonoBehaviour
     private float GetAvgTemp(float[,] temps, int padding = 5)
     {
         // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
-        int minGridX = Mathf.Clamp(Mathf.RoundToInt(minX - padding), 0, gridSizeX - 1);
-        int maxGridX = Mathf.Clamp(Mathf.RoundToInt(maxX + padding), 0, gridSizeX - 1);
-        int minGridZ = Mathf.Clamp(Mathf.RoundToInt(minZ - padding), 0, gridSizeZ - 1);
-        int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(maxZ + padding), 0, gridSizeZ - 1);
+        int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridSizeX - 1);
+        int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridSizeX - 1);
+        int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridSizeZ - 1);
+        int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridSizeZ - 1);
 
         // Calculate the average temperature within city bounds
         float totalTemperature = 0f;
