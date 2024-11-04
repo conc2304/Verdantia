@@ -69,6 +69,11 @@ public class CityMetricsManager : MonoBehaviour
 
     public float heatAddRange = 0.05f;
 
+    private float minX = float.MaxValue;
+    private float maxX = float.MinValue;
+    private float minZ = float.MaxValue;
+    private float maxZ = float.MinValue;
+
 
 
     void Start()
@@ -320,48 +325,7 @@ public class CityMetricsManager : MonoBehaviour
         return rotatedMatrix;
     }
 
-    private float[,] ApplyBlur(float[,] matrix, int blurSize = 1)
-    {
-        // Texture2D blurredTexture = new Texture2D(matrix.width, sourceTexture.height);
-        int rows = matrix.GetLength(0);    // Number of rows
-        int columns = matrix.GetLength(1);  // Number of columns
-        float[,] blurredMatrix = new float[rows, columns];
 
-        if (blurSize == 0) return matrix;
-        for (int x = 0; x < columns; x++)
-        {
-            for (int z = 0; z < rows; z++)
-            {
-                float avgVal = GetAverageNumber(matrix, x, z, blurSize);
-                // Color averageColor = GetAverageColor(sourceTexture, x, z, blurSize);
-                // blurredTexture.SetPixel(x, z, averageColor);
-                blurredMatrix[x, z] = avgVal;
-            }
-        }
-
-        // blurredTexture.Apply();
-        return blurredMatrix;
-    }
-
-    private float GetAverageNumber(float[,] matrix, int x, int z, int blurSize)
-    {
-        float sum = 0f;
-        int count = 0;
-
-        for (int xOffset = -blurSize; xOffset <= blurSize; xOffset++)
-        {
-            for (int zOffset = -blurSize; zOffset <= blurSize; zOffset++)
-            {
-                int newX = Mathf.Clamp(x + xOffset, 0, matrix.GetLength(0) - 1);
-                int newZ = Mathf.Clamp(z + zOffset, 0, matrix.GetLength(1) - 1);
-
-                sum += matrix[newX, newZ];
-                count++;
-            }
-        }
-
-        return sum / count;
-    }
 
     public float[,] GetCityTemperatures_OG()
     {
@@ -452,7 +416,6 @@ public class CityMetricsManager : MonoBehaviour
         {
             for (int j = 1; j < gridSizeZ - 1; j++)
             {
-                // if (temps[i, j] < 50) print($"{i},{j} | Below 50");
                 // Apply heat equation
                 float heatDiffusion = heatDiffusionRate * (
                     temps[i + 1, j] + temps[i - 1, j] +
@@ -462,14 +425,13 @@ public class CityMetricsManager : MonoBehaviour
 
                 newTemps[i, j] = temps[i, j] + heatDiffusion;
                 newTemps[i, j] *= heatDissipationRate; // Apply dissipation factor
-                newTemps[i, j] += sunHeatBase; // Apply sun heat
+                newTemps[i, j] += sunHeatBase; // Apply sun heat to prevent global freeze
                 newTemps[i, j] = Math.Max(newTemps[i, j], tempMin);
-                // newTemps[i, j] = (newTemps[i, j] - tempMin) * heatDissipationRate + tempMin;
             }
         }
 
         newTemps = AddHeat(newTemps);
-
+        cityTemperature = GetAvgTemp(newTemps, 10);
         temps = newTemps;
         return temps;
     }
@@ -477,7 +439,11 @@ public class CityMetricsManager : MonoBehaviour
     public float[,] AddHeat(float[,] tempsGrid)
     {
         int rescaleVal = 10; // grid size is 10
-        // propertyRanges = buildingsMenu.GetPropertyRanges();
+
+        minX = float.MaxValue;
+        maxX = float.MinValue;
+        minZ = float.MaxValue;
+        maxZ = float.MinValue;
 
         foreach (Transform building in cameraController.allBuildings)
         {
@@ -495,23 +461,61 @@ public class CityMetricsManager : MonoBehaviour
                 buildingProps.heatContribution
             );
             adjustedHeatContribution = buildingProps.heatContribution * heatAddRange;
-            // newTemps[buildingProps]
 
-
-            // Use reflection to get the value of the metric dynamically
+            // Apply heat to the tempsGrid at the calculated grid position
             tempsGrid[gridX, gridZ] += adjustedHeatContribution;
 
+            // Update min and max boundaries based on the building position
+            minX = Mathf.Min(minX, gridX);
+            maxX = Mathf.Max(maxX, gridX);
+            minZ = Mathf.Min(minZ, gridZ);
+            maxZ = Mathf.Max(maxZ, gridZ);
+
+            // Check any additional spaces associated with the building
             foreach (Transform additionalSpace in buildingProps.additionalSpace)
             {
                 gridX = Mathf.RoundToInt(additionalSpace.position.x / rescaleVal);
                 gridZ = Mathf.RoundToInt(additionalSpace.position.z / rescaleVal);
                 tempsGrid[gridX, gridZ] += adjustedHeatContribution;
+
+                // Update boundaries for additional space positions
+                minX = Mathf.Min(minX, gridX);
+                maxX = Mathf.Max(maxX, gridX);
+                minZ = Mathf.Min(minZ, gridZ);
+                maxZ = Mathf.Max(maxZ, gridZ);
             }
         }
 
         return tempsGrid;
     }
+
+    private float GetAvgTemp(float[,] temps, int padding = 5)
+    {
+        // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
+        int minGridX = Mathf.Clamp(Mathf.RoundToInt(minX - padding), 0, gridSizeX - 1);
+        int maxGridX = Mathf.Clamp(Mathf.RoundToInt(maxX + padding), 0, gridSizeX - 1);
+        int minGridZ = Mathf.Clamp(Mathf.RoundToInt(minZ - padding), 0, gridSizeZ - 1);
+        int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(maxZ + padding), 0, gridSizeZ - 1);
+
+        // Calculate the average temperature within city bounds
+        float totalTemperature = 0f;
+        int count = 0;
+
+        for (int i = minGridX; i <= maxGridX; i++)
+        {
+            for (int j = minGridZ; j <= maxGridZ; j++)
+            {
+                totalTemperature += temps[i, j];
+                count++;
+            }
+        }
+
+        float averageTemperature = count > 0 ? totalTemperature / count : 0;
+
+        return (float)Math.Round(averageTemperature);
+    }
 }
+
 // 0.25
 // 0.999
 // 0.06
