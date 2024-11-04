@@ -32,7 +32,7 @@ namespace GreenCityBuilder.Missions
                     metricName = MetricTitle.GreenSpace,
                     objectiveType = MissionObjective.ObjectiveType.MaintainAbove,
                     targetValue = 30, // TODO UPDATE THIS
-                    icon = GetMetricIcon(MetricTitle.Happiness)
+                    icon = GetMetricIcon(MetricTitle.GreenSpace)
                 }
             };
         }
