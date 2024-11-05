@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
@@ -20,19 +16,14 @@ public class CameraController : MonoBehaviour
     public bool moveTarget = false;
     [HideInInspector]
     public Transform target;
-    public int gridSize = 2;
+    public int gridSize = 10;
 
     public float normalSpeed;
     public float fastSpeed;
     public float movSpeed;
     private Vector3 toPos;
 
-    private Vector3 dragStartPos;
-    private Vector3 dragTargetPos;
-
     public float rotationScale;
-    private Vector3 rotateStartPosition;
-    private Vector3 rotateTargetPosition;
     private Quaternion toRot;
     private Quaternion mainCamtoRot;
 
@@ -55,9 +46,7 @@ public class CameraController : MonoBehaviour
     private bool dontBuild;
 
     public Transform forest;
-    List<Transform> forestObj = new List<Transform>();
-
-    bool findPositionAfterMuiltyIputs;
+    readonly List<Transform> forestObj = new List<Transform>();
 
     public GameObject activateMenu;
 
@@ -74,20 +63,19 @@ public class CameraController : MonoBehaviour
     public FixedJoystick fixedJoystick;
     public TrackPad placementTrackpad;
     public CityMetricsManager cityMetricsManager;
-    public CameraController cameraController;
 
-
-    private float cityTempUpdateRate = 1.0f;
+    public float cityTempUpdateInterval = 6;
+    public int temperatureMapTimeSteps = 5;
+    private float cityTempUpdateRate;
     private float cityTempTimer = 0f;
     public bool toggleRestartTemp = false;
     public bool playTemp = false;
 
-    public int timeSteps = 5;
 
     void Start()
     {
         zoomSlider.onValueChanged.AddListener(OnZoomSliderChanged);
-        cityTempUpdateRate = cityMetricsManager.monthDuration / 10;
+        cityTempUpdateRate = cityMetricsManager.monthDuration / cityTempUpdateInterval;
     }
 
 
@@ -110,14 +98,6 @@ public class CameraController : MonoBehaviour
             forestObj.Add(forest.GetChild(i));
 
         if (!heatMap) heatMap = FindObjectOfType<HeatMap>();
-        if (heatMap != null)
-        {
-            xRange = new int[2] { 0, grid.gridSizeX };
-            zRange = new int[] { 0, grid.gridSizeZ };
-
-            heatMap.InitializeHeatMap(grid.gridSizeX, grid.gridSizeZ, grid.smallStep);
-            UpdateHeatMap(heatmapMetric);
-        }
 
         // TODO REMOVE
         // ToggleHeatMapView();
@@ -130,36 +110,46 @@ public class CameraController : MonoBehaviour
         SetPosition();
 
 
-        // handle heat map updates on city change 
+        // if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
 
         cityTempTimer += Time.deltaTime;
-        // if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
-        // if (cityTempTimer >= cityTempUpdateRate)     // TODO reinstate this
-        if (cityTempTimer >= cityTempUpdateRate)     // TODO reinstate this
+        // handle heat map updates on city change on fixed monthly intervals
+        if (cityTempTimer >= cityTempUpdateRate)
         {
-            // float[,] cityTemps = new float[grid.gridSizeX, grid.gridSizeZ]; // this is reinitilizing evertything to 0;
-            float[,] cityTemps = cityMetricsManager.temps;
-
-            int minTemp = 50;
-            int maxTemp = 85;
-            heatMap.TemperatureHeatMap(cityTemps, minTemp, maxTemp);  // TODO investigate if this needs to change 
-            for (int i = 0; i < timeSteps; i++)
+            for (int i = 0; i < temperatureMapTimeSteps; i++)
             {
-                cityTemps = cityMetricsManager.GetCityTemperatures();
+                cityMetricsManager.GetCityTemperatures();
+            }
+
+            if (heatmapMetric == "cityTemperature")
+            {
+                // Make sure we have a valid temperature matrix
+                float[,] cityTemps = (cityMetricsManager.temps != null && cityMetricsManager.temps.Length != 0) ?
+                    cityMetricsManager.temps :
+                    cityMetricsManager.GetCityTemperatures();
+
+                int minTemp = 50;
+                int maxTemp = 85;
+                // cityTemps = cityMetricsManager.RemovePaddingFromMatrix(cityTemps);
+                heatMap.RenderCityTemperatureHeatMap(cityTemps, minTemp, maxTemp);  // TODO investigate if this needs to change 
+
+                return; // city temp is computed and rendered differently
             }
             cityTempTimer = 0f;
-            toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
+            // toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
         }
 
 
-        if (heatMap != null && cityChanged)
+
+        if (cityChanged)
         {
-            if (heatmapMetric == "cityTemperature") return; // city temp is computed and rendered differently
-            else UpdateHeatMap(heatmapMetric);
+            if (heatmapMetric != "cityTemperature")
+            {
+                UpdateHeatMap(heatmapMetric);
+            }
         }
 
-        if (cityChanged) cityMetricsManager.UpdateCityMetrics(); // TODO is this correct
-
+        if (cityChanged && FindObjectOfType<SaveDataTrigger>().cityLoadInitialized) cityMetricsManager.UpdateCityMetrics(); // TODO is this correct
 
         cityChanged = false;
     }
@@ -576,6 +566,7 @@ public class CameraController : MonoBehaviour
 
         SetSliderValueWithoutCallback(toZoom.y);
     }
+
     public void ZoomOut(float multiplier = 1)
     {
         if (!heatmapActive)
@@ -620,8 +611,6 @@ public class CameraController : MonoBehaviour
     {
         // Updates the camera angle to point down at 90 or out at 45
         // Update the Y and Z position of the camera to keep the current view in focus 
-        // TODO - handle with a fade in or something
-        // heatMap.heatMapPlane.SetActive(heatmapActive);
 
         float topViewAngle = 90;
         float defaultAngle = 45;
@@ -660,8 +649,6 @@ public class CameraController : MonoBehaviour
     {
         saveDataTrigger.BuildingDataSave();
     }
-
-
 
 }
 

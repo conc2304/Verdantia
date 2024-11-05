@@ -109,7 +109,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
         UpdatePropertyRanges();
         PrintDictionary(propertyRanges);
-        print("Building Menu Start } Mission Selected : " + IsMissionSelected());
 
         if (!IsMissionSelected())
         {

@@ -21,7 +21,6 @@ public class TempDisplay : MonoBehaviour
     // Update the UI text when the month/year changes
     void UpdateTempText()
     {
-        print("UpdateTempText: " + cityMetricsManager.cityTemperature);
         tempText.text = cityMetricsManager.cityTemperature.ToString();
     }
 

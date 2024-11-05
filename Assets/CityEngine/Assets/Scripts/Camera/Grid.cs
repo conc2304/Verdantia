@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Grid : MonoBehaviour
 {
@@ -19,8 +18,8 @@ public class Grid : MonoBehaviour
 
     private Material lineMaterial;
 
-    public Color mainColor = new Color(0f, 1f, 0f, 1f);
-    public Color subColor = new Color(0f, 0.5f, 0f, 1f);
+    public Color mainColor = new(0f, 1f, 0f, 1f);
+    public Color subColor = new(0f, 0.5f, 0f, 1f);
 
 
     void CreateLineMaterial()

@@ -11,18 +11,44 @@ public class HeatMap : MonoBehaviour
     private Texture2D heatMapTexture;
     public GameObject heatMapPlane;
     private Gradient heatGradient;
+    [SerializeField] private List<Color> heatColors = new();
 
-    public CityMetricsManager cityMetricsManager;
 
     [Range(0f, 1f)]
-    public float heatMapTransparency = 0.55f;
+    public float heatMapAlpha = 0.55f;
+    public bool heatMapInitialized = false;
+
+    private void Start()
+    {
+        InitializeGradient();
+
+        Grid grid = FindObjectOfType<Grid>();
+        gridSizeX = grid.gridSizeX;
+        gridSizeZ = grid.gridSizeZ;
+
+        if (grid != null) InitializeHeatMap(gridSizeX, gridSizeZ, 10);
+
+    }
+
+    public void Update()
+    {
+        if (!heatMapInitialized)
+        {
+            Grid grid = FindObjectOfType<Grid>();
+            gridSizeX = grid.gridSizeX;
+            gridSizeZ = grid.gridSizeZ;
+            InitializeHeatMap(gridSizeX, gridSizeZ, 10);
+        }
+    }
 
 
     // Initialize the HeatMap by passing the grid size values from Grid.cs
     public void InitializeHeatMap(int gridX, int gridZ, float stepSize)
     {
+
         gridSizeX = gridX / (int)stepSize;
         gridSizeZ = gridZ / (int)stepSize;
+        if (gridSizeX == 0 || gridSizeZ == 0) return;
 
         // Move the heat map above the ground on init
         Vector3 currentPosition = heatMapPlane.transform.position;
@@ -38,12 +64,54 @@ public class HeatMap : MonoBehaviour
             }
         }
 
-        InitializeGradient();
+        if (heatGradient == null) InitializeGradient();
+        heatMapInitialized = true;
+    }
+
+    private void InitializeGradient()
+    {
+        // Create a new Gradient
+        heatGradient = new Gradient();
+
+        List<Color> gradientPalette = new List<Color>{
+            // Color.blue,
+            // Color.cyan,
+            Color.green,
+            Color.yellow,
+            new (1f, 0.65f, 0f),  // orange color
+            Color.red
+        };
+
+        if (heatColors != null && heatColors.Count > 0) gradientPalette = heatColors;
+
+
+        // Define the color keys and alpha keys
+        GradientColorKey[] colorKeys = new GradientColorKey[gradientPalette.Count];
+        float timeStep = 1f / (gradientPalette.Count - 1);
+
+        // for (int i = 0; i < gradientPalette.Count - 1; i++)
+        for (int i = 0; i < gradientPalette.Count - 1; i++)
+        {
+            colorKeys[i].color = gradientPalette[i];
+            colorKeys[0].time = i * timeStep;
+        }
+
+
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+        alphaKeys[0].alpha = 1.0f;
+        alphaKeys[0].time = 0.0f;
+        alphaKeys[1].alpha = 1.0f;
+        alphaKeys[1].time = 1.0f;
+
+        // Set the color and alpha keys to the gradient
+        heatGradient.SetKeys(colorKeys, alphaKeys);
     }
 
     // Update the heat map with buildings and their given metric
     public void UpdateHeatMap(List<Transform> allBuildings, string metricName, int metricMin, int metricMax)
     {
+        if (heatValues.Length == 0) return;
+
         if (metricName == "cityTemperature")
         {
             Debug.LogError("Function for Heat Map not bypassed: " + metricName);
@@ -84,19 +152,25 @@ public class HeatMap : MonoBehaviour
         DisplayHeatMap();
     }
 
-    public void TemperatureHeatMap(float[,] matrix, int metricMin, int metricMax)
+    public void RenderCityTemperatureHeatMap(float[,] matrix, int metricMin, int metricMax)
     {
         heatValues = matrix;
         GenerateHeatMapTexture(metricMin, metricMax);
         DisplayHeatMap();
+        print("RenderCityTemperatureHeatMap");
     }
 
 
     private void GenerateHeatMapTexture(int metricMin, int metricMax)
     {
+        print($"{heatMapInitialized} | {heatValues.Length} | {heatGradient == null}");
+        if (heatGradient == null) InitializeGradient();
+        if (!heatMapInitialized || heatValues.Length == 0 || heatGradient == null) return;
+
+        print("GenerateHeatMapTexture");
         heatMapTexture = new Texture2D(gridSizeX, gridSizeZ);
-        float heatMin = (float)metricMin;
-        float heatMax = (float)metricMax;
+        float heatMin = metricMin;
+        float heatMax = metricMax;
         float alphaMin = 0.4f;
         float alphaMax = 0.85f;
 
@@ -104,17 +178,17 @@ public class HeatMap : MonoBehaviour
         {
             for (int z = 0; z < gridSizeZ; z++)
             {
-                // Normalize the heat value to a range of 0 to 1
-                float normalizedHeat = Mathf.InverseLerp(heatMin, heatMax, heatValues[x, z]);
+                // Normalize the heat/alpha value to a range of 0 to 1
+                float normalizedHeat = Mathf.InverseLerp(heatMin, heatMax, heatValues[x, z]); // BUG
                 float normalizedAlpha = NumbersUtils.Remap(heatMin, heatMax + 1f, alphaMin, alphaMax, heatValues[x, z]);
 
+                // print($"Normalized heat : {normalizedHeat}");
                 // Use the gradient to get the color at the normalized heat value
                 Color heatColor = heatGradient.Evaluate(normalizedHeat);
                 // heatColor.a = normalizedHeat == 0f ? 0.1f : normalizedAlpha;
 
                 // Set alpha based on normalized heat
-                heatColor.a = heatMapTransparency;
-                // heatColor.a = 1; // TODO REMOVE
+                heatColor.a = heatMapAlpha;
 
                 // Set the pixel color in the texture
                 heatMapTexture.SetPixel(x, z, heatColor);
@@ -130,102 +204,12 @@ public class HeatMap : MonoBehaviour
     }
 
 
-    private void InitializeGradient()
-    {
-        // Create a new Gradient
-        heatGradient = new Gradient();
-
-        // Define the color keys and alpha keys
-        GradientColorKey[] colorKeys = new GradientColorKey[5];
-        colorKeys[0].color = Color.cyan;   // 0% heat
-        colorKeys[0].time = 0.0f;
-        colorKeys[1].color = Color.green;  // 25% heat
-        colorKeys[1].time = 0.25f;
-        colorKeys[2].color = Color.yellow; // 50% heat
-        colorKeys[2].time = 0.5f;
-        colorKeys[3].color = new Color(1f, 0.65f, 0f); // Orange (75% heat)
-        colorKeys[3].time = 0.75f;
-        colorKeys[4].color = Color.red;    // 100% heat
-        colorKeys[4].time = 1.0f;
-
-        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
-        alphaKeys[0].alpha = 1.0f;
-        alphaKeys[0].time = 0.0f;
-        alphaKeys[1].alpha = 1.0f;
-        alphaKeys[1].time = 1.0f;
-
-        // Set the color and alpha keys to the gradient
-        heatGradient.SetKeys(colorKeys, alphaKeys);
-    }
 
     // Display the heat map texture on a plane in the scene
     private void DisplayHeatMap()
     {
         Renderer renderer = heatMapPlane.GetComponent<Renderer>();
         renderer.material.mainTexture = heatMapTexture;
-    }
-
-    private float[,] ApplyBlur(float[,] matrix, int blurSize = 1)
-    {
-        // Texture2D blurredTexture = new Texture2D(matrix.width, sourceTexture.height);
-        int rows = matrix.GetLength(0);    // Number of rows
-        int columns = matrix.GetLength(1);  // Number of columns
-        float[,] blurredMatrix = new float[rows, columns];
-
-        if (blurSize == 0) return matrix;
-        for (int x = 0; x < columns; x++)
-        {
-            for (int z = 0; z < rows; z++)
-            {
-                float avgVal = GetAverageNumber(matrix, x, z, blurSize);
-                // Color averageColor = GetAverageColor(sourceTexture, x, z, blurSize);
-                // blurredTexture.SetPixel(x, z, averageColor);
-                blurredMatrix[x, z] = avgVal;
-            }
-        }
-
-        // blurredTexture.Apply();
-        return blurredMatrix;
-    }
-
-    private Color GetAverageColor(Texture2D texture, int x, int z, int blurSize)
-    {
-        Color sum = Color.clear;
-        int count = 0;
-
-        for (int xOffset = -blurSize; xOffset <= blurSize; xOffset++)
-        {
-            for (int zOffset = -blurSize; zOffset <= blurSize; zOffset++)
-            {
-                int newX = Mathf.Clamp(x + xOffset, 0, texture.width - 1);
-                int newZ = Mathf.Clamp(z + zOffset, 0, texture.height - 1);
-
-                sum += texture.GetPixel(newX, newZ);
-                count++;
-            }
-        }
-
-        return sum / count;
-    }
-
-    private float GetAverageNumber(float[,] matrix, int x, int z, int blurSize)
-    {
-        float sum = 0f;
-        int count = 0;
-
-        for (int xOffset = -blurSize; xOffset <= blurSize; xOffset++)
-        {
-            for (int zOffset = -blurSize; zOffset <= blurSize; zOffset++)
-            {
-                int newX = Mathf.Clamp(x + xOffset, 0, matrix.GetLength(0) - 1);
-                int newZ = Mathf.Clamp(z + zOffset, 0, matrix.GetLength(1) - 1);
-
-                sum += matrix[newX, newZ];
-                count++;
-            }
-        }
-
-        return sum / count;
     }
 
     // Helper method to dynamically get the metric value using reflection
