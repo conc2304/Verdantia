@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 
 public class BuildingsMenuNew : MonoBehaviour
@@ -35,6 +36,7 @@ public class BuildingsMenuNew : MonoBehaviour
     public Button buildingButton;
     public GameObject activateMenu;
     public RectTransform buildMenuTrackpad; // The rectangular UI element acting as the trackpad
+    private string selectedBuildingName;
 
     public GameObject mainMenu;
     public GameObject navigationGui;
@@ -92,8 +94,6 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject introSequenceGO;
     public GameObject gameUIContainerGO;
     public GameObject heroTitleBar;
-
-
     private void Start()
     {
         cameraController = FindObjectOfType<CameraController>();
@@ -550,9 +550,6 @@ public class BuildingsMenuNew : MonoBehaviour
         // Handle Building Type Selection
 
         GameObject clickedBtn = EventSystem.current.currentSelectedGameObject;
-        HoldToSelect holdToSelect = clickedBtn.GetComponent<HoldToSelect>();
-        if (!holdToSelect.hasSelected) return;
-        holdToSelect.ResetState();
         string buildingCategoryName = clickedBtn.name.Replace("_btn", "");
 
 
@@ -591,9 +588,6 @@ public class BuildingsMenuNew : MonoBehaviour
                     //     msgText = "Insufficient Energy";
                     // }
 
-                    Transform buildingBtn = buildingParent.Find(buildingName + "_btn");
-                    buildingBtn.GetComponent<HoldToSelect>().SetDisabled(buildingUnavailable, msgText);
-
                 }
             }
         }
@@ -607,19 +601,16 @@ public class BuildingsMenuNew : MonoBehaviour
     // Selecting a building from the the type/category list
     public void OnBuildingClicked()
     {
-        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
-        if (holdToSelect.hasSelected)
-        {
-            CreateBuilding();
-            OpenPlacementGUI(TrackpadTargetType.Build);
-            navigationGui.SetActive(true);
-            buildingStats.SetActive(false);
-            navInfoToggleParent.SetActive(false);
-        }
-        else
-        {
-            SelectBuilding();
-        }
+        SelectBuilding();
+    }
+
+    public void OnAddBuilding()
+    {
+        CreateBuilding();
+        OpenPlacementGUI(TrackpadTargetType.Build);
+        navigationGui.SetActive(true);
+        buildingStats.SetActive(false);
+        navInfoToggleParent.SetActive(false);
     }
 
     public void OpenPlacementGUI(TrackpadTargetType targetType)
@@ -642,13 +633,11 @@ public class BuildingsMenuNew : MonoBehaviour
 
     private void CreateBuilding()
     {
-        UnsetTarget();
-
         for (int i = 0; i < buildings.Length; i++)
         {
             for (int u = 0; u < buildings[i].buildings.Length; u++)
             {
-                if (buildings[i].buildings[u].name + "_btn" == EventSystem.current.currentSelectedGameObject.name)
+                if (buildings[i].buildings[u].name + "_btn" == selectedBuildingName)
                 {
                     cameraController.moveTarget = true;
                     Transform target = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity).transform;
@@ -670,6 +659,8 @@ public class BuildingsMenuNew : MonoBehaviour
     private void SelectBuilding()
     {
         GameObject clickedBuildingBtn = EventSystem.current.currentSelectedGameObject;
+        selectedBuildingName = clickedBuildingBtn.name;
+        print(selectedBuildingName);
         GameObject selectedBuilding = GetSelectedBuildingGO(clickedBuildingBtn);
         int spaceWidth = selectedBuilding.GetComponent<BuildingProperties>().spaceWidth;
         CenterBuildingType(clickedBuildingBtn, spaceWidth);
@@ -733,15 +724,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void DeleteBuilding()
     {
-        // There is only a 
-        HoldToSelect holdToSelect;
-        EventSystem.current.currentSelectedGameObject.TryGetComponent<HoldToSelect>(out holdToSelect);
-        if (holdToSelect != null)
-        {
-            if (!holdToSelect.hasSelected) return;
-            holdToSelect.ResetHold();
-        }
-
         // Update UI
         OpenPlacementGUI(TrackpadTargetType.Demolish);
 
@@ -823,10 +805,8 @@ public class BuildingsMenuNew : MonoBehaviour
     public void OnPlacementCancel()
     {
         if (trackPad.isTracking) return; // prevent accidental click
-
-        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
-        if (!holdToSelect.hasSelected) return;
-
+        errorText.text = "";
+        errorText.gameObject.SetActive(false);
         UnsetTarget();
         InitializeTouchGui();
     }
@@ -834,24 +814,22 @@ public class BuildingsMenuNew : MonoBehaviour
     public void OnPlacementConfirm()
     {
         if (trackPad.isTracking) return; // prevent accidental click
-        HoldToSelect holdToSelect = EventSystem.current.currentSelectedGameObject.GetComponent<HoldToSelect>();
-        if (!holdToSelect.hasSelected) return;
-        string errorMsg = "";
+        Dictionary<string, object> result = new Dictionary<string, object> { { "status", null }, { "msg", "" } };
 
         Transform target = cameraController.target;
         if (target != null)
         {
             if (target.CompareTag("Road"))
             {
-                cameraController.SpawnRoad(target);
+                result = cameraController.SpawnRoad(target);
             }
             else if (target.CompareTag("Building"))
             {
-                errorMsg = cameraController.SpawnBuilding(target);
+                result = cameraController.SpawnBuilding(target);
             }
             else if (target.CompareTag("DeleteTool"))
             {
-                cameraController.DeleteTarget(target);
+                result = cameraController.DeleteTarget(target);
             }
         }
 
@@ -859,13 +837,19 @@ public class BuildingsMenuNew : MonoBehaviour
         if (cameraController.target == null || !cameraController.moveTarget)
         {
             InitializeTouchGui();
+            errorText.text = "";
+            errorText.gameObject.SetActive(false);
         }
 
-        if (errorMsg != "")
+
+        bool status = (bool)result["status"];
+        string message = (string)result["msg"];
+        if (message != "")
         {
             // put error message on opposite side of target icon
             errorText.transform.localPosition = trackPad.mousePosition.y > 0 ? new Vector3(0, -150, 0) : new Vector3(0, 150, 0);
-            errorText.text = errorMsg;
+            errorText.text = message;
+            errorText.color = status == true ? Color.black : Color.red;
             errorText.gameObject.SetActive(true);
         }
         else
@@ -876,7 +860,10 @@ public class BuildingsMenuNew : MonoBehaviour
 
     private void UnsetTarget()
     {
+        selectedBuildingName = null;
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
+        cameraController.target = null;
+        cameraController.moveTarget = false;
     }
 
     public void OnInfoTabClick()

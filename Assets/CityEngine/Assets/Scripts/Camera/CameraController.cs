@@ -167,8 +167,10 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+
         if (moveTarget && target != null)
         {
+            print("Update target position");
             Vector3 trackpadPos = TrackpadToMainCamera();
 
             float planeY = 0;
@@ -214,7 +216,7 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void SpawnRoad(Transform targetNew, bool isInitializing = false)
+    public Dictionary<string, object> SpawnRoad(Transform targetNew, bool isInitializing = false)
     {
         targetNew.parent = roadsParent;
         targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
@@ -238,17 +240,22 @@ public class CameraController : MonoBehaviour
 
             int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
             if (!isInitializing) cityMetricsManager.DeductExpenses(constructionCost);
+
+            return new Dictionary<string, object> { { "status", true }, { "msg", "Road added! You can add more." } };
+
         }
+        return new Dictionary<string, object> { { "status", false }, { "msg", "Unable to place road here." } };
     }
 
-    public string SpawnBuilding(Transform targetNew, bool isInitializing = false)
+    public Dictionary<string, object> SpawnBuilding(Transform targetNew, bool isInitializing = false)
     {
         // Get Building Properties
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
 
         dontBuild = false;
         targetNew.parent = buildingsParent;
-        string errorMsg = "";
+
+        string msg = "";
 
         for (int i = 0; i < allBuildings.Count; i++)
         {
@@ -256,9 +263,9 @@ public class CameraController : MonoBehaviour
             if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(targetNew.position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(targetNew.position.z / 10) * 10)
             {
-                errorMsg = "Can't build over an existing building";
+                msg = "Can't build over an existing building";
                 dontBuild = true;
-                return errorMsg;
+                return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
             }
 
             // Check for additionalSpace overlap with existing building
@@ -267,9 +274,9 @@ public class CameraController : MonoBehaviour
                 if (Mathf.Round(allBuildings[i].position.x / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.x / 10) * 10 &&
                 Mathf.Round(allBuildings[i].position.z / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.z / 10) * 10)
                 {
-                    errorMsg = "Can't build over an existing building";
+                    msg = "Can't build over an existing building";
                     dontBuild = true;
-                    return errorMsg;
+                    return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
                 }
             }
         }
@@ -280,8 +287,8 @@ public class CameraController : MonoBehaviour
         if (!isInitializing && !IsBuildingNextToRoad(targetNew))
         {
             dontBuild = true;
-            errorMsg = "Must be placed next to a road";
-            return errorMsg;
+            msg = "Must be placed next to a road";
+            return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
         }
 
 
@@ -292,9 +299,9 @@ public class CameraController : MonoBehaviour
                 Mathf.Round(roadGenerator.allRoads[i].position.z / 10) * 10 == Mathf.Round(targetNew.position.z))
             {
                 dontBuild = true;
-                errorMsg = "Can't build over an existing road";
+                msg = "Can't build over an existing road";
 
-                return errorMsg;
+                return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
             }
             // Check foir new building's additionalSpace overlapping with existing roads
             for (int u = 0; u < targetBuildProp.additionalSpace.Length; u++)
@@ -303,8 +310,8 @@ public class CameraController : MonoBehaviour
                 Mathf.Round(roadGenerator.allRoads[i].position.z / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.z / 10) * 10)
                 {
                     dontBuild = true;
-                    errorMsg = "Can't build over an existing road";
-                    return errorMsg;
+                    msg = "Can't build over an existing road";
+                    return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
                 }
             }
         }
@@ -365,8 +372,12 @@ public class CameraController : MonoBehaviour
             moveTarget = false;
             target = null;
             cityChanged = true;
+
+            return new Dictionary<string, object> { { "status", true }, { "msg", "New building added!" } };
+
         }
-        return errorMsg;
+
+        return new Dictionary<string, object> { { "status", false }, { "msg", "Unable to add building." } };
     }
 
     public bool IsBuildingNextToRoad(Transform targetNew)
@@ -407,8 +418,10 @@ public class CameraController : MonoBehaviour
 
 
 
-    public void DeleteTarget(Transform target)
+    public Dictionary<string, object> DeleteTarget(Transform target)
     {
+
+        string demolishedBuildingName = "";
         // Checck all buildings to see if it intersects demolition target and remove building 
         for (int i = 0; i < allBuildings.Count; i++)
         {
@@ -419,6 +432,7 @@ public class CameraController : MonoBehaviour
 
                 // deduct demolition cost from budget 
                 int demolitionCost = allBuildings[i].gameObject.GetComponent<BuildingProperties>().demolitionCost;
+                demolishedBuildingName = allBuildings[i].gameObject.GetComponent<BuildingProperties>().buildingName;
                 cityMetricsManager.DeductExpenses(demolitionCost);
 
 
@@ -465,9 +479,19 @@ public class CameraController : MonoBehaviour
                 Destroy(roadGenerator.allRoads[i].gameObject);
                 roadGenerator.allRoads.Remove(roadGenerator.allRoads[i]);
                 roadGenerator.DeleteRoad(target.transform);
+                demolishedBuildingName = "Road";
                 cityChanged = true;
                 break;
             }
+        }
+
+        if (cityChanged)
+        {
+            return new Dictionary<string, object> { { "status", true }, { "msg", "Demolished " + demolishedBuildingName } };
+        }
+        else
+        {
+            return new Dictionary<string, object> { { "status", false }, { "msg", "Nothing to demolish here." } };
         }
     }
 
