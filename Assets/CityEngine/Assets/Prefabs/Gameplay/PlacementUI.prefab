@@ -221,7 +221,6 @@ GameObject:
   - component: {fileID: 9083733151548344414}
   - component: {fileID: 5818069323655896671}
   - component: {fileID: 856085467201721772}
-  - component: {fileID: 2294778805233845484}
   m_Layer: 5
   m_Name: CancelBtn
   m_TagString: Untagged
@@ -345,26 +344,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2294778805233845484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2322387737845769204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6df79e6ac20c6a040b6ca547612d4467, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progressBar: {fileID: 7845940859455683031}
-  disableIcon: {fileID: 0}
-  disabled: 0
-  disabledMsg: 
-  disabledText: {fileID: 0}
-  holdTime: 0.6
-  delayTime: 0.1
-  hasSelected: 0
 --- !u!1 &2414703716004300442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,7 +1037,6 @@ GameObject:
   - component: {fileID: 3247603158159668218}
   - component: {fileID: 5316399903636803175}
   - component: {fileID: 2783391404110355893}
-  - component: {fileID: 2705821687578807065}
   m_Layer: 5
   m_Name: ConfirmBtn
   m_TagString: Untagged
@@ -1182,26 +1160,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2705821687578807065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7436944819640518052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6df79e6ac20c6a040b6ca547612d4467, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progressBar: {fileID: 8732998751231974710}
-  disableIcon: {fileID: 0}
-  disabled: 0
-  disabledMsg: 
-  disabledText: {fileID: 0}
-  holdTime: 0.6
-  delayTime: 0.1
-  hasSelected: 0
 --- !u!1 &7776131933632180445
 GameObject:
   m_ObjectHideFlags: 0

@@ -88,7 +88,6 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private void MoveBullseye(Vector2 mousePosition)
     {
         target.rectTransform.localPosition = new Vector2(mousePosition.x, mousePosition.y + mouseYFix);
-        print(mousePosition);
     }
 
     public void SetTarget(TrackpadTargetType targetType)
