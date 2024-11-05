@@ -29,6 +29,7 @@ public class SaveDataTrigger : MonoBehaviour
 
     BuildingData data;
 
+    public bool cityLoadInitialized = false;
     private void Awake()
     {
         cameraController = FindObjectOfType<CameraController>();
@@ -51,6 +52,8 @@ public class SaveDataTrigger : MonoBehaviour
         }
 
         print(buildingsStr);
+        cityLoadInitialized = true;
+
     }
 
     public void BuildingDataSave()

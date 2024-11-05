@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using GreenCityBuilder.Missions;
-using Unity.VisualScripting;
 
 public class CityMetricTopBar : MonoBehaviour
 {
@@ -25,6 +24,7 @@ public class CityMetricTopBar : MonoBehaviour
     {
         currentMission = mission;
         DisplayMetricsForCurrentMode();
+        UpdateMetrics();
     }
 
     private void DisplayMetricsForCurrentMode()

@@ -43,9 +43,11 @@ public class CityMetricsManager : MonoBehaviour
 
     // City Grid Plane
     public Grid grid;
-    private int gridSizeX;
-    private int gridSizeZ;
+    private int gridLengthX;
+    private int gridLengthZ;
     private readonly int gridPadding = 2;
+    private int gridTileSize = 10;
+
     private float cityBoarderMinX = float.MaxValue;
     private float cityBoarderMaxX = float.MinValue;
     private float cityBoarderMinZ = float.MaxValue;
@@ -67,11 +69,14 @@ public class CityMetricsManager : MonoBehaviour
     public bool pause = true;
 
 
+
     void Start()
     {
+        gridTileSize = cameraController.gridSize;
         propertyRanges = buildingsMenu.GetPropertyRanges();
         cityTemperature = startingTemp;
         budget = startingBudget;
+        RestartSimulation();
         UpdateCityMetrics();
         OnMetricsUpdate?.Invoke();
         OnTempUpdated?.Invoke();
@@ -91,10 +96,8 @@ public class CityMetricsManager : MonoBehaviour
             { MetricTitle.Expenses, expenses }
         };
 
-        gridSizeX = (grid.gridSizeX / 10) + gridPadding;
-        gridSizeZ = (grid.gridSizeZ / 10) + gridPadding;
-
-        RestartSimulation();
+        gridLengthX = (grid.gridSizeX / gridTileSize) + gridPadding;
+        gridLengthZ = (grid.gridSizeZ / gridTileSize) + gridPadding;
     }
 
     public float GetMetricValue(MetricTitle metricName)
@@ -104,7 +107,7 @@ public class CityMetricsManager : MonoBehaviour
 
     public void InitializeGrid()
     {
-        temps = ArrayFill(gridSizeX, gridSizeZ, startingTemp);
+        temps = ArrayFill(gridLengthX, gridLengthZ, startingTemp);
     }
 
 
@@ -122,33 +125,32 @@ public class CityMetricsManager : MonoBehaviour
             monthTimer = 0f;
         }
 
-        if (pause)
-        {
-            cameraController.toggleRestartTemp = false;
-            cameraController.playTemp = false;
-            play = false;
-        }
-        if (play)
-        {
-            cameraController.toggleRestartTemp = true;
-            cameraController.playTemp = true;
-            pause = false;
-        }
+        // if (pause)
+        // {
+        //     cameraController.toggleRestartTemp = false;
+        //     cameraController.playTemp = false;
+        //     play = false;
+        // }
+        // if (play)
+        // {
+        //     cameraController.toggleRestartTemp = true;
+        //     cameraController.playTemp = true;
+        //     pause = false;
+        // }
 
 
-        if (toggleRestartTemp)
-        {
-            RestartSimulation();
-            toggleRestartTemp = false;
-        }
-        if (takeStep)
-        {
-            cameraController.toggleRestartTemp = true;
-            takeStep = false;
-        }
+        // if (toggleRestartTemp)
+        // {
+        //     RestartSimulation();
+        //     toggleRestartTemp = false;
+        // }
+        // if (takeStep)
+        // {
+        //     cameraController.toggleRestartTemp = true;
+        //     takeStep = false;
+        // }
     }
 
-    [ContextMenu("Trigger My Function")]
     public void RestartSimulation()
     {
         InitializeGrid();
@@ -191,6 +193,12 @@ public class CityMetricsManager : MonoBehaviour
     // Update city metrics based on all buildings
     public void UpdateCityMetrics()
     {
+        if (propertyRanges == null)
+        {
+            propertyRanges = buildingsMenu.GetPropertyRanges();
+            if (propertyRanges == null) return;
+        }
+
         // Reset all metrics before recalculating them
         ResetMetrics();
 
@@ -203,23 +211,18 @@ public class CityMetricsManager : MonoBehaviour
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
             cityArea += buildingProps.additionalSpace.Length + 1;
 
-            // Population and economic metrics
             population += buildingProps.capacity;
-            // happiness += buildingProps.happinessImpact;
-            budget -= buildingProps.operationalCost;
-            budget += buildingProps.taxRevenue;
             greenSpace += buildingProps.greenSpaceEffect;
 
-            revenue += buildingProps.taxContribution;
-            income += buildingProps.taxRevenue;
-            expenses += buildingProps.upkeep;
+            income += buildingProps.income;
+            expenses += buildingProps.expense;
 
             // Environmental metrics
             float adjustedHeatContribution = buildingProps.heatContribution;
             float adjustedEnergyConsumption = buildingProps.energyConsumption;
             float adjustedCarbonFootprint = buildingProps.carbonFootprint;
             float adjustedHappiness = buildingProps.happinessImpact;
-
+            float adjustedPollution = buildingProps.pollutionImpact;
 
             // Only apply additional feedback if temperature is above base
             // Update metric value based on temperature difference
@@ -229,21 +232,22 @@ public class CityMetricsManager : MonoBehaviour
                 adjustedCarbonFootprint += adjustedCarbonFootprint * tempDifference * tempSensitivity;
                 adjustedHeatContribution += adjustedHeatContribution * tempDifference * tempSensitivity;
                 adjustedHappiness += adjustedHappiness * tempDifference * tempSensitivity;
+                adjustedPollution += adjustedPollution * tempDifference * tempSensitivity;
             }
 
             // Apply adjusted metrics
             happiness += (int)adjustedHappiness;
             urbanHeat += (int)adjustedHeatContribution;
-            pollution += buildingProps.pollutionOutput - buildingProps.pollutionReduction;
+            pollution += (int)adjustedPollution;
             energy += (int)(buildingProps.resourceProduction - adjustedEnergyConsumption);
             carbonEmission += (int)adjustedCarbonFootprint;
         }
 
         // Adjust happiness to be averaged over all buildings
         happiness = cameraController.allBuildings.Count > 0 ? (happiness / cameraController.allBuildings.Count) : 0;
+        happiness = ((happiness - propertyRanges["happinessImpact"].min) / (propertyRanges["happinessImpact"].max - propertyRanges["happinessImpact"].min)) * 100;
         happiness = (float)Math.Round(happiness);
         greenSpace = cityArea > 0 ? (float)Math.Round(greenSpace / cityArea) : 0;
-        print("Happiness: " + happiness);
     }
 
     // Method to reset all metrics to initial state before recalculation
@@ -261,14 +265,12 @@ public class CityMetricsManager : MonoBehaviour
         expenses = 0;
     }
 
-    // Example method to manually add income to the city
     public void AddRevenue(int amount)
     {
         budget += amount;
         Debug.Log($"Revenue added: {amount}, New budget: {budget}");
     }
 
-    // Example method to manually deduct expenses from the city
     public void DeductExpenses(int amount)
     {
         budget -= amount;
@@ -278,8 +280,6 @@ public class CityMetricsManager : MonoBehaviour
 
     //   Key: carbonFootprint, Min: -500, Max: 5000
     //   Key: heatContribution, Min: -50, Max: 100
-
-
 
     public float[,] ArrayFill(int sizeX, int sizeY, float initialValue)
     {
@@ -323,7 +323,7 @@ public class CityMetricsManager : MonoBehaviour
 
         List<Transform> allBuildings = cameraController.allBuildings;
 
-        float[,] outputTemps = ArrayFill(gridSizeX, gridSizeZ, 0);
+        float[,] outputTemps = ArrayFill(gridLengthX, gridLengthZ, 0);
 
         float epsilon = 1f; // Small constant to prevent division by zero
         // float maxCarbonEmission = propertyRanges["carbonFootprint"].max;
@@ -343,23 +343,23 @@ public class CityMetricsManager : MonoBehaviour
         // float bk = 0.5f;
 
         // Boundary Conditions
-        for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
+        for (int z = 1; z < gridLengthZ - (gridPadding / 2); z++)
         {
             temps[0, z] = temps[1, z];
-            temps[gridSizeX - 1, z] = temps[gridSizeX - 2, z];
+            temps[gridLengthX - 1, z] = temps[gridLengthX - 2, z];
         }
-        for (int x = 0; x < gridSizeX - (gridPadding / 2); x++)
+        for (int x = 0; x < gridLengthX - (gridPadding / 2); x++)
         {
             temps[x, 0] = temps[x, 1];
-            temps[x, gridSizeZ - 1] = temps[x, gridSizeZ - 2];
+            temps[x, gridLengthZ - 1] = temps[x, gridLengthZ - 2];
         }
         int minTemp = 50;
         int maxTemp = 100;
 
         // Build output temps matrix: Heat Diffusion/Dissipation Forumla
-        for (int x = 1; x < gridSizeX - (gridPadding / 2); x++)
+        for (int x = 1; x < gridLengthX - (gridPadding / 2); x++)
         {
-            for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
+            for (int z = 1; z < gridLengthZ - (gridPadding / 2); z++)
             {
                 outputTemps[x, z] =
                     (bk * (temps[x, z] - minTemp))
@@ -382,30 +382,40 @@ public class CityMetricsManager : MonoBehaviour
 
     public float[,] GetCityTemperatures()
     {
+        print("GetCityTemperatures");
+        // Make sure we have a valid grid
+        if (gridLengthX == 0 || gridLengthZ == 0)
+        {
+            gridLengthX = (grid.gridSizeX / gridTileSize) + gridPadding;
+            gridLengthZ = (grid.gridSizeZ / gridTileSize) + gridPadding;
+        }
+        if (gridLengthX == 0 || gridLengthZ == 0) return new float[0, 0];
+        if (temps == null || temps.Length == 0) InitializeGrid();
 
-        float[,] newTemps = new float[gridSizeX, gridSizeZ];
+
+        float[,] newTemps = new float[gridLengthX, gridLengthZ];
 
         // Boundary Conditions
-        for (int z = 1; z < gridSizeZ - (gridPadding / 2); z++)
+        for (int z = 1; z < gridLengthZ - (gridPadding / 2); z++)
         {
             // Fix left and right edges to inner cell values, effectively holding temperature steady at the boundaries
             temps[0, z] = temps[1, z];
-            temps[gridSizeX - 1, z] = temps[gridSizeX - 2, z];
+            temps[gridLengthX - 1, z] = temps[gridLengthX - 2, z];
         }
 
-        for (int x = 1; x < gridSizeX - (gridPadding / 2); x++)
+        for (int x = 1; x < gridLengthX - (gridPadding / 2); x++)
         {
             // Fix top and bottom edges to inner cell values
             temps[x, 0] = temps[x, 1];
-            temps[x, gridSizeZ - 1] = temps[x, gridSizeZ - 2];
+            temps[x, gridLengthZ - 1] = temps[x, gridLengthZ - 2];
         }
 
 
         float tempMin = 50;
 
-        for (int i = 1; i < gridSizeX - 1; i++)
+        for (int i = 1; i < gridLengthX - 1; i++)
         {
-            for (int j = 1; j < gridSizeZ - 1; j++)
+            for (int j = 1; j < gridLengthZ - 1; j++)
             {
                 // Apply heat equation
                 float heatDiffusion = heatDiffusionRate * (
@@ -429,7 +439,14 @@ public class CityMetricsManager : MonoBehaviour
 
     public float[,] AddHeat(float[,] tempsGrid)
     {
-        int rescaleVal = 10; // grid size is 10
+
+        if (propertyRanges == null)
+        {
+            propertyRanges = buildingsMenu.GetPropertyRanges();
+            if (propertyRanges == null) return new float[0, 0];
+        }
+
+        int rescaleVal = gridTileSize;
 
         cityBoarderMinX = float.MaxValue;
         cityBoarderMaxX = float.MinValue;
@@ -451,10 +468,11 @@ public class CityMetricsManager : MonoBehaviour
                 heatAddRange * (propertyRanges["heatContribution"].min / propertyRanges["heatContribution"].max),
                 buildingProps.heatContribution
             );
+
             adjustedHeatContribution = buildingProps.heatContribution * heatAddRange;
 
             // Apply heat to the tempsGrid at the calculated grid position
-            tempsGrid[gridX, gridZ] += adjustedHeatContribution;
+            tempsGrid[gridX, gridZ] += adjustedHeatContribution; // TODO BUGFIX
 
             // Update min and max boundaries based on the building position
             cityBoarderMinX = Mathf.Min(cityBoarderMinX, gridX);
@@ -483,10 +501,10 @@ public class CityMetricsManager : MonoBehaviour
     private float GetAvgTemp(float[,] temps, int padding = 5)
     {
         // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
-        int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridSizeX - 1);
-        int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridSizeX - 1);
-        int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridSizeZ - 1);
-        int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridSizeZ - 1);
+        int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridLengthX - 1);
+        int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridLengthX - 1);
+        int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridLengthZ - 1);
+        int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridLengthZ - 1);
 
         // Calculate the average temperature within city bounds
         float totalTemperature = 0f;
@@ -505,10 +523,29 @@ public class CityMetricsManager : MonoBehaviour
 
         return (float)Math.Round(averageTemperature);
     }
+
+    public float[,] RemovePaddingFromMatrix(float[,] matrix)
+    {
+        // Calculate the new dimensions without padding
+        int newGridLengthX = grid.gridSizeX / gridTileSize;
+        int newGridLengthZ = grid.gridSizeZ / gridTileSize;
+
+        // Initialize a new matrix with the adjusted size
+        float[,] shiftedMatrix = new float[newGridLengthX, newGridLengthZ];
+
+        // Fill the new matrix by skipping padding rows and columns
+        for (int x = 0; x < newGridLengthX; x++)
+        {
+            for (int z = 0; z < newGridLengthZ; z++)
+            {
+                // Offset by the padding to avoid it in the original matrix
+                shiftedMatrix[x, z] = matrix[x + gridPadding, z + gridPadding];
+            }
+        }
+
+        return shiftedMatrix;
+    }
 }
 
-// 0.25
-// 0.999
-// 0.06
-// 0.05
+
 
