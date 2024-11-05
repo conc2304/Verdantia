@@ -275,21 +275,19 @@ public class BuildingsMenuNew : MonoBehaviour
         int posType = 0;
 
         int totalSpaces = 0;
-
         for (int i = 0; i < buildings.Length; i++)
         {
             totalSpaces += buildings[i].type.GetComponent<BuildingProperties>().spaceWidth;
         }
-
-        int totalBuildingSpace = 90 * totalSpaces;
-        int totalPadding = 105 * buildings.Length;
-        int requiredSpace = totalBuildingSpace + totalPadding;
-        int startingX = -requiredSpace / 2;
-        posType = startingX;
-
-
         int buildingPadding = 105;
         int buildingSpaceSize = 90;
+        int totalBuildingSpace = buildingSpaceSize * (totalSpaces + 1); // (+1) account for the demolish item at the end
+        int totalPadding = buildingPadding * buildings.Length + 1;  // (+1) account for the demolish item at the end
+        int requiredSpace = totalBuildingSpace + totalPadding;
+        int startingX = -requiredSpace / 2;
+        // maxPos = -startingX + buildingPadding + buildingSpaceSize;
+        posType = startingX;
+
         for (int i = 0; i < buildings.Length; i++)
         {
             // Loop over Building Types/Categories
