@@ -63,7 +63,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
     private Vector3 dragStartPos;
     private Vector3 dragTargetPos;
-    public float dragMultiplier = 1.25f;
+    public float dragMultiplier = 1.5f;
 
     private bool isDragging = false;
     private float timeOfLastDrag = 0;
@@ -574,6 +574,10 @@ public class BuildingsMenuNew : MonoBehaviour
         GameObject clickedBtn = EventSystem.current.currentSelectedGameObject;
         string buildingCategoryName = clickedBtn.name.Replace("_btn", "");
 
+        HoldToSelect holdToSelect = clickedBtn.GetComponent<HoldToSelect>();
+        if (!holdToSelect.hasSelected) return;
+        holdToSelect.ResetState();
+
 
         for (int i = 0; i < buildingsCategoryTypes.Count; i++)
         {
@@ -609,7 +613,8 @@ public class BuildingsMenuNew : MonoBehaviour
                     //     buildingUnavailable = true;
                     //     msgText = "Insufficient Energy";
                     // }
-
+                    Transform buildingBtn = buildingParent.Find(buildingName + "_btn");
+                    buildingBtn.GetComponent<HoldToSelect>().SetDisabled(buildingUnavailable, msgText);
                 }
             }
         }

@@ -366,6 +366,7 @@ MonoBehaviour:
   holdTime: 0.2
   delayTime: 0.05
   hasSelected: 0
+  disableProgressBar: 1
 --- !u!1 &4426379348226383393
 GameObject:
   m_ObjectHideFlags: 0
