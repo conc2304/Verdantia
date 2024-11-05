@@ -27,7 +27,6 @@ public class HeatMap : MonoBehaviour
         gridSizeZ = grid.gridSizeZ;
 
         if (grid != null) InitializeHeatMap(gridSizeX, gridSizeZ, 10);
-
     }
 
     public void Update()

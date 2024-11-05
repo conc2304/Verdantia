@@ -170,7 +170,6 @@ public class CameraController : MonoBehaviour
 
         if (moveTarget && target != null)
         {
-            print("Update target position");
             Vector3 trackpadPos = TrackpadToMainCamera();
 
             float planeY = 0;
