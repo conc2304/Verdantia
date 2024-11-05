@@ -11,7 +11,7 @@ public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     public Image demolishBullseye;
     public Image backgroundIcon;
     public RectTransform trackpadRect;
-    private readonly float mouseYFix = -72.5f;
+    private readonly float mouseYFix = 0;
 
     private Image target;
 
