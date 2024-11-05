@@ -363,8 +363,8 @@ MonoBehaviour:
   disabled: 0
   disabledMsg: N/A
   disabledText: {fileID: 1559762209293396901}
-  holdTime: 0.6
-  delayTime: 0.2
+  holdTime: 0.2
+  delayTime: 0.05
   hasSelected: 0
 --- !u!1 &4426379348226383393
 GameObject:

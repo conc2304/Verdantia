@@ -39,7 +39,7 @@ public class SaveDataTrigger : MonoBehaviour
         for (int i = 0; i < buildingsPropertiesForIndex.Length; i++)
         {
 
-            buildingsStr += buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>().buildingName + ", ";
+            buildingsStr += buildingsPropertiesForIndex[i].name + " | " + buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>().buildingName + ", ";
             try
             {
                 buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>().buildingIndex = i;
