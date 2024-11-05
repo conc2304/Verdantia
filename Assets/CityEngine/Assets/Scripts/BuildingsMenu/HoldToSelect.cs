@@ -21,6 +21,7 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     private Coroutine holdCoroutine;
     private Button button;
+    public bool disableProgressBar;
 
 
     void Start()
@@ -33,7 +34,7 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!hasSelected && !disabled)
+        if (!hasSelected && !disabled && !disableProgressBar)
         {
             holdCoroutine = StartCoroutine(HoldSelection());
         }
