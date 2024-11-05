@@ -148,8 +148,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 7427056121792578915}
-  holdTime: 0.6
-  delayTime: 0.2
+  disableIcon: {fileID: 0}
+  disabled: 0
+  disabledMsg: 
+  disabledText: {fileID: 0}
+  holdTime: 0.2
+  delayTime: 0.05
   hasSelected: 0
 --- !u!1 &4426379348226383393
 GameObject:
