@@ -34,7 +34,7 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!hasSelected && !disabled && !disableProgressBar)
+        if (!hasSelected && !disabled)
         {
             holdCoroutine = StartCoroutine(HoldSelection());
         }
@@ -67,7 +67,7 @@ public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         while (holdTimer < holdTime)
         {
             holdTimer += Time.deltaTime;
-            progressBar.fillAmount = holdTimer / holdTime; // Update progress bar based on the hold duration
+            if (!disableProgressBar) progressBar.fillAmount = holdTimer / holdTime; // Update progress bar based on the hold duration
             yield return null;
         }
 
