@@ -274,6 +274,22 @@ public class BuildingsMenuNew : MonoBehaviour
         int textPosY = -6;
         int posType = 0;
 
+        int totalSpaces = 0;
+
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            totalSpaces += buildings[i].type.GetComponent<BuildingProperties>().spaceWidth;
+        }
+
+        int totalBuildingSpace = 90 * totalSpaces;
+        int totalPadding = 105 * buildings.Length;
+        int requiredSpace = totalBuildingSpace + totalPadding;
+        int startingX = -requiredSpace / 2;
+        posType = startingX;
+
+
+        int buildingPadding = 105;
+        int buildingSpaceSize = 90;
         for (int i = 0; i < buildings.Length; i++)
         {
             // Loop over Building Types/Categories
@@ -281,9 +297,11 @@ public class BuildingsMenuNew : MonoBehaviour
             // Wrapper
             GameObject tempObj = new GameObject("new");
             GameObject typeParent = Instantiate(tempObj, new Vector3(0, 0, 0), Quaternion.identity, types);
-            typeParent.transform.localPosition = new Vector3(-posType, 0, 0);
+            typeParent.transform.localPosition = new Vector3(posType, 0, 0);
             typeParent.transform.localScale = new Vector3(9, 9, 9);
             typeParent.name = buildings[i].type.name + "";
+
+            posType += buildingPadding + (buildingSpaceSize * buildings[i].type.GetComponent<BuildingProperties>().spaceWidth);
 
             // building type model
             GameObject type = Instantiate(
@@ -315,15 +333,26 @@ public class BuildingsMenuNew : MonoBehaviour
             button.onClick.AddListener(OnBuildingTypeClicked);
             button.gameObject.name = buildings[i].type.name + "_btn";
 
+            try
+            {
+                // Resize button based on building size and center the building text
+                for (int y = 1; y < buildings[i].type.GetComponent<BuildingProperties>().spaceWidth; y++)
+                {
+                    button.transform.localPosition = new Vector3(button.transform.localPosition.x + 5, button.transform.localPosition.y, button.transform.localPosition.z);
+                    RectTransform rectTransform = button.GetComponent<RectTransform>();
+                    rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + 10, rectTransform.sizeDelta.y);
+
+                    text.transform.localPosition = new Vector3(text.transform.localPosition.x + 5, textPosY, 0);
+                    text.rectTransform.sizeDelta = new Vector2(text.rectTransform.sizeDelta.x + 5, text.rectTransform.sizeDelta.y);
+                }
+            }
+            catch { }
+
             //find min and max position of type menu
             if (posType > maxTypePos)
                 maxTypePos = posType;
             if (posType < minTypePos)
                 minTypePos = posType;
-
-            if (posType >= 0)
-                posType += 165;
-            posType *= -1;
 
 
             // Individual Buildings
@@ -381,13 +410,12 @@ public class BuildingsMenuNew : MonoBehaviour
                 if (posBuild < buildings[i].minPos)
                     buildings[i].minPos = posBuild;
 
-                int itemPadding = -105;
+                int itemPadding = -buildingPadding;
                 try
                 {
                     for (int y = 1; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
                         buttonBuild.transform.localPosition = new Vector3(buttonBuild.transform.localPosition.x + 5, buttonBuild.transform.localPosition.y, buttonBuild.transform.localPosition.z);
-                        // buttonBuild.transform.localScale = new Vector3(buttonBuild.transform.localScale.x + 1, 1, 1);
                         RectTransform rectTransform = buttonBuild.GetComponent<RectTransform>();
                         rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x + 10, rectTransform.sizeDelta.y);
 
@@ -397,7 +425,7 @@ public class BuildingsMenuNew : MonoBehaviour
                     }
                     for (int y = 0; y < buildings[i].buildings[u].GetComponent<BuildingProperties>().spaceWidth; y++)
                     {
-                        itemPadding += -90;
+                        itemPadding += -buildingSpaceSize;
                     }
 
                 }
@@ -424,39 +452,39 @@ public class BuildingsMenuNew : MonoBehaviour
             }
         }
 
-        //delete buildings button
+        // Demolish buildings button
         // Create wrapper/parent to hold model, text and button
-        GameObject tempDel = new GameObject("new");
-        GameObject typeDelParent = Instantiate(tempDel, new Vector3(0, 0, 0), Quaternion.identity, types);
+        GameObject tempDemolish = new GameObject("new");
+        GameObject typeDemolishParent = Instantiate(tempDemolish, new Vector3(0, 0, 0), Quaternion.identity, types);
 
 
-        typeDelParent.transform.localPosition = new Vector3(-posType, 0, 0);
-        typeDelParent.transform.localScale = new Vector3(9, 9, 9);
-        typeDelParent.name = deleteBuilding.name;
+        typeDemolishParent.transform.localPosition = new Vector3(posType, 0, 0);
+        typeDemolishParent.transform.localScale = new Vector3(9, 9, 9);
+        typeDemolishParent.name = deleteBuilding.name;
 
-        GameObject typeDel = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity, typeDelParent.transform);
+        GameObject typeDemolish = Instantiate(deleteBuilding, new Vector3(0, 0, 0), Quaternion.identity, typeDemolishParent.transform);
 
-        Destroy(tempDel.gameObject);
+        Destroy(tempDemolish.gameObject);
 
-        typeDel.transform.localPosition = new Vector3(0, 0, 0);
-        typeDel.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
-        typeDel.transform.localScale = Vector3.one;
-        typeDel.name = deleteBuilding.name;
+        typeDemolish.transform.localPosition = new Vector3(0, 0, 0);
+        typeDemolish.transform.localRotation = Quaternion.Euler(menuBuildingsTilt, 0, 0);
+        typeDemolish.transform.localScale = Vector3.one;
+        typeDemolish.name = deleteBuilding.name;
 
 
-        foreach (Transform trans in typeDel.GetComponentsInChildren<Transform>(true))
+        foreach (Transform trans in typeDemolish.GetComponentsInChildren<Transform>(true))
             trans.gameObject.layer = 5;
 
-        buildingsCategories.Add(typeDelParent);
+        buildingsCategories.Add(typeDemolishParent);
 
-        TextMeshProUGUI textDel = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, typeDelParent.transform);
-        textDel.transform.localPosition = new Vector3(0, textPosY, 0);
-        textDel.text = deleteBuilding.name;
+        TextMeshProUGUI textDemolish = Instantiate(textPRO, new Vector3(0, 0, 0), Quaternion.identity, typeDemolishParent.transform);
+        textDemolish.transform.localPosition = new Vector3(0, textPosY, 0);
+        textDemolish.text = deleteBuilding.name;
 
-        Button buttonDel = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeDelParent.transform);
-        buttonDel.transform.localPosition = new Vector3(0, 2, -8);
-        buttonDel.onClick.AddListener(DeleteBuilding);
-        buttonDel.gameObject.name = deleteBuilding.name;
+        Button buttonDemolish = Instantiate(typeButton, new Vector3(0, 0, 0), Quaternion.identity, typeDemolishParent.transform);
+        buttonDemolish.transform.localPosition = new Vector3(0, 2, -8);
+        buttonDemolish.onClick.AddListener(DeleteBuilding);
+        buttonDemolish.gameObject.name = deleteBuilding.name;
     }
 
     public void CenterBuildingType(GameObject clickedBuildingBtn, int spaceWidth)
