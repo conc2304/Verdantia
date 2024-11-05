@@ -121,7 +121,8 @@ public class SaveDataTrigger : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("Building was not saved");
+
+                        Debug.LogError($"Building was not saved : {data.buildingIndex[i]}");
                     }
                 }
                 else

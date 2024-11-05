@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a610b4b73e60244bb53a79cf0a3e44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingMenuSwipeIcon: {fileID: 6564257830702713197}
   menuBuildingsTilt: -30
   menuCamera: {fileID: 4594340904507393017}
   grid: {fileID: 0}
@@ -2162,6 +2163,11 @@ RectTransform:
 --- !u!4 &3424330008443078455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2946208945006786137, guid: c5948119c035e5e4589c395487e0c030, type: 3}
+  m_PrefabInstance: {fileID: 533290158905160046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6564257830702713197 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6664849320516024323, guid: c5948119c035e5e4589c395487e0c030, type: 3}
   m_PrefabInstance: {fileID: 533290158905160046}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7991120270256264268 stripped

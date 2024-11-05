@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -9,7 +8,6 @@ using System;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 
 public class BuildingsMenuNew : MonoBehaviour
@@ -26,7 +24,7 @@ public class BuildingsMenuNew : MonoBehaviour
     }
     private List<GameObject> buildingsCategoryTypes = new List<GameObject>();
     private List<GameObject> buildingsCategories = new List<GameObject>();
-
+    public GameObject buildingMenuSwipeIcon;
     public int menuBuildingsTilt = -30;
     public Camera menuCamera;
     public Grid grid;
@@ -159,8 +157,6 @@ public class BuildingsMenuNew : MonoBehaviour
         missionSelector.SetActive(false);
         introSequenceGO.SetActive(false);
 
-        print("Mission Status: " + IsMissionSelected());
-
         if (!IsMissionSelected())
         {
             missionSelector.SetActive(true);
@@ -177,8 +173,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void OnDropdownValueChanged(int index)
     {
-        print("OnDropdownValueChanged");
-
         if (index == 0) return;
 
         string hmLabel = heatmapOptionsList[index];
@@ -243,6 +237,7 @@ public class BuildingsMenuNew : MonoBehaviour
             {
                 isDragging = true;
                 dragStartPos = Input.mousePosition;
+                buildingMenuSwipeIcon.SetActive(false);
             }
         }
 
@@ -485,6 +480,7 @@ public class BuildingsMenuNew : MonoBehaviour
     public void OpenBuildMenu()
     {
         ActivateMenu();
+        buildingMenuSwipeIcon.SetActive(true);
 
         activateMenu.SetActive(true);
 
@@ -660,7 +656,6 @@ public class BuildingsMenuNew : MonoBehaviour
     {
         GameObject clickedBuildingBtn = EventSystem.current.currentSelectedGameObject;
         selectedBuildingName = clickedBuildingBtn.name;
-        print(selectedBuildingName);
         GameObject selectedBuilding = GetSelectedBuildingGO(clickedBuildingBtn);
         int spaceWidth = selectedBuilding.GetComponent<BuildingProperties>().spaceWidth;
         CenterBuildingType(clickedBuildingBtn, spaceWidth);
