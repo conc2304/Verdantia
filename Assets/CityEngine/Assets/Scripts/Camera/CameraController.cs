@@ -182,7 +182,6 @@ public class CameraController : MonoBehaviour
             float distance; // the distance from the ray origin to the ray intersection of the plane
             if (plane.Raycast(ray, out distance))
             {
-                // target.position = ray.GetPoint(distance).x;
                 target.position = Vector3.Lerp(
                     target.position,
                     new Vector3(Mathf.Floor((ray.GetPoint(distance).x + gridSize / 2) / gridSize) * gridSize,
