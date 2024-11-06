@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
     private Vector3 toZoom;
     public float minZoom;
     public float maxZoom;
+    private float defaultMaxZoom;
     public Slider zoomSlider;
 
     private int[] xRange = new int[2] { 0, 1000 };
@@ -72,6 +73,7 @@ public class CameraController : MonoBehaviour
     public bool playTemp = false;
 
 
+
     void Start()
     {
         zoomSlider.onValueChanged.AddListener(OnZoomSliderChanged);
@@ -89,18 +91,19 @@ public class CameraController : MonoBehaviour
         toPos = cameraHolder.transform.position;
         toRot = cameraHolder.transform.rotation;
         mainCamtoRot = cameraTransform.localRotation;
+        defaultMaxZoom = maxZoom;
         toZoom = cameraTransform.localPosition;
         zoomSlider.minValue = minZoom;
         zoomSlider.maxValue = maxZoom;
         zoomSlider.value = toZoom.y;
+
 
         for (int i = 0; i < forest.childCount; i++)
             forestObj.Add(forest.GetChild(i));
 
         if (!heatMap) heatMap = FindObjectOfType<HeatMap>();
 
-        // TODO REMOVE
-        // ToggleHeatMapView();
+
     }
 
 
@@ -508,7 +511,7 @@ public class CameraController : MonoBehaviour
         );
 
 
-        toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom + 200);
+        toZoom.y = Mathf.Clamp(toZoom.y, -minZoom, !heatmapActive ? maxZoom : maxZoom);
         toZoom.z = Mathf.Clamp(toZoom.z, -maxZoom, minZoom);
 
         // Rotates the camera holder so that its always pointed at the target
@@ -655,8 +658,8 @@ public class CameraController : MonoBehaviour
 
         if (heatmapActive)
         {
-
             toZoom = new Vector3(localPos.x, localPos.y + vertDiff, 0);
+            // maxZoom = Math.Max(defaultMaxZoom, localPos.y + vertDiff);
         }
         else
         {

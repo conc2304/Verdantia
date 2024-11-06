@@ -43,6 +43,8 @@ public class CityMetricTopBar : MonoBehaviour
         {
             foreach (var objective in currentMission.objectives)
             {
+                if (objective.metricName == MetricTitle.CityTemperature) continue; // city temp has its own ui
+
                 CreateAndDisplayMetricItem(objective.metricName, objective.icon);
 
                 // Check if Budget is one of the objectives
@@ -60,7 +62,6 @@ public class CityMetricTopBar : MonoBehaviour
         }
         else
         {
-            // Free play mode: display default metrics, including Budget
             // Free play mode: display default metrics, including Budget
             CreateAndDisplayMetricItem(MetricTitle.Population, MissionRepository.metricIcons[MetricTitle.Population]);
             CreateAndDisplayMetricItem(MetricTitle.Happiness, MissionRepository.metricIcons[MetricTitle.Happiness]);
