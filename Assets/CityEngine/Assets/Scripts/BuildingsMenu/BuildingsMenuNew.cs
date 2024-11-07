@@ -772,34 +772,33 @@ public class BuildingsMenuNew : MonoBehaviour
 
                 if (properties != null)
                 {
-                    // Loop over every property
-                    FieldInfo[] fields = typeof(BuildingProperties).GetFields(BindingFlags.Public | BindingFlags.Instance);
-                    foreach (FieldInfo field in fields)
+                    // Loop over each metric in the BuildingMetric enum
+                    foreach (BuildingMetric metric in Enum.GetValues(typeof(BuildingMetric)))
                     {
-                        // Get the name of the field (e.g., "constructionCost")
-                        string fieldName = field.Name;
+                        string metricName = metric.ToString();
 
+                        // Get the field in BuildingProperties that corresponds to the current metric
+                        FieldInfo field = typeof(BuildingProperties).GetField(metricName, BindingFlags.Public | BindingFlags.Instance);
 
-                        if (!properties.dataProps.Contains(fieldName)) continue;
+                        // If field is null, skip to the next metric
+                        if (field == null) continue;
 
-                        // Get the value of the field for this specific building
+                        // Get the field value for this specific building
                         Type fieldType = field.FieldType;
                         if (fieldType == typeof(int) || fieldType == typeof(float) || fieldType == typeof(double) || fieldType == typeof(long))
                         {
-
                             int value = (int)field.GetValue(properties);
 
                             // Check if we've already tracked this property
-                            if (!propertyRanges.ContainsKey(fieldName))
+                            if (!propertyRanges.ContainsKey(metricName))
                             {
-                                propertyRanges[fieldName] = (int.MaxValue, int.MinValue); // Initialize min/max values
+                                propertyRanges[metricName] = (int.MaxValue, int.MinValue); // Initialize min/max values
                             }
 
-
                             // Update the min and max for the property
-                            propertyRanges[fieldName] = (
-                                Mathf.Min(propertyRanges[fieldName].min, value),
-                                Mathf.Max(propertyRanges[fieldName].max, value)
+                            propertyRanges[metricName] = (
+                                Mathf.Min(propertyRanges[metricName].min, value),
+                                Mathf.Max(propertyRanges[metricName].max, value)
                             );
                         }
                     }
