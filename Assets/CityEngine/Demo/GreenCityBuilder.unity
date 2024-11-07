@@ -1301,8 +1301,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 20452890441389284, guid: 4347787d822ecc7439623131488ffa85, type: 3}
+      propertyPath: field of view
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 20452890441389284, guid: 4347787d822ecc7439623131488ffa85, type: 3}
+      propertyPath: m_FOVAxisMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20452890441389284, guid: 4347787d822ecc7439623131488ffa85, type: 3}
       propertyPath: far clip plane
-      value: 1500
+      value: 3500
       objectReference: {fileID: 0}
     - target: {fileID: 20452890441389284, guid: 4347787d822ecc7439623131488ffa85, type: 3}
       propertyPath: m_CullingMask.m_Bits
@@ -2637,7 +2645,7 @@ PrefabInstance:
       objectReference: {fileID: 1078365619}
     - target: {fileID: 783540590, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: maxZoom
-      value: 800
+      value: 2200
       objectReference: {fileID: 0}
     - target: {fileID: 783540590, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: minZoom
@@ -2683,6 +2691,10 @@ PrefabInstance:
       propertyPath: snow
       value: 
       objectReference: {fileID: 1521549048}
+    - target: {fileID: 783540595, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
+      propertyPath: winterWeather
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1024400442031631237, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: m_Name
       value: Controllers
