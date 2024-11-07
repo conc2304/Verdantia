@@ -1467,29 +1467,24 @@ MonoBehaviour:
     and has a considerable carbon footprint due to high energy demands. Balancing
     these environmental impacts with its economic benefits is key to maintaining
     a healthy, thriving city.
-  zoneRequirement: 1
-  constructionCost: 300000
-  demolitionCost: 0
-  operationalCost: 1500
-  taxRevenue: 1000
-  upkeep: 300
-  energyConsumption: 1000
-  waterConsumption: 600
-  wasteProduction: 400
-  resourceProduction: 0
-  capacity: 2500
-  jobsProvided: 2000
-  happinessImpact: 10
-  healthImpact: 0
-  educationImpact: 10
-  pollutionOutput: 100
-  pollutionReduction: 0
-  heatContribution: 50
-  greenSpaceEffect: 10
-  carbonFootprint: 1000
-  taxContribution: 1000
-  industryBoosts: []
-  coverageRadius: 0
+  constructionCost: 200000
+  demolitionCost: 50000
+  cityRevenue: 4500
+  netEnergy: -1500
+  capacity: 5000
+  happinessImpact: 5
+  pollutionImpact: 100
+  heatContribution: 20
+  greenSpaceEffect: -20
+  carbonFootprint: 2500
+  proximityEffects:
+  - metricName: 6
+    boostValue: 5
+  - metricName: 7
+    boostValue: 15
+  - metricName: 3
+    boostValue: 200
+  effectRadius: 4
 --- !u!114 &3944353085308207538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2006,29 +2001,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8314887493173939352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2269,29 +2253,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,29 +2323,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1001 &444486027420100
 PrefabInstance:
   m_ObjectHideFlags: 0

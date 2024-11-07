@@ -1722,29 +1722,22 @@ MonoBehaviour:
     rooftop gardens, or using advanced glass coatings could help offset some of its
     environmental impact, making it more sustainable while maintaining its iconic
     architectural appeal."
-  zoneRequirement: 1
-  constructionCost: 400000
-  demolitionCost: 0
-  operationalCost: 2000
-  taxRevenue: 1500
-  upkeep: 500
-  energyConsumption: 1500
-  waterConsumption: 1000
-  wasteProduction: 900
-  resourceProduction: 0
-  capacity: 4000
-  jobsProvided: 4000
-  happinessImpact: 0
-  healthImpact: -5
-  educationImpact: 10
-  pollutionOutput: 150
-  pollutionReduction: 0
-  heatContribution: 70
-  greenSpaceEffect: 0
-  carbonFootprint: 1500
-  taxContribution: 1500
-  industryBoosts: []
-  coverageRadius: 0
+  constructionCost: 300000
+  demolitionCost: 75000
+  cityRevenue: 7000
+  netEnergy: -2500
+  capacity: 600
+  happinessImpact: 5
+  pollutionImpact: 80
+  heatContribution: 25
+  greenSpaceEffect: -10
+  carbonFootprint: 2000
+  proximityEffects:
+  - metricName: 3
+    boostValue: 500
+  - metricName: 7
+    boostValue: 15
+  effectRadius: 0
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2012,29 +2005,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,29 +2175,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,29 +2378,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0

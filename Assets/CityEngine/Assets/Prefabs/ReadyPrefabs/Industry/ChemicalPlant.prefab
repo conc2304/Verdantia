@@ -492,29 +492,22 @@ MonoBehaviour:
     areas. The negative impact on green space further exacerbates environmental concerns,
     making it essential to manage its effects carefully or consider eco-upgrades
     to mitigate its pollution and energy demands where possible."
-  zoneRequirement: 2
-  constructionCost: 200000
-  demolitionCost: 0
-  operationalCost: 3000
-  taxRevenue: 2000
-  upkeep: 1000
-  energyConsumption: 1200
-  waterConsumption: 800
-  wasteProduction: 500
-  resourceProduction: 0
-  capacity: 500
-  jobsProvided: 500
-  happinessImpact: -10
-  healthImpact: -20
-  educationImpact: 0
-  pollutionOutput: 300
-  pollutionReduction: 0
-  heatContribution: 20
-  greenSpaceEffect: -10
-  carbonFootprint: 500
-  taxContribution: 2000
-  industryBoosts: []
-  coverageRadius: 0
+  constructionCost: 180000
+  demolitionCost: 45000
+  cityRevenue: 6000
+  netEnergy: -2000
+  capacity: 0
+  happinessImpact: -15
+  pollutionImpact: 300
+  heatContribution: 50
+  greenSpaceEffect: -50
+  carbonFootprint: 4500
+  proximityEffects:
+  - metricName: 7
+    boostValue: 50
+  - metricName: 6
+    boostValue: -5
+  effectRadius: 3
 --- !u!114 &8663378879950882710
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -368,29 +368,22 @@ MonoBehaviour:
     structure and materials, the Cafe remains a low-impact, community-friendly building.
     Adding greenery around the exterior could enhance its appeal, reduce heat absorption,
     and further contribute to an eco-conscious urban landscape.
-  zoneRequirement: 1
-  constructionCost: 25000
-  demolitionCost: 0
-  operationalCost: 200
-  taxRevenue: 100
-  upkeep: 50
-  energyConsumption: 30
-  waterConsumption: 20
-  wasteProduction: 15
-  resourceProduction: 0
-  capacity: 50
-  jobsProvided: 15
-  happinessImpact: 5
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 5
-  pollutionReduction: 0
-  heatContribution: 2
+  constructionCost: 15000
+  demolitionCost: 4000
+  cityRevenue: 1200
+  netEnergy: -100
+  capacity: 20
+  happinessImpact: 10
+  pollutionImpact: 10
+  heatContribution: 5
   greenSpaceEffect: 0
-  carbonFootprint: 20
-  taxContribution: 100
-  industryBoosts: []
-  coverageRadius: 0
+  carbonFootprint: 200
+  proximityEffects:
+  - metricName: 6
+    boostValue: 5
+  - metricName: 3
+    boostValue: 100
+  effectRadius: 1
 --- !u!114 &1573302049676483977
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -521,29 +521,22 @@ MonoBehaviour:
     absorbing and retaining heat. Incorporating sustainable features, like energy-efficient
     lighting or a small green space, could further enhance its environmental impact
     while maintaining its role as a cornerstone of the city\u2019s economy."
-  zoneRequirement: 1
-  constructionCost: 100000
-  demolitionCost: 0
-  operationalCost: 500
-  taxRevenue: 800
-  upkeep: 300
-  energyConsumption: 100
-  waterConsumption: 50
-  wasteProduction: 20
-  resourceProduction: 0
-  capacity: 1000
-  jobsProvided: 200
-  happinessImpact: 10
-  healthImpact: 0
-  educationImpact: 5
-  pollutionOutput: 10
-  pollutionReduction: 0
-  heatContribution: 5
-  greenSpaceEffect: 0
-  carbonFootprint: 50
-  taxContribution: 800
-  industryBoosts: []
-  coverageRadius: 0
+  constructionCost: 60000
+  demolitionCost: 15000
+  cityRevenue: 3000
+  netEnergy: -300
+  capacity: 0
+  happinessImpact: 4
+  pollutionImpact: 20
+  heatContribution: 8
+  greenSpaceEffect: -5
+  carbonFootprint: 400
+  proximityEffects:
+  - metricName: 3
+    boostValue: 300
+  - metricName: 6
+    boostValue: 2
+  effectRadius: 2
 --- !u!114 &840075109517472774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,29 +723,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1001 &30780436825762262
 PrefabInstance:
   m_ObjectHideFlags: 0

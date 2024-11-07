@@ -780,29 +780,22 @@ MonoBehaviour:
     its immediate surroundings. As a cost-effective option with both environmental
     and social benefits, the Small Park is an excellent addition to support a balanced,
     eco-friendly urban landscape."
-  zoneRequirement: 2
-  constructionCost: 10000
-  demolitionCost: 0
-  operationalCost: 100
-  taxRevenue: 0
-  upkeep: 50
-  energyConsumption: 0
-  waterConsumption: 20
-  wasteProduction: 5
-  resourceProduction: 0
+  constructionCost: 20000
+  demolitionCost: 5000
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 5
-  happinessImpact: 10
-  healthImpact: 5
-  educationImpact: 2
-  pollutionOutput: 0
-  pollutionReduction: 10
-  heatContribution: -5
-  greenSpaceEffect: 20
+  happinessImpact: 8
+  pollutionImpact: -5
+  heatContribution: -3
+  greenSpaceEffect: 15
   carbonFootprint: -50
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects:
+  - metricName: 6
+    boostValue: 5
+  - metricName: 7
+    boostValue: -5
+  effectRadius: 2
 --- !u!114 &785666070005489605
 MonoBehaviour:
   m_ObjectHideFlags: 0
