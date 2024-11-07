@@ -662,29 +662,24 @@ MonoBehaviour:
     spaces, upgrading to eco-friendly building materials and adding rooftop gardens
     or green facades could mitigate some of its environmental impact, aligning it
     more closely with sustainable urban goals.
-  zoneRequirement: 0
-  constructionCost: 50000
-  demolitionCost: 0
-  operationalCost: 120
-  taxRevenue: 150
-  upkeep: 50
-  energyConsumption: 200
-  waterConsumption: 150
-  wasteProduction: 100
-  resourceProduction: 0
+  constructionCost: 80000
+  demolitionCost: 20000
+  cityRevenue: 3000
+  netEnergy: -700
   capacity: 100
-  jobsProvided: 3
-  happinessImpact: 0
-  healthImpact: -2
-  educationImpact: 0
-  pollutionOutput: 25
-  pollutionReduction: 0
-  heatContribution: 10
-  greenSpaceEffect: 0
-  carbonFootprint: 250
-  taxContribution: 150
-  industryBoosts: []
-  coverageRadius: 0
+  happinessImpact: 5
+  pollutionImpact: 50
+  heatContribution: 15
+  greenSpaceEffect: 5
+  carbonFootprint: 1000
+  proximityEffects:
+  - metricName: 6
+    boostValue: 3
+  - metricName: 7
+    boostValue: 10
+  - metricName: 3
+    boostValue: 100
+  effectRadius: 2
 --- !u!114 &4025124437981863053
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1592,7 +1592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 24
+  buildingIndex: 47
   environment: {fileID: 312077592172940161}
   connectToRoad: 1
   carsPathTargetsToConnect:
@@ -1620,29 +1620,24 @@ MonoBehaviour:
     and economic benefits for the city but also demonstrates a strong commitment
     to sustainable industrial practices, fostering a healthier environment and signaling
     the city\u2019s dedication to carbon-neutral growth.\n"
-  zoneRequirement: 2
-  constructionCost: 200000
-  demolitionCost: 0
-  operationalCost: 1500
-  taxRevenue: 2200
-  upkeep: 1000
-  energyConsumption: 900
-  waterConsumption: 700
-  wasteProduction: 300
-  resourceProduction: 0
-  capacity: 500
-  jobsProvided: 500
-  happinessImpact: 5
-  healthImpact: 10
-  educationImpact: 15
-  pollutionOutput: 50
-  pollutionReduction: 20
+  constructionCost: 250000
+  demolitionCost: 60000
+  cityRevenue: 5500
+  netEnergy: 500
+  capacity: 0
+  happinessImpact: 3
+  pollutionImpact: 20
   heatContribution: 5
-  greenSpaceEffect: 15
-  carbonFootprint: 500
-  taxContribution: 2200
-  industryBoosts: []
-  coverageRadius: 0
+  greenSpaceEffect: 30
+  carbonFootprint: 400
+  proximityEffects:
+  - metricName: 7
+    boostValue: -10
+  - metricName: 6
+    boostValue: 5
+  - metricName: 8
+    boostValue: 15
+  effectRadius: 3
 --- !u!114 &4482589422383155611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1905,29 +1900,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8381377062413157345
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,29 +2090,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2187,29 +2160,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8712104553124349172
 GameObject:
   m_ObjectHideFlags: 0

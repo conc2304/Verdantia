@@ -922,29 +922,20 @@ MonoBehaviour:
     space around the clinic, could further reduce its environmental impact. The Health
     Clinic is a crucial asset for maintaining a healthy, resilient community while
     balancing urban growth and sustainability.
-  zoneRequirement: 3
-  constructionCost: 200000
-  demolitionCost: 0
-  operationalCost: 1000
-  taxRevenue: 0
-  upkeep: 800
-  energyConsumption: 500
-  waterConsumption: 300
-  wasteProduction: 100
-  resourceProduction: 0
-  capacity: 200
-  jobsProvided: 200
-  happinessImpact: 20
-  healthImpact: 30
-  educationImpact: 5
-  pollutionOutput: 20
-  pollutionReduction: 0
-  heatContribution: 5
+  constructionCost: 30000
+  demolitionCost: 7500
+  cityRevenue: 500
+  netEnergy: -200
+  capacity: 20
+  happinessImpact: 8
+  pollutionImpact: 5
+  heatContribution: 2
   greenSpaceEffect: 0
-  carbonFootprint: 200
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  carbonFootprint: 100
+  proximityEffects:
+  - metricName: 6
+    boostValue: 5
+  effectRadius: 2
 --- !u!114 &8244234786447428393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1577,29 +1568,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8346087874753987616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,29 +1729,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,29 +1799,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8805113475485021746
 GameObject:
   m_ObjectHideFlags: 0

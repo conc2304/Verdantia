@@ -214,12 +214,11 @@ public class CityMetricsManager : MonoBehaviour
             population += buildingProps.capacity;
             greenSpace += buildingProps.greenSpaceEffect;
 
-            income += buildingProps.income;
-            expenses += buildingProps.expense;
+            revenue += buildingProps.cityRevenue;
 
             // Environmental metrics
             float adjustedHeatContribution = buildingProps.heatContribution;
-            float adjustedEnergyConsumption = buildingProps.energyConsumption;
+            float adjustedEnergyConsumption = buildingProps.netEnergy;
             float adjustedCarbonFootprint = buildingProps.carbonFootprint;
             float adjustedHappiness = buildingProps.happinessImpact;
             float adjustedPollution = buildingProps.pollutionImpact;
@@ -239,13 +238,16 @@ public class CityMetricsManager : MonoBehaviour
             happiness += (int)adjustedHappiness;
             urbanHeat += (int)adjustedHeatContribution;
             pollution += (int)adjustedPollution;
-            energy += (int)(buildingProps.resourceProduction - adjustedEnergyConsumption);
+            energy += (int)adjustedEnergyConsumption;
             carbonEmission += (int)adjustedCarbonFootprint;
         }
 
         // Adjust happiness to be averaged over all buildings
         happiness = cameraController.allBuildings.Count > 0 ? (happiness / cameraController.allBuildings.Count) : 0;
-        happiness = ((happiness - propertyRanges["happinessImpact"].min) / (propertyRanges["happinessImpact"].max - propertyRanges["happinessImpact"].min)) * 100;
+        happiness = 100 * (
+            (happiness - propertyRanges["happinessImpact"].min) /
+            (propertyRanges["happinessImpact"].max - propertyRanges["happinessImpact"].min)
+            );
         happiness = (float)Math.Round(happiness);
         greenSpace = cityArea > 0 ? (float)Math.Round(greenSpace / cityArea) : 0;
     }

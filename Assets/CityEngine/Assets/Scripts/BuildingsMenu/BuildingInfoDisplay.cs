@@ -19,30 +19,19 @@ public class BuildingInfoDisplay : MonoBehaviour
     public GameObject infoNavToggle;
     public GameObject menuBuildings;
 
-    // List of properties (you can fetch this from the building itself if necessary)
+    // List of properties
     public readonly string[] dataProps ={
         "constructionCost",
         "demolitionCost",
-        "operationalCost",
-        "taxRevenue",
-        "upkeep",
-        "energyConsumption",
-        // "waterConsumption",
-        // "wasteProduction",
-        "resourceProduction",
-        "capacity",
-        // "jobsProvided",
-        "happinessImpact",
-        "healthImpact",
-        // "educationImpact",
-        "pollutionOutput",
-        "pollutionReduction",
-        "greenSpaceEffect",
         "heatContribution",
+        "cityRevenue",
+        "netEnergy",
+        "capacity",
+        "happinessImpact",
+        "pollutionImpact",
+        "heatContribution",
+        "greenSpaceEffect",
         "carbonFootprint",
-        "taxContribution",
-        // "jobCreation",
-        "industryBoost",
         "coverageRadius",
     };
 
@@ -112,6 +101,7 @@ public class BuildingInfoDisplay : MonoBehaviour
         infoNavToggle.SetActive(true);
         menuBuildings.SetActive(true);
     }
+
     public void OnMoreInfoClick()
     {
         if (modal.activeSelf) return;

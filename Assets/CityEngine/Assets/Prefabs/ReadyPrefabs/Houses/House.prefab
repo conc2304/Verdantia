@@ -255,29 +255,22 @@ MonoBehaviour:
     happiness make it a favorable choice for a sustainable neighborhood. Surrounded
     by small green spaces, this house contributes to a pleasant environment that
     supports both well-being and ecological goals in the city.
-  zoneRequirement: 0
-  constructionCost: 15000
-  demolitionCost: 0
-  operationalCost: 50
-  taxRevenue: 50
-  upkeep: 15
-  energyConsumption: 50
-  waterConsumption: 40
-  wasteProduction: 20
-  resourceProduction: 0
-  capacity: 6
-  jobsProvided: 0
-  happinessImpact: 10
-  healthImpact: 5
-  educationImpact: 0
-  pollutionOutput: 5
-  pollutionReduction: 0
+  constructionCost: 8000
+  demolitionCost: 2000
+  cityRevenue: 1000
+  netEnergy: -500
+  capacity: 5
+  happinessImpact: 8
+  pollutionImpact: 10
   heatContribution: 3
-  greenSpaceEffect: 1
-  carbonFootprint: 60
-  taxContribution: 50
-  industryBoosts: []
-  coverageRadius: 0
+  greenSpaceEffect: 10
+  carbonFootprint: 200
+  proximityEffects:
+  - metricName: 6
+    boostValue: 2
+  - metricName: 8
+    boostValue: 3
+  effectRadius: 1
 --- !u!114 &3580955728642800891
 MonoBehaviour:
   m_ObjectHideFlags: 0

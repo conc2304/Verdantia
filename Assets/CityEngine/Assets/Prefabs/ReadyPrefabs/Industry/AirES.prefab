@@ -67,29 +67,22 @@ MonoBehaviour:
     lowering overall pollution. This green energy facility also positively impacts
     citizen happiness, as it promotes sustainable growth and cleaner air, making
     it a valuable asset in building an eco-friendly city.
-  zoneRequirement: 2
-  constructionCost: 100000
-  demolitionCost: 0
-  operationalCost: 100
-  taxRevenue: 50
-  upkeep: 50
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 300
-  capacity: 50
-  jobsProvided: 50
+  constructionCost: 50000
+  demolitionCost: 12500
+  cityRevenue: 1500
+  netEnergy: 3000
+  capacity: 0
   happinessImpact: 5
-  healthImpact: 5
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 50
-  heatContribution: 0
-  greenSpaceEffect: 0
-  carbonFootprint: 0
-  taxContribution: 50
-  industryBoosts: []
-  coverageRadius: 0
+  pollutionImpact: -50
+  heatContribution: -5
+  greenSpaceEffect: 10
+  carbonFootprint: -200
+  proximityEffects:
+  - metricName: 4
+    boostValue: 300
+  - metricName: 7
+    boostValue: -10
+  effectRadius: 5
 --- !u!114 &3991768247306095651
 MonoBehaviour:
   m_ObjectHideFlags: 0

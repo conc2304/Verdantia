@@ -1125,29 +1125,24 @@ MonoBehaviour:
     space addition make it a balanced choice for supporting a thriving, sustainable
     city. Upgrading to energy-efficient features could further reduce its environmental
     footprint."
-  zoneRequirement: 1
-  constructionCost: 50000
-  demolitionCost: 0
-  operationalCost: 200
-  taxRevenue: 100
-  upkeep: 50
-  energyConsumption: 150
-  waterConsumption: 80
-  wasteProduction: 50
-  resourceProduction: 0
-  capacity: 75
-  jobsProvided: 75
-  happinessImpact: 5
-  healthImpact: 0
-  educationImpact: 2
-  pollutionOutput: 10
-  pollutionReduction: 0
-  heatContribution: 5
-  greenSpaceEffect: 2
-  carbonFootprint: 100
-  taxContribution: 100
-  industryBoosts: []
-  coverageRadius: 0
+  constructionCost: 30000
+  demolitionCost: 7500
+  cityRevenue: 2500
+  netEnergy: -500
+  capacity: 30
+  happinessImpact: 3
+  pollutionImpact: 30
+  heatContribution: 10
+  greenSpaceEffect: -5
+  carbonFootprint: 600
+  proximityEffects:
+  - metricName: 3
+    boostValue: 200
+  - metricName: 6
+    boostValue: 2
+  - metricName: 7
+    boostValue: 5
+  effectRadius: 2
 --- !u!114 &9009391232856852927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,29 +1627,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8939596189235884654
 GameObject:
   m_ObjectHideFlags: 0

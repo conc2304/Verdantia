@@ -433,29 +433,20 @@ MonoBehaviour:
     and heat contributions. Despite its environmental costs, the Hospital\u2019s
     role in ensuring a healthy, thriving city makes it an invaluable part of urban
     infrastructure."
-  zoneRequirement: 3
-  constructionCost: 500000
-  demolitionCost: 0
-  operationalCost: 5000
-  taxRevenue: 0
-  upkeep: 4000
-  energyConsumption: 2000
-  waterConsumption: 1500
-  wasteProduction: 500
-  resourceProduction: 0
-  capacity: 1000
-  jobsProvided: 1500
-  happinessImpact: 30
-  healthImpact: 50
-  educationImpact: 10
-  pollutionOutput: 100
-  pollutionReduction: 0
-  heatContribution: 20
+  constructionCost: 200000
+  demolitionCost: 50000
+  cityRevenue: 1500
+  netEnergy: -1000
+  capacity: 100
+  happinessImpact: 15
+  pollutionImpact: 10
+  heatContribution: 8
   greenSpaceEffect: 0
-  carbonFootprint: 800
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  carbonFootprint: 300
+  proximityEffects:
+  - metricName: 6
+    boostValue: 10
+  effectRadius: 3
 --- !u!114 &4746778654929554520
 MonoBehaviour:
   m_ObjectHideFlags: 0

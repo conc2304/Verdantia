@@ -383,29 +383,24 @@ MonoBehaviour:
     urban heat island. Beyond environmental benefits, the station also enhances city
     happiness by promoting eco-friendly practices and reducing waste, making it a
     valuable addition to any forward-thinking, sustainable city."
-  zoneRequirement: 0
-  constructionCost: 75000
-  demolitionCost: 0
-  operationalCost: 500
-  taxRevenue: 500
-  upkeep: 200
-  energyConsumption: 300
-  waterConsumption: 100
-  wasteProduction: -100
-  resourceProduction: 0
-  capacity: 100
-  jobsProvided: 100
-  happinessImpact: 10
-  healthImpact: 5
-  educationImpact: 5
-  pollutionOutput: -50
-  pollutionReduction: 50
-  heatContribution: 5
-  greenSpaceEffect: 5
-  carbonFootprint: -100
-  taxContribution: 500
-  industryBoosts: []
-  coverageRadius: 0
+  constructionCost: 40000
+  demolitionCost: 10000
+  cityRevenue: 1000
+  netEnergy: -200
+  capacity: 0
+  happinessImpact: 5
+  pollutionImpact: -20
+  heatContribution: -5
+  greenSpaceEffect: 15
+  carbonFootprint: -500
+  proximityEffects:
+  - metricName: 7
+    boostValue: -15
+  - metricName: 8
+    boostValue: 5
+  - metricName: 6
+    boostValue: 3
+  effectRadius: 2
 --- !u!114 &2613454741967033339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,29 +736,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8506510547524147695
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,29 +806,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8561735233303364898
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,29 +915,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &8642678617078988365
 GameObject:
   m_ObjectHideFlags: 0

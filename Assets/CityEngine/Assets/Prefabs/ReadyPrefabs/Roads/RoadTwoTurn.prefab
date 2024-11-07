@@ -699,26 +699,17 @@ MonoBehaviour:
     pollution can indirectly affect city livability over time."
   zoneRequirement: 4
   constructionCost: 600
-  demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 10
+  demolitionCost: 150
+  income: 0
+  expense: 20
   energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
   resourceProduction: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: -5
-  educationImpact: 0
-  pollutionOutput: 10
-  pollutionReduction: 0
+  pollutionImpact: 10
   heatContribution: 15
   greenSpaceEffect: -5
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
   coverageRadius: 0
 --- !u!1 &2017414749892062022
 GameObject:

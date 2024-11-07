@@ -370,29 +370,22 @@ MonoBehaviour:
     to a more sustainable, balanced urban ecosystem. With a low carbon footprint,
     the farmhouse embodies a simpler, eco-friendly lifestyle within the bustling
     city.
-  zoneRequirement: 0
-  constructionCost: 5000
-  demolitionCost: 0
-  operationalCost: 30
-  taxRevenue: 10
-  upkeep: 10
-  energyConsumption: 20
-  waterConsumption: 15
-  wasteProduction: 5
-  resourceProduction: 0
+  constructionCost: 15000
+  demolitionCost: 4000
+  cityRevenue: 500
+  netEnergy: 0
   capacity: 4
-  jobsProvided: 0
-  happinessImpact: 5
-  healthImpact: 2
-  educationImpact: 0
-  pollutionOutput: 1
-  pollutionReduction: 0
-  heatContribution: 1
-  greenSpaceEffect: 2
-  carbonFootprint: 20
-  taxContribution: 10
-  industryBoosts: []
-  coverageRadius: 0
+  happinessImpact: 15
+  pollutionImpact: -10
+  heatContribution: 2
+  greenSpaceEffect: 30
+  carbonFootprint: 300
+  proximityEffects:
+  - metricName: 6
+    boostValue: 10
+  - metricName: 9
+    boostValue: -5
+  effectRadius: 2
 --- !u!114 &7155104198537411281
 MonoBehaviour:
   m_ObjectHideFlags: 0

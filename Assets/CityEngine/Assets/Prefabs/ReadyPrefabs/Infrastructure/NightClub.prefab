@@ -478,29 +478,22 @@ MonoBehaviour:
     upgrades, like energy-efficient lighting or small green areas around the structure,
     could help reduce its environmental impact while maintaining its role as a lively
     social venue.
-  zoneRequirement: 1
-  constructionCost: 150000
-  demolitionCost: 0
-  operationalCost: 1000
-  taxRevenue: 500
-  upkeep: 200
-  energyConsumption: 500
-  waterConsumption: 200
-  wasteProduction: 150
-  resourceProduction: 0
-  capacity: 500
-  jobsProvided: 100
-  happinessImpact: 20
-  healthImpact: -5
-  educationImpact: 0
-  pollutionOutput: 30
-  pollutionReduction: 0
-  heatContribution: 10
-  greenSpaceEffect: 0
+  constructionCost: 60000
+  demolitionCost: 15000
+  cityRevenue: 3000
+  netEnergy: -300
+  capacity: 0
+  happinessImpact: 10
+  pollutionImpact: 20
+  heatContribution: 5
+  greenSpaceEffect: -5
   carbonFootprint: 200
-  taxContribution: 500
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects:
+  - metricName: 6
+    boostValue: 3
+  - metricName: 7
+    boostValue: 10
+  effectRadius: 1
 --- !u!114 &4992570464852695727
 MonoBehaviour:
   m_ObjectHideFlags: 0

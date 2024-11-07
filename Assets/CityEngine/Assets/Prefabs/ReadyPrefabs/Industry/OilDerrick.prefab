@@ -202,29 +202,24 @@ MonoBehaviour:
     in nearby areas. While financially beneficial, the Oil Derrick poses challenges
     for sustainability and citizen happiness, making it essential to balance its
     economic gains with environmental mitigation efforts.
-  zoneRequirement: 2
   constructionCost: 250000
-  demolitionCost: 0
-  operationalCost: 2000
-  taxRevenue: 3000
-  upkeep: 1500
-  energyConsumption: 0
-  waterConsumption: 500
-  wasteProduction: 700
-  resourceProduction: 7000
-  capacity: 500
-  jobsProvided: 500
+  demolitionCost: 62500
+  cityRevenue: 7000
+  netEnergy: -100
+  capacity: 0
   happinessImpact: -15
-  healthImpact: -20
-  educationImpact: 0
-  pollutionOutput: 400
-  pollutionReduction: 0
-  heatContribution: 30
-  greenSpaceEffect: -30
-  carbonFootprint: 4000
-  taxContribution: 3000
-  industryBoosts: []
-  coverageRadius: 0
+  pollutionImpact: 300
+  heatContribution: 25
+  greenSpaceEffect: -40
+  carbonFootprint: 3500
+  proximityEffects:
+  - metricName: 3
+    boostValue: 300
+  - metricName: 7
+    boostValue: 50
+  - metricName: 6
+    boostValue: -10
+  effectRadius: 4
 --- !u!114 &7226382225563357934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,29 +540,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1001 &150861345646391902
 PrefabInstance:
   m_ObjectHideFlags: 0

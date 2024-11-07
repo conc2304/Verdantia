@@ -1018,29 +1018,18 @@ MonoBehaviour:
     negatively impact the air quality and overall health of nearby residents. While
     they don\u2019t directly influence happiness, the combined effect on heat and
     pollution can indirectly affect city livability over time."
-  zoneRequirement: 4
-  constructionCost: 600
-  demolitionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 10
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  constructionCost: 500
+  demolitionCost: 200
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: -5
-  educationImpact: 0
-  pollutionOutput: 10
-  pollutionReduction: 0
-  heatContribution: 15
+  pollutionImpact: 10
+  heatContribution: 5
   greenSpaceEffect: -5
-  carbonFootprint: 0
-  taxContribution: 0
-  industryBoosts: []
-  coverageRadius: 0
+  carbonFootprint: 10
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &1807584980700940526
 GameObject:
   m_ObjectHideFlags: 0
