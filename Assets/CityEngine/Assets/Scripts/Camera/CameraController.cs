@@ -317,7 +317,7 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        //  Do the building phase if conditions met
+        //  Add/Build the building if conditions met
         if (dontBuild == false)
         {
             // Clear Background Forest
@@ -338,6 +338,26 @@ public class CameraController : MonoBehaviour
                 }
             }
 
+
+            // Check for proximity boosts from existing buildings
+            foreach (Transform existingBuildingTransform in allBuildings)
+            {
+                if (!existingBuildingTransform.CompareTag("Building")) continue;
+
+                BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
+                if (existingBuilding != null && targetBuildProp.IsWithinProximity(existingBuilding))
+                {
+                    // Apply proximity effects from the existing building to the new building
+                    foreach (MetricBoost boost in existingBuilding.proximityEffects)
+                    {
+                        existingBuilding.ApplyBoost(targetBuildProp, boost);
+                    }
+                }
+            }
+
+            // Check for proximity boosts from new building on surrounding buildings
+            targetBuildProp.ApplyProximityEffects();
+
             spawner.carsCount += 1;
             spawner.citizensCount += 2;
             allBuildings.Add(targetNew);
@@ -357,6 +377,7 @@ public class CameraController : MonoBehaviour
                 Mathf.Round(targetNew.position.z / 10) * 10
             );
 
+
             // if (target.GetComponent<BuildingProperties>().connectToRoad)
             // //   roadGenerator.ConnectBuildingToRoad(target);
 
@@ -375,7 +396,6 @@ public class CameraController : MonoBehaviour
             cityChanged = true;
 
             return new Dictionary<string, object> { { "status", true }, { "msg", "New building added!" } };
-
         }
 
         return new Dictionary<string, object> { { "status", false }, { "msg", "Unable to add building." } };
@@ -415,8 +435,6 @@ public class CameraController : MonoBehaviour
     {
         return (Mathf.Abs(posA.x - posB.x) <= tolerance && posA.z == posB.z) || (Mathf.Abs(posA.z - posB.z) <= tolerance && posA.x == posB.x);
     }
-
-
 
 
     public Dictionary<string, object> DeleteTarget(Transform target)

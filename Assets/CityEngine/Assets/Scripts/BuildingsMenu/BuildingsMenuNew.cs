@@ -47,7 +47,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public GameObject buildingStats;
 
-
     public Transform types;
     public BuildingsAsset[] buildings;
     public GameObject deleteBuilding;

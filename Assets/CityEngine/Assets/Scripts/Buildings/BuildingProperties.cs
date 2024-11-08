@@ -75,11 +75,14 @@ public class BuildingProperties : MonoBehaviour
 
 
     private BuildingsMenuNew buildingsMenu;
+    private CameraController cameraController;
+
 
 
     void Start()
     {
         buildingsMenu = FindObjectOfType<BuildingsMenuNew>();
+        cameraController = FindObjectOfType<CameraController>();
         demolitionCost = demolitionCost != 0 ? demolitionCost : (int)(constructionCost * 0.25f);
         PassonBuildingProperties();
     }
@@ -112,12 +115,135 @@ public class BuildingProperties : MonoBehaviour
                         buildingProperties.greenSpaceEffect = greenSpaceEffect;
                         buildingProperties.carbonFootprint = carbonFootprint;
                         buildingProperties.effectRadius = effectRadius;
+                        buildingProperties.proximityEffects = proximityEffects;
                     }
                 }
             }
         }
     }
 
+    public void ApplyProximityEffects()
+    {
+        foreach (Transform buildingTransform in cameraController.allBuildings)
+        {
+            if (buildingTransform != transform && buildingTransform.CompareTag("Building")) // Skip self, Skip "Spaces" and anything not a "Building"
+            {
+                BuildingProperties building = buildingTransform.GetComponent<BuildingProperties>();
+                if (building != null && IsWithinProximity(building))
+                {
+                    foreach (MetricBoost boost in proximityEffects)
+                    {
+                        print($"{building.buildingName} APPLY BOOST TO {building.buildingName}");
+                        ApplyBoost(building, boost);
+                    }
+                }
+            }
+        }
+    }
+
+    public void RemoveProximityEffects()
+    {
+        foreach (Transform buildingTransform in cameraController.allBuildings)
+        {
+            if (buildingTransform != transform) // Skip self
+            {
+                BuildingProperties building = buildingTransform.GetComponent<BuildingProperties>();
+                if (building != null && IsWithinProximity(building))
+                {
+                    foreach (MetricBoost boost in proximityEffects)
+                    {
+                        print($"{building.buildingName} REMOVE BOOST FROM {building.buildingName}");
+                        RemoveBoost(building, boost);
+                    }
+                }
+            }
+        }
+    }
+
+    public bool IsWithinProximity(BuildingProperties other)
+    {
+        // Check if this building's position is within the effect radius of the other building
+        if (IsPositionsClose(transform.position, other.transform.position))
+        {
+            return true;
+        }
+
+        // Check additional spaces of this building against the other building's position
+        foreach (Transform space in additionalSpace)
+        {
+            if (IsPositionsClose(space.position, other.transform.position))
+            {
+                return true;
+            }
+        }
+
+        // Check additional spaces of the other building against this building's position
+        foreach (Transform otherSpace in other.additionalSpace)
+        {
+            if (IsPositionsClose(transform.position, otherSpace.position))
+            {
+                return true;
+            }
+        }
+
+        // Check additional spaces of this building against additional spaces of the other building
+        foreach (Transform space in additionalSpace)
+        {
+            foreach (Transform otherSpace in other.additionalSpace)
+            {
+                if (IsPositionsClose(space.position, otherSpace.position))
+                {
+                    return true;
+                }
+            }
+        }
+
+        // If none of the checks found a proximity, return false
+        return false;
+    }
+
+    public void ApplyBoost(BuildingProperties targetBuilding, MetricBoost boost)
+    {
+        // Get the property info for the specified metric name
+        var propertyInfo = typeof(BuildingProperties).GetProperty(boost.metricName.ToString());
+        if (propertyInfo != null && propertyInfo.CanWrite)
+        {
+            // Get the current value and apply the boost
+            int currentValue = (int)propertyInfo.GetValue(targetBuilding);
+            propertyInfo.SetValue(targetBuilding, currentValue + boost.boostValue);
+        }
+    }
+
+    public void RemoveBoost(BuildingProperties targetBuilding, MetricBoost boost)
+    {
+        // Get the property info for the specified metric name
+        var propertyInfo = typeof(BuildingProperties).GetProperty(boost.metricName.ToString());
+        if (propertyInfo != null && propertyInfo.CanWrite)
+        {
+            // Get the current value and remove the boost
+            int currentValue = (int)propertyInfo.GetValue(targetBuilding);
+            propertyInfo.SetValue(targetBuilding, currentValue - boost.boostValue);
+        }
+    }
+
+    private bool IsPositionsClose(Vector3 positionA, Vector3 positionB)
+    {
+        // Round the positions to the nearest grid point
+        float roundedX_A = Mathf.Round(positionA.x / 10) * 10;
+        float roundedZ_A = Mathf.Round(positionA.z / 10) * 10;
+        float roundedX_B = Mathf.Round(positionB.x / 10) * 10;
+        float roundedZ_B = Mathf.Round(positionB.z / 10) * 10;
+
+        // Check if the rounded positions are equal
+        if (roundedX_A == roundedX_B && roundedZ_A == roundedZ_B)
+        {
+            return true;
+        }
+
+        // Check distance to ensure they are within the effect radius
+        float distance = Vector3.Distance(positionA, positionB);
+        return distance <= effectRadius;
+    }
 }
 
 
