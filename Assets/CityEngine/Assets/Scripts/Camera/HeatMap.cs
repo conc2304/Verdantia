@@ -162,7 +162,6 @@ public class HeatMap : MonoBehaviour
 
     private void GenerateHeatMapTexture(int metricMin, int metricMax)
     {
-        print($"{heatMapInitialized} | {heatValues.Length} | {heatGradient == null}");
         if (heatGradient == null) InitializeGradient();
         if (!heatMapInitialized || heatValues.Length == 0 || heatGradient == null) return;
 
