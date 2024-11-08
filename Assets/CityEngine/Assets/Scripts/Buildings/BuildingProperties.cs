@@ -122,9 +122,13 @@ public class BuildingProperties : MonoBehaviour
         }
     }
 
-    public void ApplyProximityEffects()
+    public void ApplyProximityEffects(List<Transform> allBuildings = null)
     {
-        foreach (Transform buildingTransform in cameraController.allBuildings)
+        allBuildings ??= FindObjectOfType<CameraController>().allBuildings;
+        print($"ApplyProximityEffects from {buildingName}");
+        print(allBuildings.Count);
+
+        foreach (Transform buildingTransform in allBuildings)
         {
             if (buildingTransform != transform && buildingTransform.CompareTag("Building")) // Skip self, Skip "Spaces" and anything not a "Building"
             {
@@ -208,6 +212,7 @@ public class BuildingProperties : MonoBehaviour
         var propertyInfo = typeof(BuildingProperties).GetProperty(boost.metricName.ToString());
         if (propertyInfo != null && propertyInfo.CanWrite)
         {
+            print($"{buildingName} APPLY boost {boost.metricName} at {boost.boostValue} to {targetBuilding.buildingName}");
             // Get the current value and apply the boost
             int currentValue = (int)propertyInfo.GetValue(targetBuilding);
             propertyInfo.SetValue(targetBuilding, currentValue + boost.boostValue);
@@ -221,6 +226,8 @@ public class BuildingProperties : MonoBehaviour
         if (propertyInfo != null && propertyInfo.CanWrite)
         {
             // Get the current value and remove the boost
+            print($"{buildingName} REMOVE boost {boost.metricName} at {boost.boostValue} to {targetBuilding.buildingName}");
+
             int currentValue = (int)propertyInfo.GetValue(targetBuilding);
             propertyInfo.SetValue(targetBuilding, currentValue - boost.boostValue);
         }

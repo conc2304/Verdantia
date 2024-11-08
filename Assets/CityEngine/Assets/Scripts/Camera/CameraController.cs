@@ -284,7 +284,7 @@ public class CameraController : MonoBehaviour
 
         // if we are initializing the game, 
         // then we dont care if the building is next to a road
-        //  if we are not initializing the game, then check if the building is next to a road
+        // if we are not initializing the game, then check if the building is next to a road
         if (!isInitializing && !IsBuildingNextToRoad(targetNew))
         {
             dontBuild = true;
@@ -293,7 +293,7 @@ public class CameraController : MonoBehaviour
         }
 
 
-        // Check foir new building overlapping with existing roads
+        // Check for new building overlapping with existing roads
         for (int i = 0; i < roadGenerator.allRoads.Count; i++)
         {
             if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(targetNew.position.x) &&

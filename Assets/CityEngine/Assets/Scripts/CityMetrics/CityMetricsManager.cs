@@ -270,12 +270,16 @@ public class CityMetricsManager : MonoBehaviour
     public void AddRevenue(int amount)
     {
         budget += amount;
+        OnMetricsUpdate?.Invoke();
+
         Debug.Log($"Revenue added: {amount}, New budget: {budget}");
     }
 
     public void DeductExpenses(int amount)
     {
         budget -= amount;
+        OnMetricsUpdate?.Invoke();
+
         Debug.Log($"Expenses deducted: {amount}, New budget: {budget}");
     }
 

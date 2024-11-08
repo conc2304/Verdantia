@@ -13,6 +13,7 @@ public class BuildingInfoDisplay : MonoBehaviour
     public GameObject proximityEffectTextPrefab;
     public GameObject modal;
     public TMP_Text buildingNameText;
+    public TMP_Text cityBudgetText;
     public TMP_Text modalTitle;
     public TMP_Text modalBodyText;
     public GameObject infoNavToggle;
@@ -22,9 +23,12 @@ public class BuildingInfoDisplay : MonoBehaviour
     public void DisplayBuildingData(BuildingProperties buildingProps)
 
     {
-        // Clear the last data 
         DeleteAllChildrenFromParent(displayParent);
+        float budget = (float)FindObjectOfType<CityMetricsManager>().budget;
+        string formattedBudget = NumbersUtils.FormattedNumber(budget, "$");
+        cityBudgetText.text = $"City Budget: {formattedBudget}";
 
+        // Clear the last data 
         displayParent.gameObject.SetActive(true);
         modal.SetActive(false);
         modalBodyText.text = buildingProps.buildingDescription;
@@ -57,9 +61,16 @@ public class BuildingInfoDisplay : MonoBehaviour
 
                 // Set the text
                 labelText.text = StringsUtils.ConvertToLabel(metricName);
-                string prefix = Regex.IsMatch(metricName, "tax|cost|upkeep") ? "$" : "";
-                string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(value), prefix);
+                string prefix = Regex.IsMatch(metricName.ToLower(), "tax|cost|upkeep|income|revenue") ? "$" : "";
+                int valueInt = Convert.ToInt32(value);
+                string formattedValue = NumbersUtils.FormattedNumber(valueInt, prefix);
                 valueText.text = value != null ? formattedValue : "N/A";
+
+                // show if building/ is out of budget 
+                if (metricName == BuildingMetric.constructionCost.ToString() || metricName == BuildingMetric.demolitionCost.ToString())
+                {
+                    valueText.color = valueInt > budget ? Color.red : Color.white;
+                }
             }
         }
 
