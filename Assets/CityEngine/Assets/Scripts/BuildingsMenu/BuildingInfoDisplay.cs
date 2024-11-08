@@ -9,32 +9,14 @@ public class BuildingInfoDisplay : MonoBehaviour
 {
 
     public GameObject labelValuePrefab;
-
-    // The parent transform where the labels and values will be displayed (e.g., a vertical layout group)
     public Transform displayParent;
+    public Transform effectsListParent;
     public GameObject modal;
     public TMP_Text buildingNameText;
     public TMP_Text modalTitle;
     public TMP_Text modalBodyText;
     public GameObject infoNavToggle;
     public GameObject menuBuildings;
-
-    // List of properties
-    public readonly string[] dataProps ={
-        "constructionCost",
-        "demolitionCost",
-        "heatContribution",
-        "cityRevenue",
-        "netEnergy",
-        "capacity",
-        "happinessImpact",
-        "pollutionImpact",
-        "heatContribution",
-        "greenSpaceEffect",
-        "carbonFootprint",
-        "coverageRadius",
-    };
-
 
 
     public void DisplayBuildingData(BuildingProperties buildingProps)
@@ -52,10 +34,13 @@ public class BuildingInfoDisplay : MonoBehaviour
         // buildingNameGO.transform.Find("BuildingName").GetComponent<TMP_Text>().text = buildingProps.buildingName;
         buildingNameText.text = buildingProps.buildingName;
 
-        foreach (string prop in dataProps)
+        // Loop over each metric in the BuildingMetric enum
+        foreach (BuildingMetric metric in Enum.GetValues(typeof(BuildingMetric)))
         {
+            string metricName = metric.ToString();
+
             // Get the value from the building using reflection
-            FieldInfo fieldInfo = buildingProps.GetType().GetField(prop, BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo fieldInfo = buildingProps.GetType().GetField(metricName, BindingFlags.Public | BindingFlags.Instance);
 
             if (fieldInfo != null)
             {
@@ -71,12 +56,44 @@ public class BuildingInfoDisplay : MonoBehaviour
                 TMP_Text valueText = textParent.transform.Find("Value")?.GetComponent<TMP_Text>();
 
                 // Set the text
-                labelText.text = StringsUtils.ConvertToLabel(prop);
-                string prefix = Regex.IsMatch(prop.ToLower(), "tax|cost|upkeep") ? "$" : "";
+                labelText.text = StringsUtils.ConvertToLabel(metricName);
+                string prefix = Regex.IsMatch(metricName, "tax|cost|upkeep") ? "$" : "";
                 string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(value), prefix);
                 valueText.text = value != null ? formattedValue : "N/A";
             }
         }
+
+        DeleteAllChildrenFromParent(effectsListParent);
+        if (buildingProps.proximityEffects.Count > 0)
+        {
+
+            // Add the list of proximity effects
+            foreach (MetricBoost boost in buildingProps.proximityEffects)
+            {
+                GameObject labelValueGO = Instantiate(labelValuePrefab, effectsListParent);
+                labelValueGO.name = "data_item";
+
+                // Get the TextMeshProUGUI components
+                HorizontalLayoutGroup textParent = labelValueGO.GetComponentInChildren<HorizontalLayoutGroup>(true);
+                TMP_Text labelText = textParent.transform.Find("Label")?.GetComponent<TMP_Text>();
+                TMP_Text valueText = textParent.transform.Find("Value")?.GetComponent<TMP_Text>();
+
+                // Set the text
+                string metricName = boost.metricName.ToString();
+                labelText.text = StringsUtils.ConvertToLabel(metricName);
+                string prefix = Regex.IsMatch(metricName, "tax|cost|upkeep|income|revenue") ? "$" : "";
+                string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(boost.boostValue), prefix);
+                valueText.text = boost.boostValue != null ? formattedValue : "N/A";
+            }
+
+            effectsListParent.gameObject.SetActive(true);
+        }
+        else
+        {
+            effectsListParent.gameObject.SetActive(false);
+        }
+
+
     }
 
     public void DeleteAllChildrenFromParent(Transform parentTransform)

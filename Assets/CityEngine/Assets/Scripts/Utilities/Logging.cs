@@ -70,10 +70,10 @@ public static class ObjectPrinter
 
 
         // Iterate over each property in dataProps
-        for (int i = 0; i < buildingProps.dataProps.Length; i++)
+        foreach (BuildingMetric metric in Enum.GetValues(typeof(BuildingMetric)))
         {
-            string propName = buildingProps.dataProps[i];
-            FieldInfo fieldInfo = buildingProps.GetType().GetField(propName, BindingFlags.Public | BindingFlags.Instance);
+            string metricName = metric.ToString();
+            FieldInfo fieldInfo = buildingProps.GetType().GetField(metricName, BindingFlags.Public | BindingFlags.Instance);
 
             if (fieldInfo != null)
             {
@@ -81,13 +81,10 @@ public static class ObjectPrinter
                 object value = fieldInfo.GetValue(buildingProps);
 
                 // Append the property and its value to the JSON string
-                jsonBuilder.AppendFormat("  \"{0}\": {1}", propName, FormatValue(value));
+                jsonBuilder.AppendFormat("  \"{0}\": {1}", metricName, FormatValue(value));
 
                 // Add a comma if it's not the last item
-                if (i < buildingProps.dataProps.Length - 1)
-                {
-                    jsonBuilder.Append(",");
-                }
+                jsonBuilder.Append(",");
                 jsonBuilder.Append("\n");
             }
         }
