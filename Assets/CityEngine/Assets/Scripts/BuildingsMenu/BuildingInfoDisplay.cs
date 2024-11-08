@@ -10,7 +10,7 @@ public class BuildingInfoDisplay : MonoBehaviour
 
     public GameObject labelValuePrefab;
     public Transform displayParent;
-    public Transform effectsListParent;
+    // public Transform effectsListParent;
     public GameObject modal;
     public TMP_Text buildingNameText;
     public TMP_Text modalTitle;
@@ -63,35 +63,35 @@ public class BuildingInfoDisplay : MonoBehaviour
             }
         }
 
-        DeleteAllChildrenFromParent(effectsListParent);
-        if (buildingProps.proximityEffects.Count > 0)
-        {
+        // DeleteAllChildrenFromParent(effectsListParent);
+        // if (buildingProps.proximityEffects.Count > 0)
+        // {
 
-            // Add the list of proximity effects
-            foreach (MetricBoost boost in buildingProps.proximityEffects)
-            {
-                GameObject labelValueGO = Instantiate(labelValuePrefab, effectsListParent);
-                labelValueGO.name = "data_item";
+        //     // Add the list of proximity effects
+        //     foreach (MetricBoost boost in buildingProps.proximityEffects)
+        //     {
+        //         GameObject labelValueGO = Instantiate(labelValuePrefab, effectsListParent);
+        //         labelValueGO.name = "data_item";
 
-                // Get the TextMeshProUGUI components
-                HorizontalLayoutGroup textParent = labelValueGO.GetComponentInChildren<HorizontalLayoutGroup>(true);
-                TMP_Text labelText = textParent.transform.Find("Label")?.GetComponent<TMP_Text>();
-                TMP_Text valueText = textParent.transform.Find("Value")?.GetComponent<TMP_Text>();
+        //         // Get the TextMeshProUGUI components
+        //         HorizontalLayoutGroup textParent = labelValueGO.GetComponentInChildren<HorizontalLayoutGroup>(true);
+        //         TMP_Text labelText = textParent.transform.Find("Label")?.GetComponent<TMP_Text>();
+        //         TMP_Text valueText = textParent.transform.Find("Value")?.GetComponent<TMP_Text>();
 
-                // Set the text
-                string metricName = boost.metricName.ToString();
-                labelText.text = StringsUtils.ConvertToLabel(metricName);
-                string prefix = Regex.IsMatch(metricName, "tax|cost|upkeep|income|revenue") ? "$" : "";
-                string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(boost.boostValue), prefix);
-                valueText.text = boost.boostValue != null ? formattedValue : "N/A";
-            }
+        //         // Set the text
+        //         string metricName = boost.metricName.ToString();
+        //         labelText.text = StringsUtils.ConvertToLabel(metricName);
+        //         string prefix = Regex.IsMatch(metricName, "tax|cost|upkeep|income|revenue") ? "$" : "";
+        //         string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(boost.boostValue), prefix);
+        //         valueText.text = boost.boostValue != null ? formattedValue : "N/A";
+        //     }
 
-            effectsListParent.gameObject.SetActive(true);
-        }
-        else
-        {
-            effectsListParent.gameObject.SetActive(false);
-        }
+        //     effectsListParent.gameObject.SetActive(true);
+        // }
+        // else
+        // {
+        //     effectsListParent.gameObject.SetActive(false);
+        // }
 
 
     }
