@@ -241,10 +241,10 @@ public class BuildingProperties : MonoBehaviour
         int gridSize = 10;
         print("IsPositionsClose");
         // Round the positions to the nearest grid point
-        float roundedX_A = Mathf.Round(positionA.x / gridSize) * 1;
-        float roundedZ_A = Mathf.Round(positionA.z / gridSize) * 1;
-        float roundedX_B = Mathf.Round(positionB.x / gridSize) * 1;
-        float roundedZ_B = Mathf.Round(positionB.z / gridSize) * 1;
+        float roundedX_A = Mathf.Round(positionA.x / gridSize);
+        float roundedZ_A = Mathf.Round(positionA.z / gridSize);
+        float roundedX_B = Mathf.Round(positionB.x / gridSize);
+        float roundedZ_B = Mathf.Round(positionB.z / gridSize);
 
         // Check if the rounded positions are equal
         if (roundedX_A == roundedX_B && roundedZ_A == roundedZ_B)
