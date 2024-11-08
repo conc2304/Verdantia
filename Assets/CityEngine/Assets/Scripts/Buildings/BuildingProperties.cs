@@ -73,9 +73,6 @@ public class BuildingProperties : MonoBehaviour
     public List<MetricBoost> proximityEffects;
     public int effectRadius; // The effective radius of this building's service
 
-    // Props for data driven simulation metrics 
-    public readonly string[] dataProps;
-
 
     private BuildingsMenuNew buildingsMenu;
 
