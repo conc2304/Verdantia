@@ -125,13 +125,14 @@ public class BuildingProperties : MonoBehaviour
     public void ApplyProximityEffects(List<Transform> allBuildings = null)
     {
         allBuildings ??= FindObjectOfType<CameraController>().allBuildings;
-        print($"ApplyProximityEffects from {buildingName}");
-        print(allBuildings.Count);
+        print($"Attempt ApplyProximityEffects from {buildingName}");
+        print($"Building Count: {allBuildings.Count}");
 
         foreach (Transform buildingTransform in allBuildings)
         {
-            if (buildingTransform != transform && buildingTransform.CompareTag("Building")) // Skip self, Skip "Spaces" and anything not a "Building"
+            if (buildingTransform != transform && (buildingTransform.CompareTag("Building") || buildingTransform.CompareTag("Road"))) // Skip self, Skip "Spaces" and anything not a "Building"
             {
+                print($"{buildingTransform.name} : {buildingTransform.tag}");
                 BuildingProperties building = buildingTransform.GetComponent<BuildingProperties>();
                 if (building != null && IsWithinProximity(building))
                 {
@@ -166,6 +167,8 @@ public class BuildingProperties : MonoBehaviour
 
     public bool IsWithinProximity(BuildingProperties other)
     {
+        print($"PROXIMITY TEST: {buildingName} and {other.buildingName} ");
+
         // Check if this building's position is within the effect radius of the other building
         if (IsPositionsClose(transform.position, other.transform.position))
         {
@@ -235,11 +238,13 @@ public class BuildingProperties : MonoBehaviour
 
     private bool IsPositionsClose(Vector3 positionA, Vector3 positionB)
     {
+        int gridSize = 10;
+        print("IsPositionsClose");
         // Round the positions to the nearest grid point
-        float roundedX_A = Mathf.Round(positionA.x / 10) * 10;
-        float roundedZ_A = Mathf.Round(positionA.z / 10) * 10;
-        float roundedX_B = Mathf.Round(positionB.x / 10) * 10;
-        float roundedZ_B = Mathf.Round(positionB.z / 10) * 10;
+        float roundedX_A = Mathf.Round(positionA.x / gridSize) * 1;
+        float roundedZ_A = Mathf.Round(positionA.z / gridSize) * 1;
+        float roundedX_B = Mathf.Round(positionB.x / gridSize) * 1;
+        float roundedZ_B = Mathf.Round(positionB.z / gridSize) * 1;
 
         // Check if the rounded positions are equal
         if (roundedX_A == roundedX_B && roundedZ_A == roundedZ_B)
@@ -248,7 +253,8 @@ public class BuildingProperties : MonoBehaviour
         }
 
         // Check distance to ensure they are within the effect radius
-        float distance = Vector3.Distance(positionA, positionB);
+        float distance = Vector3.Distance(positionA, positionB) / gridSize;
+        print(distance + " vs " + effectRadius + " | " + (distance <= effectRadius));
         return distance <= effectRadius;
     }
 }
