@@ -109,7 +109,7 @@ public class HeatMap : MonoBehaviour
     // Update the heat map with buildings and their given metric
     public void UpdateHeatMap(List<Transform> allBuildings, string metricName, int metricMin, int metricMax)
     {
-        if (heatValues.Length == 0) return;
+        if (heatValues == null || heatValues.Length == 0) return;
 
         if (metricName == "cityTemperature")
         {

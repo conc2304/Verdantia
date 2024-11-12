@@ -641,7 +641,6 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public void OpenPlacementGUI(TrackpadTargetType targetType)
     {
-
         errorText.text = "";
         errorText.gameObject.SetActive(false);
 
