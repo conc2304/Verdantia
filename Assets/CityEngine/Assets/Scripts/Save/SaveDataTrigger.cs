@@ -36,6 +36,7 @@ public class SaveDataTrigger : MonoBehaviour
 
         BuildingDataLoad();
         string buildingsStr = "";
+        print("Save Data Trigger || AWAKE ");
         for (int i = 0; i < buildingsPropertiesForIndex.Length; i++)
         {
 
@@ -49,11 +50,11 @@ public class SaveDataTrigger : MonoBehaviour
             {
                 buildingsPropertiesForIndex[i].GetComponent<RoadProperties>().buildingIndex = i;
             }
+
         }
 
-        print(buildingsStr);
+        // print(buildingsStr);
         cityLoadInitialized = true;
-
     }
 
     public void BuildingDataSave()

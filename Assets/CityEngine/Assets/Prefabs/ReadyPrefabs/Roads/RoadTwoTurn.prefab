@@ -638,7 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef89c04353449ed4899392ef421fa913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 4
+  buildingIndex: 3
   pathTargetsStart:
   - {fileID: 2374661630101532678}
   - {fileID: 2096803698095046725}
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 4
+  buildingIndex: 3
   environment: {fileID: 0}
   connectToRoad: 0
   carsPathTargetsToConnect: []
@@ -697,20 +697,18 @@ MonoBehaviour:
     negatively impact the air quality and overall health of nearby residents. While
     they don\u2019t directly influence happiness, the combined effect on heat and
     pollution can indirectly affect city livability over time."
-  zoneRequirement: 4
   constructionCost: 600
   demolitionCost: 150
-  income: 0
-  expense: 20
-  energyConsumption: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
   happinessImpact: 0
   pollutionImpact: 10
   heatContribution: 15
   greenSpaceEffect: -5
   carbonFootprint: 0
-  coverageRadius: 0
+  proximityEffects: []
+  effectRadius: 0
 --- !u!1 &2017414749892062022
 GameObject:
   m_ObjectHideFlags: 0
