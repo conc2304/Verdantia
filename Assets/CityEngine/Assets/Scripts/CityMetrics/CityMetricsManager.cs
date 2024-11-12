@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CityMetricsManager : MonoBehaviour
@@ -203,17 +204,23 @@ public class CityMetricsManager : MonoBehaviour
         ResetMetrics();
 
         float tempDifference = cityTemperature - startingTemp;
-
         int cityArea = 0;
 
+        // additional spaces are included in "allBuildings"
         foreach (Transform building in cameraController.allBuildings)
         {
-            BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
-            cityArea += buildingProps.additionalSpace.Length + 1;
+            if (!(building.CompareTag("Building") || building.CompareTag("Road") || building.CompareTag("Space"))) continue;
 
+            building.TryGetComponent(out BuildingProperties buildingProps);
+            if (!buildingProps)
+            {
+                Debug.LogError("Building Props is Null for : " + building.name);
+                continue;
+            };
+
+            cityArea++;
             population += buildingProps.capacity;
             greenSpace += buildingProps.greenSpaceEffect;
-
             revenue += buildingProps.cityRevenue;
 
             // Environmental metrics
@@ -223,8 +230,7 @@ public class CityMetricsManager : MonoBehaviour
             float adjustedHappiness = buildingProps.happinessImpact;
             float adjustedPollution = buildingProps.pollutionImpact;
 
-            // Only apply additional feedback if temperature is above base
-            // Update metric value based on temperature difference
+            // Apply additional feedback if temperature is above base
             if (tempDifference != 0)
             {
                 adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
@@ -249,7 +255,6 @@ public class CityMetricsManager : MonoBehaviour
             (propertyRanges["happinessImpact"].max - propertyRanges["happinessImpact"].min)
             );
         happiness = (float)Math.Round(happiness);
-        greenSpace = cityArea > 0 ? (float)Math.Round(greenSpace / cityArea) : 0;
     }
 
     // Method to reset all metrics to initial state before recalculation
@@ -443,7 +448,7 @@ public class CityMetricsManager : MonoBehaviour
         return temps;
     }
 
-    public float[,] AddHeat(float[,] tempsGrid)
+    public float[,] AddHeat_old(float[,] tempsGrid)
     {
 
         if (propertyRanges == null)
@@ -480,6 +485,7 @@ public class CityMetricsManager : MonoBehaviour
             // Apply heat to the tempsGrid at the calculated grid position
             tempsGrid[gridX, gridZ] += adjustedHeatContribution; // TODO BUGFIX
 
+
             // Update min and max boundaries based on the building position
             cityBoarderMinX = Mathf.Min(cityBoarderMinX, gridX);
             cityBoarderMaxX = Mathf.Max(cityBoarderMaxX, gridX);
@@ -500,6 +506,125 @@ public class CityMetricsManager : MonoBehaviour
                 cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, gridZ);
             }
         }
+
+        return tempsGrid;
+    }
+
+    public float[,] AddHeat(float[,] tempsGrid)
+    {
+        if (propertyRanges == null)
+        {
+            propertyRanges = buildingsMenu.GetPropertyRanges();
+            if (propertyRanges == null) return new float[0, 0];
+        }
+
+        int rescaleVal = gridTileSize;
+
+        cityBoarderMinX = float.MaxValue;
+        cityBoarderMaxX = float.MinValue;
+        cityBoarderMinZ = float.MaxValue;
+        cityBoarderMaxZ = float.MinValue;
+
+        // Store occupied grid positions
+        HashSet<(int, int)> occupiedGridPositions = new HashSet<(int, int)>();
+
+        // First, determine all occupied positions
+        foreach (Transform building in cameraController.allBuildings)
+        {
+            // only do Buildings and Roads
+            if (!(building.CompareTag("Building") || building.CompareTag("Road"))) continue;
+
+            BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
+            if (buildingProps == null) continue;
+
+            // Get the footprint of the building and its additional spaces
+            List<(int, int)> buildingFootprint = new List<(int, int)>();
+            int baseX = Mathf.RoundToInt(building.position.x / rescaleVal);
+            int baseZ = Mathf.RoundToInt(building.position.z / rescaleVal);
+
+            // Mark the building's position as occupied
+            occupiedGridPositions.Add((baseX, baseZ));
+            buildingFootprint.Add((baseX, baseZ));
+
+            float adjustedHeatContribution = NumbersUtils.Remap(
+                propertyRanges["heatContribution"].min,
+                propertyRanges["heatContribution"].max,
+                -heatAddRange,
+                heatAddRange * (propertyRanges["heatContribution"].min / propertyRanges["heatContribution"].max),
+                buildingProps.heatContribution
+            );
+
+            adjustedHeatContribution = buildingProps.heatContribution * heatAddRange;
+
+            // Check additional spaces to determine the full footprint
+            foreach (Transform additionalSpace in buildingProps.additionalSpace)
+            {
+                int additionalX = Mathf.RoundToInt(additionalSpace.position.x / rescaleVal);
+                int additionalZ = Mathf.RoundToInt(additionalSpace.position.z / rescaleVal);
+
+                occupiedGridPositions.Add((additionalX, additionalZ));
+                buildingFootprint.Add((additionalX, additionalZ));
+
+                // Apply heat from additional spaces
+                tempsGrid[additionalX, additionalZ] += adjustedHeatContribution;
+
+                // Update boundaries for additional space positions
+                cityBoarderMinX = Mathf.Min(cityBoarderMinX, additionalX);
+                cityBoarderMaxX = Mathf.Max(cityBoarderMaxX, additionalX);
+                cityBoarderMinZ = Mathf.Min(cityBoarderMinZ, additionalZ);
+                cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, additionalZ);
+            }
+
+            // Apply heat to the building's grid position
+            tempsGrid[baseX, baseZ] += adjustedHeatContribution;
+
+            // Update boundaries based on the building position
+            cityBoarderMinX = Mathf.Min(cityBoarderMinX, baseX);
+            cityBoarderMaxX = Mathf.Max(cityBoarderMaxX, baseX);
+            cityBoarderMinZ = Mathf.Min(cityBoarderMinZ, baseZ);
+            cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, baseZ);
+
+            int effectRadius = buildingProps.effectRadius;
+            // buildingProps.proximityEffects
+            bool applyProximityHeat = false;
+            foreach (MetricBoost booster in buildingProps.proximityEffects)
+            {
+                if (booster.metricName == BuildingMetric.heatContribution) applyProximityHeat = true;
+            }
+
+            if (applyProximityHeat)
+            {
+                // Define the surrounding area based on the building footprint
+                foreach (var (footprintX, footprintZ) in buildingFootprint)
+                {
+                    // Check the effect radius surrounding area of each footprint position
+                    for (int offsetX = -effectRadius; offsetX <= effectRadius; offsetX++)
+                    {
+                        for (int offsetZ = -effectRadius; offsetZ <= effectRadius; offsetZ++)
+                        {
+                            // Skip the center position where the building is located
+                            if (offsetX == 0 && offsetZ == 0) continue;
+
+                            int surroundingX = footprintX + offsetX;
+                            int surroundingZ = footprintZ + offsetZ;
+
+                            // Check if the surrounding position is occupied
+                            if (!occupiedGridPositions.Contains((surroundingX, surroundingZ)))
+                            {
+                                tempsGrid[surroundingX, surroundingZ] += adjustedHeatContribution;
+
+                                // Update boundaries for surrounding positions
+                                cityBoarderMinX = Mathf.Min(cityBoarderMinX, surroundingX);
+                                cityBoarderMaxX = Mathf.Max(cityBoarderMaxX, surroundingX);
+                                cityBoarderMinZ = Mathf.Min(cityBoarderMinZ, surroundingZ);
+                                cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, surroundingZ);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         return tempsGrid;
     }
@@ -552,6 +677,7 @@ public class CityMetricsManager : MonoBehaviour
         return shiftedMatrix;
     }
 }
+
 
 
 

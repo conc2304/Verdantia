@@ -85,6 +85,7 @@ public class BuildingProperties : MonoBehaviour
         cameraController = FindObjectOfType<CameraController>();
         demolitionCost = demolitionCost != 0 ? demolitionCost : (int)(constructionCost * 0.25f);
         PassonBuildingProperties();
+        effectRadius++; // boost all of them by 1
     }
 
 
@@ -125,20 +126,20 @@ public class BuildingProperties : MonoBehaviour
     public void ApplyProximityEffects(List<Transform> allBuildings = null)
     {
         allBuildings ??= FindObjectOfType<CameraController>().allBuildings;
-        print($"Attempt ApplyProximityEffects from {buildingName}");
-        print($"Building Count: {allBuildings.Count}");
+        // print($"Attempt ApplyProximityEffects from {buildingName}");
+        // print($"Building Count: {allBuildings.Count}");
 
         foreach (Transform buildingTransform in allBuildings)
         {
             if (buildingTransform != transform && (buildingTransform.CompareTag("Building") || buildingTransform.CompareTag("Road"))) // Skip self, Skip "Spaces" and anything not a "Building"
             {
-                print($"{buildingTransform.name} : {buildingTransform.tag}");
+                // print($"{buildingTransform.name} : {buildingTransform.tag}");
                 BuildingProperties building = buildingTransform.GetComponent<BuildingProperties>();
                 if (building != null && IsWithinProximity(building))
                 {
                     foreach (MetricBoost boost in proximityEffects)
                     {
-                        print($"{building.buildingName} APPLY BOOST TO {building.buildingName}");
+                        // print($"{building.buildingName} APPLY BOOST TO {building.buildingName}");
                         ApplyBoost(building, boost);
                     }
                 }
@@ -157,7 +158,7 @@ public class BuildingProperties : MonoBehaviour
                 {
                     foreach (MetricBoost boost in proximityEffects)
                     {
-                        print($"{building.buildingName} REMOVE BOOST FROM {building.buildingName}");
+                        // print($"{building.buildingName} REMOVE BOOST FROM {building.buildingName}");
                         RemoveBoost(building, boost);
                     }
                 }
@@ -167,7 +168,7 @@ public class BuildingProperties : MonoBehaviour
 
     public bool IsWithinProximity(BuildingProperties other)
     {
-        print($"PROXIMITY TEST: {buildingName} and {other.buildingName} ");
+        // print($"PROXIMITY TEST: {buildingName} and {other.buildingName} ");
 
         // Check if this building's position is within the effect radius of the other building
         if (IsPositionsClose(transform.position, other.transform.position))
@@ -215,11 +216,13 @@ public class BuildingProperties : MonoBehaviour
         var propertyInfo = typeof(BuildingProperties).GetProperty(boost.metricName.ToString());
         if (propertyInfo != null && propertyInfo.CanWrite)
         {
-            print($"{buildingName} APPLY boost {boost.metricName} at {boost.boostValue} to {targetBuilding.buildingName}");
+            // print($"{buildingName} APPLY boost {boost.metricName} at {boost.boostValue} to {targetBuilding.buildingName}");
             // Get the current value and apply the boost
             int currentValue = (int)propertyInfo.GetValue(targetBuilding);
             propertyInfo.SetValue(targetBuilding, currentValue + boost.boostValue);
         }
+
+        targetBuilding.PassonBuildingProperties();
     }
 
     public void RemoveBoost(BuildingProperties targetBuilding, MetricBoost boost)
@@ -229,17 +232,19 @@ public class BuildingProperties : MonoBehaviour
         if (propertyInfo != null && propertyInfo.CanWrite)
         {
             // Get the current value and remove the boost
-            print($"{buildingName} REMOVE boost {boost.metricName} at {boost.boostValue} to {targetBuilding.buildingName}");
+            // print($"{buildingName} REMOVE boost {boost.metricName} at {boost.boostValue} to {targetBuilding.buildingName}");
 
             int currentValue = (int)propertyInfo.GetValue(targetBuilding);
             propertyInfo.SetValue(targetBuilding, currentValue - boost.boostValue);
         }
+
+        targetBuilding.PassonBuildingProperties();
     }
 
     private bool IsPositionsClose(Vector3 positionA, Vector3 positionB)
     {
         int gridSize = 10;
-        print("IsPositionsClose");
+        // print("IsPositionsClose");
         // Round the positions to the nearest grid point
         float roundedX_A = Mathf.Round(positionA.x / gridSize);
         float roundedZ_A = Mathf.Round(positionA.z / gridSize);
@@ -254,7 +259,7 @@ public class BuildingProperties : MonoBehaviour
 
         // Check distance to ensure they are within the effect radius
         float distance = Vector3.Distance(positionA, positionB) / gridSize;
-        print(distance + " vs " + effectRadius + " | " + (distance <= effectRadius));
+        // print(distance + " vs " + effectRadius + " | " + (distance <= effectRadius));
         return distance <= effectRadius;
     }
 }

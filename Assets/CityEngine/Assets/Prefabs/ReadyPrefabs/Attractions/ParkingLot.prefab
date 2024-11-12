@@ -659,6 +659,8 @@ MonoBehaviour:
     boostValue: 5
   - metricName: 0
     boostValue: -3
+  - metricName: 2
+    boostValue: 6
   effectRadius: 1
 --- !u!114 &1034629162656238963
 MonoBehaviour:

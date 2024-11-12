@@ -152,7 +152,12 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        if (cityChanged && FindObjectOfType<SaveDataTrigger>().cityLoadInitialized) cityMetricsManager.UpdateCityMetrics(); // TODO is this correct
+
+        if (cityChanged && saveDataTrigger.cityLoadInitialized)
+        {
+            print($"City changed: {cityChanged} | city Initialized : {saveDataTrigger.cityLoadInitialized}");
+            cityMetricsManager.UpdateCityMetrics();
+        } // TODO is this correct
 
         cityChanged = false;
     }
@@ -221,6 +226,7 @@ public class CameraController : MonoBehaviour
     {
         targetNew.parent = roadsParent;
         targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
+
         bool roadSpawnWasSuccessful = roadGenerator.CheckRoadType(targetNew);
         if (roadSpawnWasSuccessful)
         {
@@ -239,8 +245,26 @@ public class CameraController : MonoBehaviour
             cityChanged = true;
             // lastClickTime = 0;
 
-            int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
-            if (!isInitializing) cityMetricsManager.DeductExpenses(constructionCost);
+            if (!isInitializing)
+            {
+                int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
+                cityMetricsManager.DeductExpenses(constructionCost);
+            };
+
+            foreach (Transform existingBuildingTransform in allBuildings)
+            {
+                if (!existingBuildingTransform.CompareTag("Building")) continue;
+
+                BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
+                if (existingBuilding != null && targetNew.GetComponent<BuildingProperties>().IsWithinProximity(existingBuilding))
+                {
+                    // Apply proximity effects from the existing building to the new building
+                    foreach (MetricBoost boost in existingBuilding.proximityEffects)
+                    {
+                        existingBuilding.ApplyBoost(targetNew.GetComponent<BuildingProperties>(), boost);
+                    }
+                }
+            }
 
             return new Dictionary<string, object> { { "status", true }, { "msg", "Road added! You can add more." } };
 
@@ -449,17 +473,22 @@ public class CameraController : MonoBehaviour
             {
                 cityChanged = true;
 
+                BuildingProperties demolisionTargetProps = allBuildings[i].GetComponent<BuildingProperties>();
                 // deduct demolition cost from budget 
-                int demolitionCost = allBuildings[i].gameObject.GetComponent<BuildingProperties>().demolitionCost;
-                demolishedBuildingName = allBuildings[i].gameObject.GetComponent<BuildingProperties>().buildingName;
+                int demolitionCost = demolisionTargetProps.demolitionCost;
+                demolishedBuildingName = demolisionTargetProps.buildingName;
                 cityMetricsManager.DeductExpenses(demolitionCost);
 
 
-                for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect.Length; pathTargetIndex++)
-                    spawner.carsSpawnPoints.Remove(allBuildings[i].GetComponent<BuildingProperties>().carsPathTargetsToConnect[pathTargetIndex].GetComponent<PathTarget>().previousPathTarget.transform);
 
-                for (int pathTargetIndex = 0; pathTargetIndex < allBuildings[i].GetComponent<BuildingProperties>().citizensPathTargetsToSpawn.Length; pathTargetIndex++)
-                    spawner.citizensSpawnPoints.Remove(allBuildings[i].GetComponent<BuildingProperties>().citizensPathTargetsToSpawn[pathTargetIndex]);
+                // Check for and remove proximity boosts from demolished building on surrounding buildings
+                demolisionTargetProps.RemoveProximityEffects();
+
+                for (int pathTargetIndex = 0; pathTargetIndex < demolisionTargetProps.carsPathTargetsToConnect.Length; pathTargetIndex++)
+                    spawner.carsSpawnPoints.Remove(demolisionTargetProps.carsPathTargetsToConnect[pathTargetIndex].GetComponent<PathTarget>().previousPathTarget.transform);
+
+                for (int pathTargetIndex = 0; pathTargetIndex < demolisionTargetProps.citizensPathTargetsToSpawn.Length; pathTargetIndex++)
+                    spawner.citizensSpawnPoints.Remove(demolisionTargetProps.citizensPathTargetsToSpawn[pathTargetIndex]);
 
                 if (allBuildings[i].CompareTag("Space"))
                 {
@@ -476,9 +505,9 @@ public class CameraController : MonoBehaviour
                 }
                 else
                 {
-                    for (int y = 0; y < allBuildings[i].GetComponent<BuildingProperties>().additionalSpace.Length; y++)
+                    for (int y = 0; y < demolisionTargetProps.additionalSpace.Length; y++)
                     {
-                        allBuildings.Remove(allBuildings[i].GetComponent<BuildingProperties>().additionalSpace[y]);
+                        allBuildings.Remove(demolisionTargetProps.additionalSpace[y]);
                     }
 
                     Destroy(allBuildings[i].gameObject);
