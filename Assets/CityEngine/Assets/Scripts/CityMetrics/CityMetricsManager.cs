@@ -285,7 +285,7 @@ public class CityMetricsManager : MonoBehaviour
         budget -= amount;
         OnMetricsUpdate?.Invoke();
 
-        Debug.Log($"Expenses deducted: {amount}, New budget: {budget}");
+        // Debug.Log($"Expenses deducted: {amount}, New budget: {budget}");
     }
 
 
