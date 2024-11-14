@@ -5,6 +5,7 @@ using UnityEngine;
 public class SaveDataTrigger : MonoBehaviour
 {
 
+    public string cityFileName = "binary.fun";
     public class SaveProperties
     {
         public int index = -1;
@@ -29,7 +30,7 @@ public class SaveDataTrigger : MonoBehaviour
 
     BuildingData data;
 
-    public bool cityLoadInitialized = false;
+    public bool cityLoadInitialized { get; private set; } = false;
     private void Awake()
     {
         cameraController = FindObjectOfType<CameraController>();
@@ -95,13 +96,13 @@ public class SaveDataTrigger : MonoBehaviour
             buildingsPropertiesBuilded[cameraController.buildingsParent.childCount + i].z = (int)cameraController.roadsParent.GetChild(i).transform.position.z;
         }
 
-        SaveSystem.SaveBuildings(buildingsPropertiesBuilded);
+        SaveSystem.SaveBuildings(buildingsPropertiesBuilded, cityFileName);
     }
 
     public void BuildingDataLoad()
     {
         bool spawnInitialization = true;
-        data = SaveSystem.LoadBuildings();
+        data = SaveSystem.LoadBuildings(cityFileName);
         if (data != null)
         {
             for (int i = 0; i < data.length; i++)

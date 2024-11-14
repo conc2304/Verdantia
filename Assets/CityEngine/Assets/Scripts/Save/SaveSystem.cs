@@ -2,19 +2,15 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class SaveSystem : MonoBehaviour
+public static class SaveSystem
 {
-    // Make the file name editable in the Unity Inspector
-    [Header("Save File Settings")]
-    public string fileName = "binary.fun";  // Default file name
 
-    public void SaveBuildings(SaveDataTrigger.SaveProperties[] buildingProperties)
+    private const string defaultFilePath = "binary.fun";
+    public static void SaveBuildings(SaveDataTrigger.SaveProperties[] buildingProperties, string fileName = defaultFilePath)
     {
-        // Use the file name from the Inspector
-        string path = Application.persistentDataPath + "/" + fileName;
+        string path = Application.persistentDataPath + "/" + (fileName ?? defaultFilePath);
 
-        if (File.Exists(path))
-            File.Delete(path);
+        if (File.Exists(path)) File.Delete(path);
 
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -23,13 +19,12 @@ public class SaveSystem : MonoBehaviour
         formatter.Serialize(stream, data);
         stream.Close();
 
-        Debug.Log("Data saved to: " + path);
+        Debug.Log(Application.persistentDataPath);
     }
 
-    public BuildingData LoadBuildings()
+    public static BuildingData LoadBuildings(string fileName = defaultFilePath)
     {
-        // Use the file name from the Inspector
-        string path = Application.persistentDataPath + "/" + fileName;
+        string path = Application.persistentDataPath + "/" + (fileName ?? defaultFilePath);
 
         if (File.Exists(path))
         {
@@ -46,5 +41,7 @@ public class SaveSystem : MonoBehaviour
             Debug.Log("Save file not found at: " + path);
             return null;
         }
+
     }
+
 }
