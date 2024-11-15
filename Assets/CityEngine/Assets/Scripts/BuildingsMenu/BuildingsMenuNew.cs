@@ -147,7 +147,7 @@ public class BuildingsMenuNew : MonoBehaviour
     private void InitializeTouchGui()
     {
         // initial state
-        print("InitializeGuii");
+        // print("InitializeGui");
         if (displayData != null) displayData.OnModalClose();
 
         navigationGui.SetActive(true);

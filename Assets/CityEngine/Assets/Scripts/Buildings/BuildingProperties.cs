@@ -31,6 +31,10 @@ public class BuildingProperties : MonoBehaviour
     public int buildingIndex = -1;
     public GameObject environment;
     public bool connectToRoad;
+    public bool allowChaining = false;
+    public List<Transform> chainableTypes;
+
+
     public PathTarget[] carsPathTargetsToConnect;
     public Transform[] carsPathTargetsToSpawn;
     public PathTarget[] citizensPathTargetsToConnect;

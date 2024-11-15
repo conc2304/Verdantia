@@ -47,9 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 18
+  buildingIndex: 14
   environment: {fileID: 7628283837102228103}
   connectToRoad: 0
+  allowChaining: 1
+  chainableTypes:
+  - {fileID: 1268100822294927192, guid: c445095dafe584147918ca9685b690fe, type: 3}
+  - {fileID: 3279069989269161359, guid: 6b7a72e5bfc57db468686e8d216ac607, type: 3}
+  - {fileID: 1268100822294927192, guid: 9295f064480ac884ab6cecfca5cff18f, type: 3}
+  - {fileID: 5997599438948274626, guid: b9a2534eb29b7e545b24239f7aa8ef5a, type: 3}
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -72,7 +78,7 @@ MonoBehaviour:
   cityRevenue: 1500
   netEnergy: 3000
   capacity: 0
-  happinessImpact: 5
+  happinessImpact: 7
   pollutionImpact: -50
   heatContribution: -5
   greenSpaceEffect: 10
