@@ -319,13 +319,19 @@ MonoBehaviour:
   cityRevenue: 0
   netEnergy: 0
   capacity: 0
-  happinessImpact: 0
+  happinessImpact: -2
   pollutionImpact: 10
   heatContribution: 15
   greenSpaceEffect: -5
   carbonFootprint: 0
-  proximityEffects: []
-  effectRadius: 0
+  effectRadius: 2
+  proximityEffects:
+  - metricName: 2
+    boostValue: 2
+  - metricName: 7
+    boostValue: 3
+  - metricName: 9
+    boostValue: 1
 --- !u!1 &2269121355003905938
 GameObject:
   m_ObjectHideFlags: 0
