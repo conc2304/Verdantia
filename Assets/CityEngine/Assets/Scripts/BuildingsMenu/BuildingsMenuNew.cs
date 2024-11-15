@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
+using System.Data;
 
 
 public class BuildingsMenuNew : MonoBehaviour
@@ -91,10 +92,10 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject introSequenceGO;
     public GameObject gameUIContainerGO;
     public GameObject heroTitleBar;
+    private BuildingInfoDisplay displayData;
+
     private void Start()
     {
-        cameraController = FindObjectOfType<CameraController>();
-        roadGenerator = FindObjectOfType<RoadGenerator>();
 
         CreateTypes();
 
@@ -124,6 +125,13 @@ public class BuildingsMenuNew : MonoBehaviour
         heatmapDropdown.onValueChanged.AddListener(OnDropdownValueChanged);
     }
 
+    private void Awake()
+    {
+        cameraController = FindObjectOfType<CameraController>();
+        roadGenerator = FindObjectOfType<RoadGenerator>();
+        displayData = GetComponent<BuildingInfoDisplay>();
+    }
+
     private void InitializeHeatmapDropdownList()
     {
         heatmapDropdown.ClearOptions();
@@ -140,6 +148,7 @@ public class BuildingsMenuNew : MonoBehaviour
     {
         // initial state
         print("InitializeGuii");
+        if (displayData != null) displayData.OnModalClose();
 
         navigationGui.SetActive(true);
         gameUIContainerGO.SetActive(true);
@@ -697,7 +706,7 @@ public class BuildingsMenuNew : MonoBehaviour
         BuildingProperties buildingProps = selectedBuilding.GetComponent<BuildingProperties>();
         if (buildingProps != null)
         {
-            BuildingInfoDisplay displayData = GetComponent<BuildingInfoDisplay>();
+            displayData = GetComponent<BuildingInfoDisplay>();
             displayData.DisplayBuildingData(buildingProps);
             buildingStats.SetActive(true);
             navigationGui.SetActive(false);

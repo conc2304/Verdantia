@@ -78,6 +78,7 @@ public class CityMetricsManager : MonoBehaviour
         cityTemperature = startingTemp;
         budget = startingBudget;
         RestartSimulation();
+
         UpdateCityMetrics();
         OnMetricsUpdate?.Invoke();
         OnTempUpdated?.Invoke();
@@ -194,21 +195,33 @@ public class CityMetricsManager : MonoBehaviour
     // Update city metrics based on all buildings
     public void UpdateCityMetrics()
     {
+        Debug.Log($"UpdateCityMetrics | count : {cameraController.allBuildings.Count}");
         if (propertyRanges == null)
         {
             propertyRanges = buildingsMenu.GetPropertyRanges();
             if (propertyRanges == null) return;
         }
 
+        print($"{happiness} | 0");
+
+
         // Reset all metrics before recalculating them
         ResetMetrics();
 
         float tempDifference = cityTemperature - startingTemp;
         int cityArea = 0;
+        float totalGreenSpaceEffect = 0;
+        int totalBuildingsWithGreenSpaceEffect = 0;
+        float normalizationFactor = propertyRanges["greenSpaceEffect"].max * propertyRanges["effectRadius"].max;
+
+
+        float minHappiness = propertyRanges["happinessImpact"].min;
+        float maxHappiness = propertyRanges["happinessImpact"].max;
 
         // additional spaces are included in "allBuildings"
         foreach (Transform building in cameraController.allBuildings)
         {
+            // Skip if not a building/road/space object
             if (!(building.CompareTag("Building") || building.CompareTag("Road") || building.CompareTag("Space"))) continue;
 
             building.TryGetComponent(out BuildingProperties buildingProps);
@@ -218,16 +231,29 @@ public class CityMetricsManager : MonoBehaviour
                 continue;
             };
 
+            Debug.Log($"{buildingProps.buildingName} | hpy = {buildingProps.happinessImpact}");
             cityArea++;
             population += buildingProps.capacity;
-            greenSpace += buildingProps.greenSpaceEffect;
             revenue += buildingProps.cityRevenue;
+
+            // Calculate Green Space Effect
+            if (buildingProps.greenSpaceEffect > 0 && buildingProps.effectRadius > 0)
+            {
+                // Calculate weighted green space effect
+                float weightedGreenSpaceEffect = buildingProps.greenSpaceEffect * buildingProps.effectRadius;
+                float normalizedGreenSpaceContribution = weightedGreenSpaceEffect / normalizationFactor;
+
+                // Sum up the normalized contribution
+                totalGreenSpaceEffect += normalizedGreenSpaceContribution;
+                totalBuildingsWithGreenSpaceEffect++;
+            }
 
             // Environmental metrics
             float adjustedHeatContribution = buildingProps.heatContribution;
             float adjustedEnergyConsumption = buildingProps.netEnergy;
             float adjustedCarbonFootprint = buildingProps.carbonFootprint;
-            float adjustedHappiness = buildingProps.happinessImpact;
+            // float adjustedHappiness = buildingProps.happinessImpact;
+            float adjustedHappiness = (buildingProps.happinessImpact - minHappiness) / (maxHappiness - minHappiness); ;
             float adjustedPollution = buildingProps.pollutionImpact;
 
             // Apply additional feedback if temperature is above base
@@ -240,6 +266,7 @@ public class CityMetricsManager : MonoBehaviour
                 adjustedPollution += adjustedPollution * tempDifference * tempSensitivity;
             }
 
+
             // Apply adjusted metrics
             happiness += (int)adjustedHappiness;
             urbanHeat += (int)adjustedHeatContribution;
@@ -247,14 +274,23 @@ public class CityMetricsManager : MonoBehaviour
             energy += (int)adjustedEnergyConsumption;
             carbonEmission += (int)adjustedCarbonFootprint;
         }
+        print($"{happiness} | 1");
+
+        greenSpace = (float)Math.Round(totalGreenSpaceEffect * 100);
 
         // Adjust happiness to be averaged over all buildings
         happiness = cameraController.allBuildings.Count > 0 ? (happiness / cameraController.allBuildings.Count) : 0;
-        happiness = 100 * (
-            (happiness - propertyRanges["happinessImpact"].min) /
-            (propertyRanges["happinessImpact"].max - propertyRanges["happinessImpact"].min)
-            );
+        print($"{happiness} | 2");
+
+        // happiness = (happiness / cameraController.allBuildings.Count) * 100;
+
+        print($"{happiness} | 3");
+
+
         happiness = (float)Math.Round(happiness);
+
+        print($"{happiness} | 4");
+
     }
 
     // Method to reset all metrics to initial state before recalculation
@@ -286,6 +322,45 @@ public class CityMetricsManager : MonoBehaviour
         OnMetricsUpdate?.Invoke();
 
         // Debug.Log($"Expenses deducted: {amount}, New budget: {budget}");
+    }
+
+
+
+    public float CalculateOverallGreenSpaceEffect()
+    {
+        float totalGreenSpaceEffect = 0;
+        int totalBuildingsWithGreenSpaceEffect = 0;
+
+        // Constants for normalization
+        float maxGreenSpaceEffect = 60f;
+        float maxEffectRadius = 6f;
+        float normalizationFactor = maxGreenSpaceEffect * maxEffectRadius; // 360
+
+        foreach (Transform building in cameraController.allBuildings)
+        {
+            BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
+
+            // Only consider buildings with a positive green space effect
+            if (buildingProps.greenSpaceEffect != 0 && buildingProps.effectRadius > 0)
+            {
+                // Calculate weighted green space effect
+                float weightedGreenSpaceEffect = buildingProps.greenSpaceEffect * buildingProps.effectRadius;
+                float normalizedGreenSpaceContribution = weightedGreenSpaceEffect / normalizationFactor;
+
+                // Sum up the normalized contribution
+                totalGreenSpaceEffect += normalizedGreenSpaceContribution;
+                totalBuildingsWithGreenSpaceEffect++;
+            }
+        }
+
+        // Scale up to make it more readable (e.g., on a 0-100 scale)
+        float cityGreenSpaceEffect = totalGreenSpaceEffect * 100;
+
+        // Optional: If you want to adjust based on green space coverage of residential areas
+        // float coverageScore = CalculateGreenSpaceCoverageScore(greenSpaces, residentialBuildings);
+        // cityGreenSpaceEffect *= (coverageScore / 100);
+
+        return Mathf.Round(cityGreenSpaceEffect);
     }
 
 
