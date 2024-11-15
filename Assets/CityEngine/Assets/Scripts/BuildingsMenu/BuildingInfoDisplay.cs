@@ -131,6 +131,5 @@ public class BuildingInfoDisplay : MonoBehaviour
         modal.SetActive(true);
         infoNavToggle.SetActive(false);
         menuBuildings.SetActive(false);
-
     }
 }

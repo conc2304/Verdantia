@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -722,5 +723,29 @@ public class CameraController : MonoBehaviour
         saveDataTrigger.BuildingDataSave();
     }
 
+    public List<Transform> GetAllBuildings(bool includeSpaces = true)
+    {
+        List<Transform> cityBuildings = new List<Transform>();
+        cityBuildings.Concat(roadGenerator.allRoads);
+
+
+        // allBuildings contians buildings, spaces,
+        foreach (Transform building in allBuildings)
+        {
+
+            if (!(building.CompareTag("Building") || (building.CompareTag("Space") && includeSpaces))) continue;
+
+            building.TryGetComponent(out BuildingProperties buildingProps);
+            if (!buildingProps)
+            {
+                Debug.LogError("Building Props is Null for : " + building.name);
+                continue;
+            };
+
+            cityBuildings.Add(building);
+        }
+
+        return cityBuildings;
+    }
 }
 
