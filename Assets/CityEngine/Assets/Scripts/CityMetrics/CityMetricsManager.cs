@@ -195,7 +195,6 @@ public class CityMetricsManager : MonoBehaviour
     // Update city metrics based on all buildings
     public void UpdateCityMetrics()
     {
-        Debug.Log($"UpdateCityMetrics | count : {cameraController.allBuildings.Count}");
         if (propertyRanges == null)
         {
             propertyRanges = buildingsMenu.GetPropertyRanges();
@@ -219,10 +218,16 @@ public class CityMetricsManager : MonoBehaviour
         float maxHappiness = propertyRanges["happinessImpact"].max;
 
         // additional spaces are included in "allBuildings"
-        foreach (Transform building in cameraController.allBuildings)
+        bool includeSpaces = false;
+        List<Transform> cityBuildings = cameraController.GetAllBuildings(includeSpaces);
+        foreach (Transform building in cityBuildings)
         {
-            // Skip if not a building/road/space object
-            if (!(building.CompareTag("Building") || building.CompareTag("Road") || building.CompareTag("Space"))) continue;
+
+            if (!(building.CompareTag("Building") || building.CompareTag("Road")))
+            {
+                // buildings' additionalSpaces has metrics inherited for the sake of heatmapping so dont over count them here
+                continue;
+            }
 
             building.TryGetComponent(out BuildingProperties buildingProps);
             if (!buildingProps)
@@ -279,10 +284,9 @@ public class CityMetricsManager : MonoBehaviour
         greenSpace = (float)Math.Round(totalGreenSpaceEffect * 100);
 
         // Adjust happiness to be averaged over all buildings
-        happiness = cameraController.allBuildings.Count > 0 ? (happiness / cameraController.allBuildings.Count) : 0;
+        happiness = cityBuildings.Count > 0 ? (happiness / cityBuildings.Count) : 0;
         print($"{happiness} | 2");
 
-        // happiness = (happiness / cameraController.allBuildings.Count) * 100;
 
         print($"{happiness} | 3");
 
@@ -336,7 +340,8 @@ public class CityMetricsManager : MonoBehaviour
         float maxEffectRadius = 6f;
         float normalizationFactor = maxGreenSpaceEffect * maxEffectRadius; // 360
 
-        foreach (Transform building in cameraController.allBuildings)
+        bool includeSpaces = false;
+        foreach (Transform building in cameraController.GetAllBuildings(includeSpaces))
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
 
@@ -407,7 +412,8 @@ public class CityMetricsManager : MonoBehaviour
     public float[,] GetCityTemperatures_OG()
     {
 
-        List<Transform> allBuildings = cameraController.allBuildings;
+        bool includeSpace = false;
+        List<Transform> allBuildings = cameraController.GetAllBuildings(includeSpace);
 
         float[,] outputTemps = ArrayFill(gridLengthX, gridLengthZ, 0);
 
@@ -539,7 +545,8 @@ public class CityMetricsManager : MonoBehaviour
         cityBoarderMinZ = float.MaxValue;
         cityBoarderMaxZ = float.MinValue;
 
-        foreach (Transform building in cameraController.allBuildings)
+        bool includeSpace = true
+        foreach (Transform building in cameraController.GetAllBuildings(includeSpace))
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
             if (buildingProps == null) continue;
@@ -604,7 +611,8 @@ public class CityMetricsManager : MonoBehaviour
         HashSet<(int, int)> occupiedGridPositions = new HashSet<(int, int)>();
 
         // First, determine all occupied positions
-        foreach (Transform building in cameraController.allBuildings)
+        bool includeSpaces = false;
+        foreach (Transform building in cameraController.GetAllBuildings(includeSpaces))
         {
             // only do Buildings and Roads
             if (!(building.CompareTag("Building") || building.CompareTag("Road"))) continue;
