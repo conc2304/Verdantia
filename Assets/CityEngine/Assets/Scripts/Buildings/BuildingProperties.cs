@@ -71,8 +71,8 @@ public class BuildingProperties : MonoBehaviour
     public int heatContribution; // Contribution to urban heat island effect
     public int greenSpaceEffect; // Benefits of green space
     public int carbonFootprint; // Carbon emissions of this building
-    public List<MetricBoost> proximityEffects;
     public int effectRadius; // The effective radius of this building's service
+    public List<MetricBoost> proximityEffects;
 
 
     private BuildingsMenuNew buildingsMenu;

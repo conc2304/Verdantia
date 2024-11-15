@@ -45,7 +45,7 @@ public class SaveDataTrigger : MonoBehaviour
             try
             {
                 buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>().buildingIndex = i;
-                // ObjectPrinter.PrintBuildingDataAsJson(buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>());
+                ObjectPrinter.PrintBuildingDataAsJson(buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>());
             }
             catch
             {

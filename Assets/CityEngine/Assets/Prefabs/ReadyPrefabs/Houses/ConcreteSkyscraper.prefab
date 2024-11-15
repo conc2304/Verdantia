@@ -1693,7 +1693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: -1
+  buildingIndex: 50
   environment: {fileID: 6403579935978578}
   connectToRoad: 0
   carsPathTargetsToConnect: []
@@ -1709,21 +1709,34 @@ MonoBehaviour:
   buildingTime: 30
   spaceWidth: 2
   buildingName: Concrete Skyscraper Office
-  buildingDescription: 
-  zoneRequirement: 1
-  constructionCost: 300000
+  buildingDescription: The Concrete Skyscraper Office is a high-capacity commercial
+    building that generates substantial tax revenue, but it also highlights the environmental
+    challenges posed by dense urban development. Made from concrete, the building
+    absorbs and retains heat, significantly contributing to the urban heat island
+    effect. Its high energy consumption and pollution output result in a large carbon
+    footprint, worsening air quality and straining public health. Additionally, the
+    lack of green space surrounding the building reduces its ability to mitigate
+    these environmental impacts, emphasizing the need for sustainable urban planning.
+  constructionCost: 280000
   demolitionCost: 75000
-  income: 0
-  expense: 0
-  energyConsumption: 2000
-  resourceProduction: 0
-  capacity: 4000
-  happinessImpact: -5
-  pollutionImpact: 0
-  heatContribution: 80
-  greenSpaceEffect: 0
-  carbonFootprint: 2000
-  coverageRadius: 0
+  cityRevenue: 6500
+  netEnergy: -2300
+  capacity: 550
+  happinessImpact: -3
+  pollutionImpact: 100
+  heatContribution: 35
+  greenSpaceEffect: -15
+  carbonFootprint: 2500
+  effectRadius: 4
+  proximityEffects:
+  - metricName: 3
+    boostValue: 300
+  - metricName: 6
+    boostValue: -5
+  - metricName: 8
+    boostValue: -10
+  - metricName: 7
+    boostValue: 20
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1991,20 +2004,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  income: 0
-  expense: 0
-  energyConsumption: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
   happinessImpact: 0
   pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2163,20 +2174,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  income: 0
-  expense: 0
-  energyConsumption: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
   happinessImpact: 0
   pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2284,20 +2293,18 @@ MonoBehaviour:
   spaceWidth: 1
   buildingName: 
   buildingDescription: 
-  zoneRequirement: 0
   constructionCost: 0
   demolitionCost: 0
-  income: 0
-  expense: 0
-  energyConsumption: 0
-  resourceProduction: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
   happinessImpact: 0
   pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0
