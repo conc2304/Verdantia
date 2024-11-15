@@ -68,8 +68,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &1200924099984898703
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,8 +138,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &2097803470436546452
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,8 +208,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &3010632827834040516
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,8 +278,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &3567788603933871046
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,8 +348,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &4457244273089208584
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,8 +454,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &5273924451734148981
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,8 +563,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &5793062631657546409
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,6 +654,7 @@ MonoBehaviour:
   heatContribution: 20
   greenSpaceEffect: -5
   carbonFootprint: 1800
+  effectRadius: 5
   proximityEffects:
   - metricName: 3
     boostValue: 500
@@ -661,7 +662,6 @@ MonoBehaviour:
     boostValue: 3
   - metricName: 2
     boostValue: 10
-  effectRadius: 3
 --- !u!114 &1034629162656238963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,8 +743,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1001 &292837686419520677
 PrefabInstance:
   m_ObjectHideFlags: 0

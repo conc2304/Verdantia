@@ -1135,6 +1135,7 @@ MonoBehaviour:
   heatContribution: 10
   greenSpaceEffect: -5
   carbonFootprint: 600
+  effectRadius: 3
   proximityEffects:
   - metricName: 3
     boostValue: 200
@@ -1142,7 +1143,6 @@ MonoBehaviour:
     boostValue: 2
   - metricName: 7
     boostValue: 5
-  effectRadius: 2
 --- !u!114 &9009391232856852927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1637,8 +1637,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8939596189235884654
 GameObject:
   m_ObjectHideFlags: 0

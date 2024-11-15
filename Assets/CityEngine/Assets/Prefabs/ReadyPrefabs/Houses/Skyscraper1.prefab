@@ -672,6 +672,7 @@ MonoBehaviour:
   heatContribution: 15
   greenSpaceEffect: 5
   carbonFootprint: 1000
+  effectRadius: 3
   proximityEffects:
   - metricName: 6
     boostValue: 3
@@ -679,7 +680,6 @@ MonoBehaviour:
     boostValue: 10
   - metricName: 3
     boostValue: 100
-  effectRadius: 2
 --- !u!114 &4025124437981863053
 MonoBehaviour:
   m_ObjectHideFlags: 0
