@@ -74,7 +74,6 @@ public class CityMetricsManager : MonoBehaviour
     void Start()
     {
         gridTileSize = cameraController.gridSize;
-        propertyRanges = buildingsMenu.GetPropertyRanges();
         cityTemperature = startingTemp;
         budget = startingBudget;
         RestartSimulation();
@@ -123,6 +122,7 @@ public class CityMetricsManager : MonoBehaviour
         {
             // Every month, calculate the city's financial status
             UpdateMonthlybudget();
+            UpdateCityMetrics();
             AdvanceMonth();
             monthTimer = 0f;
         }
@@ -195,37 +195,39 @@ public class CityMetricsManager : MonoBehaviour
     // Update city metrics based on all buildings
     public void UpdateCityMetrics()
     {
-        if (propertyRanges == null)
-        {
-            propertyRanges = buildingsMenu.GetPropertyRanges();
-            if (propertyRanges == null) return;
-        }
-
-        print($"{happiness} | 0");
-
+        propertyRanges = buildingsMenu.GetPropertyRanges();
+        if (propertyRanges == null) return;
 
         // Reset all metrics before recalculating them
         ResetMetrics();
 
-        float tempDifference = cityTemperature - startingTemp;
+        float tempDifference = Mathf.Clamp(-10, 10, cityTemperature - startingTemp);
+
         int cityArea = 0;
         float totalGreenSpaceEffect = 0;
         int totalBuildingsWithGreenSpaceEffect = 0;
         float normalizationFactor = propertyRanges["greenSpaceEffect"].max * propertyRanges["effectRadius"].max;
 
-
         float minHappiness = propertyRanges["happinessImpact"].min;
         float maxHappiness = propertyRanges["happinessImpact"].max;
 
-        // additional spaces are included in "allBuildings"
+        // To store total happiness and weights
+        float totalHappiness = 0f;
+        float totalPopulationWeight = 0f;
+
+        // Include additional spaces in the "allBuildings" list
         bool includeSpaces = false;
         List<Transform> cityBuildings = cameraController.GetAllBuildings(includeSpaces);
+        int totalCityBuildings = cityBuildings.Count;
+
+        print($"--- UpdateCityMetrics --- ");
+        print($"#Buildings : {cityBuildings.Count}");
+
         foreach (Transform building in cityBuildings)
         {
-
             if (!(building.CompareTag("Building") || building.CompareTag("Road")))
             {
-                // buildings' additionalSpaces has metrics inherited for the sake of heatmapping so dont over count them here
+                // Skip buildings' additionalSpaces to avoid over-counting
                 continue;
             }
 
@@ -234,43 +236,25 @@ public class CityMetricsManager : MonoBehaviour
             {
                 Debug.LogError("Building Props is Null for : " + building.name);
                 continue;
-            };
+            }
 
-            Debug.Log($"{buildingProps.buildingName} | hpy = {buildingProps.happinessImpact}");
-            cityArea++;
+            cityArea += buildingProps.additionalSpace.Count() + 1; // 1 for the building, and then count the spaces
+
             population += buildingProps.capacity;
             revenue += buildingProps.cityRevenue;
-
-            // Calculate Green Space Effect
-            if (buildingProps.greenSpaceEffect > 0 && buildingProps.effectRadius > 0)
-            {
-                // Calculate weighted green space effect
-                float weightedGreenSpaceEffect = buildingProps.greenSpaceEffect * buildingProps.effectRadius;
-                float normalizedGreenSpaceContribution = weightedGreenSpaceEffect / normalizationFactor;
-
-                // Sum up the normalized contribution
-                totalGreenSpaceEffect += normalizedGreenSpaceContribution;
-                totalBuildingsWithGreenSpaceEffect++;
-            }
+            greenSpace += buildingProps.greenSpaceEffect;
 
             // Environmental metrics
             float adjustedHeatContribution = buildingProps.heatContribution;
             float adjustedEnergyConsumption = buildingProps.netEnergy;
             float adjustedCarbonFootprint = buildingProps.carbonFootprint;
-            // float adjustedHappiness = buildingProps.happinessImpact;
-            float adjustedHappiness = (buildingProps.happinessImpact - minHappiness) / (maxHappiness - minHappiness); ;
+            float adjustedHappiness = buildingProps.happinessImpact;
             float adjustedPollution = buildingProps.pollutionImpact;
 
-            // Apply additional feedback if temperature is above base
-            if (tempDifference != 0)
-            {
-                adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
-                adjustedCarbonFootprint += adjustedCarbonFootprint * tempDifference * tempSensitivity;
-                adjustedHeatContribution += adjustedHeatContribution * tempDifference * tempSensitivity;
-                adjustedHappiness += adjustedHappiness * tempDifference * tempSensitivity;
-                adjustedPollution += adjustedPollution * tempDifference * tempSensitivity;
-            }
-
+            // Add to happiness calculation
+            float populationWeight = buildingProps.capacity > 0 ? buildingProps.capacity : 1; // Use building capacity as a weight
+            totalHappiness += adjustedHappiness * populationWeight;
+            totalPopulationWeight += populationWeight;
 
             // Apply adjusted metrics
             happiness += (int)adjustedHappiness;
@@ -279,23 +263,27 @@ public class CityMetricsManager : MonoBehaviour
             energy += (int)adjustedEnergyConsumption;
             carbonEmission += (int)adjustedCarbonFootprint;
         }
-        print($"{happiness} | 1");
 
-        greenSpace = (float)Math.Round(totalGreenSpaceEffect * 100);
+        // Calculate overall city happiness
+        happiness = (float)Math.Round(totalPopulationWeight > 0 ? totalHappiness / totalPopulationWeight : 0f);
 
-        // Adjust happiness to be averaged over all buildings
-        happiness = cityBuildings.Count > 0 ? (happiness / cityBuildings.Count) : 0;
-        print($"{happiness} | 2");
+        // Clamp cityHappiness to a defined range (e.g., minHappiness to maxHappiness)
+        // cityHappiness = Mathf.Clamp(cityHappiness, minHappiness, maxHappiness);
 
-
-        print($"{happiness} | 3");
-
-
-        happiness = (float)Math.Round(happiness);
-
-        print($"{happiness} | 4");
-
+        // Log the city happiness for debugging
+        print($"City Happiness: {happiness}");
     }
+
+
+    // Apply additional feedback if temperature is above base
+    // if (tempDifference != 0)
+    // {
+    //     adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
+    //     adjustedCarbonFootprint += adjustedCarbonFootprint * tempDifference * tempSensitivity;
+    //     adjustedHeatContribution += adjustedHeatContribution * tempDifference * tempSensitivity;
+    //     adjustedHappiness += adjustedHappiness * tempDifference * tempSensitivity;
+    //     adjustedPollution += adjustedPollution * tempDifference * tempSensitivity;
+    // }     
 
     // Method to reset all metrics to initial state before recalculation
     private void ResetMetrics()
@@ -310,22 +298,19 @@ public class CityMetricsManager : MonoBehaviour
         revenue = 0;
         income = 0;
         expenses = 0;
+        // Budget does not get reset
     }
 
     public void AddRevenue(int amount)
     {
         budget += amount;
         OnMetricsUpdate?.Invoke();
-
-        Debug.Log($"Revenue added: {amount}, New budget: {budget}");
     }
 
     public void DeductExpenses(int amount)
     {
         budget -= amount;
         OnMetricsUpdate?.Invoke();
-
-        // Debug.Log($"Expenses deducted: {amount}, New budget: {budget}");
     }
 
 

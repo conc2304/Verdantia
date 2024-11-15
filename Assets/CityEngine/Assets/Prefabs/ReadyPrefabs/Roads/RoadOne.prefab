@@ -1316,7 +1316,7 @@ MonoBehaviour:
   cityRevenue: 0
   netEnergy: 0
   capacity: 0
-  happinessImpact: -2
+  happinessImpact: 0
   pollutionImpact: 10
   heatContribution: 15
   greenSpaceEffect: -5

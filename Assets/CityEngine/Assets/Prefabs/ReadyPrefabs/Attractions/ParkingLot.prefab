@@ -615,7 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 45
+  buildingIndex: 39
   environment: {fileID: 4634941177921207583}
   connectToRoad: 0
   carsPathTargetsToConnect: []
@@ -649,7 +649,7 @@ MonoBehaviour:
   cityRevenue: 0
   netEnergy: 0
   capacity: 0
-  happinessImpact: -5
+  happinessImpact: -10
   pollutionImpact: 15
   heatContribution: 10
   greenSpaceEffect: -10

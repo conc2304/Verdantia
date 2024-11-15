@@ -146,6 +146,8 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -416,9 +418,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 38
+  buildingIndex: 33
   environment: {fileID: 926642169814988149}
   connectToRoad: 1
+  allowChaining: 1
+  chainableTypes:
+  - {fileID: 3279069989269161359, guid: 6b7a72e5bfc57db468686e8d216ac607, type: 3}
+  - {fileID: 1268100822294927192, guid: 9295f064480ac884ab6cecfca5cff18f, type: 3}
+  - {fileID: 1268100822294927192}
+  - {fileID: 5997599438948274626, guid: b9a2534eb29b7e545b24239f7aa8ef5a, type: 3}
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect:
@@ -448,7 +456,7 @@ MonoBehaviour:
   cityRevenue: 0
   netEnergy: 0
   capacity: 0
-  happinessImpact: 20
+  happinessImpact: 15
   pollutionImpact: -20
   heatContribution: -20
   greenSpaceEffect: 50
@@ -816,6 +824,8 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1873,6 +1883,8 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -2079,6 +2091,8 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -2297,6 +2311,8 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []

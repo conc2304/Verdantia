@@ -893,7 +893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 30
+  buildingIndex: 25
   environment: {fileID: 2295577919374763152}
   connectToRoad: 1
   carsPathTargetsToConnect:
@@ -927,15 +927,15 @@ MonoBehaviour:
   cityRevenue: 500
   netEnergy: -200
   capacity: 20
-  happinessImpact: 8
+  happinessImpact: 5
   pollutionImpact: 5
   heatContribution: 2
   greenSpaceEffect: 0
   carbonFootprint: 100
+  effectRadius: 2
   proximityEffects:
   - metricName: 6
     boostValue: 5
-  effectRadius: 2
 --- !u!114 &8244234786447428393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1578,8 +1578,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8346087874753987616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,8 +1739,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,8 +1809,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8805113475485021746
 GameObject:
   m_ObjectHideFlags: 0

@@ -153,14 +153,11 @@ public class CameraController : MonoBehaviour
             }
         }
 
-
         if (cityChanged && saveDataTrigger.cityLoadInitialized)
         {
-            print($"City changed: {cityChanged} | city Initialized : {saveDataTrigger.cityLoadInitialized}");
             cityMetricsManager.UpdateCityMetrics();
         } // TODO is this correct
-
-        cityChanged = false;
+        cityChanged = false; // reset for next run
     }
 
     public void UpdateHeatMap(string metricName)
@@ -243,7 +240,6 @@ public class CameraController : MonoBehaviour
 
             Transform target1 = Instantiate(targetNew, new Vector3(0, 0, 0), Quaternion.identity).transform;
             target = target1;
-            cityChanged = true;
             // lastClickTime = 0;
 
             if (!isInitializing)
@@ -267,6 +263,7 @@ public class CameraController : MonoBehaviour
                 }
             }
 
+            cityChanged = true;
             return new Dictionary<string, object> { { "status", true }, { "msg", "Road added! You can add more." } };
 
         }
@@ -310,11 +307,22 @@ public class CameraController : MonoBehaviour
         // if we are initializing the game, 
         // then we dont care if the building is next to a road
         // if we are not initializing the game, then check if the building is next to a road
-        if (!isInitializing && !IsBuildingNextToRoad(targetNew))
+        // allow certain buildings to not be placed by road if chaining is enabled
+        if (!isInitializing)
         {
-            dontBuild = true;
-            msg = "Must be placed next to a road";
-            return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
+            bool targetCanChain = CanBuildingChain(targetNew);
+            if (targetCanChain)
+            {
+                // do nothing
+            }
+            else if (!IsBuildingNextToRoad(targetNew))
+            {
+
+                dontBuild = true;
+                msg = "Must be placed next to a road" + (targetCanChain ? " or by similar building" : "");
+
+                return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
+            }
         }
 
 
@@ -426,6 +434,16 @@ public class CameraController : MonoBehaviour
         return new Dictionary<string, object> { { "status", false }, { "msg", "Unable to add building." } };
     }
 
+    public bool CanBuildingChain(Transform targetNew)
+    {
+
+        BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
+        string[] gameObjectNames = targetBuildProp.chainableTypes.Select(transform => transform.gameObject.name).ToArray();
+        gameObjectNames.Append(target.name);
+
+        return targetBuildProp.allowChaining && IsNextToBuildingsOfType(targetNew, gameObjectNames);
+    }
+
     public bool IsBuildingNextToRoad(Transform targetNew)
     {
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
@@ -447,6 +465,60 @@ public class CameraController : MonoBehaviour
                 if (IsAdjacent(space.position, road.position))
                 {
                     return true;
+                }
+            }
+        }
+
+        // No adjacent road found for the building or additional spaces
+        return false;
+    }
+
+    public bool IsNextToBuildingsOfType(Transform targetNew, string[] buildingNames)
+    {
+        BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
+
+        // Check if the target is next to a building of a type
+        foreach (Transform other in allBuildings)
+        {
+            if (!buildingNames.Contains(other.name)) continue;
+
+            if (IsAdjacent(targetNew.position, other.position))
+            {
+                return true;
+            }
+
+            // Check if building is next to any of the existing building's additional slaces
+            other.TryGetComponent(out BuildingProperties buildingProps);
+            foreach (Transform additionalSpace in buildingProps.additionalSpace)
+            {
+                if (IsAdjacent(targetNew.position, additionalSpace.position))
+                {
+                    return true;
+                }
+            }
+        }
+
+        // Check if any THIS building's additional spaces of the new building are next to existing buildings of type
+        foreach (Transform space in targetBuildProp.additionalSpace)
+        {
+            foreach (Transform other in allBuildings)
+            {
+
+                if (!buildingNames.Contains(other.name)) continue;
+
+                if (IsAdjacent(space.position, other.position))
+                {
+                    return true;
+                }
+
+                // Check if any of THIS building's spaces are adjacent to spaces of existing building
+                other.TryGetComponent(out BuildingProperties buildingProps);
+                foreach (Transform additionalSpace in buildingProps.additionalSpace)
+                {
+                    if (IsAdjacent(targetNew.position, additionalSpace.position))
+                    {
+                        return true;
+                    }
                 }
             }
         }
