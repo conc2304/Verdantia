@@ -1717,11 +1717,7 @@ MonoBehaviour:
     to environmental challenges. The building\u2019s extensive glass surface increases
     heat reflection onto nearby areas, intensifying the urban heat island effect.
     Additionally, high energy consumption and pollution output lead to a sizable
-    carbon footprint, impacting air quality and public health. Inspired by eco-friendly
-    solutions like Ford\u2019s \u201Cliving roof,\u201D integrating green walls,
-    rooftop gardens, or using advanced glass coatings could help offset some of its
-    environmental impact, making it more sustainable while maintaining its iconic
-    architectural appeal."
+    carbon footprint, impacting air quality and public health."
   constructionCost: 300000
   demolitionCost: 75000
   cityRevenue: 7000
@@ -1732,12 +1728,14 @@ MonoBehaviour:
   heatContribution: 25
   greenSpaceEffect: -10
   carbonFootprint: 2000
+  effectRadius: 4
   proximityEffects:
   - metricName: 3
     boostValue: 500
   - metricName: 7
     boostValue: 15
-  effectRadius: 0
+  - metricName: 2
+    boostValue: 8
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2015,8 +2013,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2185,8 +2183,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,8 +2386,8 @@ MonoBehaviour:
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  proximityEffects: []
   effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0

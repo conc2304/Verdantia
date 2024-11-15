@@ -545,7 +545,7 @@ public class CityMetricsManager : MonoBehaviour
         cityBoarderMinZ = float.MaxValue;
         cityBoarderMaxZ = float.MinValue;
 
-        bool includeSpace = true
+        bool includeSpace = true;
         foreach (Transform building in cameraController.GetAllBuildings(includeSpace))
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
