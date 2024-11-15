@@ -126,7 +126,7 @@ public class BuildingProperties : MonoBehaviour
 
     public void ApplyProximityEffects(List<Transform> allBuildings = null)
     {
-        allBuildings ??= FindObjectOfType<CameraController>().allBuildings;
+        allBuildings ??= FindObjectOfType<CameraController>().GetAllBuildings();
         // print($"Attempt ApplyProximityEffects from {buildingName}");
         // print($"Building Count: {allBuildings.Count}");
 
@@ -150,7 +150,8 @@ public class BuildingProperties : MonoBehaviour
 
     public void RemoveProximityEffects()
     {
-        foreach (Transform buildingTransform in cameraController.allBuildings)
+
+        foreach (Transform buildingTransform in cameraController.GetAllBuildings())
         {
             if (buildingTransform != transform) // Skip self
             {

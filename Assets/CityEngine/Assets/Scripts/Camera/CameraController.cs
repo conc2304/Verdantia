@@ -171,7 +171,7 @@ public class CameraController : MonoBehaviour
 
         int metricMin = buildingMenu.propertyRanges[heatmapMetric].min;
         int metricMax = buildingMenu.propertyRanges[heatmapMetric].max;
-        heatMap.UpdateHeatMap(allBuildings, heatmapMetric, metricMin, metricMax);
+        heatMap.UpdateHeatMap(GetAllBuildings(true), heatmapMetric, metricMin, metricMax);
     }
 
     private void LateUpdate()
@@ -726,7 +726,7 @@ public class CameraController : MonoBehaviour
     public List<Transform> GetAllBuildings(bool includeSpaces = true)
     {
         List<Transform> cityBuildings = new List<Transform>();
-        cityBuildings.Concat(roadGenerator.allRoads);
+        cityBuildings.AddRange(roadGenerator.allRoads);
 
 
         // allBuildings contians buildings, spaces,
