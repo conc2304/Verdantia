@@ -304,24 +304,29 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        // if we are initializing the game, 
-        // then we dont care if the building is next to a road
-        // if we are not initializing the game, then check if the building is next to a road
-        // allow certain buildings to not be placed by road if chaining is enabled
+        // if we are initializing the game, then we are loading the city from memory
+        // and we dont care about placement restrictions
+        // otherwise the user is placing builinds so then check placement restrictions
         if (!isInitializing)
         {
-            bool targetCanChain = CanBuildingChain(targetNew);
-            if (targetCanChain)
+            // some buildings can be placed anywhere as long as they do not over lap
+            // if they have do not unrestrictedPlacement then check the restrictions below
+            if (targetBuildProp.unrestrictedPlacement == false)
             {
-                // do nothing
-            }
-            else if (!IsBuildingNextToRoad(targetNew))
-            {
+                // If target cannot chain, then it must be built by a road, 
+                // otherwise it can be placed by a chainable building
+                bool targetCanChain = CanBuildingChain(targetNew);
+                if (!targetCanChain)
+                {
+                    // if the target is not chainable, then it must be placed by road
+                    if (!IsBuildingNextToRoad(targetNew))
+                    {
+                        dontBuild = true;
+                        msg = "Must be placed next to a road" + (targetCanChain ? " or by similar building" : "");
+                        return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
+                    }
+                }
 
-                dontBuild = true;
-                msg = "Must be placed next to a road" + (targetCanChain ? " or by similar building" : "");
-
-                return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
             }
         }
 
@@ -434,14 +439,17 @@ public class CameraController : MonoBehaviour
         return new Dictionary<string, object> { { "status", false }, { "msg", "Unable to add building." } };
     }
 
+    // Check if building is next to any chainable buildings, chainable buildings can chain off of themselves
     public bool CanBuildingChain(Transform targetNew)
     {
-
         BuildingProperties targetBuildProp = targetNew.GetComponent<BuildingProperties>();
+
+        if (targetBuildProp.allowChaining == false) return false;
+
         string[] gameObjectNames = targetBuildProp.chainableTypes.Select(transform => transform.gameObject.name).ToArray();
         gameObjectNames.Append(target.name);
 
-        return targetBuildProp.allowChaining && IsNextToBuildingsOfType(targetNew, gameObjectNames);
+        return IsNextToBuildingsOfType(targetNew, gameObjectNames);
     }
 
     public bool IsBuildingNextToRoad(Transform targetNew)
