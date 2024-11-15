@@ -31,9 +31,9 @@ public class BuildingProperties : MonoBehaviour
     public int buildingIndex = -1;
     public GameObject environment;
     public bool connectToRoad;
-    public bool allowChaining = false;
-    public List<Transform> chainableTypes;
-
+    public bool unrestrictedPlacement = false;  // Allows building to not be built next to roads or chainable buildings (ie allow forest placement anywhere)
+    public bool allowChaining = false;  // Allows building to be placed not along roads if chaining
+    public List<Transform> chainableTypes; // List of building types that item can chain off of
 
     public PathTarget[] carsPathTargetsToConnect;
     public Transform[] carsPathTargetsToSpawn;

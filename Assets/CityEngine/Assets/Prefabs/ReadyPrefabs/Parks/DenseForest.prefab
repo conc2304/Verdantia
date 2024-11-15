@@ -47,6 +47,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -119,6 +120,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -191,6 +193,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -263,6 +266,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -335,6 +339,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -523,6 +528,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -634,6 +640,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -711,6 +718,7 @@ MonoBehaviour:
   buildingIndex: 46
   environment: {fileID: 4144757082451293284}
   connectToRoad: 0
+  unrestrictedPlacement: 1
   allowChaining: 1
   chainableTypes:
   - {fileID: 1268100822294927192, guid: c445095dafe584147918ca9685b690fe, type: 3}
@@ -820,6 +828,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
