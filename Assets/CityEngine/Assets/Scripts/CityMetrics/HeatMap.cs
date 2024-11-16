@@ -11,7 +11,7 @@ public class HeatMap : MonoBehaviour
     private Texture2D heatMapTexture;
     public GameObject heatMapPlane;
     private Gradient heatGradient;
-    [SerializeField] private List<Color> heatColors = new();
+    [SerializeField] public List<Color> heatColors = new();
 
 
     [Range(0f, 1f)]
@@ -73,11 +73,10 @@ public class HeatMap : MonoBehaviour
         heatGradient = new Gradient();
 
         List<Color> gradientPalette = new List<Color>{
-            // Color.blue,
-            // Color.cyan,
+            Color.blue,
+            Color.cyan,
             Color.green,
             Color.yellow,
-            new (1f, 0.65f, 0f),  // orange color
             Color.red
         };
 
