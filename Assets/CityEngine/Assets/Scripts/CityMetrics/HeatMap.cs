@@ -18,8 +18,12 @@ public class HeatMap : MonoBehaviour
     public float heatMapAlpha = 0.55f;
     public bool heatMapInitialized = false;
 
+    public HeatMapLegend heatMapLegend;
+
     private void Start()
     {
+        if (!heatMapLegend) heatMapLegend = FindObjectOfType<HeatMapLegend>();
+
         InitializeGradient();
 
         Grid grid = FindObjectOfType<Grid>();
@@ -148,6 +152,8 @@ public class HeatMap : MonoBehaviour
         // Generate the texture to represent the heat map
         GenerateHeatMapTexture(metricMin, metricMax);
         DisplayHeatMap();
+
+        heatMapLegend.UpdateLabels(metricName, metricMin, metricMax);
     }
 
     public void RenderCityTemperatureHeatMap(float[,] matrix, int metricMin, int metricMax)
@@ -155,6 +161,9 @@ public class HeatMap : MonoBehaviour
         heatValues = matrix;
         GenerateHeatMapTexture(metricMin, metricMax);
         DisplayHeatMap();
+
+        heatMapLegend.UpdateLabels("cityTemperature", metricMin, metricMax);
+
         print("RenderCityTemperatureHeatMap");
     }
 

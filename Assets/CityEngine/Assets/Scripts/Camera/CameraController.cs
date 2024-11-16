@@ -756,7 +756,9 @@ public class CameraController : MonoBehaviour
     {
         heatmapActive = !heatmapActive;
         heatMap.heatMapPlane.SetActive(heatmapActive);
+        FindObjectOfType<HeatMapLegend>().SetVisibility(heatmapActive);
         UpdateHeatMapCamera();
+
     }
 
     public void UpdateHeatMapCamera()
