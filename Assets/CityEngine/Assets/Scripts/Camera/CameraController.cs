@@ -15,6 +15,8 @@ public class CameraController : MonoBehaviour
     public Transform carsParent;
 
     public bool moveTarget = false;
+    public GameObject placementCursor;
+
     [HideInInspector]
     public Transform target;
     public int gridSize = 10;
@@ -192,6 +194,26 @@ public class CameraController : MonoBehaviour
                     Mathf.Floor((ray.GetPoint(distance).z + gridSize / 2) / gridSize) * gridSize),
                     Time.deltaTime * 50
                 );
+
+                target.TryGetComponent<BuildingProperties>(out BuildingProperties properties);
+                if (!target.CompareTag("DeleteTool") && properties != null)
+                {
+                    int buildingHeight = (int)((properties.buildingHigh + 1) * 10);
+                    print("Update PLacement cursor" + buildingHeight);
+                    float xTotal = target.position.x;
+                    float zTotal = target.position.z;
+                    int count = 1;
+
+                    foreach (Transform additionalSpace in properties.additionalSpace)
+                    {
+                        xTotal += additionalSpace.position.x;
+                        zTotal += additionalSpace.position.z;
+                        count++;
+                    }
+
+                    placementCursor.transform.position = new Vector3(xTotal / count, target.position.y + buildingHeight, zTotal / count);
+                }
+
             }
         }
     }
@@ -758,7 +780,6 @@ public class CameraController : MonoBehaviour
         heatMap.heatMapPlane.SetActive(heatmapActive);
         FindObjectOfType<HeatMapLegend>().SetVisibility(heatmapActive);
         UpdateHeatMapCamera();
-
     }
 
     public void UpdateHeatMapCamera()

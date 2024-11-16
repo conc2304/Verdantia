@@ -349,6 +349,9 @@ MonoBehaviour:
   buildingIndex: 8
   environment: {fileID: 8337416255508903434}
   connectToRoad: 1
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect:
@@ -357,7 +360,7 @@ MonoBehaviour:
   - {fileID: 7466546545158132242}
   additionalSpace: []
   buildConstruction: {fileID: 4466433475549507765}
-  buildingHigh: 0.25
+  buildingHigh: 1
   buildingTime: 10
   spaceWidth: 1
   buildingName: Farmhouse

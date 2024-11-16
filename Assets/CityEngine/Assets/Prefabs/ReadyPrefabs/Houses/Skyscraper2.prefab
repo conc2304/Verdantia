@@ -142,9 +142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 15
+  buildingIndex: 11
   environment: {fileID: 18007532685691577}
   connectToRoad: 1
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect:
@@ -154,7 +157,7 @@ MonoBehaviour:
   additionalSpace:
   - {fileID: 8332451716412398795}
   buildConstruction: {fileID: 322588464444745127}
-  buildingHigh: 1
+  buildingHigh: 3
   buildingTime: 20
   spaceWidth: 2
   buildingName: Mid-rise Apartment w/ Park and Parking
@@ -620,6 +623,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
