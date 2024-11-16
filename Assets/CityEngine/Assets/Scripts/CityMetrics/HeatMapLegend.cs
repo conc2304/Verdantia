@@ -14,6 +14,7 @@ public class HeatMapLegend : MonoBehaviour
     public TMP_Text midValueText;
     public TMP_Text maxValueText;
     public TMP_Text metricNameText;
+    public GameObject parentPanel;
 
     private int textureWidth = 1520;
     private int textureHeight = 50;
@@ -93,4 +94,21 @@ public class HeatMapLegend : MonoBehaviour
 
         return Color.Lerp(colors[segmentIndex], colors[segmentIndex + 1], segmentT);
     }
+
+    public void UpdateLabels(string metricName, int minValue, int maxValue)
+    {
+
+        int midValue = (maxValue - minValue) / 2;
+        minValueText.text = minValue.ToString();
+        midValueText.text = midValue.ToString();
+        maxValueText.text = maxValue.ToString();
+
+        metricNameText.text = StringsUtils.ConvertToLabel(metricName);
+    }
+
+    public void SetVisibility(bool visible)
+    {
+        parentPanel.SetActive(visible);
+    }
+
 }
