@@ -656,7 +656,7 @@ MonoBehaviour:
   - {fileID: 1625377923295787955}
   - {fileID: 8538671939875801243}
   buildConstruction: {fileID: 3468565513508231131}
-  buildingHigh: 0.25
+  buildingHigh: 1
   buildingTime: 2
   spaceWidth: 3
   buildingName: Parking Lot

@@ -1914,6 +1914,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 8247148201507297857}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1923,33 +1926,23 @@ MonoBehaviour:
   - {fileID: 8377390569522374457}
   - {fileID: 9190606786764265354}
   buildConstruction: {fileID: 3468565513508231131}
-  buildingHigh: 1.25
+  buildingHigh: 2.5
   buildingTime: 30
   spaceWidth: 2
   buildingName: Eco Office
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 250000
-  operationalCost: 100
-  taxRevenue: 300
-  upkeep: 100
-  energyConsumption: 80
-  waterConsumption: 50
-  wasteProduction: 20
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 1800
-  jobsProvided: 1800
   happinessImpact: 15
-  healthImpact: 10
-  educationImpact: 5
-  pollutionOutput: 5
-  pollutionReduction: 20
+  pollutionImpact: 0
   heatContribution: 2
   greenSpaceEffect: 10
   carbonFootprint: 50
-  taxContribution: 300
-  jobCreation: 1800
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2301,6 +2294,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -2311,29 +2307,19 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2481,6 +2467,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -2491,29 +2480,19 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,6 +2589,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -2620,29 +2602,19 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0
