@@ -79,7 +79,6 @@ public class CityMetricsManager : MonoBehaviour
         RestartSimulation();
 
         UpdateCityMetrics();
-        OnMetricsUpdate?.Invoke();
         OnTempUpdated?.Invoke();
 
         // Initialize the dictionary for easier access
@@ -202,23 +201,23 @@ public class CityMetricsManager : MonoBehaviour
         ResetMetrics();
 
         float tempDifference = Mathf.Clamp(-10, 10, cityTemperature - startingTemp);
-
+        tempDifference = 0f; // TODO remove this later 
         int cityArea = 0;
-        float totalGreenSpaceEffect = 0;
-        int totalBuildingsWithGreenSpaceEffect = 0;
-        float normalizationFactor = propertyRanges["greenSpaceEffect"].max * propertyRanges["effectRadius"].max;
 
-        float minHappiness = propertyRanges["happinessImpact"].min;
-        float maxHappiness = propertyRanges["happinessImpact"].max;
-
-        // To store total happiness and weights
-        float totalHappiness = 0f;
-        float totalPopulationWeight = 0f;
+        // Variables for happiness calculation
+        // Variables for happiness calculation
+        float totalHappinessImpact = 0f;
+        float totalWeight = 0f;
 
         // Include additional spaces in the "allBuildings" list
         bool includeSpaces = false;
         List<Transform> cityBuildings = cameraController.GetAllBuildings(includeSpaces);
         int totalCityBuildings = cityBuildings.Count;
+        int totalPopulation = 0;
+
+        // Constants for greenspace and intrinsic weights
+        // const float GreenMultiplier = 0.5f; // Amplifies the effect of greenspace
+        const float BaseWeight = 5f;        // Intrinsic weight for capacity-zero buildings
 
         print($"--- UpdateCityMetrics --- ");
         print($"#Buildings : {cityBuildings.Count}");
@@ -240,56 +239,86 @@ public class CityMetricsManager : MonoBehaviour
 
             cityArea += buildingProps.additionalSpace.Count() + 1; // 1 for the building, and then count the spaces
 
+            // Cumulative Metrics
             population += buildingProps.capacity;
             revenue += buildingProps.cityRevenue;
             greenSpace += buildingProps.greenSpaceEffect;
 
-            // Environmental metrics
+            // Non standard metrics
             float adjustedHeatContribution = buildingProps.heatContribution;
             float adjustedEnergyConsumption = buildingProps.netEnergy;
             float adjustedCarbonFootprint = buildingProps.carbonFootprint;
             float adjustedHappiness = buildingProps.happinessImpact;
             float adjustedPollution = buildingProps.pollutionImpact;
 
-            // Add to happiness calculation
-            float populationWeight = buildingProps.capacity > 0 ? buildingProps.capacity : 1; // Use building capacity as a weight
-            totalHappiness += adjustedHappiness * populationWeight;
-            totalPopulationWeight += populationWeight;
+
+            // Apply additional feedback if temperature is above base
+            if (tempDifference != 0)
+            {
+                adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
+                adjustedCarbonFootprint += adjustedCarbonFootprint * tempDifference * tempSensitivity;
+                adjustedHeatContribution += adjustedHeatContribution * tempDifference * tempSensitivity;
+                adjustedHappiness += adjustedHappiness * tempDifference * tempSensitivity;
+                adjustedPollution += adjustedPollution * tempDifference * tempSensitivity;
+            }
+
+            // Calculate weight based on building type
+            // Calculate dynamic GreenMultiplier based on greenspaceEffect
+            float greenMultiplier = (buildingProps.greenSpaceEffect + 100f) / 200f;
+            float populationWeight = 0f;
+
+            // Calculate weight based on building type
+            if (buildingProps.capacity > 0)
+            {
+                // Population-based weight for residential/commercial buildings
+                populationWeight = buildingProps.capacity + buildingProps.effectRadius * greenMultiplier;
+            }
+            else
+            {
+                // Weight for capacity-zero buildings (parks, forests, etc.)
+                populationWeight = buildingProps.effectRadius * greenMultiplier + BaseWeight;
+            }
+
+            // Add to happiness impact
+            totalHappinessImpact += buildingProps.happinessImpact * populationWeight;
+
+            // Accumulate weight and population
+            totalWeight += populationWeight;
+            totalPopulation += buildingProps.capacity;
 
             // Apply adjusted metrics
-            happiness += (int)adjustedHappiness;
+            // happiness += (int)adjustedHappiness;
             urbanHeat += (int)adjustedHeatContribution;
             pollution += (int)adjustedPollution;
             energy += (int)adjustedEnergyConsumption;
             carbonEmission += (int)adjustedCarbonFootprint;
         }
+        Debug.Log($"total happiness : {totalHappinessImpact}");
+        Debug.Log($"totalPopulationWeight : {totalWeight}");
 
         // Calculate overall city happiness
-        happiness = (float)Math.Round(totalPopulationWeight > 0 ? totalHappiness / totalPopulationWeight : 0f);
+        // Calculate normalization factor (adjust based on city size and population)
+        float normalizationFactor = Mathf.Max(1, totalCityBuildings + totalPopulation); // Prevent division by zero
 
-        // Clamp cityHappiness to a defined range (e.g., minHappiness to maxHappiness)
-        // cityHappiness = Mathf.Clamp(cityHappiness, minHappiness, maxHappiness);
+        // Adjust city happiness
+        happiness += totalHappinessImpact / normalizationFactor;
+        print($"City Happiness: {happiness} | -2");
+
+        // Clamp city happiness to the range [0, 100]
+        happiness = (float)Math.Round(Mathf.Clamp(happiness, 0f, 100f));
 
         // Log the city happiness for debugging
-        print($"City Happiness: {happiness}");
+        print($"City Happiness: {happiness} | -1");
+        OnMetricsUpdate?.Invoke();
     }
 
 
-    // Apply additional feedback if temperature is above base
-    // if (tempDifference != 0)
-    // {
-    //     adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
-    //     adjustedCarbonFootprint += adjustedCarbonFootprint * tempDifference * tempSensitivity;
-    //     adjustedHeatContribution += adjustedHeatContribution * tempDifference * tempSensitivity;
-    //     adjustedHappiness += adjustedHappiness * tempDifference * tempSensitivity;
-    //     adjustedPollution += adjustedPollution * tempDifference * tempSensitivity;
-    // }     
 
     // Method to reset all metrics to initial state before recalculation
     private void ResetMetrics()
     {
         population = 0;
-        happiness = 0;
+        happiness = 50;
         greenSpace = 0;
         urbanHeat = 0;
         pollution = 0;

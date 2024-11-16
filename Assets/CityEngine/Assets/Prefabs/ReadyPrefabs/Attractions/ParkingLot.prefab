@@ -47,6 +47,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -117,6 +120,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -187,6 +193,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -257,6 +266,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -327,6 +339,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -433,6 +448,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -542,6 +560,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -618,6 +639,9 @@ MonoBehaviour:
   buildingIndex: 39
   environment: {fileID: 4634941177921207583}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -654,7 +678,7 @@ MonoBehaviour:
   heatContribution: 10
   greenSpaceEffect: -10
   carbonFootprint: 200
-  effectRadius: 3
+  effectRadius: 5
   proximityEffects:
   - metricName: 7
     boostValue: 5
@@ -720,6 +744,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
