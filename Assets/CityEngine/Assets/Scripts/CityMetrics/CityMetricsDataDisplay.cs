@@ -91,6 +91,5 @@ public class CityMetricsDataDisplay : MonoBehaviour
     public void OnEnergyClick() { OnMetricClick(MetricTitle.Energy); }
     public void OnCarbonEmissionClick() { OnMetricClick(MetricTitle.CarbonEmission); }
     public void OnRevenueClick() { OnMetricClick(MetricTitle.Revenue); }
-    public void OnIncomeClick() { OnMetricClick(MetricTitle.Income); }
-    public void OnExpensesClick() { OnMetricClick(MetricTitle.Expenses); }
+
 }

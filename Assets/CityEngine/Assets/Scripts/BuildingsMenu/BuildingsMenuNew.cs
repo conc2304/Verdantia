@@ -164,6 +164,7 @@ public class BuildingsMenuNew : MonoBehaviour
         errorText.gameObject.SetActive(false);
         missionSelector.SetActive(false);
         introSequenceGO.SetActive(false);
+        cameraController.placementCursor.SetActive(false);
 
         if (!IsMissionSelected())
         {

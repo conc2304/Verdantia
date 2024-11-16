@@ -16,8 +16,6 @@ public enum MetricTitle
     Energy,
     CarbonEmission,
     Revenue,
-    Income,
-    Expenses,
 }
 
 public enum DifficultyLevel

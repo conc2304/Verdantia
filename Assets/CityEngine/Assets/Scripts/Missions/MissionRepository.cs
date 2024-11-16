@@ -17,8 +17,9 @@ namespace GreenCityBuilder.Missions
             { MetricTitle.Energy, Resources.Load<Sprite>("MetricIcons/energy") },
             { MetricTitle.CarbonEmission, Resources.Load<Sprite>("MetricIcons/carbon-emission") },
             { MetricTitle.Revenue, Resources.Load<Sprite>("MetricIcons/revenue") },
-            { MetricTitle.Income, Resources.Load<Sprite>("MetricIcons/income") },
-            { MetricTitle.Expenses, Resources.Load<Sprite>("MetricIcons/expenses") }
+            // { MetricTitle.Income, Resources.Load<Sprite>("MetricIcons/income") },
+            // { MetricTitle.Expenses, Resources.Load<Sprite>("MetricIcons/expenses") }
+
         };
         public static List<Mission> AllMissions { get; } = new List<Mission>
         {

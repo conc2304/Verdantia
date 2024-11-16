@@ -1176,6 +1176,9 @@ MonoBehaviour:
   buildingIndex: 35
   environment: {fileID: 9170872634758128117}
   connectToRoad: 1
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect:
   - {fileID: 3245237540471453286}
   - {fileID: 6325301893003380414}
@@ -1219,6 +1222,7 @@ MonoBehaviour:
     boostValue: 200
   - metricName: 7
     boostValue: -10
+  floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
 --- !u!114 &3095412744837479016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1279,6 +1283,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1302,6 +1309,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &6319363023558620523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,6 +1406,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1421,6 +1432,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &7154619427325838312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,6 +1579,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1590,6 +1605,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &8153347221091577815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,6 +1819,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1826,6 +1845,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &8518388907409151356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,6 +1943,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1946,6 +1969,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1001 &377449481163907778
 PrefabInstance:
   m_ObjectHideFlags: 0

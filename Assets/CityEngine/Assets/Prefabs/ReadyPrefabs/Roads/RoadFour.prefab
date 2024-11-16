@@ -1001,6 +1001,9 @@ MonoBehaviour:
   buildingIndex: 5
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1036,6 +1039,7 @@ MonoBehaviour:
     boostValue: 3
   - metricName: 9
     boostValue: 1
+  floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
 --- !u!1 &1807584980700940526
 GameObject:
   m_ObjectHideFlags: 0

@@ -1240,6 +1240,7 @@ MonoBehaviour:
     boostValue: 200
   - metricName: 7
     boostValue: 30
+  floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
 --- !u!114 &3095412744837479016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1326,6 +1327,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &6319363023558620523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,6 +1450,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &7154619427325838312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,6 +1623,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &8153347221091577815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1859,6 +1863,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &8518388907409151356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,6 +1987,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1001 &148211819485164978
 PrefabInstance:
   m_ObjectHideFlags: 0

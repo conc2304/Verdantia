@@ -97,8 +97,6 @@ public class CameraController : MonoBehaviour
             forestObj.Add(forest.GetChild(i));
 
         if (!heatMap) heatMap = FindObjectOfType<HeatMap>();
-
-
     }
 
 
@@ -106,12 +104,6 @@ public class CameraController : MonoBehaviour
     {
         TouchInput();
         SetPosition();
-
-
-
-
-
-
 
         if (cityChanged && heatmapMetric != "cityTemperature")
         {

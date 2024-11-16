@@ -99,8 +99,6 @@ public class CityMetricsManager : MonoBehaviour
             { MetricTitle.Pollution, pollution },
             { MetricTitle.Population, population },
             { MetricTitle.CarbonEmission, carbonEmission },
-            { MetricTitle.Income, income },
-            { MetricTitle.Expenses, expenses }
         };
 
         gridLengthX = (grid.gridSizeX / gridTileSize) + gridPadding;

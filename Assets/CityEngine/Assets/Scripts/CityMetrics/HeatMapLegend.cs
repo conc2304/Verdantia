@@ -69,7 +69,6 @@ public class HeatMapLegend : MonoBehaviour
 
                 // Interpolate between the gradient colors
                 Color interpolatedColor = InterpolateGradient(heatMap.heatColors, t);
-                print(interpolatedColor);
                 interpolatedColor.a = 1;
                 gradientTexture.SetPixel(x, y, interpolatedColor);
             }
@@ -90,8 +89,6 @@ public class HeatMapLegend : MonoBehaviour
         segmentIndex = Mathf.Clamp(segmentIndex, 0, colors.Count - 2);
 
         float segmentT = (t - segmentIndex * segmentLength) / segmentLength;
-        print(colors[segmentIndex] + " to " + colors[segmentIndex + 1]);
-
         return Color.Lerp(colors[segmentIndex], colors[segmentIndex + 1], segmentT);
     }
 

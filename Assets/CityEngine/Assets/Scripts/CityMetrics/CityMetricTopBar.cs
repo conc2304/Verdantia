@@ -146,12 +146,6 @@ public class CityMetricTopBar : MonoBehaviour
                 case MetricTitle.Revenue:
                     metricUI.UpdateValue(cityMetricsManager.revenue.ToString());
                     break;
-                case MetricTitle.Income:
-                    metricUI.UpdateValue(cityMetricsManager.income.ToString());
-                    break;
-                case MetricTitle.Expenses:
-                    metricUI.UpdateValue(cityMetricsManager.expenses.ToString());
-                    break;
             }
         }
     }
