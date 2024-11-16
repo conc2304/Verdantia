@@ -198,25 +198,38 @@ public class CameraController : MonoBehaviour
                 target.TryGetComponent<BuildingProperties>(out BuildingProperties properties);
                 if (!target.CompareTag("DeleteTool") && properties != null)
                 {
-                    int buildingHeight = (int)((properties.buildingHigh + 1) * 10);
-                    print("Update PLacement cursor" + buildingHeight);
-                    float xTotal = target.position.x;
-                    float zTotal = target.position.z;
-                    int count = 1;
-
-                    // get the center of the building based on its additional spaces
-                    foreach (Transform additionalSpace in properties.additionalSpace)
-                    {
-                        xTotal += additionalSpace.position.x;
-                        zTotal += additionalSpace.position.z;
-                        count++;
-                    }
-
-                    placementCursor.transform.position = new Vector3(xTotal / count, target.position.y + buildingHeight, zTotal / count);
+                    placementCursor.transform.position = GetBuildingPopUpPlacement(target);
                 }
 
             }
         }
+    }
+
+    public Vector3 GetBuildingPopUpPlacement(Transform buildingObject)
+    {
+        target.TryGetComponent<BuildingProperties>(out BuildingProperties properties);
+
+        float xTotal = target.position.x;
+        float zTotal = target.position.z;
+        int count = 1;
+        float yPos = 10;
+
+        // get the center of the building based on its additional spaces
+        if (properties != null)
+        {
+            yPos = (properties.buildingHigh + 1) * 10;
+            foreach (Transform additionalSpace in properties.additionalSpace)
+            {
+                xTotal += additionalSpace.position.x;
+                zTotal += additionalSpace.position.z;
+                count++;
+            }
+        }
+
+        float xPos = xTotal / count;
+        float zPos = zTotal / count;
+
+        return new Vector3(xPos, yPos, zPos);
     }
 
     public Vector3 TrackpadToMainCamera()
