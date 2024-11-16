@@ -204,6 +204,7 @@ public class CameraController : MonoBehaviour
                     float zTotal = target.position.z;
                     int count = 1;
 
+                    // get the center of the building based on its additional spaces
                     foreach (Transform additionalSpace in properties.additionalSpace)
                     {
                         xTotal += additionalSpace.position.x;
