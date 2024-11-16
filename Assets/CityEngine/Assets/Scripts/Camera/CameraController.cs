@@ -68,19 +68,11 @@ public class CameraController : MonoBehaviour
     public TrackPad placementTrackpad;
     public CityMetricsManager cityMetricsManager;
 
-    public float cityTempUpdateInterval = 6;
-    public int temperatureMapTimeSteps = 5;
-    private float cityTempUpdateRate;
-    private float cityTempTimer = 0f;
-    public bool toggleRestartTemp = false;
-    public bool playTemp = false;
-
 
 
     void Start()
     {
         zoomSlider.onValueChanged.AddListener(OnZoomSliderChanged);
-        cityTempUpdateRate = cityMetricsManager.monthDuration / cityTempUpdateInterval;
     }
 
 
@@ -116,49 +108,21 @@ public class CameraController : MonoBehaviour
         SetPosition();
 
 
-        // if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
 
-        cityTempTimer += Time.deltaTime;
-        // handle heat map updates on city change on fixed monthly intervals
-        if (cityTempTimer >= cityTempUpdateRate)
+
+
+
+
+        if (cityChanged && heatmapMetric != "cityTemperature")
         {
-            for (int i = 0; i < temperatureMapTimeSteps; i++)
-            {
-                cityMetricsManager.GetCityTemperatures();
-            }
-
-            if (heatmapMetric == "cityTemperature")
-            {
-                // Make sure we have a valid temperature matrix
-                float[,] cityTemps = (cityMetricsManager.temps != null && cityMetricsManager.temps.Length != 0) ?
-                    cityMetricsManager.temps :
-                    cityMetricsManager.GetCityTemperatures();
-
-                int minTemp = 50;
-                int maxTemp = 85;
-                // cityTemps = cityMetricsManager.RemovePaddingFromMatrix(cityTemps);
-                heatMap.RenderCityTemperatureHeatMap(cityTemps, minTemp, maxTemp);  // TODO investigate if this needs to change 
-
-                return; // city temp is computed and rendered differently
-            }
-            cityTempTimer = 0f;
-            // toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
-        }
-
-
-
-        if (cityChanged)
-        {
-            if (heatmapMetric != "cityTemperature")
-            {
-                UpdateHeatMap(heatmapMetric);
-            }
+            UpdateHeatMap(heatmapMetric);
         }
 
         if (cityChanged && saveDataTrigger.cityLoadInitialized)
         {
             cityMetricsManager.UpdateCityMetrics();
         } // TODO is this correct
+
         cityChanged = false; // reset for next run
     }
 
@@ -201,7 +165,6 @@ public class CameraController : MonoBehaviour
                 {
                     placementCursor.transform.position = buildingProps.GetBuildingPopUpPlacement();
                 }
-
             }
         }
     }
