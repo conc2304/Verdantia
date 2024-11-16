@@ -268,6 +268,29 @@ public class BuildingProperties : MonoBehaviour
         // print(distance + " vs " + effectRadius + " | " + (distance <= effectRadius));
         return distance <= effectRadius;
     }
+
+    public Vector3 GetBuildingPopUpPlacement()
+    {
+        // target.TryGetComponent<BuildingProperties>(out BuildingProperties properties);
+
+        float xTotal = transform.position.x;
+        float zTotal = transform.position.z;
+        int count = 1;
+
+        // get the center of the building based on its additional spaces
+        foreach (Transform additionalSpace in additionalSpace)
+        {
+            xTotal += additionalSpace.position.x;
+            zTotal += additionalSpace.position.z;
+            count++;
+        }
+
+        float yPos = (buildingHigh + 1) * 10;
+        float xPos = xTotal / count;
+        float zPos = zTotal / count;
+
+        return new Vector3(xPos, yPos, zPos);
+    }
 }
 
 
