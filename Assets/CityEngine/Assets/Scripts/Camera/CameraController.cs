@@ -326,7 +326,6 @@ public class CameraController : MonoBehaviour
                         return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
                     }
                 }
-
             }
         }
 
@@ -560,8 +559,6 @@ public class CameraController : MonoBehaviour
                 demolishedBuildingName = demolisionTargetProps.buildingName;
                 cityMetricsManager.DeductExpenses(demolitionCost);
 
-
-
                 // Check for and remove proximity boosts from demolished building on surrounding buildings
                 demolisionTargetProps.RemoveProximityEffects();
 
@@ -571,9 +568,11 @@ public class CameraController : MonoBehaviour
                 for (int pathTargetIndex = 0; pathTargetIndex < demolisionTargetProps.citizensPathTargetsToSpawn.Length; pathTargetIndex++)
                     spawner.citizensSpawnPoints.Remove(demolisionTargetProps.citizensPathTargetsToSpawn[pathTargetIndex]);
 
+                // if delete overlap is "space" destory all sibling spaces from game
                 if (allBuildings[i].CompareTag("Space"))
                 {
                     BuildingProperties spaceBuildingProperty = allBuildings[i].parent.parent.GetComponent<BuildingProperties>();
+                    demolishedBuildingName = spaceBuildingProperty.buildingName;
                     for (int y = 0; y < spaceBuildingProperty.additionalSpace.Length; y++)
                     {
                         Destroy(spaceBuildingProperty.additionalSpace[y].gameObject);
@@ -584,7 +583,7 @@ public class CameraController : MonoBehaviour
                     allBuildings.Remove(spaceBuildingProperty.transform);
                     cityChanged = true;
                 }
-                else
+                else // is not "Space" so delete all child additional Spaces
                 {
                     for (int y = 0; y < demolisionTargetProps.additionalSpace.Length; y++)
                     {

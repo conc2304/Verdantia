@@ -146,6 +146,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -421,6 +422,7 @@ MonoBehaviour:
   buildingIndex: 33
   environment: {fileID: 926642169814988149}
   connectToRoad: 1
+  unrestrictedPlacement: 0
   allowChaining: 1
   chainableTypes:
   - {fileID: 3279069989269161359, guid: 6b7a72e5bfc57db468686e8d216ac607, type: 3}
@@ -461,7 +463,7 @@ MonoBehaviour:
   heatContribution: -20
   greenSpaceEffect: 50
   carbonFootprint: -300
-  effectRadius: 6
+  effectRadius: 15
   proximityEffects:
   - metricName: 6
     boostValue: 15
@@ -824,6 +826,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -1278,6 +1281,8 @@ Transform:
   - {fileID: 1597173473610677321}
   - {fileID: 7825314544720332316}
   - {fileID: 7899359563060886228}
+  - {fileID: 2347497430672407094}
+  - {fileID: 1050523905451255750}
   - {fileID: 431431248537919254}
   - {fileID: 1178947369836960993}
   - {fileID: 7497296675255374689}
@@ -1883,6 +1888,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -2044,6 +2050,55 @@ Transform:
   - {fileID: 7938047770208980298}
   m_Father: {fileID: 1268100822294927192}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7061874530833058064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2347497430672407094}
+  - component: {fileID: 2752112875581199243}
+  m_Layer: 0
+  m_Name: PathTarget 4 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2347497430672407094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061874530833058064}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.99, y: 0.48, z: 24.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9173991030470176390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2752112875581199243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061874530833058064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c60907429fed0a48b9d3bdab26c7c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previousPathTarget: {fileID: 4908942139256544119}
+  nextPathTarget: {fileID: 4908942139256544119}
+  width: 1
+  branches: []
+  branchesRatio: 0.5
 --- !u!1 &7638193516838387292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,6 +2146,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
@@ -2264,6 +2320,57 @@ MonoBehaviour:
   width: 1
   branches: []
   branchesRatio: 0.5
+--- !u!1 &8733930943844166637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1050523905451255750}
+  - component: {fileID: 4908942139256544119}
+  m_Layer: 0
+  m_Name: PathTarget 4 (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1050523905451255750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8733930943844166637}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.93, y: 0.48, z: 22.93}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9173991030470176390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4908942139256544119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8733930943844166637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c60907429fed0a48b9d3bdab26c7c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previousPathTarget: {fileID: 7715917537892518601}
+  nextPathTarget: {fileID: 7285502873463905163}
+  width: 1
+  branches:
+  - {fileID: 2603397608509931441}
+  - {fileID: 7285502873463905163}
+  branchesRatio: 0.5
 --- !u!1 &8756243266892462690
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,6 +2418,7 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
   allowChaining: 0
   chainableTypes: []
   carsPathTargetsToConnect: []
