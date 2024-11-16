@@ -7,7 +7,7 @@ public class CityMetricTopBar : MonoBehaviour
     public CityMetricsManager cityMetricsManager;
     public MissionCatalog missionCatalog;
     public Transform missionMetricsContainer;
-    public GameObject metricItemPrefab;  // Prefab to dynamically display metrics
+    public GameObject metricItemPrefab;
     public Mission currentMission;       // Reference to the current mission (null if "free play")
 
     private Dictionary<MetricTitle, CityMetricUIItem> activeMetricItems = new Dictionary<MetricTitle, CityMetricUIItem>();

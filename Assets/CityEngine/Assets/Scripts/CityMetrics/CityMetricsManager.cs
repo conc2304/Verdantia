@@ -54,6 +54,10 @@ public class CityMetricsManager : MonoBehaviour
     private float cityBoarderMinZ = float.MaxValue;
     private float cityBoarderMaxZ = float.MinValue;
 
+    public float cityTempUpdateInterval = 6;
+    public int temperatureMapTimeSteps = 5;
+    private float cityTempUpdateRate;
+    private float cityTempTimer = 0f;
 
     // City Temperature Heat Diffusion 
     public float[,] temps { get; private set; }
@@ -66,17 +70,20 @@ public class CityMetricsManager : MonoBehaviour
     [Header("Heat Map Debug")]
     public bool takeStep = false;
     public bool toggleRestartTemp = false;
-    public bool play = false;
-    public bool pause = true;
+    public bool playTemp = false;
 
-
+    private HeatMap heatMap;
 
     void Start()
     {
+        heatMap = FindObjectOfType<HeatMap>();
+
         gridTileSize = cameraController.gridSize;
         cityTemperature = startingTemp;
         budget = startingBudget;
         RestartSimulation();
+
+        cityTempUpdateRate = monthDuration / cityTempUpdateInterval;
 
         UpdateCityMetrics();
         OnTempUpdated?.Invoke();
@@ -110,13 +117,10 @@ public class CityMetricsManager : MonoBehaviour
         temps = ArrayFill(gridLengthX, gridLengthZ, startingTemp);
     }
 
-
-
     void Update()
     {
         // Accumulate budget monthly
         monthTimer += Time.deltaTime;
-
         if (monthTimer >= monthDuration)
         {
             // Every month, calculate the city's financial status
@@ -126,18 +130,38 @@ public class CityMetricsManager : MonoBehaviour
             monthTimer = 0f;
         }
 
-        // if (pause)
-        // {
-        //     cameraController.toggleRestartTemp = false;
-        //     cameraController.playTemp = false;
-        //     play = false;
-        // }
-        // if (play)
-        // {
-        //     cameraController.toggleRestartTemp = true;
-        //     cameraController.playTemp = true;
-        //     pause = false;
-        // }
+
+        // handle heat map updates on city change on fixed monthly intervals
+        cityTempTimer += Time.deltaTime;
+
+        // if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
+        if (cityTempTimer >= cityTempUpdateRate)
+        {
+            for (int i = 0; i < temperatureMapTimeSteps; i++)
+            {
+                GetCityTemperatures();
+            }
+
+            if (cameraController.heatmapMetric == "cityTemperature")
+            {
+                // Make sure we have a valid temperature matrix
+                float[,] cityTemps = (temps != null && temps.Length != 0) ?
+                    temps :
+                    GetCityTemperatures();
+
+                int minTemp = 50;
+                int maxTemp = 85;
+                // cityTemps = cityMetricsManager.RemovePaddingFromMatrix(cityTemps);
+                heatMap.RenderCityTemperatureHeatMap(cityTemps, minTemp, maxTemp);  // TODO investigate if this needs to change 
+
+                return; // city temp is computed and rendered differently
+            }
+
+            OnTempUpdated?.Invoke();
+        }
+        cityTempTimer = 0f;
+
+        // toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
 
 
         // if (toggleRestartTemp)
@@ -147,7 +171,7 @@ public class CityMetricsManager : MonoBehaviour
         // }
         // if (takeStep)
         // {
-        //     cameraController.toggleRestartTemp = true;
+        //     toggleRestartTemp = true;
         //     takeStep = false;
         // }
     }
@@ -749,7 +773,8 @@ public class CityMetricsManager : MonoBehaviour
 
         float averageTemperature = count > 0 ? totalTemperature / count : 0;
 
-        return (float)Math.Round(averageTemperature);
+        averageTemperature = (float)Math.Round(averageTemperature);
+        return averageTemperature;
     }
 
     public float[,] RemovePaddingFromMatrix(float[,] matrix)
