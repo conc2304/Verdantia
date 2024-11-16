@@ -19,7 +19,7 @@ public enum BuildingMetric
 
 
 // Serializable class to define metric boosts
-[System.Serializable]
+[Serializable]
 public class MetricBoost
 {
     public BuildingMetric metricName; // The name of the metric (e.g., "happinessImpact", "taxRevenue")
@@ -77,16 +77,15 @@ public class BuildingProperties : MonoBehaviour
     public int carbonFootprint; // Carbon emissions of this building
     public int effectRadius; // The effective radius of this building's service
     public List<MetricBoost> proximityEffects;
+    public GameObject floatingValuePrefab;
 
 
-    private BuildingsMenuNew buildingsMenu;
     private CameraController cameraController;
 
 
 
     void Start()
     {
-        buildingsMenu = FindObjectOfType<BuildingsMenuNew>();
         cameraController = FindObjectOfType<CameraController>();
         demolitionCost = demolitionCost != 0 ? demolitionCost : (int)(constructionCost * 0.25f);
         PassonBuildingProperties();
@@ -146,6 +145,7 @@ public class BuildingProperties : MonoBehaviour
                     {
                         // print($"{building.buildingName} APPLY BOOST TO {building.buildingName}");
                         ApplyBoost(building, boost);
+
                     }
                 }
             }
@@ -229,6 +229,7 @@ public class BuildingProperties : MonoBehaviour
         }
 
         targetBuilding.PassonBuildingProperties();
+        targetBuilding.ShowFloatingValue(boost.metricName, boost.boostValue);
     }
 
     public void RemoveBoost(BuildingProperties targetBuilding, MetricBoost boost)
@@ -244,6 +245,7 @@ public class BuildingProperties : MonoBehaviour
             propertyInfo.SetValue(targetBuilding, currentValue - boost.boostValue);
         }
 
+        targetBuilding.ShowFloatingValue(boost.metricName, boost.boostValue);
         targetBuilding.PassonBuildingProperties();
     }
 
@@ -290,6 +292,32 @@ public class BuildingProperties : MonoBehaviour
         float zPos = zTotal / count;
 
         return new Vector3(xPos, yPos, zPos);
+    }
+
+    public void ShowFloatingValue(BuildingMetric metric, int boostValue)
+    {
+        if (floatingValuePrefab == null) return;
+        MetricTitle? metricTitle = MetricMapping.GetMetricTitle(metric);
+
+        if (!metricTitle.HasValue)
+        {
+            return;
+        }
+
+
+        // Get the popup position
+        Vector3 popupPosition = GetBuildingPopUpPlacement();
+
+        // Instantiate the floating value prefab
+        GameObject floatingValue = Instantiate(floatingValuePrefab, popupPosition, Quaternion.identity);
+
+        // Set the text and color based on the boost value
+        bool isPositive = boostValue > 0;
+
+        string valueText = $"{(isPositive ? "+" : "-")}{boostValue}";
+        bool metricIsInverted = MetricMapping.IsInverted(metricTitle.Value);
+        if (metricIsInverted) isPositive = !isPositive; // swap the color after the sign assignment
+        floatingValue.GetComponent<FloatingValueEffect>().Initialize(valueText, isPositive, metricTitle);
     }
 }
 

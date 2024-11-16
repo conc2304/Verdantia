@@ -371,6 +371,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -381,29 +384,20 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &1122900781374162191
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,6 +599,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -615,29 +612,20 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &1677988769193696417
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,6 +869,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -891,29 +882,20 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &2183434425992822091
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,6 +1180,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1208,29 +1193,20 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &3182352584191653468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,6 +1445,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -1479,29 +1458,20 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &3619101455671523474
 GameObject:
   m_ObjectHideFlags: 0
@@ -2014,6 +1984,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -2024,29 +1997,20 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &4886019817785860286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2232,6 +2196,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -2242,29 +2209,20 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &5588677677568002211
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,6 +2456,9 @@ MonoBehaviour:
   buildingIndex: 8
   environment: {fileID: 2840651461947477271}
   connectToRoad: 1
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect:
@@ -2520,29 +2481,20 @@ MonoBehaviour:
   buildingTime: 15
   spaceWidth: 3
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
 --- !u!114 &1757984320355563085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4524,6 +4476,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -4534,29 +4489,20 @@ MonoBehaviour:
   buildingTime: 10
   spaceWidth: 1
   buildingName: 
-  zoneRequirement: 0
+  buildingDescription: 
   constructionCost: 0
-  operationalCost: 0
-  taxRevenue: 0
-  upkeep: 0
-  energyConsumption: 0
-  waterConsumption: 0
-  wasteProduction: 0
-  resourceProduction: 0
+  demolitionCost: 0
+  cityRevenue: 0
+  netEnergy: 0
   capacity: 0
-  jobsProvided: 0
   happinessImpact: 0
-  healthImpact: 0
-  educationImpact: 0
-  pollutionOutput: 0
-  pollutionReduction: 0
+  pollutionImpact: 0
   heatContribution: 0
   greenSpaceEffect: 0
   carbonFootprint: 0
-  taxContribution: 0
-  jobCreation: 0
-  industryBoost: 0
-  coverageRadius: 0
+  effectRadius: 0
+  proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &8205008194997610192
 GameObject:
   m_ObjectHideFlags: 0

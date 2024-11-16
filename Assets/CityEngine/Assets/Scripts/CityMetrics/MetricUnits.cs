@@ -21,8 +21,6 @@ public static class MetricUnits
         { MetricTitle.Pollution, ("%", UnitPosition.After) },
         { MetricTitle.CityTemperature, ("°C", UnitPosition.After) },
         { MetricTitle.Revenue, ("$", UnitPosition.Before) },
-        { MetricTitle.Income, ("$", UnitPosition.Before) },
-        { MetricTitle.Expenses, ("$", UnitPosition.Before) }
     };
 
     // Method to get the unit for a given metric title

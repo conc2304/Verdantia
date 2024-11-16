@@ -500,6 +500,9 @@ MonoBehaviour:
   buildingIndex: 22
   environment: {fileID: 1476963848363781676}
   connectToRoad: 1
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect:
@@ -537,6 +540,7 @@ MonoBehaviour:
     boostValue: 300
   - metricName: 6
     boostValue: 2
+  floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
 --- !u!114 &840075109517472774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,6 +716,9 @@ MonoBehaviour:
   buildingIndex: -1
   environment: {fileID: 0}
   connectToRoad: 0
+  unrestrictedPlacement: 0
+  allowChaining: 0
+  chainableTypes: []
   carsPathTargetsToConnect: []
   carsPathTargetsToSpawn: []
   citizensPathTargetsToConnect: []
@@ -735,6 +742,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1001 &30780436825762262
 PrefabInstance:
   m_ObjectHideFlags: 0

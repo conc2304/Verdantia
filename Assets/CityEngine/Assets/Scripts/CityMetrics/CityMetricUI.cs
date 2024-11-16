@@ -5,15 +5,14 @@ using UnityEngine.UI;
 [ExecuteAlways] // Allows this to work both at runtime and in the Editor
 public class CityMetricUIItem : MonoBehaviour
 {
-    // Public fields to be set in the Unity Editor
     [Header("UI Components")]
-    public TMP_Text labelText; // Text for the label
-    public TMP_Text valueText; // Text for the value
-    public Image iconImage;    // Image for the icon
+    public TMP_Text labelText;
+    public TMP_Text valueText;
+    public Image iconImage;
 
     [Header("Properties")]
-    public string label;       // The label text, set from the Editor
-    public Sprite icon;        // The icon sprite, set from the Editor
+    public string label;
+    public Sprite icon;
 
     public string value = "0";
     public string valuePrefix = "";

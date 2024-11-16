@@ -187,6 +187,7 @@ MonoBehaviour:
     boostValue: 5
   - metricName: 7
     boostValue: -5
+  floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
 --- !u!114 &3605215850848964902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,6 +650,7 @@ MonoBehaviour:
   carbonFootprint: 0
   effectRadius: 0
   proximityEffects: []
+  floatingValuePrefab: {fileID: 0}
 --- !u!1 &4299146351718101626
 GameObject:
   m_ObjectHideFlags: 0
