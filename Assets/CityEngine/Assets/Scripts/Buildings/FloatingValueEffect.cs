@@ -7,8 +7,8 @@ public class FloatingValueEffect : MonoBehaviour
 {
     public TextMeshPro valueText;
     public SpriteRenderer iconRenderer;
-    public float floatSpeed = 1.5f;
-    public float lifetime = 5f;
+    public float floatSpeed = 2.5f;
+    public float lifetime = 8f;
     public Color positiveColor = Color.green;
     public Color negativeColor = Color.red;
 
