@@ -266,13 +266,11 @@ public class BuildingProperties : MonoBehaviour
         if (propertyInfo != null && propertyInfo.CanWrite)
         {
             // Get the current value and remove the boost
-            // print($"{buildingName} REMOVE boost {boost.metricName} at {boost.boostValue} to {targetBuilding.buildingName}");
-
             int currentValue = (int)propertyInfo.GetValue(targetBuilding);
             propertyInfo.SetValue(targetBuilding, currentValue - boost.boostValue);
         }
 
-        targetBuilding.ShowFloatingValue(boost.metricName, boost.boostValue, displayDelay);
+        targetBuilding.ShowFloatingValue(boost.metricName, -boost.boostValue, displayDelay);
         targetBuilding.PassonBuildingProperties();
     }
 
@@ -337,7 +335,7 @@ public class BuildingProperties : MonoBehaviour
         // Set the text and color based on the boost value
         bool isPositive = boostValue > 0;
 
-        string valueText = $"{(isPositive ? "+" : "-")}{boostValue}";
+        string valueText = $"{(isPositive ? "+" : "")}{boostValue}";
         bool metricIsInverted = MetricMapping.IsInverted(metricTitle.Value);
         if (metricIsInverted) isPositive = !isPositive; // swap the color after the sign assignment
         floatingValue.GetComponent<FloatingValueEffect>().Initialize(valueText, isPositive, metricTitle, displayDelay);
