@@ -81,6 +81,8 @@ public class BuildingProperties : MonoBehaviour
 
 
     private CameraController cameraController;
+    private Vector3 popupPlacement;
+    private int gridSize = 10;
 
 
 
@@ -89,7 +91,7 @@ public class BuildingProperties : MonoBehaviour
         cameraController = FindObjectOfType<CameraController>();
         demolitionCost = demolitionCost != 0 ? demolitionCost : (int)(constructionCost * 0.25f);
         PassonBuildingProperties();
-        effectRadius++; // boost all of them by 1
+        popupPlacement = GetBuildingPopUpPlacement();
     }
 
 
@@ -128,33 +130,47 @@ public class BuildingProperties : MonoBehaviour
     }
 
     // Apply proximity effect of this building on all neighboring buildings
-    public void ApplyProximityEffects(List<Transform> allBuildings = null)
+    public float ApplyProximityEffects(List<Transform> allBuildings = null)
     {
+        float maxDelay = 0;
         allBuildings ??= FindObjectOfType<CameraController>().GetAllBuildings();
 
-        foreach (Transform buildingTransform in allBuildings)
+        foreach (Transform existingBuilding in allBuildings)
         {
-            if (buildingTransform != transform && (buildingTransform.CompareTag("Building") || buildingTransform.CompareTag("Road"))) // Skip self, Skip "Spaces" and anything not a "Building"
+            if (existingBuilding != transform && (existingBuilding.CompareTag("Building") || existingBuilding.CompareTag("Road"))) // Skip self, Skip "Spaces" and anything not a "Building"
             {
-                BuildingProperties building = buildingTransform.GetComponent<BuildingProperties>();
+                BuildingProperties building = existingBuilding.GetComponent<BuildingProperties>();
                 // Check if building[i] is within THIS building's effect radius
                 if (building != null && IsWithinProximity(building, effectRadius))
                 {
+                    // Delay pop ups based on distance
+                    Vector3 positionA = building.GetBuildingPopUpPlacement();
+                    positionA.y = 0;
+                    Vector3 positionB = GetBuildingPopUpPlacement();
+                    positionB.y = 0;
+                    float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
+                    float popupDelay = 0;
+                    int metricCount = 0;
 
                     foreach (MetricBoost boost in proximityEffects)
                     {
+                        popupDelay = roundedDistance + (metricCount * 10);
                         // print($"{building.buildingName} APPLY BOOST TO {building.buildingName}");
-                        ApplyBoost(building, boost);
+                        ApplyBoost(building, boost, popupDelay);
+                        maxDelay = Math.Max(maxDelay, popupDelay);
+                        metricCount++;
                     }
                 }
             }
         }
+
+        return maxDelay;
     }
 
     // Remove proximity effect of this building on all neighboring buildings
-    public void RemoveProximityEffects()
+    public float RemoveProximityEffects()
     {
-
+        float maxDelay = 0;
         foreach (Transform buildingTransform in cameraController.GetAllBuildings())
         {
             if (buildingTransform != transform) // Skip self
@@ -163,13 +179,24 @@ public class BuildingProperties : MonoBehaviour
                 // Check if building[i] is within THIS building's effect radius
                 if (building != null && IsWithinProximity(building, effectRadius))
                 {
+                    Vector3 positionA = building.GetBuildingPopUpPlacement();
+                    positionA.y = 0;
+                    Vector3 positionB = GetBuildingPopUpPlacement();
+                    positionB.y = 0;
+                    float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
+                    float popupDelay = 0;
+                    int metricCount = 0;
                     foreach (MetricBoost boost in proximityEffects)
                     {
-                        RemoveBoost(building, boost);
+                        popupDelay = roundedDistance + (metricCount * 10);
+                        RemoveBoost(building, boost, popupDelay);
+                        metricCount++;
+                        maxDelay = Math.Max(maxDelay, popupDelay);
                     }
                 }
             }
         }
+        return maxDelay;
     }
 
     // Check if THIS building is within the proximity of the OTHER building
@@ -216,7 +243,7 @@ public class BuildingProperties : MonoBehaviour
         return false;
     }
 
-    public void ApplyBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay = 0)
+    public void ApplyBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay)
     {
         // Get the property info for the specified metric name
         var propertyInfo = typeof(BuildingProperties).GetProperty(boost.metricName.ToString());
@@ -232,7 +259,7 @@ public class BuildingProperties : MonoBehaviour
         targetBuilding.ShowFloatingValue(boost.metricName, boost.boostValue, displayDelay);
     }
 
-    public void RemoveBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay = 0)
+    public void RemoveBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay)
     {
         // Get the property info for the specified metric name
         var propertyInfo = typeof(BuildingProperties).GetProperty(boost.metricName.ToString());
@@ -251,7 +278,6 @@ public class BuildingProperties : MonoBehaviour
 
     private bool IsPositionsClose(Vector3 positionA, Vector3 positionB, float threshold = 0)
     {
-        int gridSize = 10;
         // print("IsPositionsClose");
         // Round the positions to the nearest grid point
         float roundedX_A = Mathf.Round(positionA.x / gridSize);
@@ -267,12 +293,12 @@ public class BuildingProperties : MonoBehaviour
 
         // Check distance to ensure they are within the effect radius
         float distance = Vector3.Distance(positionA, positionB) / gridSize;
-        // print(distance + " vs " + effectRadius + " | " + (distance <= effectRadius));
         return distance <= threshold;
     }
 
     public Vector3 GetBuildingPopUpPlacement()
     {
+
         float xTotal = transform.position.x;
         float zTotal = transform.position.z;
         int count = 1;
