@@ -1,18 +1,20 @@
 using UnityEngine;
 using TMPro;
 using GreenCityBuilder.Missions;
+using System.Collections;
 
 public class FloatingValueEffect : MonoBehaviour
 {
     public TextMeshPro valueText;
     public SpriteRenderer iconRenderer;
     public float floatSpeed = 1.5f;
-    public float lifetime = 3f;
+    public float lifetime = 5f;
     public Color positiveColor = Color.green;
     public Color negativeColor = Color.red;
 
     private Vector3 floatDirection = Vector3.up;
     private float elapsedTime = 0f;
+
 
     public void Initialize(string valueString, bool isPositive, MetricTitle? metricTitle, float displayDelay)
     {
@@ -36,18 +38,40 @@ public class FloatingValueEffect : MonoBehaviour
         {
             iconRenderer.enabled = false;
         }
+
+        StartCoroutine(DelayedPopup(displayDelay));
+    }
+
+    private IEnumerator DelayedPopup(float displayDelay)
+    {
+        // Hide components during the delay
+        valueText?.gameObject.SetActive(false);
+        iconRenderer?.gameObject.SetActive(false);
+
+        // Wait for the delay duration
+        yield return new WaitForSeconds(displayDelay);
+
+        // Show components after the delay
+        valueText?.gameObject.SetActive(true);
+        iconRenderer?.gameObject.SetActive(true);
+
+        // Start the movement and lifetime countdown
+        elapsedTime = 0f;
     }
 
     void Update()
     {
-        // Move the text upward
-        transform.Translate(floatDirection * floatSpeed * Time.deltaTime);
-
-        // Destroy after lifetime
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime >= lifetime)
+        // Only move and count lifetime if the popup is visible
+        if (elapsedTime >= 0f)
         {
-            Destroy(gameObject);
+            transform.Translate(floatDirection * floatSpeed * Time.deltaTime, Space.World);
+
+            // Destroy after lifetime
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= lifetime)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

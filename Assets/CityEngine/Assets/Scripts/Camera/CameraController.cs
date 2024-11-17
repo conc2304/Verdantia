@@ -207,7 +207,6 @@ public class CameraController : MonoBehaviour
 
             Transform target1 = Instantiate(targetNew, new Vector3(0, 0, 0), Quaternion.identity).transform;
             target = target1;
-            // lastClickTime = 0;
 
             if (!isInitializing)
             {
@@ -215,8 +214,12 @@ public class CameraController : MonoBehaviour
                 cityMetricsManager.DeductExpenses(constructionCost);
             };
 
-            // Check for proximity boosts from existing buildings
-            foreach (Transform existingBuildingTransform in allBuildings)
+            // Check for proximity boosts from existing buildings onto this new ROAD
+
+            bool includeSpaces = false;
+            List<Transform> allCityStructures = GetAllBuildings(includeSpaces);
+
+            foreach (Transform existingBuildingTransform in allCityStructures)
             {
                 if (!existingBuildingTransform.CompareTag("Building")) continue;
 
@@ -225,9 +228,11 @@ public class CameraController : MonoBehaviour
                 if (existingBuilding != null && targetNew.GetComponent<BuildingProperties>().IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
                 {
                     // Apply proximity effects from the existing building to the new building
+                    float popupDelay = 0;
                     foreach (MetricBoost boost in existingBuilding.proximityEffects)
                     {
-                        existingBuilding.ApplyBoost(targetNew.GetComponent<BuildingProperties>(), boost);
+                        existingBuilding.ApplyBoost(targetNew.GetComponent<BuildingProperties>(), boost, popupDelay);
+                        popupDelay++;
                     }
                 }
             }
@@ -310,7 +315,7 @@ public class CameraController : MonoBehaviour
 
                 return new Dictionary<string, object> { { "status", false }, { "msg", msg } };
             }
-            // Check foir new building's additionalSpace overlapping with existing roads
+            // Check for new building's additionalSpace overlapping with existing roads
             for (int u = 0; u < targetBuildProp.additionalSpace.Length; u++)
             {
                 if (Mathf.Round(roadGenerator.allRoads[i].position.x / 10) * 10 == Mathf.Round(targetBuildProp.additionalSpace[u].position.x / 10) * 10 &&
@@ -344,9 +349,19 @@ public class CameraController : MonoBehaviour
                 }
             }
 
+            // Apply Proximity Effects
 
-            // Check for proximity boosts from existing buildings
-            foreach (Transform existingBuildingTransform in allBuildings)
+            bool includeSpaces = false;
+            List<Transform> allCityStructures = GetAllBuildings(includeSpaces);
+
+            // Check for proximity boosts from new building on surrounding buildings
+            float lastPopupDelay = targetBuildProp.ApplyProximityEffects(allCityStructures);
+            // first display from new building on surrounding buildings,
+
+            // then show surrounding buildings on new building
+
+            // Check for proximity boosts from existing buildings onto new building
+            foreach (Transform existingBuildingTransform in allCityStructures)
             {
                 if (!existingBuildingTransform.CompareTag("Building")) continue; // ??  TODO should roads be included here
 
@@ -355,15 +370,27 @@ public class CameraController : MonoBehaviour
                 if (existingBuilding != null && targetBuildProp.IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
                 {
                     // Apply proximity effects from the existing building to the new building
+
+                    // Delay pop ups based on distance
+                    Vector3 positionA = targetBuildProp.GetBuildingPopUpPlacement();
+                    positionA.y = 0;
+                    Vector3 positionB = existingBuilding.GetBuildingPopUpPlacement();
+                    positionB.y = 0;
+                    float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
+                    float popupDelay = lastPopupDelay + 10;
+
+                    int metricCount = 0;
                     foreach (MetricBoost boost in existingBuilding.proximityEffects)
                     {
-                        existingBuilding.ApplyBoost(targetBuildProp, boost);
+                        popupDelay += metricCount * 10;
+                        // Stagger the boosts pop up so they do not all appear at once and overlap each other
+                        existingBuilding.ApplyBoost(targetBuildProp, boost, popupDelay);
+                        metricCount++;
                     }
                 }
             }
 
-            // Check for proximity boosts from new building on surrounding buildings
-            targetBuildProp.ApplyProximityEffects(allBuildings);
+
 
             spawner.carsCount += 1;
             spawner.citizensCount += 2;
