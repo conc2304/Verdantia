@@ -14,7 +14,7 @@ public class FloatingValueEffect : MonoBehaviour
     private Vector3 floatDirection = Vector3.up;
     private float elapsedTime = 0f;
 
-    public void Initialize(string valueString, bool isPositive, MetricTitle? metricTitle)
+    public void Initialize(string valueString, bool isPositive, MetricTitle? metricTitle, float displayDelay)
     {
         // Update the text
         valueText.text = valueString;

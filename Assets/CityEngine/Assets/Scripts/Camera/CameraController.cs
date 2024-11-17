@@ -215,12 +215,14 @@ public class CameraController : MonoBehaviour
                 cityMetricsManager.DeductExpenses(constructionCost);
             };
 
+            // Check for proximity boosts from existing buildings
             foreach (Transform existingBuildingTransform in allBuildings)
             {
                 if (!existingBuildingTransform.CompareTag("Building")) continue;
 
+                // Check if new "target" building is in the proximity radius of the existing building
                 BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
-                if (existingBuilding != null && targetNew.GetComponent<BuildingProperties>().IsWithinProximity(existingBuilding))
+                if (existingBuilding != null && targetNew.GetComponent<BuildingProperties>().IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
                 {
                     // Apply proximity effects from the existing building to the new building
                     foreach (MetricBoost boost in existingBuilding.proximityEffects)
@@ -346,10 +348,11 @@ public class CameraController : MonoBehaviour
             // Check for proximity boosts from existing buildings
             foreach (Transform existingBuildingTransform in allBuildings)
             {
-                if (!existingBuildingTransform.CompareTag("Building")) continue;
+                if (!existingBuildingTransform.CompareTag("Building")) continue; // ??  TODO should roads be included here
 
                 BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
-                if (existingBuilding != null && targetBuildProp.IsWithinProximity(existingBuilding))
+                // Check if new "target" building is in the proximity radius of the existing building
+                if (existingBuilding != null && targetBuildProp.IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
                 {
                     // Apply proximity effects from the existing building to the new building
                     foreach (MetricBoost boost in existingBuilding.proximityEffects)
@@ -360,7 +363,7 @@ public class CameraController : MonoBehaviour
             }
 
             // Check for proximity boosts from new building on surrounding buildings
-            targetBuildProp.ApplyProximityEffects();
+            targetBuildProp.ApplyProximityEffects(allBuildings);
 
             spawner.carsCount += 1;
             spawner.citizensCount += 2;
