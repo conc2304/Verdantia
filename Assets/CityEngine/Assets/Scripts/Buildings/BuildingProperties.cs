@@ -141,7 +141,6 @@ public class BuildingProperties : MonoBehaviour
         Debug.Log($"{name} ({buildingName}) | ApplyProximityEffects");
         Debug.Log($"Count {allBuildings.Count} | ApplyProximityEffects");
 
-
         foreach (Transform existingBuilding in allBuildings)
         {
             if (gameObject.GetInstanceID() == existingBuilding.gameObject.GetInstanceID())
@@ -177,7 +176,7 @@ public class BuildingProperties : MonoBehaviour
                 foreach (MetricBoost boost in proximityEffects)
                 {
                     boost.boostValue *= roundedDistance / effectRadius;
-                    popupDelay = roundedDistance + (metricCount * 14);
+                    popupDelay = roundedDistance + (metricCount * 8);
                     Debug.Log($"{name} APPLY BOOST TO {building.name} | {boost.metricName}");
                     ApplyBoost(building, boost, popupDelay, removeEffect);
                     maxDelay = Math.Max(maxDelay, popupDelay);
