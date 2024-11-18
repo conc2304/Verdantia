@@ -92,13 +92,13 @@ public class HeatMapLegend : MonoBehaviour
         return Color.Lerp(colors[segmentIndex], colors[segmentIndex + 1], segmentT);
     }
 
-    public void UpdateLabels(string metricName, int minValue, int maxValue)
+    public void UpdateLabels(string metricName, float minValue, float maxValue)
     {
 
-        int midValue = (maxValue - minValue) / 2;
-        minValueText.text = minValue.ToString();
-        midValueText.text = midValue.ToString();
-        maxValueText.text = maxValue.ToString();
+        float midValue = (maxValue - minValue) / 2;
+        minValueText.text = Math.Round(minValue).ToString();
+        midValueText.text = Math.Round(midValue).ToString();
+        maxValueText.text = Math.Round(maxValue).ToString();
 
         metricNameText.text = StringsUtils.ConvertToLabel(metricName);
     }

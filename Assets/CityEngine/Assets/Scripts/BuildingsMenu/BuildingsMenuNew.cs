@@ -71,7 +71,7 @@ public class BuildingsMenuNew : MonoBehaviour
     private CameraController cameraController;
     private RoadGenerator roadGenerator;
 
-    public Dictionary<string, (int min, int max)> propertyRanges = new();
+    public Dictionary<string, (float min, float max)> propertyRanges = new();
 
 
     public GameObject placementUI;
@@ -774,7 +774,7 @@ public class BuildingsMenuNew : MonoBehaviour
         cameraController.target = target;
     }
 
-    public Dictionary<string, (int min, int max)> UpdatePropertyRanges()
+    public Dictionary<string, (float min, float max)> UpdatePropertyRanges()
     {
         // Loop over Buildings Categorys
         foreach (var buildingCategory in buildings)
@@ -801,7 +801,7 @@ public class BuildingsMenuNew : MonoBehaviour
                         Type fieldType = field.FieldType;
                         if (fieldType == typeof(int) || fieldType == typeof(float) || fieldType == typeof(double) || fieldType == typeof(long))
                         {
-                            int value = (int)field.GetValue(properties);
+                            float value = (float)field.GetValue(properties);
 
                             // Check if we've already tracked this property
                             if (!propertyRanges.ContainsKey(metricName))
@@ -823,13 +823,13 @@ public class BuildingsMenuNew : MonoBehaviour
         return propertyRanges;
     }
 
-    public Dictionary<string, (int min, int max)> GetPropertyRanges()
+    public Dictionary<string, (float min, float max)> GetPropertyRanges()
     {
         if (propertyRanges.Count > 0) return propertyRanges;
         else return UpdatePropertyRanges();
     }
 
-    void PrintDictionary(Dictionary<string, (int min, int max)> dict)
+    void PrintDictionary(Dictionary<string, (float min, float max)> dict)
     {
         string result = "Dictionary Properties:\n";
         foreach (var kvp in dict)

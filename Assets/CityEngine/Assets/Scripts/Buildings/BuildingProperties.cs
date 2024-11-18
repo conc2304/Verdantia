@@ -24,7 +24,7 @@ public enum BuildingMetric
 public class MetricBoost
 {
     public BuildingMetric metricName; // The name of the metric (e.g., "happinessImpact", "taxRevenue")
-    public int boostValue;    // The value by which this metric is boosted
+    public float boostValue;    // The value by which this metric is boosted
 }
 
 public class BuildingProperties : MonoBehaviour
@@ -57,26 +57,26 @@ public class BuildingProperties : MonoBehaviour
     public string buildingName;
     [TextArea]
     public string buildingDescription;
-    public int constructionCost;
-    public int demolitionCost;
+    public float constructionCost;
+    public float demolitionCost;
 
     // Resource Management Properties
     [Header("Resource Management Properties")]
 
-    public int cityRevenue;
-    public int netEnergy;
+    public float cityRevenue;
+    public float netEnergy;
 
     // Population Dynamics Properties
     [Header("Population Dynamics Properties")]
-    public int capacity; // For population metrics
-    public int happinessImpact; // Positive or negative impact on population happiness
+    public float capacity; // For population metrics
+    public float happinessImpact; // Positive or negative impact on population happiness
 
     [Header("Environmental Impact Properties")]
-    public int pollutionImpact;  // Positive or negative impact on pollution levels
-    public int heatContribution; // Contribution to urban heat island effect
-    public int greenSpaceEffect; // Benefits of green space
-    public int carbonFootprint; // Carbon emissions of this building
-    public int effectRadius; // The effective radius of this building's service
+    public float pollutionImpact;  // Positive or negative impact on pollution levels
+    public float heatContribution; // Contribution to urban heat island effect
+    public float greenSpaceEffect; // Benefits of green space
+    public float carbonFootprint; // Carbon emissions of this building
+    public float effectRadius; // The effective radius of this building's service
     public List<MetricBoost> proximityEffects;
     public GameObject floatingValuePrefab;
 
@@ -98,72 +98,90 @@ public class BuildingProperties : MonoBehaviour
 
     private void PassonBuildingProperties()
     {
-        if (gameObject.CompareTag("Building"))
+        // Make all "Additional Spaces" inherit all properties from the Building Parent
+        if (additionalSpace != null && additionalSpace.Length > 0)
         {
-            BuildingProperties buildingProps = GetComponent<BuildingProperties>();
-            Transform[] additionalSpace = buildingProps.additionalSpace;
-            // Make all "Additional Spaces" inherit all properties from the Building Parent
-            if (additionalSpace != null && additionalSpace.Length > 0)
+            // Loop through each Transform in the additionalSpace array
+            for (int i = 0; i < additionalSpace.Length; i++)
             {
-                // Loop through each Transform in the additionalSpace array
-                for (int i = 0; i < additionalSpace.Length; i++)
-                {
-                    Transform space = additionalSpace[i];
+                Transform space = additionalSpace[i];
 
-                    if (space != null && space.CompareTag("Space") && space.TryGetComponent<BuildingProperties>(out BuildingProperties buildingProperties)) // Ensure the Transform is not null
-                    {
-                        buildingProperties.constructionCost = constructionCost;
-                        buildingProperties.demolitionCost = demolitionCost;
-                        buildingProperties.heatContribution = heatContribution;
-                        buildingProperties.netEnergy = netEnergy;
-                        buildingProperties.capacity = capacity;
-                        buildingProperties.happinessImpact = happinessImpact;
-                        buildingProperties.pollutionImpact = pollutionImpact;
-                        buildingProperties.heatContribution = heatContribution;
-                        buildingProperties.greenSpaceEffect = greenSpaceEffect;
-                        buildingProperties.carbonFootprint = carbonFootprint;
-                        buildingProperties.effectRadius = effectRadius;
-                        buildingProperties.proximityEffects = proximityEffects;
-                        buildingProperties.cityRevenue = cityRevenue;
-                    }
+                if (space != null && space.CompareTag("Space") && space.TryGetComponent(out BuildingProperties buildingProperties)) // Ensure the Transform is not null
+                {
+                    TransferBuildingProperties(buildingProperties);
                 }
             }
         }
+    }
+
+
+    public void TransferBuildingProperties(BuildingProperties transferTarget)
+    {
+        transferTarget.constructionCost = constructionCost;
+        transferTarget.demolitionCost = demolitionCost;
+        transferTarget.heatContribution = heatContribution;
+        transferTarget.netEnergy = netEnergy;
+        transferTarget.capacity = capacity;
+        transferTarget.happinessImpact = happinessImpact;
+        transferTarget.pollutionImpact = pollutionImpact;
+        transferTarget.heatContribution = heatContribution;
+        transferTarget.greenSpaceEffect = greenSpaceEffect;
+        transferTarget.carbonFootprint = carbonFootprint;
+        transferTarget.effectRadius = effectRadius;
+        transferTarget.proximityEffects = proximityEffects;
+        transferTarget.cityRevenue = cityRevenue;
     }
 
     // Apply proximity effect of this building on all neighboring buildings
-    public float ApplyProximityEffects(List<Transform> allBuildings = null)
+    public float ApplyProximityEffects(bool removeEffect = false)
     {
         float maxDelay = 0;
-        allBuildings ??= FindObjectOfType<CameraController>().GetAllBuildings();
+        bool includeSpaces = false;
+        List<Transform> allBuildings = FindObjectOfType<CameraController>().GetAllBuildings(includeSpaces);
+        Debug.Log($"{name} ({buildingName}) | ApplyProximityEffects");
+        Debug.Log($"Count {allBuildings.Count} | ApplyProximityEffects");
+
 
         foreach (Transform existingBuilding in allBuildings)
         {
-
-            if (existingBuilding != transform && (existingBuilding.CompareTag("Building") || existingBuilding.CompareTag("Road"))) // Skip self, Skip "Spaces" and anything not a "Building"
+            if (gameObject.GetInstanceID() == existingBuilding.gameObject.GetInstanceID())
             {
-                BuildingProperties building = existingBuilding.GetComponent<BuildingProperties>();
-                // Check if building[i] is within THIS building's effect radius
+                Debug.Log($"Same instance id SKIP : {existingBuilding.transform.name} | {transform.name} || {gameObject.GetInstanceID()} : {existingBuilding.gameObject.GetInstanceID()}");
+                continue;
+            }
 
-                if (building != null && IsWithinProximity(building, effectRadius))
+            if (!(existingBuilding.CompareTag("Building") || existingBuilding.CompareTag("Road")))
+            {
+                Debug.Log($"Not a Building Or a Road {existingBuilding.name} | {existingBuilding.tag}");
+                continue;
+            }
+            // Skip self, Skip "Spaces" and anything not a "Building"
+
+            BuildingProperties building = existingBuilding.GetComponent<BuildingProperties>();
+            // Check if building[i] is within THIS building's effect radius
+
+            if (building != null && IsWithinProximity(building, effectRadius))
+            {
+                // Delay pop ups based on distance
+                Vector3 positionA = building.GetBuildingPopUpPlacement();
+                positionA.y = 0;
+                Vector3 positionB = GetBuildingPopUpPlacement();
+                positionB.y = 0;
+                float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
+                float popupDelay = 0;
+                int metricCount = 0;
+                Debug.Log($"RDist | {roundedDistance}");
+                Debug.Log($"% Dist | {roundedDistance / effectRadius}");
+
+
+                foreach (MetricBoost boost in proximityEffects)
                 {
-                    // Delay pop ups based on distance
-                    Vector3 positionA = building.GetBuildingPopUpPlacement();
-                    positionA.y = 0;
-                    Vector3 positionB = GetBuildingPopUpPlacement();
-                    positionB.y = 0;
-                    float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
-                    float popupDelay = 0;
-                    int metricCount = 0;
-
-                    foreach (MetricBoost boost in proximityEffects)
-                    {
-                        popupDelay = roundedDistance + (metricCount * 14);
-                        Debug.Log($"{name} APPLY BOOST TO {building.name} | {boost.metricName}");
-                        ApplyBoost(building, boost, popupDelay);
-                        maxDelay = Math.Max(maxDelay, popupDelay);
-                        metricCount++;
-                    }
+                    boost.boostValue *= roundedDistance / effectRadius;
+                    popupDelay = roundedDistance + (metricCount * 14);
+                    Debug.Log($"{name} APPLY BOOST TO {building.name} | {boost.metricName}");
+                    ApplyBoost(building, boost, popupDelay, removeEffect);
+                    maxDelay = Math.Max(maxDelay, popupDelay);
+                    metricCount++;
                 }
             }
         }
@@ -171,37 +189,6 @@ public class BuildingProperties : MonoBehaviour
         return maxDelay;
     }
 
-    // Remove proximity effect of this building on all neighboring buildings
-    public float RemoveProximityEffects()
-    {
-        float maxDelay = 0;
-        foreach (Transform buildingTransform in cameraController.GetAllBuildings())
-        {
-            if (buildingTransform != transform) // Skip self
-            {
-                BuildingProperties building = buildingTransform.GetComponent<BuildingProperties>();
-                // Check if building[i] is within THIS building's effect radius
-                if (building != null && IsWithinProximity(building, effectRadius))
-                {
-                    Vector3 positionA = building.GetBuildingPopUpPlacement();
-                    positionA.y = 0;
-                    Vector3 positionB = GetBuildingPopUpPlacement();
-                    positionB.y = 0;
-                    float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
-                    float popupDelay = 0;
-                    int metricCount = 0;
-                    foreach (MetricBoost boost in proximityEffects)
-                    {
-                        popupDelay = roundedDistance + (metricCount * 14);
-                        RemoveBoost(building, boost, popupDelay);
-                        metricCount++;
-                        maxDelay = Math.Max(maxDelay, popupDelay);
-                    }
-                }
-            }
-        }
-        return maxDelay;
-    }
 
     // Check if THIS building is within the proximity of the OTHER building
     public bool IsWithinProximity(BuildingProperties other, float threshold)
@@ -248,21 +235,14 @@ public class BuildingProperties : MonoBehaviour
     }
 
     // Apply boost to target building 
-    public void ApplyBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay)
+    public void ApplyBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay, bool removeEffect = false)
     {
-        ModifyProperty(targetBuilding, boost.metricName.ToString(), boost.boostValue);
+        float valueInverter = removeEffect ? -1f : 1f;
+        ModifyProperty(targetBuilding, boost.metricName.ToString(), valueInverter * boost.boostValue);
         targetBuilding.PassonBuildingProperties();
-        targetBuilding.ShowFloatingValue(boost.metricName, boost.boostValue, displayDelay);
+        targetBuilding.ShowFloatingValue(boost.metricName, valueInverter * boost.boostValue, displayDelay);
     }
 
-    // Remove boost from target building
-    public void RemoveBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay)
-    {
-        // Get the property info for the specified metric name
-        ModifyProperty(targetBuilding, boost.metricName.ToString(), -boost.boostValue);
-        targetBuilding.ShowFloatingValue(boost.metricName, -boost.boostValue, displayDelay);
-        targetBuilding.PassonBuildingProperties();
-    }
 
     private bool IsPositionsClose(Vector3 positionA, Vector3 positionB, float threshold = 0)
     {
@@ -282,7 +262,7 @@ public class BuildingProperties : MonoBehaviour
         // Check distance to ensure they are within the effect radius
         float distance = Vector3.Distance(positionA, positionB) / gridSize;
 
-        print($"{distance} | {threshold}");
+        // print($"{distance} | {threshold}");
 
         return distance <= threshold;
     }
@@ -309,7 +289,7 @@ public class BuildingProperties : MonoBehaviour
         return new Vector3(xPos, yPos, zPos);
     }
 
-    public void ShowFloatingValue(BuildingMetric metric, int boostValue, float displayDelay = 0)
+    public void ShowFloatingValue(BuildingMetric metric, float boostValue, float displayDelay = 0)
     {
         if (CompareTag("Space"))
         {

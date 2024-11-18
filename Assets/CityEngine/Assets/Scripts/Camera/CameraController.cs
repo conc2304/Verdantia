@@ -124,8 +124,8 @@ public class CameraController : MonoBehaviour
 
         heatmapMetric = metricName;
 
-        int metricMin = buildingMenu.propertyRanges[heatmapMetric.ToString()].min;
-        int metricMax = buildingMenu.propertyRanges[heatmapMetric.ToString()].max;
+        float metricMin = buildingMenu.propertyRanges[heatmapMetric.ToString()].min;
+        float metricMax = buildingMenu.propertyRanges[heatmapMetric.ToString()].max;
         heatMap.UpdateHeatMap(GetAllBuildings(true), metricName, metricMin, metricMax);
     }
 
@@ -189,6 +189,7 @@ public class CameraController : MonoBehaviour
 
     public Dictionary<string, object> SpawnRoad(Transform targetNew, bool isInitializing = false)
     {
+        // TargetNew will be the RoadForSpawnPrefab, and it will be replaced by a new road for the correct type
         targetNew.parent = roadsParent;
         targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
 
@@ -198,8 +199,6 @@ public class CameraController : MonoBehaviour
         if (roadSpawnWasSuccessful)
         {
             // get the last road added to allRoads
-            int lastRoadIndex = roadGenerator.allRoads.Count - 1;
-            Transform newestRoad = roadGenerator.allRoads[lastRoadIndex];
 
             for (int i = 0; i < forestObj.Count; i++)
             {
@@ -216,47 +215,48 @@ public class CameraController : MonoBehaviour
 
             if (!isInitializing)
             {
-                int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
+                float constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
                 cityMetricsManager.DeductExpenses(constructionCost);
             };
 
 
-            bool includeSpaces = false;
-            List<Transform> allCityStructures = GetAllBuildings(includeSpaces);
+            // bool includeSpaces = false;
+            // List<Transform> allCityStructures = GetAllBuildings(includeSpaces);
 
             // Check for proximity boosts from new ROAD on surrounding buildings
+            Transform newestRoad = roadGenerator.newRoadSaved;
             BuildingProperties roadProps = newestRoad.GetComponent<BuildingProperties>();
-            float lastPopupDelay = roadProps.ApplyProximityEffects(allCityStructures);
+            float lastPopupDelay = roadProps.ApplyProximityEffects();
 
             // Check for proximity boosts from existing buildings onto this new ROAD
-            foreach (Transform existingBuildingTransform in allCityStructures)
-            {
-                if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue;
-                if (existingBuildingTransform == newestRoad || newestRoad.position == existingBuildingTransform.position)
-                {
-                    print("ROAD IS SAME ROAD ??");
-                    continue;
-                };
+            // foreach (Transform existingBuildingTransform in allCityStructures)
+            // {
+            //     if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue;
+            //     if (existingBuildingTransform == newestRoad || newestRoad.position == existingBuildingTransform.position)
+            //     {
+            //         print("ROAD IS SAME ROAD ??");
+            //         continue;
+            //     };
 
 
-                // Check if new ROAD is in the proximity radius of the existing building
-                BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
-                if (existingBuilding != null && roadProps.IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
-                {
-                    // Apply proximity effects from the existing building to the new building
-                    int metricCount = 0;
-                    foreach (MetricBoost boost in existingBuilding.proximityEffects)
-                    {
-                        float popupDelay = lastPopupDelay + 1 + (metricCount * 14);
+            //     // Check if new ROAD is in the proximity radius of the existing building
+            //     BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
+            //     if (existingBuilding != null && roadProps.IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
+            //     {
+            //         // Apply proximity effects from the existing building to the new building
+            //         int metricCount = 0;
+            //         foreach (MetricBoost boost in existingBuilding.proximityEffects)
+            //         {
+            //             float popupDelay = lastPopupDelay + 1 + (metricCount * 14);
 
-                        Debug.Log($"{roadProps.name} APPLY BOOST TO {existingBuilding.name} | {boost.metricName}");
+            //             Debug.Log($"{roadProps.name} APPLY BOOST TO {existingBuilding.name} | {boost.metricName}");
 
-                        existingBuilding.ApplyBoost(roadProps, boost, popupDelay);
-                        metricCount++;
+            //             existingBuilding.ApplyBoost(roadProps, boost, popupDelay);
+            //             metricCount++;
 
-                    }
-                }
-            }
+            //         }
+            //     }
+            // }
 
             cityChanged = true;
             return new Dictionary<string, object> { { "status", true }, { "msg", "Road added! You can add more." } };
@@ -377,44 +377,44 @@ public class CameraController : MonoBehaviour
 
             // Check for proximity boosts from new building on surrounding buildings
             float lastPopupDelay = 0;
-            lastPopupDelay += targetBuildProp.ApplyProximityEffects(allCityStructures);
+            lastPopupDelay += targetBuildProp.ApplyProximityEffects();
 
             // first display from new building on surrounding buildings
             // then show surrounding buildings on new building
 
             // Check for proximity boosts from existing buildings onto new building
-            foreach (Transform existingBuildingTransform in allCityStructures)
-            {
-                if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue; // ??  TODO should roads be included here
+            // foreach (Transform existingBuildingTransform in allCityStructures)
+            // {
+            //     if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue; // ??  TODO should roads be included here
 
-                // if (existingBuildingTransform.transform == targetNew.transform) continue;
+            //     // if (existingBuildingTransform.transform == targetNew.transform) continue;
 
-                BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
-                // Check if new "target" building is in the proximity radius of the existing building
-                if (existingBuilding != null && targetBuildProp.IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
-                {
-                    // Apply proximity effects from the existing building to the new building
+            //     BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
+            //     // Check if new "target" building is in the proximity radius of the existing building
+            //     if (existingBuilding != null && targetBuildProp.IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
+            //     {
+            //         // Apply proximity effects from the existing building to the new building
 
-                    // Delay pop ups based on distance
-                    Vector3 positionA = targetBuildProp.GetBuildingPopUpPlacement();
-                    positionA.y = 0;
-                    Vector3 positionB = existingBuilding.GetBuildingPopUpPlacement();
-                    positionB.y = 0;
-                    float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
-                    float popupDelay = roundedDistance + lastPopupDelay + 10;
+            //         // Delay pop ups based on distance
+            //         Vector3 positionA = targetBuildProp.GetBuildingPopUpPlacement();
+            //         positionA.y = 0;
+            //         Vector3 positionB = existingBuilding.GetBuildingPopUpPlacement();
+            //         positionB.y = 0;
+            //         float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
+            //         float popupDelay = roundedDistance + lastPopupDelay + 10;
 
-                    int metricCount = 0;
-                    foreach (MetricBoost boost in existingBuilding.proximityEffects)
-                    {
+            //         int metricCount = 0;
+            //         foreach (MetricBoost boost in existingBuilding.proximityEffects)
+            //         {
 
-                        popupDelay += (metricCount * 14);
-                        Debug.Log($"{existingBuilding.buildingName} APPLY BOOST TO {targetBuildProp.buildingName} | {boost.metricName}   || DELAY = {popupDelay}");
-                        // Stagger the boosts pop up so they do not all appear at once and overlap each other
-                        existingBuilding.ApplyBoost(targetBuildProp, boost, popupDelay);
-                        metricCount++;
-                    }
-                }
-            }
+            //             popupDelay += (metricCount * 14);
+            //             Debug.Log($"{existingBuilding.buildingName} APPLY BOOST TO {targetBuildProp.buildingName} | {boost.metricName}   || DELAY = {popupDelay}");
+            //             // Stagger the boosts pop up so they do not all appear at once and overlap each other
+            //             existingBuilding.ApplyBoost(targetBuildProp, boost, popupDelay);
+            //             metricCount++;
+            //         }
+            //     }
+            // }
 
 
 
@@ -424,7 +424,7 @@ public class CameraController : MonoBehaviour
 
             if (!isInitializing)
             {
-                int constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
+                float constructionCost = targetNew.gameObject.GetComponent<BuildingProperties>().constructionCost;
                 cityMetricsManager.DeductExpenses(constructionCost);
             }
 
@@ -567,6 +567,8 @@ public class CameraController : MonoBehaviour
     public Dictionary<string, object> DeleteTarget(Transform target)
     {
 
+        bool removeEffect = true;
+
         string demolishedBuildingName = "";
         // Checck all buildings to see if it intersects demolition target and remove building 
         for (int i = 0; i < allBuildings.Count; i++)
@@ -578,12 +580,12 @@ public class CameraController : MonoBehaviour
 
                 BuildingProperties demolisionTargetProps = allBuildings[i].GetComponent<BuildingProperties>();
                 // deduct demolition cost from budget 
-                int demolitionCost = demolisionTargetProps.demolitionCost;
+                float demolitionCost = demolisionTargetProps.demolitionCost;
                 demolishedBuildingName = demolisionTargetProps.buildingName;
                 cityMetricsManager.DeductExpenses(demolitionCost);
 
                 // Check for and remove proximity boosts from demolished building on surrounding buildings
-                demolisionTargetProps.RemoveProximityEffects();
+                demolisionTargetProps.ApplyProximityEffects(removeEffect);
 
                 for (int pathTargetIndex = 0; pathTargetIndex < demolisionTargetProps.carsPathTargetsToConnect.Length; pathTargetIndex++)
                     spawner.carsSpawnPoints.Remove(demolisionTargetProps.carsPathTargetsToConnect[pathTargetIndex].GetComponent<PathTarget>().previousPathTarget.transform);

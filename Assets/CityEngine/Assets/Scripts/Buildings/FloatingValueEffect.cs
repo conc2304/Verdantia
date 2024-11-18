@@ -34,11 +34,13 @@ public class FloatingValueEffect : MonoBehaviour
     {
         cameraController = FindObjectOfType<CameraController>();
 
-        // the further the zoom, the faster the items move
+        // the further the zoom, the faster the items move and the larger they are
         float zoomPos = cameraController.toZoom.y;
-        print($"ZoomPos : {zoomPos}");
-        float zoomMultiplier = Mathf.InverseLerp(cameraController.minZoom, cameraController.maxZoom, zoomPos);  // 0 -1
-        // floatSpeed *= Mathf.Lerp(1, 10, zoomMultiplier);
+        float zoomMultiplier = 1 + Mathf.InverseLerp(cameraController.minZoom, cameraController.maxZoom, zoomPos);  // 0 to 1
+        zoomMultiplier *= Mathf.Lerp(0.8f, 10, zoomMultiplier);
+        startScale *= zoomMultiplier;
+        endtScale *= zoomMultiplier;
+        floatSpeed *= Mathf.Lerp(0.6f, 5, zoomMultiplier);
 
         // Update the text
         valueText.text = valueString;
@@ -61,10 +63,11 @@ public class FloatingValueEffect : MonoBehaviour
             iconRenderer.enabled = false;
         }
 
+        // Initialize size and position so it doesnt jump on update
         transform.Translate(floatDirection * floatSpeed * 0, Space.World);
-        // Wait for the delay duration
         transform.localScale = new Vector3(startScale, startScale, startScale);
 
+        // Wait for the delay duration
         StartCoroutine(DelayedPopup(displayDelay));
     }
 

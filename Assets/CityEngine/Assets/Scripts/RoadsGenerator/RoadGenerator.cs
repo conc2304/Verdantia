@@ -5,8 +5,9 @@ using UnityEngine;
 public class RoadGenerator : MonoBehaviour
 {
 
-    private Transform newRoad, newRoadType, newRoadSaved;
+    private Transform newRoad, newRoadType;
 
+    public Transform newRoadSaved;
     public List<Transform> allRoads = new List<Transform>();
     [HideInInspector]
     public Transform[] nearRoads = new Transform[4];
@@ -36,8 +37,11 @@ public class RoadGenerator : MonoBehaviour
         spawner = FindObjectOfType<Spawner>();
     }
 
-    public bool CheckRoadType(Transform road)
+    // This gets called by the camera controller on road spawn
+    public bool CheckRoadType(Transform roadForSpawn)
     {
+        // road will be RoadForSpawn prefab
+
         top = down = right = left = false;
         countWays = 0;
         roadRotationY = 0;
@@ -50,27 +54,27 @@ public class RoadGenerator : MonoBehaviour
         //find another roads
         for (int i = 0; i < allRoads.Count; i++)
         {
-            if (Mathf.Round(allRoads[i].position.x) == Mathf.Round(road.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(road.position.z - 10))
+            if (Mathf.Round(allRoads[i].position.x) == Mathf.Round(roadForSpawn.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(roadForSpawn.position.z - 10))
             {
                 top = true;
                 nearRoads[0] = allRoads[i];
             }
-            if (Mathf.Round(allRoads[i].position.x) == Mathf.Round(road.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(road.position.z + 10))
+            if (Mathf.Round(allRoads[i].position.x) == Mathf.Round(roadForSpawn.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(roadForSpawn.position.z + 10))
             {
                 down = true;
                 nearRoads[1] = allRoads[i];
             }
-            if (Mathf.Round(allRoads[i].position.x) - 10 == Mathf.Round(road.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(road.position.z))
+            if (Mathf.Round(allRoads[i].position.x) - 10 == Mathf.Round(roadForSpawn.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(roadForSpawn.position.z))
             {
                 right = true;
                 nearRoads[2] = allRoads[i];
             }
-            if (Mathf.Round(allRoads[i].position.x) + 10 == Mathf.Round(road.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(road.position.z))
+            if (Mathf.Round(allRoads[i].position.x) + 10 == Mathf.Round(roadForSpawn.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(roadForSpawn.position.z))
             {
                 left = true;
                 nearRoads[3] = allRoads[i];
             }
-            if (Mathf.Round(allRoads[i].position.x) == Mathf.Round(road.position.x) && allRoads[i].position.z == Mathf.Round(road.position.z))
+            if (Mathf.Round(allRoads[i].position.x) == Mathf.Round(roadForSpawn.position.x) && allRoads[i].position.z == Mathf.Round(roadForSpawn.position.z))
             {
                 return false;
             }
@@ -78,31 +82,34 @@ public class RoadGenerator : MonoBehaviour
 
         for (int i = 0; i < cameraController.allBuildings.Count; i++)
         {
-            if (Mathf.Round(cameraController.allBuildings[i].transform.position.x) == Mathf.Round(road.position.x) &&
-                        Mathf.Round(cameraController.allBuildings[i].transform.position.z) == Mathf.Round(road.position.z))
+            if (Mathf.Round(cameraController.allBuildings[i].transform.position.x) == Mathf.Round(roadForSpawn.position.x) &&
+                        Mathf.Round(cameraController.allBuildings[i].transform.position.z) == Mathf.Round(roadForSpawn.position.z))
             {
                 return false;
             }
         }
 
-        RotateRoad();
+        RotateRoad(); // Updates which prefab newRoad is
 
         //final procedure
         newRoadType = newRoad;
-        newRoad = Instantiate(newRoad, road.position, Quaternion.Euler(road.rotation.eulerAngles.x, roadRotationY, road.rotation.eulerAngles.z), cameraController.roadsParent);
+        newRoad = Instantiate(newRoad, roadForSpawn.position, Quaternion.Euler(roadForSpawn.rotation.eulerAngles.x, roadRotationY, roadForSpawn.rotation.eulerAngles.z), cameraController.roadsParent);
         newRoadSaved = newRoad;
         //nearRoadsProperties.Add(newRoad.GetComponent<RoadProperties>());
-        allRoads.Remove(road);
+
+        roadForSpawn.GetComponent<BuildingProperties>().TransferBuildingProperties(newRoad.GetComponent<BuildingProperties>());
+        allRoads.Remove(roadForSpawn);
         allRoads.Add(newRoad);
 
-        Destroy(road.gameObject);
+        Destroy(roadForSpawn.gameObject);
         //road.gameObject.SetActive(false);
 
-        //repair near roads
+        // CheckCreatedRoads will call rotateRoad()
+        // repair near roads
         for (int i = 0; i < nearRoads.Length; i++)
             if (nearRoads[i] != null)
-                CheckCreatedRoads(nearRoads[i], i);
-        
+                CheckCreatedRoads(nearRoads[i], i);     // TODO CHECK THIS !! HERE
+
         CloseOfCloseRoads();
         for (int i = 0; i < nearRoads.Length; i++)
             if (nearRoads[i] != null)
@@ -124,7 +131,10 @@ public class RoadGenerator : MonoBehaviour
     void RotateRoad()
     {
         //count near roads
-        if (top) countWays += 1; if (down) countWays += 1; if (right) countWays += 1; if (left) countWays += 1;
+        if (top) countWays += 1;
+        if (down) countWays += 1;
+        if (right) countWays += 1;
+        if (left) countWays += 1;
 
         if (countWays == 0) newRoad = roadZero;
         if (countWays == 1) newRoad = roadOne;
@@ -208,6 +218,11 @@ public class RoadGenerator : MonoBehaviour
         newRoad = Instantiate(newRoad, road.position, Quaternion.Euler(road.rotation.eulerAngles.x, roadRotationY, road.rotation.eulerAngles.z), cameraController.roadsParent);
         nearRoads[u] = newRoad;
         nearRoadsProperties.Add(newRoad.GetComponent<RoadProperties>());
+
+        // Since we are deleting an old road to but in the correct type,
+        // We want to transfer all of the metrics to the new road
+        road.GetComponent<BuildingProperties>().TransferBuildingProperties(newRoad.GetComponent<BuildingProperties>());
+
         allRoads.Remove(road);
         allRoads.Add(newRoad);
         Destroy(road.gameObject);
@@ -265,7 +280,7 @@ public class RoadGenerator : MonoBehaviour
                 closerRoadLast.nextPathTarget = roadProperties.pathTargetsStart[pathTargetIndex];
 
             }
-           
+
         }
     }
 
@@ -310,7 +325,7 @@ public class RoadGenerator : MonoBehaviour
             }
         }
 
-        
+
     }
 
     public void ConnectBuildingToRoad(Transform building)
@@ -350,11 +365,11 @@ public class RoadGenerator : MonoBehaviour
                 if (Mathf.Round(allRoads[i].position.x) + 10 == Mathf.Round(building.position.x) && Mathf.Round(allRoads[i].position.z) == Mathf.Round(building.position.z))
                     nearRoadsProperties.Add(allRoads[i].GetComponent<RoadProperties>());
             }
-            if(y > 0) building = buildingPathTarget.additionalSpace[y];
+            if (y > 0) building = buildingPathTarget.additionalSpace[y];
         }
 
-            //cars roads connect
-            bool shoudSpawnCitizens = false;
+        //cars roads connect
+        bool shoudSpawnCitizens = false;
         bool shoudSpawnCars = false;
         for (int pathTargetIndex = 0; pathTargetIndex < buildingPathTarget.carsPathTargetsToConnect.Length; pathTargetIndex++)
         {
@@ -411,7 +426,7 @@ public class RoadGenerator : MonoBehaviour
             }
 
             buildingPathTarget.citizensPathTargetsToConnect[pathTargetIndex].GetComponent<PathTarget>().branches.Clear();
-            
+
             if (distance < 5)
             {
                 if (closerTarget != null)
@@ -422,16 +437,16 @@ public class RoadGenerator : MonoBehaviour
                 }
             }
         }
-        
+
         if (shoudSpawnCitizens)
-            for(int i = 0; i < buildingPathTarget.citizensPathTargetsToSpawn.Length; i++)
+            for (int i = 0; i < buildingPathTarget.citizensPathTargetsToSpawn.Length; i++)
                 spawner.citizensSpawnPoints.Add(buildingPathTarget.citizensPathTargetsToSpawn[i]);
 
         if (shoudSpawnCars)
             for (int i = 0; i < buildingPathTarget.carsPathTargetsToSpawn.Length; i++)
                 //if(spawner.carsSpawnPoints.Contains(buildingPathTarget.carsPathTargetsToSpawn[i].transform) == false)
                 spawner.carsSpawnPoints.Add(buildingPathTarget.carsPathTargetsToSpawn[i]);
-        
+
     }
 
     public void ConnectElectricalPillar(RoadProperties roadProperties)
