@@ -319,10 +319,12 @@ public class CityMetricsManager : MonoBehaviour
         // print($"City Happiness: {happiness} | -2");
 
         // Clamp city happiness to the range [0, 100]
-        happiness = (float)Math.Round(Mathf.Clamp(happiness, 0f, 100f));
+        happiness = Mathf.Clamp(happiness, 0f, 100f);
 
         // Log the city happiness for debugging
         // print($"City Happiness: {happiness} | -1");
+        CleanMetrics();
+
         OnMetricsUpdate?.Invoke();
     }
 
@@ -339,9 +341,19 @@ public class CityMetricsManager : MonoBehaviour
         energy = 0;
         carbonEmission = 0;
         revenue = 0;
-        // income = 0;
-        // expenses = 0;
         // Budget does not get reset
+    }
+
+    private void CleanMetrics()
+    {
+        population = (float)Math.Round(population);
+        happiness = (float)Math.Round(happiness);
+        greenSpace = (float)Math.Round(greenSpace);
+        urbanHeat = (float)Math.Round(urbanHeat);
+        pollution = (float)Math.Round(pollution);
+        energy = (float)Math.Round(energy);
+        carbonEmission = (float)Math.Round(carbonEmission);
+        revenue = (float)Math.Round(revenue);
     }
 
     public void AddRevenue(float amount)
