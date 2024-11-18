@@ -129,7 +129,6 @@ public class HeatMap : MonoBehaviour
         foreach (Transform building in allBuildings)
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
-            Debug.Log($"{buildingProps.buildingName} | {building.tag}");
 
             if (buildingProps != null)
             {

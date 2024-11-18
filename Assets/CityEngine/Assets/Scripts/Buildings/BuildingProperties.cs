@@ -19,12 +19,11 @@ public enum BuildingMetric
 };
 
 
-// Serializable class to define metric boosts
 [Serializable]
 public class MetricBoost
 {
-    public BuildingMetric metricName; // The name of the metric (e.g., "happinessImpact", "taxRevenue")
-    public float boostValue;    // The value by which this metric is boosted
+    public BuildingMetric metricName;
+    public float boostValue;
 }
 
 public class BuildingProperties : MonoBehaviour
@@ -34,7 +33,7 @@ public class BuildingProperties : MonoBehaviour
     public bool connectToRoad;
     public bool unrestrictedPlacement = false;  // Allows building to not be built next to roads or chainable buildings (ie allow forest placement anywhere)
     public bool allowChaining = false;  // Allows building to be placed not along roads if chaining
-    public List<Transform> chainableTypes; // List of building types that item can chain off of
+    public List<Transform> chainableTypes; // List of building types that item can chain off of (ie allow connecting of parks)
 
     public PathTarget[] carsPathTargetsToConnect;
     public Transform[] carsPathTargetsToSpawn;
@@ -69,30 +68,23 @@ public class BuildingProperties : MonoBehaviour
     // Population Dynamics Properties
     [Header("Population Dynamics Properties")]
     public float capacity; // For population metrics
-    public float happinessImpact; // Positive or negative impact on population happiness
+    public float happinessImpact;
 
     [Header("Environmental Impact Properties")]
-    public float pollutionImpact;  // Positive or negative impact on pollution levels
-    public float heatContribution; // Contribution to urban heat island effect
-    public float greenSpaceEffect; // Benefits of green space
-    public float carbonFootprint; // Carbon emissions of this building
-    public float effectRadius; // The effective radius of this building's service
+    public float pollutionImpact;
+    public float heatContribution;
+    public float greenSpaceEffect;
+    public float carbonFootprint;
+    public float effectRadius;
     public List<MetricBoost> proximityEffects;
     public GameObject floatingValuePrefab;
-
-
-    private CameraController cameraController;
-    private Vector3 popupPlacement;
-    private int gridSize = 10;
-
+    private readonly int gridSize = 10;
 
 
     void Start()
     {
-        cameraController = FindObjectOfType<CameraController>();
         demolitionCost = demolitionCost != 0 ? demolitionCost : (int)(constructionCost * 0.25f);
         PassonBuildingProperties();
-        popupPlacement = GetBuildingPopUpPlacement();
     }
 
 
@@ -166,17 +158,18 @@ public class BuildingProperties : MonoBehaviour
                 positionA.y = 0;
                 Vector3 positionB = GetBuildingPopUpPlacement();
                 positionB.y = 0;
-                float roundedDistance = Vector3.Distance(positionA, positionB) / gridSize; // in number of grid spaces
+                // dissipate the value of the effect over the distance
+                float roundedDistance = (float)Math.Round(Vector3.Distance(positionA, positionB)) / gridSize; // in number of grid spaces
+                float distanceMultiplier = Math.Min(1, roundedDistance / effectRadius);
+
                 float popupDelay = 0;
                 int metricCount = 0;
-                Debug.Log($"RDist | {roundedDistance}");
-                Debug.Log($"% Dist | {roundedDistance / effectRadius}");
-
 
                 foreach (MetricBoost boost in proximityEffects)
                 {
-                    boost.boostValue *= roundedDistance / effectRadius;
-                    popupDelay = roundedDistance + (metricCount * 8);
+                    // apply boost delay based on distance from boost initiator
+                    boost.boostValue = (float)NumbersUtils.RoundToNearestHalf(boost.boostValue * distanceMultiplier);
+                    popupDelay = (roundedDistance * 3) + (metricCount * 6);
                     Debug.Log($"{name} APPLY BOOST TO {building.name} | {boost.metricName}");
                     ApplyBoost(building, boost, popupDelay, removeEffect);
                     maxDelay = Math.Max(maxDelay, popupDelay);
@@ -370,7 +363,6 @@ public class BuildingProperties : MonoBehaviour
             if (currentValue is float floatValue && deltaValue is float deltaFloat)
             {
                 field.SetValue(component, floatValue + deltaFloat);
-                Debug.Log($"Field '{propertyName}' modified to: {floatValue + deltaFloat}");
                 return;
             }
         }

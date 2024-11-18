@@ -392,6 +392,7 @@ public class CameraController : MonoBehaviour
         return new Dictionary<string, object> { { "status", false }, { "msg", "Unable to add building." } };
     }
 
+    // Mirrors BuildingProperties.ApplyPromiximtyEffect() but inversed : Neigherbors to self
     public void ApplyNeighborEffectsToSelf(BuildingProperties self, float delayTime)
     {
         bool includeSpaces = false;
@@ -414,16 +415,25 @@ public class CameraController : MonoBehaviour
             BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
             if (existingBuilding != null && existingBuilding.IsWithinProximity(self, existingBuilding.effectRadius))
             {
+
+                // dissipate the value of the effect over the distance
+                Vector3 positionA = self.GetBuildingPopUpPlacement();
+                positionA.y = 0;
+                Vector3 positionB = existingBuilding.GetBuildingPopUpPlacement();
+                positionB.y = 0;
+                float roundedDistance = (float)Math.Round(Vector3.Distance(positionA, positionB)) / gridSize; // in number of grid spaces
+                float distanceMultiplier = Math.Min(1, roundedDistance / existingBuilding.effectRadius);
+
                 // Aggregate proximity effects from the existing building to the new building
                 foreach (MetricBoost boost in existingBuilding.proximityEffects)
                 {
                     if (aggregatedBoosts.ContainsKey(boost.metricName))
                     {
-                        aggregatedBoosts[boost.metricName] += boost.boostValue;
+                        aggregatedBoosts[boost.metricName] += (float)NumbersUtils.RoundToNearestHalf(boost.boostValue * distanceMultiplier); ;
                     }
                     else
                     {
-                        aggregatedBoosts[boost.metricName] = boost.boostValue;
+                        aggregatedBoosts[boost.metricName] = (float)NumbersUtils.RoundToNearestHalf(boost.boostValue * distanceMultiplier); ;
                     }
                 }
             }
@@ -432,7 +442,8 @@ public class CameraController : MonoBehaviour
         int metricCount = 0;
         foreach (KeyValuePair<BuildingMetric, float> boostMetric in aggregatedBoosts)
         {
-            float popupDelay = delayTime + 1 + (metricCount * 8);
+            // start the self applyboost at x% of the previous set of neighbording boosts
+            float popupDelay = (delayTime * 0.66f) + (metricCount * 6);
             metricCount++;
 
             MetricBoost boost = new MetricBoost
@@ -831,7 +842,6 @@ public class CameraController : MonoBehaviour
         {
 
             if (!(building.CompareTag("Building") || (building.CompareTag("Space") && includeSpaces))) continue;
-            print($"{building.name} ");
             if (building.name.ToLower().Contains("spawn")) continue;
 
             building.TryGetComponent(out BuildingProperties buildingProps);

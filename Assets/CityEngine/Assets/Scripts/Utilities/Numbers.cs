@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class NumbersUtils
@@ -17,5 +18,15 @@ public static class NumbersUtils
         string formattedNumber = string.Format("{0:N0}", number);
 
         return prefix + formattedNumber + suffix;
+    }
+
+    public static double ToNthDecimal(double number, int decimals)
+    {
+        return Math.Round(number, decimals, MidpointRounding.AwayFromZero);
+    }
+
+    public static double RoundToNearestHalf(double value)
+    {
+        return Math.Round(value * 2) / 2;
     }
 }
