@@ -150,6 +150,8 @@ public class BuildingsMenuNew : MonoBehaviour
         // print("InitializeGui");
         if (displayData != null) displayData.OnModalClose();
 
+        cameraController.placementCursor.SetActive(false);
+
         navigationGui.SetActive(true);
         gameUIContainerGO.SetActive(true);
         mainMenu.SetActive(true);
@@ -680,6 +682,7 @@ public class BuildingsMenuNew : MonoBehaviour
                     cameraController.moveTarget = true;
                     Transform target = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity).transform;
                     cameraController.target = target;
+                    cameraController.placementCursor.SetActive(true);
                 }
             }
         }
@@ -896,6 +899,8 @@ public class BuildingsMenuNew : MonoBehaviour
 
     private void UnsetTarget()
     {
+        cameraController.placementCursor.SetActive(false);
+
         selectedBuildingName = null;
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
         cameraController.target = null;

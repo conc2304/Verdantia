@@ -139,11 +139,13 @@ public class BuildingProperties : MonoBehaviour
 
         foreach (Transform existingBuilding in allBuildings)
         {
+
             if (existingBuilding != transform && (existingBuilding.CompareTag("Building") || existingBuilding.CompareTag("Road"))) // Skip self, Skip "Spaces" and anything not a "Building"
             {
                 BuildingProperties building = existingBuilding.GetComponent<BuildingProperties>();
                 // Check if building[i] is within THIS building's effect radius
-                if (building != null && IsWithinProximity(building, effectRadius))
+
+                if (building != null && IsWithinProximity(building, !existingBuilding.CompareTag("Road") ? effectRadius : effectRadius - 1))
                 {
                     // Delay pop ups based on distance
                     Vector3 positionA = building.GetBuildingPopUpPlacement();
@@ -156,8 +158,8 @@ public class BuildingProperties : MonoBehaviour
 
                     foreach (MetricBoost boost in proximityEffects)
                     {
-                        popupDelay = roundedDistance + (metricCount * 10);
-                        // Debug.Log($"{buildingName} APPLY BOOST TO {building.buildingName} | {boost.metricName}");
+                        popupDelay = roundedDistance + (metricCount * 3);
+                        Debug.Log($"{name} APPLY BOOST TO {building.name} | {boost.metricName}");
                         ApplyBoost(building, boost, popupDelay);
                         maxDelay = Math.Max(maxDelay, popupDelay);
                         metricCount++;
@@ -190,7 +192,7 @@ public class BuildingProperties : MonoBehaviour
                     int metricCount = 0;
                     foreach (MetricBoost boost in proximityEffects)
                     {
-                        popupDelay = roundedDistance + (metricCount * 10);
+                        popupDelay = roundedDistance + (metricCount);
                         RemoveBoost(building, boost, popupDelay);
                         metricCount++;
                         maxDelay = Math.Max(maxDelay, popupDelay);
@@ -306,6 +308,11 @@ public class BuildingProperties : MonoBehaviour
 
     public void ShowFloatingValue(BuildingMetric metric, int boostValue, float displayDelay = 0)
     {
+        if (CompareTag("Space"))
+        {
+            Debug.LogError("Attempting to show floating value for SPACE");
+            return;
+        }
         if (floatingValuePrefab == null)
         {
             Debug.LogError($"{name} has no floating value prefab");

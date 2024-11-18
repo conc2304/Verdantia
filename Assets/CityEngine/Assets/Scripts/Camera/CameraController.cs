@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
     private Quaternion mainCamtoRot;
 
     public Vector3 zoomScale;
-    private Vector3 toZoom;
+    public Vector3 toZoom;
     public float minZoom;
     public float maxZoom;
     private float defaultMaxZoom;
@@ -192,9 +192,14 @@ public class CameraController : MonoBehaviour
         targetNew.parent = roadsParent;
         targetNew.position = new Vector3((Mathf.Round(targetNew.position.x / 10)) * 10, 0, (Mathf.Round(targetNew.position.z / 10)) * 10);
 
+        // road was already hadd here if successfull
+        // TargetNew is the RoadForSpawn prefab
         bool roadSpawnWasSuccessful = roadGenerator.CheckRoadType(targetNew);
         if (roadSpawnWasSuccessful)
         {
+            // get the last road added to allRoads
+            int lastRoadIndex = roadGenerator.allRoads.Count - 1;
+            Transform newestRoad = roadGenerator.allRoads[lastRoadIndex];
 
             for (int i = 0; i < forestObj.Count; i++)
             {
@@ -206,6 +211,7 @@ public class CameraController : MonoBehaviour
             }
 
             Transform target1 = Instantiate(targetNew, new Vector3(0, 0, 0), Quaternion.identity).transform;
+
             target = target1;
 
             if (!isInitializing)
@@ -219,24 +225,31 @@ public class CameraController : MonoBehaviour
             List<Transform> allCityStructures = GetAllBuildings(includeSpaces);
 
             // Check for proximity boosts from new ROAD on surrounding buildings
-            BuildingProperties roadProps = targetNew.GetComponent<BuildingProperties>();
+            BuildingProperties roadProps = newestRoad.GetComponent<BuildingProperties>();
             float lastPopupDelay = roadProps.ApplyProximityEffects(allCityStructures);
 
             // Check for proximity boosts from existing buildings onto this new ROAD
             foreach (Transform existingBuildingTransform in allCityStructures)
             {
                 if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue;
+                if (existingBuildingTransform == newestRoad || newestRoad.position == existingBuildingTransform.position) continue;
+
 
                 // Check if new ROAD is in the proximity radius of the existing building
                 BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
                 if (existingBuilding != null && roadProps.IsWithinProximity(existingBuilding, existingBuilding.effectRadius))
                 {
                     // Apply proximity effects from the existing building to the new building
-                    float popupDelay = lastPopupDelay + 5;
+                    int metricCount = 0;
                     foreach (MetricBoost boost in existingBuilding.proximityEffects)
                     {
+                        float popupDelay = lastPopupDelay + 1 + (metricCount * 3);
+
+                        Debug.Log($"{roadProps.name} APPLY BOOST TO {existingBuilding.name} | {boost.metricName}");
+
                         existingBuilding.ApplyBoost(roadProps, boost, popupDelay);
-                        popupDelay += 10;
+                        metricCount++;
+
                     }
                 }
             }
@@ -355,10 +368,12 @@ public class CameraController : MonoBehaviour
             // Apply Proximity Effects
 
             bool includeSpaces = false;
+
             List<Transform> allCityStructures = GetAllBuildings(includeSpaces);
 
             // Check for proximity boosts from new building on surrounding buildings
-            float lastPopupDelay = targetBuildProp.ApplyProximityEffects(allCityStructures);
+            float lastPopupDelay = 0;
+            lastPopupDelay += targetBuildProp.ApplyProximityEffects(allCityStructures);
 
             // first display from new building on surrounding buildings
             // then show surrounding buildings on new building
@@ -367,6 +382,8 @@ public class CameraController : MonoBehaviour
             foreach (Transform existingBuildingTransform in allCityStructures)
             {
                 if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue; // ??  TODO should roads be included here
+
+                if (existingBuildingTransform.transform == targetNew.transform) continue;
 
                 BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
                 // Check if new "target" building is in the proximity radius of the existing building
@@ -385,7 +402,9 @@ public class CameraController : MonoBehaviour
                     int metricCount = 0;
                     foreach (MetricBoost boost in existingBuilding.proximityEffects)
                     {
-                        popupDelay += metricCount * 10;
+
+                        popupDelay += metricCount;
+                        Debug.Log($"{existingBuilding.buildingName} APPLY BOOST TO {targetBuildProp.buildingName} | {boost.metricName}   || DELAY = {popupDelay}");
                         // Stagger the boosts pop up so they do not all appear at once and overlap each other
                         existingBuilding.ApplyBoost(targetBuildProp, boost, popupDelay);
                         metricCount++;
@@ -806,7 +825,14 @@ public class CameraController : MonoBehaviour
     public List<Transform> GetAllBuildings(bool includeSpaces = true)
     {
         List<Transform> cityBuildings = new List<Transform>();
-        cityBuildings.AddRange(roadGenerator.allRoads);
+
+        // cityBuildings.AddRange(roadGenerator.allRoads);
+
+        foreach (Transform road in roadGenerator.allRoads)
+        {
+            if (road.name.ToLower().Contains("spawn")) continue;
+            cityBuildings.Add(road);
+        }
 
 
         // allBuildings contians buildings, spaces,
@@ -814,6 +840,8 @@ public class CameraController : MonoBehaviour
         {
 
             if (!(building.CompareTag("Building") || (building.CompareTag("Space") && includeSpaces))) continue;
+            print($"{building.name} ");
+            if (building.name.ToLower().Contains("spawn")) continue;
 
             building.TryGetComponent(out BuildingProperties buildingProps);
             if (!buildingProps)

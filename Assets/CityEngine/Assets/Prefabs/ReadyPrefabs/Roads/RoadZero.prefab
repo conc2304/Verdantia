@@ -327,12 +327,12 @@ MonoBehaviour:
   heatContribution: 15
   greenSpaceEffect: -5
   carbonFootprint: 0
-  effectRadius: 2
+  effectRadius: 1
   proximityEffects:
   - metricName: 2
-    boostValue: 2
+    boostValue: 1
   - metricName: 7
-    boostValue: 3
+    boostValue: 1
   - metricName: 9
     boostValue: 1
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
