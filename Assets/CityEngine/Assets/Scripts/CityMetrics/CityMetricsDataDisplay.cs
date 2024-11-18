@@ -52,8 +52,6 @@ public class CityMetricsDataDisplay : MonoBehaviour
         energyUIItem.UpdateValue(cityMetricsManager.energy.ToString());
         carbonEmissionUIItem.UpdateValue(cityMetricsManager.carbonEmission.ToString());
         revenueUIItem.UpdateValue(cityMetricsManager.revenue.ToString());
-        incomeUIItem.UpdateValue(cityMetricsManager.income.ToString());
-        expensesUIItem.UpdateValue(cityMetricsManager.expenses.ToString());
     }
 
 

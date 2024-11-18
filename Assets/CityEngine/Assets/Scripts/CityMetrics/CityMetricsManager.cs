@@ -23,21 +23,19 @@ public class CityMetricsManager : MonoBehaviour
 
     // Metric Setter and Getters
     private Dictionary<MetricTitle, float> metrics;
-    private Dictionary<string, (int min, int max)> propertyRanges;
+    private Dictionary<string, (float min, float max)> propertyRanges;
 
     public float tempSensitivity = 0.05f; // Sensitivity factor for how much extra heat affects energy and emissions
     public float cityTemperature { get; private set; }
-    public int population { get; private set; }
+    public float population { get; private set; }
     public float happiness { get; private set; }
-    public int budget { get; private set; }
+    public float budget { get; private set; }
     public float greenSpace { get; private set; }
-    public int urbanHeat { get; private set; }
-    public int pollution { get; private set; }
-    public int energy { get; private set; }
-    public int carbonEmission { get; private set; }
-    public int revenue { get; private set; }
-    public int income { get; private set; }
-    public int expenses { get; private set; }
+    public float urbanHeat { get; private set; }
+    public float pollution { get; private set; }
+    public float energy { get; private set; }
+    public float carbonEmission { get; private set; }
+    public float revenue { get; private set; }
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
 
@@ -203,14 +201,8 @@ public class CityMetricsManager : MonoBehaviour
     // Update budget based on revenue and expenses (done every "month")
     private void UpdateMonthlybudget()
     {
-        // Calculate income from tax revenue
-        int monthlyIncome = income;
-
-        // Calculate expenses (operational cost and upkeep of all buildings)
-        int monthlyExpenses = expenses;
-
         // Update the budget by subtracting expenses from income
-        budget += monthlyIncome - monthlyExpenses;
+        budget += revenue;
     }
 
     // Update city metrics based on all buildings
@@ -235,7 +227,7 @@ public class CityMetricsManager : MonoBehaviour
         bool includeSpaces = false;
         List<Transform> cityBuildings = cameraController.GetAllBuildings(includeSpaces);
         int totalCityBuildings = cityBuildings.Count;
-        int totalPopulation = 0;
+        float totalPopulation = 0;
 
         // Constants for greenspace and intrinsic weights
         // const float GreenMultiplier = 0.5f; // Amplifies the effect of greenspace
@@ -262,7 +254,7 @@ public class CityMetricsManager : MonoBehaviour
             cityArea += buildingProps.additionalSpace.Count() + 1; // 1 for the building, and then count the spaces
 
             // Cumulative Metrics
-            population += buildingProps.capacity;
+            population += (float)Math.Round(buildingProps.capacity);
             revenue += buildingProps.cityRevenue;
             greenSpace += buildingProps.greenSpaceEffect;
 
@@ -347,18 +339,18 @@ public class CityMetricsManager : MonoBehaviour
         energy = 0;
         carbonEmission = 0;
         revenue = 0;
-        income = 0;
-        expenses = 0;
+        // income = 0;
+        // expenses = 0;
         // Budget does not get reset
     }
 
-    public void AddRevenue(int amount)
+    public void AddRevenue(float amount)
     {
         budget += amount;
         OnMetricsUpdate?.Invoke();
     }
 
-    public void DeductExpenses(int amount)
+    public void DeductExpenses(float amount)
     {
         budget -= amount;
         OnMetricsUpdate?.Invoke();
@@ -703,7 +695,7 @@ public class CityMetricsManager : MonoBehaviour
             cityBoarderMinZ = Mathf.Min(cityBoarderMinZ, baseZ);
             cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, baseZ);
 
-            int effectRadius = buildingProps.effectRadius;
+            float effectRadius = buildingProps.effectRadius;
             // buildingProps.proximityEffects
             bool applyProximityHeat = false;
             foreach (MetricBoost booster in buildingProps.proximityEffects)
@@ -717,9 +709,9 @@ public class CityMetricsManager : MonoBehaviour
                 foreach (var (footprintX, footprintZ) in buildingFootprint)
                 {
                     // Check the effect radius surrounding area of each footprint position
-                    for (int offsetX = -effectRadius; offsetX <= effectRadius; offsetX++)
+                    for (int offsetX = (int)-effectRadius; offsetX <= effectRadius; offsetX++)
                     {
-                        for (int offsetZ = -effectRadius; offsetZ <= effectRadius; offsetZ++)
+                        for (int offsetZ = (int)-effectRadius; offsetZ <= effectRadius; offsetZ++)
                         {
                             // Skip the center position where the building is located
                             if (offsetX == 0 && offsetZ == 0) continue;

@@ -111,7 +111,7 @@ public class HeatMap : MonoBehaviour
     }
 
     // Update the heat map with buildings and their given metric
-    public void UpdateHeatMap(List<Transform> allBuildings, string metricName, int metricMin, int metricMax)
+    public void UpdateHeatMap(List<Transform> allBuildings, string metricName, float metricMin, float metricMax)
     {
         if (heatValues == null || heatValues.Length == 0) return;
 
@@ -139,7 +139,7 @@ public class HeatMap : MonoBehaviour
                 if (gridX >= 0 && gridX < gridSizeX && gridZ >= 0 && gridZ < gridSizeZ)
                 {
                     // Use reflection to get the value of the metric dynamically
-                    int heatmapValue = GetMetricValue(buildingProps, metricName);
+                    float heatmapValue = GetMetricValue(buildingProps, metricName);
                     heatValues[gridX, gridZ] = heatmapValue;
                 }
             }
@@ -174,7 +174,7 @@ public class HeatMap : MonoBehaviour
     }
 
 
-    private void GenerateHeatMapTexture(int metricMin, int metricMax, bool invertValues = false)
+    private void GenerateHeatMapTexture(float metricMin, float metricMax, bool invertValues = false)
     {
         if (heatGradient == null) InitializeGradient();
         if (!heatMapInitialized || heatValues.Length == 0 || heatGradient == null) return;
@@ -189,7 +189,10 @@ public class HeatMap : MonoBehaviour
             for (int z = 0; z < gridSizeZ; z++)
             {
                 // Normalize the heat/alpha value to a range of 0 to 1
-                float normalizedHeat = invertValues ? Mathf.InverseLerp(heatMin, heatMax, heatValues[x, z]) : Mathf.Lerp(heatMin, heatMax, heatValues[x, z]); // BUG
+                float normalizedHeat = invertValues ?
+                    Mathf.InverseLerp(heatMax, heatMin, heatValues[x, z]) :
+                    Mathf.InverseLerp(heatMin, heatMax, heatValues[x, z]);
+                normalizedHeat = heatValues[x, z] == float.NegativeInfinity ? 0.5f : normalizedHeat;
 
                 // print($"Normalized heat : {normalizedHeat}");
                 // Use the gradient to get the color at the normalized heat value
@@ -221,20 +224,20 @@ public class HeatMap : MonoBehaviour
     }
 
     // Helper method to dynamically get the metric value using reflection
-    public int GetMetricValue(BuildingProperties buildingProps, string metricName)
+    public float GetMetricValue(BuildingProperties buildingProps, string metricName)
     {
         // Try to find the field with the given name
         FieldInfo field = buildingProps.GetType().GetField(metricName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         if (field != null)
         {
-            return (int)field.GetValue(buildingProps);
+            return (float)field.GetValue(buildingProps);
         }
 
         // Try to find the property with the given name
         PropertyInfo property = buildingProps.GetType().GetProperty(metricName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         if (property != null && property.CanRead)
         {
-            return (int)property.GetValue(buildingProps);
+            return (float)property.GetValue(buildingProps);
         }
 
         // If the field or property is not found, throw an exception (or handle the error)
