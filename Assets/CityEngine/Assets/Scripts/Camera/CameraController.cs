@@ -232,7 +232,11 @@ public class CameraController : MonoBehaviour
             foreach (Transform existingBuildingTransform in allCityStructures)
             {
                 if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue;
-                if (existingBuildingTransform == newestRoad || newestRoad.position == existingBuildingTransform.position) continue;
+                if (existingBuildingTransform == newestRoad || newestRoad.position == existingBuildingTransform.position)
+                {
+                    print("ROAD IS SAME ROAD ??");
+                    continue;
+                };
 
 
                 // Check if new ROAD is in the proximity radius of the existing building
@@ -243,7 +247,7 @@ public class CameraController : MonoBehaviour
                     int metricCount = 0;
                     foreach (MetricBoost boost in existingBuilding.proximityEffects)
                     {
-                        float popupDelay = lastPopupDelay + 1 + (metricCount * 3);
+                        float popupDelay = lastPopupDelay + 1 + (metricCount * 14);
 
                         Debug.Log($"{roadProps.name} APPLY BOOST TO {existingBuilding.name} | {boost.metricName}");
 
@@ -383,7 +387,7 @@ public class CameraController : MonoBehaviour
             {
                 if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue; // ??  TODO should roads be included here
 
-                if (existingBuildingTransform.transform == targetNew.transform) continue;
+                // if (existingBuildingTransform.transform == targetNew.transform) continue;
 
                 BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
                 // Check if new "target" building is in the proximity radius of the existing building
@@ -403,7 +407,7 @@ public class CameraController : MonoBehaviour
                     foreach (MetricBoost boost in existingBuilding.proximityEffects)
                     {
 
-                        popupDelay += metricCount;
+                        popupDelay += (metricCount * 14);
                         Debug.Log($"{existingBuilding.buildingName} APPLY BOOST TO {targetBuildProp.buildingName} | {boost.metricName}   || DELAY = {popupDelay}");
                         // Stagger the boosts pop up so they do not all appear at once and overlap each other
                         existingBuilding.ApplyBoost(targetBuildProp, boost, popupDelay);

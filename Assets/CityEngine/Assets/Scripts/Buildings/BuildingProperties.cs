@@ -145,7 +145,7 @@ public class BuildingProperties : MonoBehaviour
                 BuildingProperties building = existingBuilding.GetComponent<BuildingProperties>();
                 // Check if building[i] is within THIS building's effect radius
 
-                if (building != null && IsWithinProximity(building, !existingBuilding.CompareTag("Road") ? effectRadius : effectRadius - 1))
+                if (building != null && IsWithinProximity(building, effectRadius))
                 {
                     // Delay pop ups based on distance
                     Vector3 positionA = building.GetBuildingPopUpPlacement();
@@ -158,7 +158,7 @@ public class BuildingProperties : MonoBehaviour
 
                     foreach (MetricBoost boost in proximityEffects)
                     {
-                        popupDelay = roundedDistance + (metricCount * 3);
+                        popupDelay = roundedDistance + (metricCount * 14);
                         Debug.Log($"{name} APPLY BOOST TO {building.name} | {boost.metricName}");
                         ApplyBoost(building, boost, popupDelay);
                         maxDelay = Math.Max(maxDelay, popupDelay);
@@ -192,7 +192,7 @@ public class BuildingProperties : MonoBehaviour
                     int metricCount = 0;
                     foreach (MetricBoost boost in proximityEffects)
                     {
-                        popupDelay = roundedDistance + (metricCount);
+                        popupDelay = roundedDistance + (metricCount * 14);
                         RemoveBoost(building, boost, popupDelay);
                         metricCount++;
                         maxDelay = Math.Max(maxDelay, popupDelay);
@@ -281,6 +281,9 @@ public class BuildingProperties : MonoBehaviour
 
         // Check distance to ensure they are within the effect radius
         float distance = Vector3.Distance(positionA, positionB) / gridSize;
+
+        print($"{distance} | {threshold}");
+
         return distance <= threshold;
     }
 
@@ -328,6 +331,7 @@ public class BuildingProperties : MonoBehaviour
 
         // Get the popup position
         Vector3 popupPosition = GetBuildingPopUpPlacement();
+        popupPosition.y = popupPosition.y / 2;
 
         // Instantiate the floating value prefab
         GameObject floatingValue = Instantiate(floatingValuePrefab, popupPosition, Quaternion.identity);
