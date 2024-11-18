@@ -40,7 +40,7 @@ public class FloatingValueEffect : MonoBehaviour
         zoomMultiplier *= Mathf.Lerp(0.8f, 10, zoomMultiplier);
         startScale *= zoomMultiplier;
         endtScale *= zoomMultiplier;
-        floatSpeed *= Mathf.Lerp(0.6f, 5, zoomMultiplier);
+        floatSpeed *= Mathf.Lerp(0.3f, 5, zoomMultiplier);
 
         // Update the text
         valueText.text = valueString;
