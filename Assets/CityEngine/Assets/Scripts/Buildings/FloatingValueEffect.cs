@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using GreenCityBuilder.Missions;
 using System.Collections;
+using System;
 
 public class FloatingValueEffect : MonoBehaviour
 {
@@ -18,9 +19,27 @@ public class FloatingValueEffect : MonoBehaviour
 
     [Range(0, 2f)]
     public float delayMultiplier = 0.3f;
+    [Range(0, 5f)]
+    public float startScale = 0.5f;
+    [Range(0, 5f)]
+    public float endtScale = 1.5f;
+    private CameraController cameraController;
+
+    private void Start()
+    {
+        cameraController = FindObjectOfType<CameraController>();
+    }
 
     public void Initialize(string valueString, bool isPositive, MetricTitle? metricTitle, float displayDelay)
     {
+        cameraController = FindObjectOfType<CameraController>();
+
+        // the further the zoom, the faster the items move
+        float zoomPos = cameraController.toZoom.y;
+        print($"ZoomPos : {zoomPos}");
+        float zoomMultiplier = Mathf.InverseLerp(cameraController.minZoom, cameraController.maxZoom, zoomPos);  // 0 -1
+        // floatSpeed *= Mathf.Lerp(1, 10, zoomMultiplier);
+
         // Update the text
         valueText.text = valueString;
         valueText.color = isPositive ? positiveColor : negativeColor;
@@ -42,6 +61,10 @@ public class FloatingValueEffect : MonoBehaviour
             iconRenderer.enabled = false;
         }
 
+        transform.Translate(floatDirection * floatSpeed * 0, Space.World);
+        // Wait for the delay duration
+        transform.localScale = new Vector3(startScale, startScale, startScale);
+
         StartCoroutine(DelayedPopup(displayDelay));
     }
 
@@ -51,7 +74,6 @@ public class FloatingValueEffect : MonoBehaviour
         valueText?.gameObject.SetActive(false);
         iconRenderer?.gameObject.SetActive(false);
 
-        // Wait for the delay duration
         yield return new WaitForSeconds(displayDelay * delayMultiplier);
 
         // Show components after the delay
@@ -68,6 +90,10 @@ public class FloatingValueEffect : MonoBehaviour
         // Only move and count lifetime if the popup is visible
         if (isVisible && elapsedTime >= 0f)
         {
+            float progress = elapsedTime / lifetime;
+            float scale = Mathf.Lerp(startScale, endtScale, progress * progress);
+
+            transform.localScale = new Vector3(scale, scale, scale);
             transform.Translate(floatDirection * floatSpeed * Time.deltaTime, Space.World);
 
             // Destroy after lifetime
