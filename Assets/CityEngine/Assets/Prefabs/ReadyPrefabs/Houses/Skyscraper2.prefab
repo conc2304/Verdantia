@@ -157,7 +157,7 @@ MonoBehaviour:
   additionalSpace:
   - {fileID: 8332451716412398795}
   buildConstruction: {fileID: 322588464444745127}
-  buildingHigh: 3
+  buildingHigh: 1.7
   buildingTime: 20
   spaceWidth: 2
   buildingName: Mid-rise Apartment w/ Park and Parking

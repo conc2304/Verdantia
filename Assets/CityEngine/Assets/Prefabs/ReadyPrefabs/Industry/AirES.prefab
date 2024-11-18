@@ -63,7 +63,7 @@ MonoBehaviour:
   citizensPathTargetsToSpawn: []
   additionalSpace: []
   buildConstruction: {fileID: 4466433475549507765}
-  buildingHigh: 0.3
+  buildingHigh: 0.5
   buildingTime: 12
   spaceWidth: 1
   buildingName: Wind Farm

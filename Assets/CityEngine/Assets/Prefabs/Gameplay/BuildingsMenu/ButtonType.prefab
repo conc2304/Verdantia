@@ -152,7 +152,7 @@ MonoBehaviour:
   disabled: 0
   disabledMsg: 
   disabledText: {fileID: 0}
-  holdTime: 0.15
+  holdTime: 0.05
   delayTime: 0.05
   hasSelected: 0
   disableProgressBar: 1

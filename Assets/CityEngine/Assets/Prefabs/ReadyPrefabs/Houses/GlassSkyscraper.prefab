@@ -1711,7 +1711,7 @@ MonoBehaviour:
   - {fileID: 8377390569522374457}
   - {fileID: 9190606786764265354}
   buildConstruction: {fileID: 3468565513508231131}
-  buildingHigh: 3
+  buildingHigh: 2
   buildingTime: 30
   spaceWidth: 2
   buildingName: Glass Skyscraper Office

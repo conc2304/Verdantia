@@ -164,7 +164,6 @@ public class BuildingsMenuNew : MonoBehaviour
         errorText.gameObject.SetActive(false);
         missionSelector.SetActive(false);
         introSequenceGO.SetActive(false);
-        cameraController.placementCursor.SetActive(false);
 
         if (!IsMissionSelected())
         {
@@ -679,7 +678,6 @@ public class BuildingsMenuNew : MonoBehaviour
                 if (buildings[i].buildings[u].name + "_btn" == selectedBuildingName)
                 {
                     cameraController.moveTarget = true;
-                    cameraController.placementCursor.SetActive(true);
                     Transform target = Instantiate(buildings[i].buildings[u], new Vector3(0, 0, 0), Quaternion.identity).transform;
                     cameraController.target = target;
                 }
@@ -902,7 +900,6 @@ public class BuildingsMenuNew : MonoBehaviour
         if (cameraController.target != null && cameraController.target.gameObject != null) Destroy(cameraController.target.gameObject);
         cameraController.target = null;
         cameraController.moveTarget = false;
-        cameraController.placementCursor.SetActive(false);
     }
 
     public void OnInfoTabClick()
