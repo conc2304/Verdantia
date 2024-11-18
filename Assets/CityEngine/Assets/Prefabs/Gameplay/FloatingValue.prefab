@@ -251,10 +251,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   valueText: {fileID: 7750074749528634532}
   iconRenderer: {fileID: 3981612466695995063}
-  floatSpeed: 1
-  lifetime: 2
+  floatSpeed: 3
+  lifetime: 15
   positiveColor: {r: 0, g: 1, b: 0, a: 1}
   negativeColor: {r: 1, g: 0, b: 0, a: 1}
+  delayMultiplier: 0.3
 --- !u!1 &8949820664562862575
 GameObject:
   m_ObjectHideFlags: 0

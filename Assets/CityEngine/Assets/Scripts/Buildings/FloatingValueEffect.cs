@@ -14,7 +14,10 @@ public class FloatingValueEffect : MonoBehaviour
 
     private Vector3 floatDirection = Vector3.up;
     private float elapsedTime = 0f;
+    private bool isVisible = false;
 
+    [Range(0, 2f)]
+    public float delayMultiplier = 0.3f;
 
     public void Initialize(string valueString, bool isPositive, MetricTitle? metricTitle, float displayDelay)
     {
@@ -49,20 +52,21 @@ public class FloatingValueEffect : MonoBehaviour
         iconRenderer?.gameObject.SetActive(false);
 
         // Wait for the delay duration
-        yield return new WaitForSeconds(displayDelay);
+        yield return new WaitForSeconds(displayDelay * delayMultiplier);
 
         // Show components after the delay
         valueText?.gameObject.SetActive(true);
         iconRenderer?.gameObject.SetActive(true);
 
         // Start the movement and lifetime countdown
+        isVisible = true;
         elapsedTime = 0f;
     }
 
     void Update()
     {
         // Only move and count lifetime if the popup is visible
-        if (elapsedTime >= 0f)
+        if (isVisible && elapsedTime >= 0f)
         {
             transform.Translate(floatDirection * floatSpeed * Time.deltaTime, Space.World);
 
