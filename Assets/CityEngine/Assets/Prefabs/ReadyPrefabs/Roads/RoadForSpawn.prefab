@@ -109,7 +109,7 @@ MonoBehaviour:
   citizensPathTargetsToSpawn: []
   additionalSpace: []
   buildConstruction: {fileID: 0}
-  buildingHigh: 1
+  buildingHigh: 0.5
   buildingTime: 2
   spaceWidth: 1
   buildingName: Road

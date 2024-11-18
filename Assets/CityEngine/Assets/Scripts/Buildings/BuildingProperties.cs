@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public enum BuildingMetric
@@ -123,6 +124,7 @@ public class BuildingProperties : MonoBehaviour
                         buildingProperties.carbonFootprint = carbonFootprint;
                         buildingProperties.effectRadius = effectRadius;
                         buildingProperties.proximityEffects = proximityEffects;
+                        buildingProperties.cityRevenue = cityRevenue;
                     }
                 }
             }
@@ -155,7 +157,7 @@ public class BuildingProperties : MonoBehaviour
                     foreach (MetricBoost boost in proximityEffects)
                     {
                         popupDelay = roundedDistance + (metricCount * 10);
-                        // print($"{building.buildingName} APPLY BOOST TO {building.buildingName}");
+                        // Debug.Log($"{buildingName} APPLY BOOST TO {building.buildingName} | {boost.metricName}");
                         ApplyBoost(building, boost, popupDelay);
                         maxDelay = Math.Max(maxDelay, popupDelay);
                         metricCount++;
@@ -243,33 +245,19 @@ public class BuildingProperties : MonoBehaviour
         return false;
     }
 
+    // Apply boost to target building 
     public void ApplyBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay)
     {
-        // Get the property info for the specified metric name
-        var propertyInfo = typeof(BuildingProperties).GetProperty(boost.metricName.ToString());
-        if (propertyInfo != null && propertyInfo.CanWrite)
-        {
-            // print($"{buildingName} APPLY boost {boost.metricName} at {boost.boostValue} to {targetBuilding.buildingName}");
-            // Get the current value and apply the boost
-            int currentValue = (int)propertyInfo.GetValue(targetBuilding);
-            propertyInfo.SetValue(targetBuilding, currentValue + boost.boostValue);
-        }
-
+        ModifyProperty(targetBuilding, boost.metricName.ToString(), boost.boostValue);
         targetBuilding.PassonBuildingProperties();
         targetBuilding.ShowFloatingValue(boost.metricName, boost.boostValue, displayDelay);
     }
 
+    // Remove boost from target building
     public void RemoveBoost(BuildingProperties targetBuilding, MetricBoost boost, float displayDelay)
     {
         // Get the property info for the specified metric name
-        var propertyInfo = typeof(BuildingProperties).GetProperty(boost.metricName.ToString());
-        if (propertyInfo != null && propertyInfo.CanWrite)
-        {
-            // Get the current value and remove the boost
-            int currentValue = (int)propertyInfo.GetValue(targetBuilding);
-            propertyInfo.SetValue(targetBuilding, currentValue - boost.boostValue);
-        }
-
+        ModifyProperty(targetBuilding, boost.metricName.ToString(), -boost.boostValue);
         targetBuilding.ShowFloatingValue(boost.metricName, -boost.boostValue, displayDelay);
         targetBuilding.PassonBuildingProperties();
     }
@@ -318,11 +306,16 @@ public class BuildingProperties : MonoBehaviour
 
     public void ShowFloatingValue(BuildingMetric metric, int boostValue, float displayDelay = 0)
     {
-        if (floatingValuePrefab == null) return;
+        if (floatingValuePrefab == null)
+        {
+            Debug.LogError($"{name} has no floating value prefab");
+            return;
+        };
         MetricTitle? metricTitle = MetricMapping.GetMetricTitle(metric);
 
         if (!metricTitle.HasValue)
         {
+            Debug.LogError($"{metric} has no city metric mapping");
             return;
         }
 
@@ -336,9 +329,63 @@ public class BuildingProperties : MonoBehaviour
         bool isPositive = boostValue > 0;
 
         string valueText = $"{(isPositive ? "+" : "")}{boostValue}";
-        bool metricIsInverted = MetricMapping.IsInverted(metricTitle.Value);
+        bool metricIsInverted = MetricMapping.CityMetricIsInverted(metricTitle.Value);
         if (metricIsInverted) isPositive = !isPositive; // swap the color after the sign assignment
         floatingValue.GetComponent<FloatingValueEffect>().Initialize(valueText, isPositive, metricTitle, displayDelay);
+    }
+
+    // Method to add or subtract a value to/from a property or field
+    public void ModifyProperty(object component, string propertyName, object deltaValue)
+    {
+        if (component == null)
+        {
+            Debug.LogError("Component is null.");
+            return;
+        }
+
+        Type type = component.GetType();
+
+        // Try to modify a property
+        PropertyInfo property = type.GetProperty(propertyName);
+        if (property != null && property.CanRead && property.CanWrite)
+        {
+            object currentValue = property.GetValue(component);
+
+            if (currentValue is int intValue && deltaValue is int deltaInt)
+            {
+                property.SetValue(component, intValue + deltaInt);
+                Debug.Log($"Property '{propertyName}' modified to: {intValue + deltaInt}");
+                return;
+            }
+            if (currentValue is float floatValue && deltaValue is float deltaFloat)
+            {
+                property.SetValue(component, floatValue + deltaFloat);
+                Debug.Log($"Property '{propertyName}' modified to: {floatValue + deltaFloat}");
+                return;
+            }
+        }
+
+        // Try to modify a field
+        FieldInfo field = type.GetField(propertyName);
+        if (field != null)
+        {
+            object currentValue = field.GetValue(component);
+
+            if (currentValue is int intValue && deltaValue is int deltaInt)
+            {
+                field.SetValue(component, intValue + deltaInt);
+                // Debug.Log($"Field '{propertyName}' modified to: {intValue + deltaInt}");
+                return;
+            }
+            if (currentValue is float floatValue && deltaValue is float deltaFloat)
+            {
+                field.SetValue(component, floatValue + deltaFloat);
+                Debug.Log($"Field '{propertyName}' modified to: {floatValue + deltaFloat}");
+                return;
+            }
+        }
+
+        Debug.LogError($"Property or field '{propertyName}' not found, or type mismatch in {type.Name}.");
     }
 }
 

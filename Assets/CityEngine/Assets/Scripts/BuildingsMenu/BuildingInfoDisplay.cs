@@ -96,7 +96,7 @@ public class BuildingInfoDisplay : MonoBehaviour
                 labelText.text = StringsUtils.ConvertToLabel(metricName);
                 string prefix = Regex.IsMatch(metricName, "tax|cost|upkeep|income|revenue") ? "$" : "";
                 string formattedValue = NumbersUtils.FormattedNumber(Convert.ToInt32(boost.boostValue), prefix);
-                valueText.text = boost.boostValue != null ? formattedValue : "N/A";
+                valueText.text = formattedValue;
             }
         }
 

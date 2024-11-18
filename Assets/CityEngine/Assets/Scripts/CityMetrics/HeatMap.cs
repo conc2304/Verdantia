@@ -63,7 +63,7 @@ public class HeatMap : MonoBehaviour
         {
             for (int z = 0; z < gridSizeZ; z++)
             {
-                heatValues[x, z] = 0f;  // Initialize all heat values to zero
+                heatValues[x, z] = float.NegativeInfinity;  // Initialize all heat values to zero
             }
         }
 
@@ -85,6 +85,7 @@ public class HeatMap : MonoBehaviour
         };
 
         if (heatColors != null && heatColors.Count > 0) gradientPalette = heatColors;
+        print($"Color Count: {gradientPalette.Count}");
 
 
         // Define the color keys and alpha keys
@@ -92,10 +93,10 @@ public class HeatMap : MonoBehaviour
         float timeStep = 1f / (gradientPalette.Count - 1);
 
         // for (int i = 0; i < gradientPalette.Count - 1; i++)
-        for (int i = 0; i < gradientPalette.Count - 1; i++)
+        for (int i = 0; i < gradientPalette.Count; i++)
         {
             colorKeys[i].color = gradientPalette[i];
-            colorKeys[0].time = i * timeStep;
+            colorKeys[i].time = i * timeStep;
         }
 
 
@@ -114,18 +115,12 @@ public class HeatMap : MonoBehaviour
     {
         if (heatValues == null || heatValues.Length == 0) return;
 
-        if (metricName == "cityTemperature")
-        {
-            Debug.LogError("Function for Heat Map not bypassed: " + metricName);
-            return;
-        }
-
         // Reset heat values before recalculating
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int z = 0; z < gridSizeZ; z++)
             {
-                heatValues[x, z] = 0f;
+                heatValues[x, z] = float.NegativeInfinity;
             }
         }
 
@@ -134,6 +129,7 @@ public class HeatMap : MonoBehaviour
         foreach (Transform building in allBuildings)
         {
             BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
+            Debug.Log($"{buildingProps.buildingName} | {building.tag}");
 
             if (buildingProps != null)
             {
@@ -144,13 +140,23 @@ public class HeatMap : MonoBehaviour
                 {
                     // Use reflection to get the value of the metric dynamically
                     int heatmapValue = GetMetricValue(buildingProps, metricName);
-                    heatValues[gridX, gridZ] += heatmapValue;
+                    heatValues[gridX, gridZ] = heatmapValue;
                 }
+            }
+            else
+            {
+                Debug.LogError($"{building.name} | No building Props");
             }
         }
 
+        BuildingMetric? metricEnum = MetricMapping.GetBuildingMetric(metricName);
+        bool invertMetrics = metricEnum.HasValue
+            ? MetricMapping.BuildingMetricIsInverted(metricEnum.Value)
+            : false;
+
+        Debug.Log($"{metricName} {invertMetrics}");
         // Generate the texture to represent the heat map
-        GenerateHeatMapTexture(metricMin, metricMax);
+        GenerateHeatMapTexture(metricMin, metricMax, invertMetrics);
         DisplayHeatMap();
 
         heatMapLegend.UpdateLabels(metricName, metricMin, metricMax);
@@ -159,7 +165,7 @@ public class HeatMap : MonoBehaviour
     public void RenderCityTemperatureHeatMap(float[,] matrix, int metricMin, int metricMax)
     {
         heatValues = matrix;
-        GenerateHeatMapTexture(metricMin, metricMax);
+        GenerateHeatMapTexture(metricMin, metricMax, false);
         DisplayHeatMap();
 
         heatMapLegend.UpdateLabels("cityTemperature", metricMin, metricMax);
@@ -168,7 +174,7 @@ public class HeatMap : MonoBehaviour
     }
 
 
-    private void GenerateHeatMapTexture(int metricMin, int metricMax)
+    private void GenerateHeatMapTexture(int metricMin, int metricMax, bool invertValues = false)
     {
         if (heatGradient == null) InitializeGradient();
         if (!heatMapInitialized || heatValues.Length == 0 || heatGradient == null) return;
@@ -177,24 +183,20 @@ public class HeatMap : MonoBehaviour
         heatMapTexture = new Texture2D(gridSizeX, gridSizeZ);
         float heatMin = metricMin;
         float heatMax = metricMax;
-        float alphaMin = 0.4f;
-        float alphaMax = 0.85f;
 
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int z = 0; z < gridSizeZ; z++)
             {
                 // Normalize the heat/alpha value to a range of 0 to 1
-                float normalizedHeat = Mathf.InverseLerp(heatMin, heatMax, heatValues[x, z]); // BUG
-                float normalizedAlpha = NumbersUtils.Remap(heatMin, heatMax + 1f, alphaMin, alphaMax, heatValues[x, z]);
+                float normalizedHeat = invertValues ? Mathf.InverseLerp(heatMin, heatMax, heatValues[x, z]) : Mathf.Lerp(heatMin, heatMax, heatValues[x, z]); // BUG
 
                 // print($"Normalized heat : {normalizedHeat}");
                 // Use the gradient to get the color at the normalized heat value
                 Color heatColor = heatGradient.Evaluate(normalizedHeat);
-                // heatColor.a = normalizedHeat == 0f ? 0.1f : normalizedAlpha;
+                // Color heatColor = heatGradient.Evaluate(1);
 
-                // Set alpha based on normalized heat
-                heatColor.a = heatMapAlpha;
+                heatColor.a = heatValues[x, z] == float.NegativeInfinity ? 0.3f : heatMapAlpha;
 
                 // Set the pixel color in the texture
                 heatMapTexture.SetPixel(x, z, heatColor);

@@ -242,7 +242,7 @@ public class CityMetricsManager : MonoBehaviour
         const float BaseWeight = 5f;        // Intrinsic weight for capacity-zero buildings
 
         print($"--- UpdateCityMetrics --- ");
-        print($"#Buildings : {cityBuildings.Count}");
+        // print($"#Buildings : {cityBuildings.Count}");
 
         foreach (Transform building in cityBuildings)
         {
@@ -315,8 +315,8 @@ public class CityMetricsManager : MonoBehaviour
             energy += (int)adjustedEnergyConsumption;
             carbonEmission += (int)adjustedCarbonFootprint;
         }
-        Debug.Log($"total happiness : {totalHappinessImpact}");
-        Debug.Log($"totalPopulationWeight : {totalWeight}");
+        // Debug.Log($"total happiness : {totalHappinessImpact}");
+        // Debug.Log($"totalPopulationWeight : {totalWeight}");
 
         // Calculate overall city happiness
         // Calculate normalization factor (adjust based on city size and population)
@@ -324,13 +324,13 @@ public class CityMetricsManager : MonoBehaviour
 
         // Adjust city happiness
         happiness += totalHappinessImpact / normalizationFactor;
-        print($"City Happiness: {happiness} | -2");
+        // print($"City Happiness: {happiness} | -2");
 
         // Clamp city happiness to the range [0, 100]
         happiness = (float)Math.Round(Mathf.Clamp(happiness, 0f, 100f));
 
         // Log the city happiness for debugging
-        print($"City Happiness: {happiness} | -1");
+        // print($"City Happiness: {happiness} | -1");
         OnMetricsUpdate?.Invoke();
     }
 
