@@ -153,7 +153,8 @@ public class HeatMap : MonoBehaviour
             ? MetricMapping.BuildingMetricIsInverted(metricEnum.Value)
             : false;
 
-        Debug.Log($"{metricName} {invertMetrics}");
+
+        Debug.Log($"{metricName} INVERT == {invertMetrics}");
         // Generate the texture to represent the heat map
         GenerateHeatMapTexture(metricMin, metricMax, invertMetrics);
         DisplayHeatMap();
@@ -243,3 +244,6 @@ public class HeatMap : MonoBehaviour
         throw new System.Exception("No field or property found with the name: " + metricName);
     }
 }
+
+
+// GenericPropertyJSON: { "name":"heatColors","type":-1,"arraySize":6,"arrayType":"Color","children":[{ "name":"Array","type":-1,"arraySize":6,"arrayType":"Color","children":[{ "name":"size","type":12,"val":6},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":1},{ "name":"g","type":2,"val":1},{ "name":"b","type":2,"val":1},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":0},{ "name":"g","type":2,"val":0},{ "name":"b","type":2,"val":0.5294118},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":0},{ "name":"g","type":2,"val":0.9725491},{ "name":"b","type":2,"val":1},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":0},{ "name":"g","type":2,"val":1},{ "name":"b","type":2,"val":0.223529428},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":0.937254965},{ "name":"g","type":2,"val":1},{ "name":"b","type":2,"val":0.211764723},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":1},{ "name":"g","type":2,"val":0.04705883},{ "name":"b","type":2,"val":0.003921569},{ "name":"a","type":2,"val":0}]}]}]}

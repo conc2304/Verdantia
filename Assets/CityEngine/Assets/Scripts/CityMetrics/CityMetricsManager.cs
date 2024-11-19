@@ -70,6 +70,8 @@ public class CityMetricsManager : MonoBehaviour
     public bool toggleRestartTemp = false;
     public bool playTemp = false;
 
+    public int minTemp = 50;
+    public int maxTemp = 100;
     private HeatMap heatMap;
 
     void Start()
@@ -81,7 +83,7 @@ public class CityMetricsManager : MonoBehaviour
         budget = startingBudget;
         RestartSimulation();
 
-        cityTempUpdateRate = monthDuration / cityTempUpdateInterval;
+        cityTempUpdateRate = (monthDuration / cityTempUpdateInterval) / temperatureMapTimeSteps;
 
         UpdateCityMetrics();
         OnTempUpdated?.Invoke();
@@ -133,29 +135,21 @@ public class CityMetricsManager : MonoBehaviour
         // if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
         if (cityTempTimer >= cityTempUpdateRate)
         {
-            for (int i = 0; i < temperatureMapTimeSteps; i++)
-            {
+
+            GetCityTemperatures();
+
+            float[,] cityTemps = (temps != null && temps.Length != 0) ?
+                temps :
                 GetCityTemperatures();
-            }
 
-            if (cameraController.heatmapMetric == "cityTemperature")
+            if (temps != null && temps.Length != 0 && cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")
             {
-                // Make sure we have a valid temperature matrix
-                float[,] cityTemps = (temps != null && temps.Length != 0) ?
-                    temps :
-                    GetCityTemperatures();
-
-                int minTemp = 50;
-                int maxTemp = 85;
-                // cityTemps = cityMetricsManager.RemovePaddingFromMatrix(cityTemps);
-                heatMap.RenderCityTemperatureHeatMap(cityTemps, minTemp, maxTemp);  // TODO investigate if this needs to change 
-
-                return; // city temp is computed and rendered differently
+                heatMap.RenderCityTemperatureHeatMap(cityTemps, minTemp, maxTemp);
             }
-
-            OnTempUpdated?.Invoke();
+            cityTempTimer = 0f;
         }
-        cityTempTimer = 0f;
+
+        OnTempUpdated?.Invoke();
 
         // toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
 
@@ -323,8 +317,9 @@ public class CityMetricsManager : MonoBehaviour
 
         // Log the city happiness for debugging
         // print($"City Happiness: {happiness} | -1");
-        CleanMetrics();
 
+
+        CleanMetrics();
         OnMetricsUpdate?.Invoke();
     }
 
@@ -485,8 +480,7 @@ public class CityMetricsManager : MonoBehaviour
             temps[x, 0] = temps[x, 1];
             temps[x, gridLengthZ - 1] = temps[x, gridLengthZ - 2];
         }
-        int minTemp = 50;
-        int maxTemp = 100;
+
 
         // Build output temps matrix: Heat Diffusion/Dissipation Forumla
         for (int x = 1; x < gridLengthX - (gridPadding / 2); x++)
