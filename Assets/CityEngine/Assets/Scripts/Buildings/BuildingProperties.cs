@@ -130,20 +130,16 @@ public class BuildingProperties : MonoBehaviour
         float maxDelay = 0;
         bool includeSpaces = false;
         List<Transform> allBuildings = FindObjectOfType<CameraController>().GetAllBuildings(includeSpaces);
-        Debug.Log($"{name} ({buildingName}) | ApplyProximityEffects");
-        Debug.Log($"Count {allBuildings.Count} | ApplyProximityEffects");
 
         foreach (Transform existingBuilding in allBuildings)
         {
             if (gameObject.GetInstanceID() == existingBuilding.gameObject.GetInstanceID())
             {
-                Debug.Log($"Same instance id SKIP : {existingBuilding.transform.name} | {transform.name} || {gameObject.GetInstanceID()} : {existingBuilding.gameObject.GetInstanceID()}");
                 continue;
             }
 
             if (!(existingBuilding.CompareTag("Building") || existingBuilding.CompareTag("Road")))
             {
-                Debug.Log($"Not a Building Or a Road {existingBuilding.name} | {existingBuilding.tag}");
                 continue;
             }
             // Skip self, Skip "Spaces" and anything not a "Building"
@@ -170,7 +166,6 @@ public class BuildingProperties : MonoBehaviour
                     // apply boost delay based on distance from boost initiator
                     boost.boostValue = (float)NumbersUtils.RoundToNearestHalf(boost.boostValue * distanceMultiplier);
                     popupDelay = (roundedDistance * 3) + (metricCount * 6);
-                    Debug.Log($"{name} APPLY BOOST TO {building.name} | {boost.metricName}");
                     ApplyBoost(building, boost, popupDelay, removeEffect);
                     maxDelay = Math.Max(maxDelay, popupDelay);
                     metricCount++;
@@ -238,7 +233,6 @@ public class BuildingProperties : MonoBehaviour
 
     private bool IsPositionsClose(Vector3 positionA, Vector3 positionB, float threshold = 0)
     {
-        // print("IsPositionsClose");
         // Round the positions to the nearest grid point
         float roundedX_A = Mathf.Round(positionA.x / gridSize);
         float roundedZ_A = Mathf.Round(positionA.z / gridSize);
@@ -253,8 +247,6 @@ public class BuildingProperties : MonoBehaviour
 
         // Check distance to ensure they are within the effect radius
         float distance = Vector3.Distance(positionA, positionB) / gridSize;
-
-        // print($"{distance} | {threshold}");
 
         return distance <= threshold;
     }
@@ -337,13 +329,11 @@ public class BuildingProperties : MonoBehaviour
             if (currentValue is int intValue && deltaValue is int deltaInt)
             {
                 property.SetValue(component, intValue + deltaInt);
-                Debug.Log($"Property '{propertyName}' modified to: {intValue + deltaInt}");
                 return;
             }
             if (currentValue is float floatValue && deltaValue is float deltaFloat)
             {
                 property.SetValue(component, floatValue + deltaFloat);
-                Debug.Log($"Property '{propertyName}' modified to: {floatValue + deltaFloat}");
                 return;
             }
         }

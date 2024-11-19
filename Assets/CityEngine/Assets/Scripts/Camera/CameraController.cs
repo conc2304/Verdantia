@@ -416,11 +416,7 @@ public class CameraController : MonoBehaviour
         foreach (Transform existingBuildingTransform in allCityStructures)
         {
             if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue;
-            if (self.gameObject.GetInstanceID() == existingBuildingTransform.gameObject.GetInstanceID())
-            {
-                Debug.Log($"Same instance id SKIP : {existingBuildingTransform.name} | {transform.name} || {gameObject.GetInstanceID()} : {existingBuildingTransform.gameObject.GetInstanceID()}");
-                continue;
-            }
+            if (self.gameObject.GetInstanceID() == existingBuildingTransform.gameObject.GetInstanceID()) continue;
 
             // Check if new ROAD is in the proximity radius of the existing building
             BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
