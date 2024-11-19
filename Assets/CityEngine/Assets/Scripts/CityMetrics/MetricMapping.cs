@@ -41,14 +41,14 @@ public class MetricMapping
 
     private static readonly Dictionary<BuildingMetric, bool> ShouldInvertBuildingMetric = new Dictionary<BuildingMetric, bool>
     {
-        { BuildingMetric.heatContribution, false },    // Higher values are hot
+        { BuildingMetric.heatContribution, false },    // Higher values are hot (yellow)
         { BuildingMetric.capacity, false },           // Higher capacity (population) is good
         { BuildingMetric.happinessImpact, false },    // Higher happiness is good
-        { BuildingMetric.cityRevenue, false },        // Higher revenue is good
-        { BuildingMetric.greenSpaceEffect, false },   // More green space is good
-        { BuildingMetric.pollutionImpact, true },     // Higher pollution impact is bad
-        { BuildingMetric.netEnergy, false },          // Higher net energy is good
-        { BuildingMetric.carbonFootprint, true }      // Higher carbon footprint is bad
+        { BuildingMetric.cityRevenue, true },        // Higher revenue is good
+        { BuildingMetric.greenSpaceEffect, true },   // More green space is good
+        { BuildingMetric.pollutionImpact, false },     // Higher pollution impact is bad
+        { BuildingMetric.netEnergy, true },          // Higher net energy is good
+        { BuildingMetric.carbonFootprint, false }      // Higher carbon footprint is bad
     };
 
     // Dictionary to map strings to BuildingMetric

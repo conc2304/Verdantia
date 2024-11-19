@@ -159,7 +159,7 @@ public class HeatMap : MonoBehaviour
         GenerateHeatMapTexture(metricMin, metricMax, invertMetrics);
         DisplayHeatMap();
 
-        heatMapLegend.UpdateLabels(metricName, metricMin, metricMax);
+        heatMapLegend.UpdateLabels(metricName, metricMin, metricMax, invertMetrics);
     }
 
     public void RenderCityTemperatureHeatMap(float[,] matrix, int metricMin, int metricMax)
@@ -168,7 +168,7 @@ public class HeatMap : MonoBehaviour
         GenerateHeatMapTexture(metricMin, metricMax, false);
         DisplayHeatMap();
 
-        heatMapLegend.UpdateLabels("cityTemperature", metricMin, metricMax);
+        heatMapLegend.UpdateLabels("cityTemperature", metricMin, metricMax, false);
 
         print("RenderCityTemperatureHeatMap");
     }
