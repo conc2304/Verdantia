@@ -154,7 +154,7 @@ public class HeatMap : MonoBehaviour
             : false;
 
 
-        Debug.Log($"{metricName} INVERT == {invertMetrics}");
+        // Debug.Log($"{metricName} INVERT == {invertMetrics}");
         // Generate the texture to represent the heat map
         GenerateHeatMapTexture(metricMin, metricMax, invertMetrics);
         DisplayHeatMap();

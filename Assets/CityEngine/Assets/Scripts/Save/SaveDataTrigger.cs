@@ -37,7 +37,6 @@ public class SaveDataTrigger : MonoBehaviour
 
         BuildingDataLoad();
         string buildingsStr = "";
-        print("Save Data Trigger || AWAKE ");
         for (int i = 0; i < buildingsPropertiesForIndex.Length; i++)
         {
 
@@ -45,7 +44,7 @@ public class SaveDataTrigger : MonoBehaviour
             try
             {
                 buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>().buildingIndex = i;
-                // ObjectPrinter.PrintBuildingDataAsJson(buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>());
+                ObjectPrinter.PrintBuildingDataAsJson(buildingsPropertiesForIndex[i].GetComponent<BuildingProperties>());
             }
             catch
             {
@@ -54,7 +53,7 @@ public class SaveDataTrigger : MonoBehaviour
 
         }
 
-        // print(buildingsStr);
+        print(buildingsStr);
         cityLoadInitialized = true;
     }
 
