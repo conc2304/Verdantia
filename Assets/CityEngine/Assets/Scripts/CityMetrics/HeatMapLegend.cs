@@ -92,7 +92,7 @@ public class HeatMapLegend : MonoBehaviour
         return Color.Lerp(colors[segmentIndex], colors[segmentIndex + 1], segmentT);
     }
 
-    public void UpdateLabels(string metricName, float minValue, float maxValue)
+    public void UpdateLabels(string metricName, float minValue, float maxValue, bool invertGradient)
     {
 
         float midValue = (maxValue + minValue) / 2;
@@ -101,6 +101,8 @@ public class HeatMapLegend : MonoBehaviour
         maxValueText.text = Math.Round(maxValue).ToString();
 
         metricNameText.text = StringsUtils.ConvertToLabel(metricName);
+
+        legendImage.transform.localScale = new Vector3(invertGradient ? -1 : 1, 1, 1);
     }
 
     public void SetVisibility(bool visible)
