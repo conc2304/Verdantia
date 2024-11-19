@@ -95,7 +95,7 @@ public class HeatMapLegend : MonoBehaviour
     public void UpdateLabels(string metricName, float minValue, float maxValue)
     {
 
-        float midValue = (maxValue - minValue) / 2;
+        float midValue = (maxValue + minValue) / 2;
         minValueText.text = Math.Round(minValue).ToString();
         midValueText.text = Math.Round(midValue).ToString();
         maxValueText.text = Math.Round(maxValue).ToString();

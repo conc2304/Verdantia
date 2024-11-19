@@ -106,15 +106,26 @@ public class CameraController : MonoBehaviour
         TouchInput();
         SetPosition();
 
-        if (cityChanged && heatmapMetric != "cityTemperature")
+        if (cityChanged)
         {
-            UpdateHeatMap(heatmapMetric);
+
+            if (heatmapMetric != "cityTemperature")
+            {
+                UpdateHeatMap(heatmapMetric);
+            }
+
+
+            if (saveDataTrigger.cityLoadInitialized)
+            {
+                cityMetricsManager.UpdateCityMetrics();
+            } // TODO is this correct
         }
 
-        if (cityChanged && saveDataTrigger.cityLoadInitialized)
+        if (heatmapMetric == "cityTemperature" && heatmapActive)
         {
-            cityMetricsManager.UpdateCityMetrics();
-        } // TODO is this correct
+            // DO NOTHING / handled by Citymetric manager
+            // heatMap.RenderCityTemperatureHeatMap(cityMetricsManager.temps, cityMetricsManager.minTemp, cityMetricsManager.maxTemp);
+        }
 
         cityChanged = false; // reset for next run
     }

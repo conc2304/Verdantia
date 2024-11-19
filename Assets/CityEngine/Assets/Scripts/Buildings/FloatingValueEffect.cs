@@ -25,6 +25,7 @@ public class FloatingValueEffect : MonoBehaviour
     public float endtScale = 1.5f;
     private CameraController cameraController;
 
+
     private void Start()
     {
         cameraController = FindObjectOfType<CameraController>();
@@ -33,6 +34,9 @@ public class FloatingValueEffect : MonoBehaviour
     public void Initialize(string valueString, bool isPositive, MetricTitle? metricTitle, float displayDelay)
     {
         cameraController = FindObjectOfType<CameraController>();
+        SaveDataTrigger sdt = FindObjectOfType<SaveDataTrigger>();
+
+        if (!sdt.cityLoadInitialized) Destroy(gameObject); // dont show pop ups on city load
 
         // the further the zoom, the faster the items move and the larger they are
         float zoomPos = cameraController.toZoom.y;
