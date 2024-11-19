@@ -6373,15 +6373,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4596873504838643656, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: heatColors.Array.data[0].b
-      value: 1
+      value: 0.015686274
       objectReference: {fileID: 0}
     - target: {fileID: 4596873504838643656, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: heatColors.Array.data[0].g
-      value: 0.54874045
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4596873504838643656, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: heatColors.Array.data[0].r
-      value: 0.0141509175
+      value: 0.0941498
       objectReference: {fileID: 0}
     - target: {fileID: 4596873504838643656, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: heatColors.Array.data[1].b
