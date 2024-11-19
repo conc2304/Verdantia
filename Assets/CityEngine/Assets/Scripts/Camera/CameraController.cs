@@ -177,7 +177,6 @@ public class CameraController : MonoBehaviour
 
     public Vector3 TrackpadToMainCamera()
     {
-
         Vector2 trackpadPos = placementTrackpad.GetTargetPosition();
 
         // Get the trackpad's size
@@ -188,15 +187,28 @@ public class CameraController : MonoBehaviour
         float normalizedX = (trackpadPos.x + trackpadWidth / 2) / trackpadWidth; // Local position ranges from -width/2 to +width/2
         float normalizedY = (trackpadPos.y + trackpadHeight / 2) / trackpadHeight; // Local position ranges from -height/2 to +height/2
 
+        // Calculate the aspect ratios
+        float trackpadAspectRatio = trackpadWidth / trackpadHeight;
+        float screenAspectRatio = 1920f / (1080f - 100f); // Assuming 1920x1080 resolution minus the top bar height
+
+        // Offset X position based on size difference
+        // Adjust normalizedX to account for the aspect ratio difference
+        if (trackpadAspectRatio < screenAspectRatio)
+        {
+            // Trackpad is taller relative to the screen; map X proportionally
+            float xPadding = (1 - (trackpadAspectRatio / screenAspectRatio)) / 2; // Add padding to both sides
+            normalizedX = Mathf.Clamp01((normalizedX * (1 - 2 * xPadding)) + xPadding);
+        }
+
         // Map the normalized trackpad position to the main display's screen resolution
-        // Hardcoded for now
-        float topBarHight = 100;
-        float screenX = normalizedX * 1920;
-        float screenY = normalizedY * (1080 - topBarHight);
+        float topBarHeight = 100; // Adjust for the top bar
+        float screenX = normalizedX * 1920f;
+        float screenY = normalizedY * (1080f - topBarHeight);
 
         Vector3 screenPos = new Vector3(screenX, screenY, 0);
         return screenPos;
     }
+
 
 
     public Dictionary<string, object> SpawnRoad(Transform targetNew, bool isInitializing = false)
