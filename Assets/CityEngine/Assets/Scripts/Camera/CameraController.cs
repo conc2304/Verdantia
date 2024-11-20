@@ -98,6 +98,10 @@ public class CameraController : MonoBehaviour
             forestObj.Add(forest.GetChild(i));
 
         if (!heatMap) heatMap = FindObjectOfType<HeatMap>();
+
+        // todo remove debugging
+        heatmapMetric = "cityTemperature";
+        ToggleHeatMapView();
     }
 
 

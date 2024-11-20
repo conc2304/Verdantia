@@ -117,7 +117,15 @@ public class CityMetricsManager : MonoBehaviour
 
     void Update()
     {
-        // Accumulate budget monthly
+        // handle heat map updates on city change on fixed monthly intervals
+
+        HandleDateChange();
+        HandleTempUpdate();
+
+    }
+
+    public void HandleDateChange()
+    {
         monthTimer += Time.deltaTime;
         if (monthTimer >= monthDuration)
         {
@@ -127,49 +135,61 @@ public class CityMetricsManager : MonoBehaviour
             AdvanceMonth();
             monthTimer = 0f;
         }
+    }
 
+    public void HandleTempUpdate()
+    {
 
-        // handle heat map updates on city change on fixed monthly intervals
-        cityTempTimer += Time.deltaTime;
-
-        // if (toggleRestartTemp || (playTemp && cityTempTimer >= cityTempUpdateRate))      // TODO remove this after testing
-        if (cityTempTimer >= cityTempUpdateRate)
+        if (playTemp)
         {
-
-            GetCityTemperatures();
-
-            float[,] cityTemps = (temps != null && temps.Length != 0) ?
-                temps :
-                GetCityTemperatures();
-
-            if (temps != null && temps.Length != 0 && cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")
-            {
-                heatMap.RenderCityTemperatureHeatMap(cityTemps, minTemp, maxTemp);
-            }
-            cityTempTimer = 0f;
+            toggleRestartTemp = false;
+            takeStep = false;
         }
 
-        OnTempUpdated?.Invoke();
+        if (toggleRestartTemp)
+        {
+            RestartSimulation();
+            toggleRestartTemp = false;
+            playTemp = false;
+            return;
+        }
 
-        // toggleRestartTemp = false; // Reset the toggle if you want it to trigger only once
+        if (takeStep)
+        {
+            StepSimulation();
+            takeStep = false;
+            playTemp = false;
+            return;
+        }
 
 
-        // if (toggleRestartTemp)
-        // {
-        //     RestartSimulation();
-        //     toggleRestartTemp = false;
-        // }
-        // if (takeStep)
-        // {
-        //     toggleRestartTemp = true;
-        //     takeStep = false;
-        // }
+        cityTempTimer += Time.deltaTime;
+        if (playTemp && cityTempTimer >= cityTempUpdateRate)
+        {
+            StepSimulation();
+        }
     }
+
 
     public void RestartSimulation()
     {
         InitializeGrid();
         GetCityTemperatures();
+    }
+
+    public void StepSimulation()
+    {
+        GetCityTemperatures();
+
+        float[,] cityTemps = (temps != null && temps.Length != 0) ?
+            temps :
+            GetCityTemperatures();
+
+        if (temps != null && temps.Length != 0 && cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")
+        {
+            heatMap.RenderCityTemperatureHeatMap(cityTemps, minTemp, maxTemp);
+        }
+        OnTempUpdated?.Invoke();
     }
 
     void AdvanceMonth()
