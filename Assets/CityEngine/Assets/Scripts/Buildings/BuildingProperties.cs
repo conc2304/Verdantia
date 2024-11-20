@@ -26,6 +26,14 @@ public class MetricBoost
     public float boostValue;
 }
 
+[Serializable]
+public class BuildingFact
+{
+    public string title;
+    [TextArea]
+    public string factoid;
+}
+
 public class BuildingProperties : MonoBehaviour
 {
     public int buildingIndex = -1;
@@ -79,6 +87,8 @@ public class BuildingProperties : MonoBehaviour
     public List<MetricBoost> proximityEffects;
     public GameObject floatingValuePrefab;
     private readonly int gridSize = 10;
+
+    public List<BuildingFact> funFacts;
 
 
     void Start()

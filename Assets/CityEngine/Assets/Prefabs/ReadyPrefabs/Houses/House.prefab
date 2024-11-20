@@ -275,6 +275,27 @@ MonoBehaviour:
   - metricName: 8
     boostValue: 3
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Happiness & Health
+    factoid: The Residential House offers cozy living spaces with access to small
+      yards or gardens, enhancing residents' <b>happiness</b> and supporting improved
+      <b>health</b> by providing a serene, low-stress environment.
+  - title: Green Space & Urban Heat
+    factoid: These houses contribute modestly to <b>green space</b> in the city,
+      and their smaller size compared to apartments means they have a lower impact
+      on the <b>urban heat island effect</b>.
+  - title: Pollution & Carbon Emission
+    factoid: While individual houses can produce more <b>carbon emissions</b> per
+      resident than apartments, incorporating solar panels or energy-efficient designs
+      can reduce their <b>pollution</b> impact.
+  - title: Population Growth
+    factoid: "Residential houses attract families, adding to the city\u2019s <b>population</b>,
+      but their limited capacity compared to high-rise buildings means they occupy
+      more land per resident."
+  - title: Budget & Revenue
+    factoid: These homes generate consistent <b>revenue</b> through property taxes
+      while requiring manageable city services, balancing costs and contributing
+      positively to the city's <b>budget</b>.
 --- !u!114 &3580955728642800891
 MonoBehaviour:
   m_ObjectHideFlags: 0

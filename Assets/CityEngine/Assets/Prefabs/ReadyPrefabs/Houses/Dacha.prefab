@@ -390,6 +390,29 @@ MonoBehaviour:
   - metricName: 9
     boostValue: -5
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: GreenSpace & Pollution
+    factoid: Traditional farmhouses often feature gardens or small plots of land,
+      which contribute to green space and help absorb carbon dioxide. Even a small
+      garden can sequester up to <b>10 kg of carbon per square meter annually</b>,
+      lowering carbon emissions.
+  - title: Happiness
+    factoid: The farmhouse lifestyle is associated with reduced stress and higher
+      happiness due to its proximity to nature. Studies show that living near greenery
+      can <b>reduce stress levels by 16%</b> and improve overall well-being.
+  - title: Energy
+    factoid: Farmhouses often use fewer energy-intensive appliances than modern urban
+      homes. When combined with renewable energy solutions like solar panels, they
+      can significantly <b>reduce energy consumption</b> compared to other residential
+      buildings.
+  - title: Urban Heat & City Temperature
+    factoid: Unlike concrete-heavy city structures, farmhouses with natural landscaping
+      have a minimal heat contribution. Trees and vegetation around farmhouses can
+      cool the area by up to <b>5 degrees Celsius</b> through shade and evapotranspiration.
+  - title: Budget & Revenue
+    factoid: Farmhouses are low-cost housing solutions that still generate some tax
+      revenue. They represent an affordable option for residents while keeping the
+      city's budget in balance due to their low upkeep and operational costs.
 --- !u!114 &7155104198537411281
 MonoBehaviour:
   m_ObjectHideFlags: 0

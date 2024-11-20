@@ -1147,6 +1147,24 @@ MonoBehaviour:
   - metricName: 7
     boostValue: 5
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Budget-Friendly Operations
+    factoid: The Small Office has relatively low <b>operational costs</b>, making
+      it an accessible choice for startups and small businesses, contributing to
+      a balanced <b>budget</b> for the city.
+  - title: Compact Design
+    factoid: Its small footprint has minimal impact on <b>green space</b>, preserving
+      the city's natural environment while still boosting <b>revenue</b> from its
+      tenants.
+  - title: Moderate Energy Use
+    factoid: With a smaller energy demand compared to larger offices, this building
+      keeps <b>energy</b> consumption manageable, helping the city conserve resources.
+  - title: Community Impact
+    factoid: As a hub for local businesses, the Small Office fosters a vibrant <b>population</b>,
+      enhancing economic activity and creating jobs that improve <b>happiness</b>.
+  - title: Low Pollution Output
+    factoid: The Small Office generates minimal <b>pollution</b>, making it an environmentally
+      conscious addition to the cityscape that supports sustainability goals.
 --- !u!114 &9009391232856852927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1647,6 +1665,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8939596189235884654
 GameObject:
   m_ObjectHideFlags: 0

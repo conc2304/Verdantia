@@ -1489,6 +1489,30 @@ MonoBehaviour:
   - metricName: 3
     boostValue: 200
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Urban Heat & City Temperature
+    factoid: Large office buildings, especially those with traditional rooftops,
+      can significantly contribute to the <b>urban heat island effect</b>. Incorporating
+      green roofs or reflective materials can help reduce heat absorption and lower
+      the city's overall <b>temperature</b>.
+  - title: Population & Happiness
+    factoid: As hubs of employment, these buildings can attract a significant <b>population</b>
+      to the city. Offering employee-friendly amenities like green spaces, cafes,
+      or wellness programs can boost <b>happiness</b> and productivity.
+  - title: Budget & Revenue
+    factoid: "Campus offices generate considerable <b>city revenue</b> through taxes,
+      but their high operational costs can impact the city\u2019s <b>budget</b>.
+      Energy-efficient upgrades can help reduce operational expenses while maintaining
+      profitability."
+  - title: Pollution & Carbon Emission
+    factoid: These offices can be significant contributors to <b>pollution</b> and
+      <b>carbon emissions</b> due to energy consumption and waste generation. Adding
+      solar panels or implementing sustainable waste management practices can mitigate
+      their environmental impact.
+  - title: GreenSpace
+    factoid: Large office campuses often have room for landscaped areas, parks, or
+      rooftop gardens. These elements not only improve <b>green space</b> but also
+      help in pollution reduction and employee well-being.
 --- !u!114 &3944353085308207538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,6 +2045,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8314887493173939352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2302,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2351,6 +2377,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1001 &444486027420100
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -684,6 +684,28 @@ MonoBehaviour:
   - metricName: 3
     boostValue: 100
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Efficient Population Housing
+    factoid: "Mid-rise apartments balance housing density and space, making them
+      a great choice for increasing the city\u2019s <b>population</b> without sprawling
+      into valuable <b>green space</b>."
+  - title: Urban Heat Impact
+    factoid: "The concentration of units in a mid-rise building means less land is
+      paved over, but the building\u2019s materials and footprint can still contribute
+      to the <b>urban heat island effect</b>. Adding reflective roofs or vegetation
+      could mitigate this."
+  - title: Pollution & Carbon Footprint
+    factoid: With multiple households under one roof, these apartments centralize
+      energy use, often leading to more efficient systems but still contributing
+      to <b>pollution</b> and <b>carbon emissions</b> without eco-friendly upgrades.
+  - title: Happiness Potential
+    factoid: Mid-rise apartments can include amenities like shared courtyards, gyms,
+      or rooftop terraces, which enhance resident <b>happiness</b>. However, poor
+      design or lack of green areas can have the opposite effect.
+  - title: Budget Impact
+    factoid: "These apartments generate consistent <b>revenue</b> through property
+      taxes, and their density makes city services like utilities and waste management
+      more cost-effective, helping the city\u2019s <b>budget</b>."
 --- !u!114 &4025124437981863053
 MonoBehaviour:
   m_ObjectHideFlags: 0
