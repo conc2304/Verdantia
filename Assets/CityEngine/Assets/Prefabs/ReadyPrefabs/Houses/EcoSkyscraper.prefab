@@ -1942,8 +1942,38 @@ MonoBehaviour:
   greenSpaceEffect: 10
   carbonFootprint: 50
   effectRadius: 0
-  proximityEffects: []
+  proximityEffects:
+  - metricName: 6
+    boostValue: 3
+  - metricName: 3
+    boostValue: 350
+  - metricName: 8
+    boostValue: 4
+  - metricName: 7
+    boostValue: -1
+  - metricName: 2
+    boostValue: -2
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: 'Green Facade and Roof:'
+    factoid: The Eco Skyscraper Office features vegetation on its exterior and roof,
+      reducing <b>urban heat</b> and contributing positively to <b>green space</b>,
+      while also improving <b>happiness</b> with its calming, natural design.
+  - title: Energy Efficiency
+    factoid: Built with sustainable materials and energy-efficient systems, this
+      skyscraper minimizes <b>energy</b> consumption, lowering <b>carbon emissions</b>
+      and operational costs.
+  - title: Improved Air Quality
+    factoid: The vegetation on the building filters pollutants, reducing <b>pollution</b>
+      and promoting a healthier urban environment.
+  - title: Higher Productivity
+    factoid: The eco-friendly design and integration of natural light boost occupant
+      well-being and productivity, indirectly supporting the city's <b>revenue</b>
+      through increased economic activity.
+  - title: Symbol of Sustainability
+    factoid: "As a landmark, the Eco Skyscraper Office inspires other developments
+      to adopt greener practices, indirectly influencing the city\u2019s overall
+      <b>carbon emissions</b> and environmental reputation."
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2322,6 +2352,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2496,6 +2527,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2619,6 +2651,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0

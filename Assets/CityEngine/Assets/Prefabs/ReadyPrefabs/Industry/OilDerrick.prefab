@@ -224,6 +224,25 @@ MonoBehaviour:
   - metricName: 6
     boostValue: -10
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Fuel Producer
+    factoid: The Oil Derrick is a significant producer of <b>energy</b>, supplying
+      fuel for industries and transportation, but its reliance on fossil fuels impacts
+      the city's <b>carbon emissions</b> and <b>pollution</b> levels.
+  - title: Pollution Source
+    factoid: Drilling and refining oil contribute heavily to <b>pollution</b>, affecting
+      local air and water quality. This can have long-term effects on the city's
+      <b>happiness</b> and <b>health</b> metrics.
+  - title: Economic Driver
+    factoid: Despite its environmental drawbacks, the Oil Derrick generates <b>revenue</b>
+      through energy exports and fuel taxation, boosting the city's <b>budget</b>.
+  - title: Land Impact
+    factoid: The derrick's operations reduce <b>green space</b>, making it less appealing
+      to residents and increasing the strain on natural ecosystems.
+  - title: Global Shift
+    factoid: Many cities are moving away from oil-based energy sources in favor of
+      renewable alternatives. Replacing Oil Derricks with wind or solar farms can
+      dramatically lower <b>carbon emissions</b> and enhance <b>sustainability</b>.
 --- !u!114 &7226382225563357934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,6 +579,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1001 &150861345646391902
 PrefabInstance:
   m_ObjectHideFlags: 0

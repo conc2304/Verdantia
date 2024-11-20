@@ -740,6 +740,26 @@ MonoBehaviour:
   - metricName: 6
     boostValue: -5
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Clean Energy Giant
+    factoid: The Nuclear Plant produces massive amounts of <b>energy</b> with zero
+      <b>carbon emissions</b>, making it a cornerstone of any eco-friendly city's
+      power grid.
+  - title: Costly to Operate
+    factoid: While it significantly contributes to the city's <b>energy</b> supply,
+      the Nuclear Plant has high <b>operational expenses</b>, impacting the <b>budget</b>.
+  - title: Health and Safety Balance
+    factoid: Although it has a minimal <b>pollution</b> output compared to fossil
+      fuel plants, public concern about radiation risks slightly reduces <b>happiness</b>
+      in surrounding areas.
+  - title: Stable Power Source
+    factoid: Unlike renewable sources like wind or solar, the Nuclear Plant provides
+      consistent <b>energy</b> regardless of weather conditions, ensuring reliable
+      power for the city's growing <b>population</b>.
+  - title: High-Tech Symbol
+    factoid: Its advanced infrastructure serves as a technological and scientific
+      symbol for the city, indirectly contributing to <b>happiness</b> by inspiring
+      pride among citizens.
 --- !u!114 &3944007841880845247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,6 +1017,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8381377062413157345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,6 +1175,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,6 +1250,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1001 &148221960665240512
 PrefabInstance:
   m_ObjectHideFlags: 0

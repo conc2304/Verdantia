@@ -336,6 +336,27 @@ MonoBehaviour:
   - metricName: 7
     boostValue: -10
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: GreenSpace & Urban Heat
+    factoid: "This building features vegetation on its facade or rooftop gardens,
+      enhancing the city\u2019s <b>green space</b> while combating the <b>urban heat
+      island effect</b> by cooling surrounding areas."
+  - title: 'Happiness & Health:'
+    factoid: With eco-friendly designs and natural light optimization, these apartments
+      foster better mental and physical well-being, boosting <b>happiness</b> and
+      <b>health</b> for residents.
+  - title: Pollution & Carbon Emission
+    factoid: Utilizing renewable energy sources and efficient insulation, this building
+      significantly reduces its <b>pollution</b> output and <b>carbon emissions</b>,
+      setting a benchmark for sustainable urban living.
+  - title: Population Growth
+    factoid: These eco-apartments attract environmentally-conscious residents, contributing
+      to a growing <b>population</b> while maintaining a lower environmental impact
+      per capita.
+  - title: Budget & Revenue
+    factoid: Although slightly higher in construction cost, eco-apartments provide
+      substantial <b>revenue</b> from tenants and reduce operational expenses through
+      energy efficiency, balancing the city's <b>budget</b> effectively.
 --- !u!114 &1865229129844725689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +493,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &2026911521823970683
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +700,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &2454700781081638459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1542,6 +1565,7 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
 --- !u!1 &8650933005214006296
 GameObject:
   m_ObjectHideFlags: 0
