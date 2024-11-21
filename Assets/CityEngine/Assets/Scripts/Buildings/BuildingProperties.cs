@@ -16,7 +16,7 @@ public enum BuildingMetric
     greenSpaceEffect,
     carbonFootprint,
     effectRadius,
-    buildingDescription
+    // buildingDescription
 };
 
 

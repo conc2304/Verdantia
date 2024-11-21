@@ -12,30 +12,73 @@ public class BuildingFactoid : MonoBehaviour
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private TMP_Text buildingNameText;
 
-    [SerializeField] private Image QRCode;
+    [SerializeField] private Image QRCodeImage;
     [SerializeField] private VerticalLayoutGroup verticalSlider;
-    private readonly List<float> animationDurations = new List<float>(3) { 0.5f, 12.0f, 0.5f };
-    private readonly List<(float bottom, float top)> sequence = new List<(float bottom, float top)>
+    [SerializeField] private List<float> animationDurations = new List<float>(3) { 0.5f, 12.0f, 1.5f };
+    [SerializeField]
+    private List<(float bottom, float top)> sequence = new List<(float bottom, float top)>
     {
         (-1800f, 0f ), // Start
         (0f, 0f),     // Middle
         (0f, -2000f)  // End
     };
 
-    private string[] pastBuildings = { };
+    public string[] pastBuildings = { };
 
-    private bool inProgress = false;
+    public bool inProgress = false;
 
     private void Start()
     {
-        // Initialize positions
+        InitializePosition();
+    }
 
+    private void InitializePosition()
+    {
         verticalSlider.padding.top = (int)sequence[0].top;
         verticalSlider.padding.bottom = (int)sequence[0].bottom;
+    }
+
+    private IEnumerator AnimateFactoid(System.Action onComplete)
+    {
+        // Move to visible position
+        yield return AnimatePosition(sequence[0], sequence[1], animationDurations[0]);
+
+        // Wait at visible position
+        yield return new WaitForSeconds(animationDurations[1]);
+
+        // Move to exit position
+        yield return AnimatePosition(sequence[1], sequence[2], animationDurations[2]);
+
+        onComplete?.Invoke();
+    }
+
+
+    private IEnumerator AnimatePosition((float bottom, float top) from, (float bottom, float top) to, float duration)
+    {
+        print("AnimatePosition");
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            // Interpolate position based on elapsed time
+            // target.position = Vector3.Lerp(from, to, elapsedTime / duration);
+            float percentComplete = elapsedTime / duration;
+            verticalSlider.padding.top = (int)Mathf.Lerp(from.top, to.top, percentComplete);
+            verticalSlider.padding.bottom = (int)Mathf.Lerp(from.bottom, to.bottom, percentComplete);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
+
+            elapsedTime += Time.deltaTime;
+            yield return null;  // Wait for the next frame
+        }
+
+        // Ensure the final position is exactly the target position
+        verticalSlider.padding.top = (int)to.top;
+        verticalSlider.padding.bottom = (int)to.bottom;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
 
     }
 
-    private IEnumerator<WaitForSeconds> AnimateFactoid(System.Action onComplete)
+    private IEnumerator<WaitForSeconds> AnimateFactoid_OLD(System.Action onComplete)
     {
         inProgress = true;
         for (int i = 0; i < sequence.Count; i++)
@@ -80,8 +123,11 @@ public class BuildingFactoid : MonoBehaviour
             }
 
             // Pause after applying the padding for the specified duration
+            print($"Duration: {duration}");
             yield return new WaitForSeconds(duration);
         }
+        // Trigger the callback at the end of the animation
+        onComplete?.Invoke();
     }
 
 
@@ -98,9 +144,10 @@ public class BuildingFactoid : MonoBehaviour
             return;
         };
 
+
         pastBuildings.Append(buildingName);
 
-        if (buildingName != null)
+        if (buildingNameText != null)
         {
             buildingNameText.text = buildingName;
         }
@@ -110,10 +157,21 @@ public class BuildingFactoid : MonoBehaviour
             titleText.text = title;
         }
 
-        if (caseStudyLink != null)
+        if (QRCodeImage != null)
         {
             // Generate QR Code Image from link
             // QRCode.sprite = image;
+            Texture2D qrTexture = QRGenerator.EncodeString(caseStudyLink, Color.black, Color.white);
+
+            // Set the generated texture as the mainTexture on the quad
+            // QRCodeImage.GetComponent<Renderer>().material.mainTexture = qrTexture;
+            // QRCodeImage. = qrTexture;
+            Sprite sprite = Sprite.Create(
+                qrTexture,
+                new Rect(0, 0, qrTexture.width, qrTexture.height),
+                new Vector2(0.5f, 0.5f)
+            );
+            QRCodeImage.sprite = sprite;
         }
 
         if (descriptionText != null)
@@ -127,8 +185,8 @@ public class BuildingFactoid : MonoBehaviour
 
     private void ResetPosition()
     {
-        verticalSlider.padding.top = Mathf.RoundToInt(sequence[0].top);
-        verticalSlider.padding.bottom = Mathf.RoundToInt(sequence[0].bottom);
+        InitializePosition();
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
         inProgress = false;
         const int maxBuffer = 3;
