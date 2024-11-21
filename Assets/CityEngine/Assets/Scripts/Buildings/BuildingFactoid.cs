@@ -14,10 +14,10 @@ public class BuildingFactoid : MonoBehaviour
 
     [SerializeField] private Image QRCode;
     [SerializeField] private VerticalLayoutGroup verticalSlider;
-    private readonly List<float> animationDurations = new List<float>(3) { 0.5f, 10.0f, 0.5f };
+    private readonly List<float> animationDurations = new List<float>(3) { 0.5f, 12.0f, 0.5f };
     private readonly List<(float bottom, float top)> sequence = new List<(float bottom, float top)>
     {
-        (-1500f, 0f ), // Start
+        (-1800f, 0f ), // Start
         (0f, 0f),     // Middle
         (0f, -2000f)  // End
     };
