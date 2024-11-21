@@ -6811,8 +6811,14 @@ MonoBehaviour:
   titleText: {fileID: 124258243}
   descriptionText: {fileID: 1686122608}
   buildingNameText: {fileID: 2081695831}
-  QRCode: {fileID: 68147402}
+  QRCodeImage: {fileID: 68147402}
   verticalSlider: {fileID: 331985021}
+  animationDurations:
+  - 0.5
+  - 12
+  - 0.5
+  pastBuildings: []
+  inProgress: 0
 --- !u!224 &1572396923 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 808744586446103123, guid: 61a8e3d954897ac41b2567575a60361c, type: 3}
