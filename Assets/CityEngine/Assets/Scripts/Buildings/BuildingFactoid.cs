@@ -2,22 +2,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic; // Optional, if you are using TextMeshPro
+using System.Collections.Generic;
+using System.Linq;
 
 public class BuildingFactoid : MonoBehaviour
 {
     // UI Elements
     [SerializeField] private TMP_Text titleText;
-    [SerializeField] private Image QRCode;
     [SerializeField] private TMP_Text descriptionText;
+    [SerializeField] private TMP_Text buildingNameText;
+
+    [SerializeField] private Image QRCode;
     [SerializeField] private VerticalLayoutGroup layoutGroup;
     private readonly List<float> animationDurations = new List<float>(3) { 0.5f, 2.0f, 0.5f };
     private readonly List<(float bottom, float top)> sequence = new List<(float bottom, float top)>
     {
         (-1500f, 0f ), // Start
         (0f, 0f),     // Middle
-        (0f, -1800f)  // End
+        (0f, -1900f)  // End
     };
+
+    private string[] pastBuildings = { };
+
+    private bool inProgress = false;
 
     private void Start()
     {
@@ -30,6 +37,7 @@ public class BuildingFactoid : MonoBehaviour
 
     private IEnumerator<WaitForSeconds> AnimateFactoid(System.Action onComplete)
     {
+        inProgress = true;
         for (int i = 0; i < sequence.Count; i++)
         {
             float duration = animationDurations[i];
@@ -78,16 +86,34 @@ public class BuildingFactoid : MonoBehaviour
 
 
     // Update the factoid's content
-    public void UpdateFactoid(string title, Sprite image, string description)
+    public void UpdateFactoid(string buildingName, string title, string description, string caseStudyLink)
     {
+        Debug.Log("UPDATE FACTOID");
+        Debug.Log($"{buildingName}, {title}, {description}, {caseStudyLink}");
+        if (inProgress) return;
+        if (buildingName.ToLower().Contains("road") && pastBuildings.Contains(buildingName))
+        {
+            // Limit how often a road triggers a new factoid
+            pastBuildings.Append("");
+            return;
+        };
+
+        pastBuildings.Append(buildingName);
+
+        if (buildingName != null)
+        {
+            buildingNameText.text = buildingName;
+        }
+
         if (titleText != null)
         {
             titleText.text = title;
         }
 
-        if (QRCode != null)
+        if (caseStudyLink != null)
         {
-            QRCode.sprite = image;
+            // Generate QR Code Image from link
+            // QRCode.sprite = image;
         }
 
         if (descriptionText != null)
@@ -104,6 +130,13 @@ public class BuildingFactoid : MonoBehaviour
         layoutGroup.padding.top = Mathf.RoundToInt(sequence[0].top);
         layoutGroup.padding.bottom = Mathf.RoundToInt(sequence[0].bottom);
         LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
+        inProgress = false;
+        const int maxBuffer = 3;
+        if (pastBuildings.Length > maxBuffer)
+        {
+            int startingIndex = pastBuildings.Length - maxBuffer;
+            pastBuildings = ArrayUtils.Slice(pastBuildings, startingIndex);
+        }
 
         Debug.Log("Position reset for the next trigger.");
     }

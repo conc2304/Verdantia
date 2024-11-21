@@ -19,7 +19,7 @@ public static class ArrayUtils
         return grid;
     }
 
-    public static T[] ArrayFill<T>(int size, T initialValue)
+    public static T[] Fill<T>(int size, T initialValue)
     {
         T[] array = new T[size];
 
@@ -32,7 +32,7 @@ public static class ArrayUtils
     }
 
 
-    public static T[] ArraySlice<T>(T[] source, int start, int? end = null)
+    public static T[] Slice<T>(T[] source, int start, int? end = null)
     {
         // Handle negative start index
         if (start < 0) start = source.Length + start;
