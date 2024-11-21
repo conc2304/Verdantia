@@ -30,20 +30,19 @@ public static class NumbersUtils
         return Math.Round(value * 2) / 2;
     }
 
-    public static string FormatMoney(double amount, bool includeDollarSign = false)
+    public static string NumberToAbrev(double amount, string prefix = "", string suffix = "")
     {
         // Determine the suffix and scale the amount
-        string prefix = includeDollarSign ? "$" : "";
-        string suffix = "";
+        string numberSuffix = "";
         if (amount >= 1_000_000)
         {
             amount /= 1_000_000;
-            suffix = "M";
+            numberSuffix = "M";
         }
         else if (amount >= 1_000)
         {
             amount /= 1_000;
-            suffix = "K";
+            numberSuffix = "K";
         }
 
         // Ensure at most 3 significant digits
@@ -53,6 +52,6 @@ public static class NumbersUtils
                 ? Math.Round(amount, 1).ToString("N1")
                 : Math.Round(amount, 2).ToString("N2");
 
-        return $"{prefix}{formattedAmount}{suffix}";
+        return $"{prefix}{formattedAmount}{numberSuffix} {suffix}";
     }
 }
