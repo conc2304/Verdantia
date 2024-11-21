@@ -29,4 +29,30 @@ public static class NumbersUtils
     {
         return Math.Round(value * 2) / 2;
     }
+
+    public static string FormatMoney(double amount, bool includeDollarSign = false)
+    {
+        // Determine the suffix and scale the amount
+        string prefix = includeDollarSign ? "$" : "";
+        string suffix = "";
+        if (amount >= 1_000_000)
+        {
+            amount /= 1_000_000;
+            suffix = "M";
+        }
+        else if (amount >= 1_000)
+        {
+            amount /= 1_000;
+            suffix = "K";
+        }
+
+        // Ensure at most 3 significant digits
+        string formattedAmount = amount >= 100
+            ? Math.Round(amount).ToString("N0")
+            : amount >= 10
+                ? Math.Round(amount, 1).ToString("N1")
+                : Math.Round(amount, 2).ToString("N2");
+
+        return $"{prefix}{formattedAmount}{suffix}";
+    }
 }
