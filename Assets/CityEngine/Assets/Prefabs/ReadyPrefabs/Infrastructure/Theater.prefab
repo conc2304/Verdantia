@@ -769,6 +769,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &6019004004815959016
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,7 +947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 35
+  buildingIndex: 30
   environment: {fileID: 2243940807401587892}
   connectToRoad: 1
   unrestrictedPlacement: 0
@@ -989,6 +991,20 @@ MonoBehaviour:
   - metricName: 3
     boostValue: 100
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Cultural Enrichment
+    fact: The <b>Theater</b> boosts <b>happiness</b> by serving as a hub for artistic
+      expression, performances, and community events.
+  - title: Moderate Environmental Impact
+    fact: "The theater\u2019s <b>energy consumption</b> and pollution output contribute
+      to a small but notable carbon footprint in the urban ecosystem."
+  - title: Heat Island Contribution
+    fact: Its structure adds slightly to the <b>urban heat island effect</b>, though
+      the impact is less significant than larger buildings.
+  - title: Sustainability Potential
+    fact: Incorporating solar panels or energy-efficient lighting can reduce the
+      theater's <b>environmental impact</b> while maintaining its cultural significance.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &1141662597171751843
 MonoBehaviour:
   m_ObjectHideFlags: 0

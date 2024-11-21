@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 24
+  buildingIndex: 19
   environment: {fileID: 312077592172940161}
   connectToRoad: 1
   unrestrictedPlacement: 0
@@ -657,6 +657,20 @@ MonoBehaviour:
   - metricName: 6
     boostValue: -3
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Economic Driver
+    fact: The <b>Factory</b> generates <b>tax revenue</b> and employment, supporting
+      the city's industrial and economic development.
+  - title: Pollution Source
+    fact: Industrial operations from factories contribute to <b>air pollution</b>,
+      releasing harmful particulates and chemicals that affect public health.
+  - title: Heat Island Contributor
+    fact: Factories amplify the <b>urban heat island effect</b> through their heat-intensive
+      operations and infrastructure, increasing local temperatures.
+  - title: Green Space Reduction
+    fact: "The factory\u2019s large footprint diminishes <b>green space</b>, impacting
+      urban cooling and reducing habitats for biodiversity."
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &4482589422383155611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,6 +841,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8381377062413157345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,6 +1037,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,6 +1113,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8712104553124349172
 GameObject:
   m_ObjectHideFlags: 0

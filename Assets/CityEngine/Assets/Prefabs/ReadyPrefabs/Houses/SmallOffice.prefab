@@ -1148,23 +1148,22 @@ MonoBehaviour:
     boostValue: 5
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Budget-Friendly Operations
-    factoid: The Small Office has relatively low <b>operational costs</b>, making
-      it an accessible choice for startups and small businesses, contributing to
-      a balanced <b>budget</b> for the city.
-  - title: Compact Design
-    factoid: Its small footprint has minimal impact on <b>green space</b>, preserving
-      the city's natural environment while still boosting <b>revenue</b> from its
-      tenants.
-  - title: Moderate Energy Use
-    factoid: With a smaller energy demand compared to larger offices, this building
-      keeps <b>energy</b> consumption manageable, helping the city conserve resources.
-  - title: Community Impact
-    factoid: As a hub for local businesses, the Small Office fosters a vibrant <b>population</b>,
-      enhancing economic activity and creating jobs that improve <b>happiness</b>.
-  - title: Low Pollution Output
-    factoid: The Small Office generates minimal <b>pollution</b>, making it an environmentally
-      conscious addition to the cityscape that supports sustainability goals.
+  - title: 'Modest Workspace '
+    fact: The <b>Small Office</b> provides essential commercial space, supporting
+      <b>economic growth</b> with a relatively low environmental footprint.
+  - title: 'Minimal Heat Impact '
+    fact: 'Its compact design contributes minimally to the <b>urban heat island effect</b>,
+      making it a more sustainable choice for urban development.
+
+
+'
+  - title: 'Pollution Management '
+    fact: The office produces lower levels of <b>pollution</b> compared to larger
+      commercial buildings, promoting cleaner air in the city.
+  - title: Upgrade Potential
+    fact: "Adopting energy-efficient technologies can significantly lower the building\u2019s
+      <b>carbon footprint</b> and improve its environmental impact."
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &9009391232856852927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,6 +1665,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8939596189235884654
 GameObject:
   m_ObjectHideFlags: 0

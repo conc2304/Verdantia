@@ -92,24 +92,20 @@ MonoBehaviour:
     boostValue: -10
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Renewable Energy Leader
-    factoid: The Wind Farm produces clean, renewable <b>energy</b>, reducing the
-      city's dependency on fossil fuels and lowering overall <b>carbon emissions</b>.
-  - title: Pollution Fighter
-    factoid: With zero direct <b>pollution</b> output, the Wind Farm is a key player
-      in improving air quality and supporting a healthier <b>population</b>.
-  - title: Cost-Effective Sustainability
-    factoid: Although it has moderate construction costs, the Wind Farm's low <b>operational
-      expenses</b> and contribution to the city's <b>budget</b> make it a sound long-term
-      investment.
-  - title: Heat Reduction Benefit
-    factoid: By generating energy without heat-intensive processes, the Wind Farm
-      helps mitigate the city's <b>urban heat island</b> effect, contributing to
-      lower <b>city temperatures</b>.
-  - title: Public Perception Boost
-    factoid: As a visible symbol of sustainability, the Wind Farm increases <b>happiness</b>
-      among environmentally conscious citizens, showing a commitment to a greener
-      future.
+  - title: 'Clean Energy Producer '
+    fact: The <b>Wind Farm</b> generates renewable energy without releasing <b>pollution</b>,
+      making it a cornerstone for sustainable city development.
+  - title: Carbon Reduction
+    fact: "By replacing fossil fuels, wind energy can reduce a city\u2019s <b>carbon
+      emissions</b> by thousands of tons annually, contributing to climate change
+      mitigation."
+  - title: Positive Community Impact
+    fact: Access to clean energy sources like wind farms has been shown to increase
+      <b>happiness</b> due to improved air quality and environmental health.
+  - title: Biodiversity Preservation
+    fact: Wind farms often coexist with green spaces, promoting <b>biodiversity</b>
+      and maintaining natural habitats while producing energy.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &3991768247306095651
 MonoBehaviour:
   m_ObjectHideFlags: 0

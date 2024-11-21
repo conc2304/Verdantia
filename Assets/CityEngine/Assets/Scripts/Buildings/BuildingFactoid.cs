@@ -13,13 +13,13 @@ public class BuildingFactoid : MonoBehaviour
     [SerializeField] private TMP_Text buildingNameText;
 
     [SerializeField] private Image QRCode;
-    [SerializeField] private VerticalLayoutGroup layoutGroup;
-    private readonly List<float> animationDurations = new List<float>(3) { 0.5f, 2.0f, 0.5f };
+    [SerializeField] private VerticalLayoutGroup verticalSlider;
+    private readonly List<float> animationDurations = new List<float>(3) { 0.5f, 10.0f, 0.5f };
     private readonly List<(float bottom, float top)> sequence = new List<(float bottom, float top)>
     {
         (-1500f, 0f ), // Start
         (0f, 0f),     // Middle
-        (0f, -1900f)  // End
+        (0f, -2000f)  // End
     };
 
     private string[] pastBuildings = { };
@@ -30,8 +30,8 @@ public class BuildingFactoid : MonoBehaviour
     {
         // Initialize positions
 
-        layoutGroup.padding.top = (int)sequence[0].top;
-        layoutGroup.padding.bottom = (int)sequence[0].bottom;
+        verticalSlider.padding.top = (int)sequence[0].top;
+        verticalSlider.padding.bottom = (int)sequence[0].bottom;
 
     }
 
@@ -47,8 +47,8 @@ public class BuildingFactoid : MonoBehaviour
             if (duration > 0)
             {
                 float elapsedTime = 0f;
-                float initialTop = layoutGroup.padding.top;
-                float initialBottom = layoutGroup.padding.bottom;
+                float initialTop = verticalSlider.padding.top;
+                float initialBottom = verticalSlider.padding.bottom;
 
                 float targetTop = step.top;
                 float targetBottom = step.bottom;
@@ -58,25 +58,25 @@ public class BuildingFactoid : MonoBehaviour
                     elapsedTime += Time.deltaTime;
                     float t = Mathf.Clamp01(elapsedTime / duration);
 
-                    layoutGroup.padding.top = Mathf.RoundToInt(Mathf.Lerp(initialTop, targetTop, t));
-                    layoutGroup.padding.bottom = Mathf.RoundToInt(Mathf.Lerp(initialBottom, targetBottom, t));
+                    verticalSlider.padding.top = Mathf.RoundToInt(Mathf.Lerp(initialTop, targetTop, t));
+                    verticalSlider.padding.bottom = Mathf.RoundToInt(Mathf.Lerp(initialBottom, targetBottom, t));
 
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
 
                     yield return null;
                 }
 
-                layoutGroup.padding.top = Mathf.RoundToInt(targetTop);
-                layoutGroup.padding.bottom = Mathf.RoundToInt(targetBottom);
+                verticalSlider.padding.top = Mathf.RoundToInt(targetTop);
+                verticalSlider.padding.bottom = Mathf.RoundToInt(targetBottom);
 
-                LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
+                LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
             }
             else
             {
                 // If duration is 0, apply the padding immediately
-                layoutGroup.padding.top = Mathf.RoundToInt(step.top);
-                layoutGroup.padding.bottom = Mathf.RoundToInt(step.bottom);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
+                verticalSlider.padding.top = Mathf.RoundToInt(step.top);
+                verticalSlider.padding.bottom = Mathf.RoundToInt(step.bottom);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
             }
 
             // Pause after applying the padding for the specified duration
@@ -127,9 +127,9 @@ public class BuildingFactoid : MonoBehaviour
 
     private void ResetPosition()
     {
-        layoutGroup.padding.top = Mathf.RoundToInt(sequence[0].top);
-        layoutGroup.padding.bottom = Mathf.RoundToInt(sequence[0].bottom);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
+        verticalSlider.padding.top = Mathf.RoundToInt(sequence[0].top);
+        verticalSlider.padding.bottom = Mathf.RoundToInt(sequence[0].bottom);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
         inProgress = false;
         const int maxBuffer = 3;
         if (pastBuildings.Length > maxBuffer)

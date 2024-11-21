@@ -1642,6 +1642,23 @@ MonoBehaviour:
   - metricName: 8
     boostValue: 15
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Sustainable Productivity
+    fact: The <b>Green Factory</b> combines industrial productivity with eco-friendly
+      practices, demonstrating a commitment to sustainable growth.
+  - title: Heat Island Mitigation
+    fact: The green roof absorbs sunlight and provides insulation, reducing the <b>urban
+      heat island effect</b> and cooling the surrounding area.
+  - title: Pollution Reduction
+    fact: Rooftop vegetation improves <b>air quality</b> by filtering pollutants
+      and offsets some carbon emissions, fostering a healthier environment.
+  - title: Economic and Environmental Harmony
+    fact: The factory provides jobs and <b>city revenue</b> while maintaining lower
+      pollution levels than traditional industrial buildings.
+  - title: Green Space Enhancement
+    fact: The incorporation of a green roof adds valuable <b>green space</b>, promoting
+      biodiversity and improving the factory's environmental footprint.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &4482589422383155611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,6 +1937,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8381377062413157345
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,6 +2133,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,6 +2209,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8712104553124349172
 GameObject:
   m_ObjectHideFlags: 0

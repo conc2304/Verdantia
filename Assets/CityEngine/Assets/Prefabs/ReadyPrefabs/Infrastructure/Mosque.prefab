@@ -525,6 +525,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &2041179397918746481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1131,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &4360850413987870195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,6 +1794,20 @@ MonoBehaviour:
   - metricName: 8
     boostValue: 2
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: 'Cultural and Spiritual Hub '
+    fact: The <b>Mosque</b> fosters <b>happiness</b> and community well-being by
+      serving as a vital cultural and spiritual gathering place.
+  - title: 'Minimal Environmental Impact '
+    fact: With low <b>energy consumption</b> and virtually no pollution output, the
+      mosque is an eco-friendly urban building.
+  - title: Heat Island Reduction
+    fact: "The mosque\u2019s low contribution to the <b>urban heat island effect</b>
+      makes it a sustainable choice for densely populated areas."
+  - title: Green Space Enhancer
+    fact: Incorporating green spaces around the mosque can enhance its cooling effect,
+      promote <b>biodiversity</b>, and improve urban livability.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &1126103691497784439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2009,6 +2027,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &6751604758201391464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2534,6 +2554,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8309358822199386370
 GameObject:
   m_ObjectHideFlags: 0
@@ -2608,6 +2630,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8487919611124618188
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,6 +2757,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2807,6 +2833,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8656973746821228390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2981,6 +3009,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1001 &59049517418715692
 PrefabInstance:
   m_ObjectHideFlags: 0

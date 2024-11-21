@@ -940,6 +940,20 @@ MonoBehaviour:
   - metricName: 6
     boostValue: 5
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: 'Vital Public Service '
+    fact: The <b>Health Clinic</b> enhances <b>happiness</b> and resilience by providing
+      essential medical care and promoting community well-being.
+  - title: Minimal Environmental Impact
+    fact: With a low <b>carbon footprint</b> and minimal contribution to the <b>urban
+      heat island effect</b>, clinics are eco-friendly urban assets.
+  - title: Energy Efficiency Potential
+    fact: "Incorporating energy-efficient systems can reduce the clinic\u2019s <b>pollution</b>
+      and operational <b>carbon emissions</b>, making it more sustainable."
+  - title: Community Health Hub
+    fact: "The clinic\u2019s role in improving <b>public health</b> makes it indispensable
+      for building a thriving, balanced urban ecosystem."
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &8244234786447428393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1588,6 +1602,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8346087874753987616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,6 +1769,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,6 +1845,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8805113475485021746
 GameObject:
   m_ObjectHideFlags: 0

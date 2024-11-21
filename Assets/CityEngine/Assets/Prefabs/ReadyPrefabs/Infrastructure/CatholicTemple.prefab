@@ -909,6 +909,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &2937463744704567768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,6 +1034,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &4009151218591205241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,6 +1510,20 @@ MonoBehaviour:
   - metricName: 8
     boostValue: 3
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Community Anchor
+    fact: The <b>Church</b> fosters <b>happiness</b> and well-being by serving as
+      a spiritual and social hub for residents.
+  - title: Low Environmental Impact
+    fact: With a modest <b>carbon footprint</b> and minimal <b>pollution</b> output,
+      churches are gentle on the urban environment.
+  - title: Heat Island Effect
+    fact: "The church\u2019s large structure contributes slightly to the <b>urban
+      heat island effect</b>, but its impact is relatively minor."
+  - title: Green Space Enhancer
+    fact: Adding greenery around the church enhances its serene atmosphere, reduces
+      <b>heat absorption</b>, and supports urban sustainability.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &1776457202894404208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,6 +1611,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &6293319912610132131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,6 +1736,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &6607300929242637581
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +2050,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8103836568424127817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2244,6 +2268,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8515937822785164626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,6 +2476,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8643548988433089282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,6 +2651,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8896344948871049938
 GameObject:
   m_ObjectHideFlags: 0

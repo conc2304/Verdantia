@@ -1551,6 +1551,20 @@ MonoBehaviour:
   - metricName: 7
     boostValue: 20
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: 'Entertainment Hub '
+    fact: The <b>Stadium</b> enhances <b>happiness</b> by hosting events that unite
+      the community and provide lively entertainment.
+  - title: Environmental Impact
+    fact: Stadiums have high <b>energy demands</b> and contribute significantly to
+      <b>pollution</b>, affecting air quality and the urban carbon footprint.
+  - title: Heat Island Effect
+    fact: The large structure and heat-absorbing materials of stadiums amplify the
+      <b>urban heat island effect</b>, raising local temperatures.
+  - title: Sustainability Opportunities
+    fact: "Incorporating solar panels and green spaces can mitigate the stadium\u2019s
+      <b>environmental impact</b> while maintaining its role as a key social venue."
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &1535817793563421322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1638,6 +1652,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &5846980157184479451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +2044,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8102965917579531198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,6 +2120,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8376511160102156800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2225,6 +2245,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8624051617236475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2299,6 +2321,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &9114106045936304712
 GameObject:
   m_ObjectHideFlags: 0

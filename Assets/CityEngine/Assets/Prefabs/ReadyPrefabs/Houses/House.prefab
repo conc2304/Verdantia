@@ -276,26 +276,34 @@ MonoBehaviour:
     boostValue: 3
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Happiness & Health
-    factoid: The Residential House offers cozy living spaces with access to small
-      yards or gardens, enhancing residents' <b>happiness</b> and supporting improved
-      <b>health</b> by providing a serene, low-stress environment.
-  - title: Green Space & Urban Heat
-    factoid: These houses contribute modestly to <b>green space</b> in the city,
-      and their smaller size compared to apartments means they have a lower impact
-      on the <b>urban heat island effect</b>.
-  - title: Pollution & Carbon Emission
-    factoid: While individual houses can produce more <b>carbon emissions</b> per
-      resident than apartments, incorporating solar panels or energy-efficient designs
-      can reduce their <b>pollution</b> impact.
-  - title: Population Growth
-    factoid: "Residential houses attract families, adding to the city\u2019s <b>population</b>,
-      but their limited capacity compared to high-rise buildings means they occupy
-      more land per resident."
-  - title: Budget & Revenue
-    factoid: These homes generate consistent <b>revenue</b> through property taxes
-      while requiring manageable city services, balancing costs and contributing
-      positively to the city's <b>budget</b>.
+  - title: Comfortable Living
+    fact: 'The <b>Residential House</b> provides a cozy and functional space for
+      families, enhancing the sense of <b>community</b> and overall <b>happiness</b>.
+
+
+'
+  - title: Minimal Heat Impact
+    fact: Compact residential homes have a smaller effect on the <b>urban heat island</b>
+      compared to larger buildings, helping maintain local temperature stability.
+  - title: Moderate Energy Use
+    fact: 'While residential houses consume energy, advancements like solar panel
+      adoption can significantly reduce their <b>energy footprint</b>.
+
+
+'
+  - title: Modest Pollution Contribution
+    fact: These homes generate minimal <b>pollution</b>, but integrating eco-friendly
+      appliances and practices can further mitigate environmental impacts.
+  - title: Green Space Boost
+    fact: Surrounded by small gardens or yards, residential houses increase <b>green
+      space</b>, promoting urban cooling and biodiversity.
+  - title: 'Happiness Enhancer '
+    fact: Living in low-density housing with nearby greenery has been linked to increased
+      <b>mental well-being</b> and life satisfaction in urban studies.
+  - title: Sustainable Neighborhoods
+    fact: Residential houses are ideal for building <b>sustainable communities</b>,
+      balancing livability and ecological responsibility when paired with green initiatives.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &3580955728642800891
 MonoBehaviour:
   m_ObjectHideFlags: 0

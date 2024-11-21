@@ -685,27 +685,35 @@ MonoBehaviour:
     boostValue: 100
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Efficient Population Housing
-    factoid: "Mid-rise apartments balance housing density and space, making them
-      a great choice for increasing the city\u2019s <b>population</b> without sprawling
-      into valuable <b>green space</b>."
-  - title: Urban Heat Impact
-    factoid: "The concentration of units in a mid-rise building means less land is
-      paved over, but the building\u2019s materials and footprint can still contribute
-      to the <b>urban heat island effect</b>. Adding reflective roofs or vegetation
-      could mitigate this."
-  - title: Pollution & Carbon Footprint
-    factoid: With multiple households under one roof, these apartments centralize
-      energy use, often leading to more efficient systems but still contributing
-      to <b>pollution</b> and <b>carbon emissions</b> without eco-friendly upgrades.
-  - title: Happiness Potential
-    factoid: Mid-rise apartments can include amenities like shared courtyards, gyms,
-      or rooftop terraces, which enhance resident <b>happiness</b>. However, poor
-      design or lack of green areas can have the opposite effect.
-  - title: Budget Impact
-    factoid: "These apartments generate consistent <b>revenue</b> through property
-      taxes, and their density makes city services like utilities and waste management
-      more cost-effective, helping the city\u2019s <b>budget</b>."
+  - title: Essential Housing
+    fact: The <b>Mid-rise Apartment</b> provides much-needed housing for urban residents,
+      supporting population growth and improving <b>city density</b>.
+  - title: Urban Heat Contribution
+    fact: "Mid-rise buildings contribute to the <b>urban heat island effect</b>,
+      with studies showing that densely packed apartments can raise local temperatures
+      by up to 3\xB0F."
+  - title: Energy Consumption
+    fact: Apartments of this scale consume significant energy, with average mid-rise
+      residential buildings using around 50-70 kWh per square meter annually.
+  - title: Pollution Source
+    fact: Construction and operation of mid-rise apartments can produce notable <b>pollution</b>,
+      impacting local air quality and increasing greenhouse gases.
+  - title: 'Moderate Carbon Footprint '
+    fact: "These buildings have a measurable <b>carbon footprint</b>, primarily from
+      energy use and construction materials like concrete and steel, which account
+      for 39% of global CO\u2082 emissions in the building sector."
+  - title: 'Limited Green Space '
+    fact: Without rooftop gardens or green facades, mid-rise apartments offer minimal
+      <b>green space</b>, but integrating vegetation can offset environmental drawbacks.
+  - title: 'Happiness Impact '
+    fact: Access to mid-rise apartments in urban areas can improve <b>happiness</b>
+      by reducing housing shortages, though environmental concerns may detract from
+      their livability.
+  - title: 'Sustainable Potential '
+    fact: Retrofits with energy-efficient materials and technologies can transform
+      mid-rise apartments into <b>eco-friendly</b> housing solutions, aligning with
+      urban sustainability goals.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &4025124437981863053
 MonoBehaviour:
   m_ObjectHideFlags: 0

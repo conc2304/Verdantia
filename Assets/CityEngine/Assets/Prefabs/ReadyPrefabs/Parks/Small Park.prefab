@@ -805,6 +805,26 @@ MonoBehaviour:
   - metricName: 7
     boostValue: -5
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Happiness Boost
+    fact: The <b>Small Park</b> offers a tranquil retreat, enhancing <b>happiness</b>
+      and mental well-being for nearby residents.
+  - title: Pollution Filter
+    fact: Despite its size, the park reduces <b>pollution</b> by filtering airborne
+      particles, contributing to cleaner urban air.
+  - title: Heat Island Mitigator
+    fact: The greenery helps counteract the <b>urban heat island effect</b>, providing
+      a slight cooling effect to the surrounding area.
+  - title: Carbon Reduction
+    fact: "Small parks act as <b>carbon sinks</b>, offsetting emissions and lowering
+      the city\u2019s overall <b>carbon footprint</b>."
+  - title: 'Biodiversity Pocket '
+    fact: Even small green spaces can support <b>biodiversity</b>, offering habitats
+      for birds, insects, and urban wildlife.
+  - title: Cost-Effective Sustainability
+    fact: With low costs and high benefits, the <b>Small Park</b> is an efficient
+      addition for fostering an eco-friendly, balanced city.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &785666070005489605
 MonoBehaviour:
   m_ObjectHideFlags: 0

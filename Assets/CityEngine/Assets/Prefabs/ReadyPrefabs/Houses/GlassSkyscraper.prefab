@@ -1741,23 +1741,23 @@ MonoBehaviour:
     boostValue: 8
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Heat Magnet
-    factoid: The large glass surfaces of this skyscraper contribute to higher <b>urban
-      heat</b> levels, intensifying the <b>city temperature</b> by reflecting and
-      trapping sunlight.
-  - title: Aesthetic Appeal
-    factoid: "The modern, sleek design enhances the city\u2019s skyline, potentially
-      boosting <b>happiness</b> by creating an iconic architectural landmark."
-  - title: Energy Guzzler
-    factoid: Glass-heavy structures often require significant energy for cooling,
-      negatively impacting the city's <b>energy</b> and <b>carbon emissions</b> metrics.
-  - title: Economic Hub
-    factoid: "This office building generates high <b>revenue</b> through property
-      taxes and increased commercial activity, contributing positively to the city\u2019s
-      <b>budget</b>."
-  - title: Limited Green Contribution
-    factoid: Unlike eco-focused designs, this building lacks natural vegetation,
-      offering minimal benefits to <b>green space</b> and air quality.
+  - title: Economic Driver
+    fact: The <b>Glass Skyscraper Office</b> boosts <b>city revenue</b> through tax
+      contributions, supporting economic growth and urban infrastructure.
+  - title: Heat Reflection Impact
+    fact: The reflective glass facade amplifies the <b>urban heat island effect</b>,
+      raising temperatures in surrounding areas.
+  - title: Energy-Intensive Operations
+    fact: High energy consumption contributes to a sizable <b>carbon footprint</b>,
+      emphasizing the need for energy-efficient upgrades.
+  - title: Air Quality Concerns
+    fact: "The building\u2019s operations lead to increased <b>pollution</b>, affecting
+      air quality and public health in nearby areas."
+  - title: Sustainability Potential
+    fact: "Incorporating green rooftops or renewable energy systems can reduce the
+      skyscraper\u2019s <b>environmental impact</b> while maintaining its economic
+      benefits."
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2042,6 +2042,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,6 +2218,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2425,6 +2427,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0
