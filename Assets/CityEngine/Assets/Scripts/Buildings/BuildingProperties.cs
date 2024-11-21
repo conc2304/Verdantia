@@ -31,7 +31,12 @@ public class BuildingFact
 {
     public string title;
     [TextArea]
-    public string factoid;
+    public string fact;
+}
+
+public class Factoid : BuildingFact
+{
+    public string caseStudyLink;
 }
 
 public class BuildingProperties : MonoBehaviour
@@ -89,6 +94,7 @@ public class BuildingProperties : MonoBehaviour
     private readonly int gridSize = 10;
 
     public List<BuildingFact> funFacts;
+    public string caseStudyLink = "https://onetreeplanted.org/blogs/stories/urban-heat-island";
 
 
     void Start()
@@ -369,6 +375,25 @@ public class BuildingProperties : MonoBehaviour
 
         Debug.LogError($"Property or field '{propertyName}' not found, or type mismatch in {type.Name}.");
     }
+
+    public Factoid? GetRandomBuildingFact()
+    {
+        if (funFacts.Count > 0)
+        {
+            BuildingFact randomFact = funFacts[UnityEngine.Random.Range(1, funFacts.Count)];
+            return new Factoid
+            {
+                fact = randomFact.fact,
+                title = randomFact.title,
+                caseStudyLink = caseStudyLink,
+            };
+        }
+
+        return null;
+    }
+
+
+
 }
 
 

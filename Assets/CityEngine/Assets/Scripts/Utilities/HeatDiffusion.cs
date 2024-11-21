@@ -31,11 +31,11 @@ public static class HeatDiffusion
         // 3 vectors | for the lower, upper and diagonal for the solver
         // int gridSize = gridSizeX * gridSizeZ;
 
-        float[] lower = ArrayUtils.ArrayFill(gridSizeZ - 1, -A);
+        float[] lower = ArrayUtils.Fill(gridSizeZ - 1, -A);
         lower[gridSizeZ - 2] *= 2;
 
-        float[] diagonal = ArrayUtils.ArrayFill(gridSizeZ, B);
-        float[] upper = ArrayUtils.ArrayFill(gridSizeZ - 1, -A);
+        float[] diagonal = ArrayUtils.Fill(gridSizeZ, B);
+        float[] upper = ArrayUtils.Fill(gridSizeZ - 1, -A);
         upper[0] *= 2;
 
         // Form the right hand side of the system 

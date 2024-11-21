@@ -93,6 +93,7 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject gameUIContainerGO;
     public GameObject heroTitleBar;
     private BuildingInfoDisplay displayData;
+    private BuildingFactoid buildingFactPopup;
 
     private void Start()
     {
@@ -130,6 +131,7 @@ public class BuildingsMenuNew : MonoBehaviour
         cameraController = FindObjectOfType<CameraController>();
         roadGenerator = FindObjectOfType<RoadGenerator>();
         displayData = GetComponent<BuildingInfoDisplay>();
+        buildingFactPopup = FindObjectOfType<BuildingFactoid>();
     }
 
     private void InitializeHeatmapDropdownList()
@@ -865,6 +867,8 @@ public class BuildingsMenuNew : MonoBehaviour
             else if (target.CompareTag("Building"))
             {
                 result = cameraController.SpawnBuilding(target);
+
+
             }
             else if (target.CompareTag("DeleteTool"))
             {
@@ -895,6 +899,28 @@ public class BuildingsMenuNew : MonoBehaviour
         {
             errorText.gameObject.SetActive(false);
         }
+
+        if (status)
+        {
+            // on successful spawn, trigger a factoid popup
+            DisplayBuildingFact(target);
+        }
+    }
+
+    private void DisplayBuildingFact(Transform target)
+    {
+        Debug.Log($"DisplayBuildingFact");
+        target.TryGetComponent(out BuildingProperties buildingProps);
+        if (buildingProps != null)
+        {
+            Factoid factoid = buildingProps.GetRandomBuildingFact();
+
+            if (factoid != null)
+            {
+                buildingFactPopup.UpdateFactoid(buildingProps.buildingName, factoid.title, factoid.fact, factoid.caseStudyLink);
+            }
+        }
+
     }
 
     private void UnsetTarget()
