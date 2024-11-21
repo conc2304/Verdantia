@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d02ff243a8d38438ad45b18cef06e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingIndex: 25
+  buildingIndex: 20
   environment: {fileID: 2356441817755934726}
   connectToRoad: 1
   unrestrictedPlacement: 0
@@ -405,6 +405,21 @@ MonoBehaviour:
   - metricName: 6
     boostValue: 3
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Pollution Reducer
+    fact: The <b>Recycling and Repair Station</b> actively lowers <b>pollution</b>
+      by recycling materials and reducing waste, contributing to a cleaner urban
+      environment.
+  - title: Carbon Offset
+    fact: "By repairing goods and minimizing waste, this station helps reduce the
+      city\u2019s <b>carbon footprint</b>, supporting climate-conscious urban development."
+  - title: Green Space Enhancer
+    fact: The station integrates <b>green spaces</b>, improving air quality and providing
+      cooling effects to counteract the urban heat island.
+  - title: Happiness Promoter
+    fact: Promoting eco-friendly practices enhances <b>happiness</b> among residents
+      by fostering a sense of sustainability and reducing environmental stressors.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &2613454741967033339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,6 +771,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8506510547524147695
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +847,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8561735233303364898
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,6 +962,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8642678617078988365
 GameObject:
   m_ObjectHideFlags: 0

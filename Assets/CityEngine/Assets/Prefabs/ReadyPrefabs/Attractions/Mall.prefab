@@ -74,6 +74,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &1200924099984898703
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +150,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &2097803470436546452
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +226,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &3010632827834040516
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +302,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &3567788603933871046
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +378,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &4457244273089208584
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,6 +490,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &5273924451734148981
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,6 +605,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &5793062631657546409
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +708,23 @@ MonoBehaviour:
   - metricName: 2
     boostValue: 10
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Economic Hub
+    fact: The <b>Shopping Mall</b> generates substantial <b>city revenue</b>, supporting
+      economic growth through its commercial activity.
+  - title: Social Gathering Space
+    fact: As a bustling center for community interaction, the mall enhances <b>happiness</b>
+      by providing entertainment and shopping opportunities.
+  - title: Heat Island Contributor
+    fact: "The mall\u2019s large structure and heat-retaining materials add to the
+      <b>urban heat island effect</b>, increasing local temperatures."
+  - title: Environmental Impact
+    fact: High energy consumption and pollution output contribute to a notable <b>carbon
+      footprint</b>, impacting air quality and sustainability.
+  - title: Sustainability Potential
+    fact: "Green roofs and energy-efficient systems can reduce the mall\u2019s <b>environmental
+      impact</b> while maintaining its economic and social benefits."
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &1034629162656238963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,6 +812,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1001 &292837686419520677
 PrefabInstance:
   m_ObjectHideFlags: 0

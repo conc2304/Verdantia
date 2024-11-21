@@ -1930,18 +1930,25 @@ MonoBehaviour:
   buildingTime: 30
   spaceWidth: 2
   buildingName: Eco Office
-  buildingDescription: 
-  constructionCost: 250000
-  demolitionCost: 0
-  cityRevenue: 0
-  netEnergy: 0
-  capacity: 1800
+  buildingDescription: The Singapore-Inspired Eco Skyscraper is a visionary blend
+    of architectural innovation and environmental stewardship. With vertical gardens,
+    green terraces, and energy-efficient systems, this skyscraper is designed to
+    harmonize with nature. Inspired by structures like Singapore's Marina One, the
+    building incorporates natural cooling, renewable energy, and abundant greenery
+    to reduce the urban heat island effect and enhance biodiversity. It provides
+    a serene and eco-friendly environment for residents and workers while setting
+    a benchmark for sustainable urban development.
+  constructionCost: 336000
+  demolitionCost: 90000
+  cityRevenue: 7800
+  netEnergy: -575
+  capacity: 700
   happinessImpact: 15
   pollutionImpact: 0
   heatContribution: 2
-  greenSpaceEffect: 10
+  greenSpaceEffect: 12
   carbonFootprint: 50
-  effectRadius: 0
+  effectRadius: 5
   proximityEffects:
   - metricName: 6
     boostValue: 3
@@ -1955,25 +1962,23 @@ MonoBehaviour:
     boostValue: -2
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: 'Green Facade and Roof:'
-    factoid: The Eco Skyscraper Office features vegetation on its exterior and roof,
-      reducing <b>urban heat</b> and contributing positively to <b>green space</b>,
-      while also improving <b>happiness</b> with its calming, natural design.
-  - title: Energy Efficiency
-    factoid: Built with sustainable materials and energy-efficient systems, this
-      skyscraper minimizes <b>energy</b> consumption, lowering <b>carbon emissions</b>
-      and operational costs.
-  - title: Improved Air Quality
-    factoid: The vegetation on the building filters pollutants, reducing <b>pollution</b>
-      and promoting a healthier urban environment.
-  - title: Higher Productivity
-    factoid: The eco-friendly design and integration of natural light boost occupant
-      well-being and productivity, indirectly supporting the city's <b>revenue</b>
-      through increased economic activity.
-  - title: Symbol of Sustainability
-    factoid: "As a landmark, the Eco Skyscraper Office inspires other developments
-      to adopt greener practices, indirectly influencing the city\u2019s overall
-      <b>carbon emissions</b> and environmental reputation."
+  - title: Happiness Booster
+    fact: Lush green spaces and natural design elements improve <b>happiness</b>
+      and mental well-being for occupants and the surrounding community.
+  - title: Natural Cooling Pioneer
+    fact: The <b>Eco Skyscraper</b> integrates vertical gardens and open-air terraces,
+      significantly reducing the <b>urban heat island effect</b> and cooling nearby
+      areas.
+  - title: Biodiversity Enhancer
+    fact: The building's greenery supports <b>biodiversity</b>, creating habitats
+      for pollinators and urban wildlife within its vertical ecosystem.
+  - title: Carbon Footprint Reducer
+    fact: Utilizing renewable energy and sustainable materials, the skyscraper minimizes
+      its <b>carbon emissions</b>, setting a standard for green architecture.
+  - title: Resource Efficiency
+    fact: Advanced energy-efficient systems reduce <b>energy consumption</b>, making
+      the building both eco-friendly and cost-effective for urban living.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2353,6 +2358,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2528,6 +2534,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,6 +2659,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0

@@ -451,6 +451,23 @@ MonoBehaviour:
   - metricName: 6
     boostValue: 10
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: 'Community Lifeline '
+    fact: The <b>Hospital</b> is critical to urban infrastructure, enhancing <b>public
+      health</b> and significantly boosting <b>happiness</b>.
+  - title: Energy-Intensive Operations
+    fact: Hospitals have high energy demands, making them ideal candidates for implementing
+      <b>energy-efficient systems</b> to lower their environmental impact.
+  - title: Urban Heat Contributor
+    fact: Large hospital buildings contribute moderately to the <b>urban heat island
+      effect</b>, impacting nearby temperatures.
+  - title: 'Environmental Improvement Opportunities '
+    fact: 'Adding green spaces around hospitals can reduce their <b>carbon footprint</b>
+      and help offset their environmental impact.
+
+
+'
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &4746778654929554520
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -74,6 +74,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &1200924099984898703
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +150,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &2097803470436546452
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +226,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &3010632827834040516
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +302,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &3567788603933871046
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +378,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &4144757082451293284
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +570,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &5273924451734148981
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,6 +685,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &5793062631657546409
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,6 +790,29 @@ MonoBehaviour:
   - metricName: 8
     boostValue: 30
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Natural Air Purifier
+    fact: The <b>Dense Forest</b> reduces <b>pollution</b> by filtering harmful particles
+      from the air, contributing to cleaner and healthier urban environments.
+  - title: 'Carbon Sequestration Champion '
+    fact: "Acting as a carbon sink, the forest lowers the city\u2019s <b>carbon footprint</b>,
+      supporting climate change mitigation efforts."
+  - title: Heat Island Neutralizer
+    fact: The dense canopy absorbs heat, offering a powerful <b>cooling effect</b>
+      that helps counter the urban heat island phenomenon.
+  - title: Happiness Boost
+    fact: The serene environment of the forest significantly enhances <b>happiness</b>
+      and mental well-being for residents and visitors alike.
+  - title: Biodiversity Haven
+    fact: Dense forests provide habitats for a wide variety of <b>flora and fauna</b>,
+      fostering biodiversity within the urban ecosystem.
+  - title: Green Space Amplifier
+    fact: As a major contributor to <b>green space</b>, the forest enhances urban
+      aesthetics and ecological balance, making cities more livable.
+  - title: 'Public Health Improver '
+    fact: Cleaner air and access to nature in dense forests contribute to better
+      <b>public health</b>, reducing respiratory issues and stress levels.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &1034629162656238963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,6 +900,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1001 &292837686419520677
 PrefabInstance:
   m_ObjectHideFlags: 0

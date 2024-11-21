@@ -388,6 +388,23 @@ MonoBehaviour:
   - metricName: 3
     boostValue: 100
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Social Hub
+    fact: The <b>Cafe</b> enhances <b>happiness</b> by providing a welcoming space
+      for socializing, relaxation, and community gatherings.
+  - title: Low Environmental Impact
+    fact: With minimal <b>pollution</b> and a small <b>carbon footprint</b>, cafes
+      are among the most environmentally friendly commercial buildings.
+  - title: Heat Island Effect
+    fact: "The cafe\u2019s materials contribute slightly to the <b>urban heat island
+      effect</b>, but its impact is far less significant than larger buildings."
+  - title: Green Space Potential
+    fact: 'Incorporating greenery around cafes can enhance their aesthetic appeal,
+      reduce <b>heat absorption</b>, and contribute to urban sustainability.
+
+
+'
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &1573302049676483977
 MonoBehaviour:
   m_ObjectHideFlags: 0

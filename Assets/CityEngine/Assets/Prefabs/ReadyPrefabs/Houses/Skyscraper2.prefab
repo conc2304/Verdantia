@@ -189,26 +189,39 @@ MonoBehaviour:
     boostValue: -5
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Integrated Green Space
-    factoid: The addition of a park significantly enhances <b>green space</b>, counteracting
-      some of the negative effects of urban development and contributing to lower
-      <b>city temperature</b> and <b>urban heat</b>.
-  - title: Happiness Boost
-    factoid: Residents benefit from both the convenience of parking and the mental
-      health advantages of nearby <b>green space</b>, leading to higher <b>happiness</b>
-      levels compared to standard mid-rise apartments.
-  - title: Parking and Pollution
-    factoid: While the parking area adds convenience, it can increase <b>pollution</b>
-      and <b>carbon emissions</b> unless mitigated with sustainable transport initiatives
-      or eco-friendly paving materials.
-  - title: Energy Efficiency Potential
-    factoid: "Combining the building\u2019s energy use with smart systems, such as
-      shared energy for the apartments and electric vehicle charging stations in
-      the parking lot, can positively impact <b>energy</b> consumption metrics."
-  - title: Balanced Budget Impact
-    factoid: While slightly more expensive to maintain due to the park, the increased
-      <b>happiness</b> and potential for higher property value help generate steady
-      <b>revenue</b> for the city.
+  - title: 'Multi-Use Potential '
+    fact: By combining housing, parking, and a park, this development type supports
+      <b>sustainable urban planning</b>, offering livability while mitigating environmental
+      impacts.
+  - title: 'Balanced Urban Living '
+    fact: The <b>Mid-rise Apartment with Park</b> offers urban housing with the added
+      benefits of integrated <b>green space</b>, creating a healthier living environment.
+  - title: Heat Mitigation
+    fact: The attached park reduces the <b>urban heat island effect</b> by providing
+      shade and absorbing heat, helping to lower local temperatures.
+  - title: Improved Air Quality
+    fact: Parks integrated into residential areas can filter pollutants like carbon
+      monoxide and particulate matter, improving <b>air quality</b> by up to 15%.
+  - title: 'Sustainable Density '
+    fact: 'This apartment balances <b>residential density</b> with ecological concerns,
+      offering housing while minimizing the environmental strain typical of dense
+      urban structures.
+
+'
+  - title: Happiness Booster
+    fact: Access to green spaces has been shown to increase urban residents' <b>happiness</b>,
+      with nearby parks linked to better mental health and lower stress levels.
+  - title: Pollution Reduction
+    fact: 'The park offsets some pollution from the building and its parking area,
+      contributing to cleaner urban air and a more pleasant environment.
+
+
+'
+  - title: Carbon Footprint Offset
+    fact: "While the building\u2019s carbon footprint is notable, the park provides
+      opportunities to plant trees that sequester carbon over time, reducing the
+      city's overall <b>carbon emissions</b>."
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &3605215850848964902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -673,6 +686,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &4299146351718101626
 GameObject:
   m_ObjectHideFlags: 0

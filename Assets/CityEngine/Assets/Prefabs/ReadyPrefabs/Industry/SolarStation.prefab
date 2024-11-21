@@ -1223,6 +1223,26 @@ MonoBehaviour:
   - metricName: 7
     boostValue: -10
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: 'Clean Energy Leader '
+    fact: 'The <b>Solar Farm</b> generates renewable <b>energy</b>, reducing reliance
+      on fossil fuels and advancing sustainability goals.
+
+
+'
+  - title: Carbon Neutrality Champion
+    fact: "By significantly lowering the city\u2019s <b>carbon footprint</b>, the
+      solar farm supports efforts to combat climate change."
+  - title: Pollution Reducer
+    fact: The farm contributes to improved <b>air quality</b> by eliminating emissions
+      associated with traditional energy production.
+  - title: Heat and Eco-Friendly
+    fact: With no contribution to the <b>urban heat island effect</b>, the solar
+      farm integrates seamlessly into eco-conscious urban planning.
+  - title: Happiness Enhancer
+    fact: Access to clean energy sources improves <b>happiness</b> and public health
+      by fostering a healthier, more sustainable city.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &3095412744837479016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1310,6 +1330,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &6319363023558620523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,6 +1455,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &7154619427325838312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1606,6 +1630,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8153347221091577815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1846,6 +1872,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8518388907409151356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,6 +1998,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1001 &377449481163907778
 PrefabInstance:
   m_ObjectHideFlags: 0

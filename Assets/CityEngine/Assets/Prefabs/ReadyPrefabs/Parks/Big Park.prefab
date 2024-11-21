@@ -173,6 +173,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &924503880932423349
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,6 +475,29 @@ MonoBehaviour:
   - metricName: 8
     boostValue: 25
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: Happiness Haven
+    fact: The <b>Large Park</b> provides a serene natural space for recreation and
+      relaxation, greatly enhancing <b>happiness</b> and mental well-being.
+  - title: Air Quality Enhancer
+    fact: 'With its extensive greenery, the park improves <b>air quality</b> by filtering
+      pollutants and producing oxygen, fostering a healthier urban environment.
+
+
+'
+  - title: Urban Cooling Champion
+    fact: The park's cooling effect helps mitigate the <b>urban heat island effect</b>,
+      significantly lowering temperatures in nearby areas.
+  - title: Carbon Offset Leader
+    fact: "Large parks act as <b>carbon sinks</b>, absorbing CO\u2082 and reducing
+      the city\u2019s overall <b>carbon footprint</b>."
+  - title: Biodiversity Promoter
+    fact: The park supports <b>biodiversity</b>, providing habitats for birds, pollinators,
+      and other wildlife within the urban landscape.
+  - title: Community Health Booste
+    fact: Access to parks has been linked to improved <b>physical health</b>, reducing
+      stress and encouraging active lifestyles among residents.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &1027435996179414172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,6 +880,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &3244725724182146805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,6 +1945,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &7042528004188080150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2177,6 +2206,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &7851172037209588594
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,6 +2481,8 @@ MonoBehaviour:
   effectRadius: 0
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
+  funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8792205642593579246
 GameObject:
   m_ObjectHideFlags: 0

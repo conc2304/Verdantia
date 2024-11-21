@@ -1244,26 +1244,20 @@ MonoBehaviour:
     boostValue: 6
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Energy Workhorse
-    factoid: The Coal-Fired Power Plant generates large amounts of <b>energy</b>,
-      supporting industrial growth and the needs of a growing <b>population</b>.
-      However, it comes at a cost to the environment.
-  - title: Carbon Emissions Leader
-    factoid: This plant is a major contributor to <b>carbon emissions</b>, significantly
-      impacting the city's <b>pollution</b> levels and overall air quality, increasing
-      the need for mitigation efforts.
-  - title: Heat Contributor
-    factoid: The high heat output from its operations exacerbates the <b>urban heat
-      island</b> effect, making it a critical target for replacement with cleaner
-      energy alternatives.
-  - title: Budget Booster
-    factoid: Despite its environmental drawbacks, the plant generates significant
-      <b>revenue</b> for the city through energy taxes and supports the <b>budget</b>
-      with consistent income.
-  - title: 'Outdated Technology:'
-    factoid: Many cities are transitioning away from coal due to its impact on <b>greenhouse
-      gas emissions</b>. Upgrading to cleaner alternatives like wind farms or solar
-      stations could help reduce the city's <b>carbon footprint</b>.
+  - title: High Energy Output
+    fact: The <b>Coal-Fired Power Plant</b> generates substantial <b>energy</b> to
+      power the city, supporting industrial and residential needs.
+  - title: Major Polluter
+    fact: Coal plants are among the largest contributors to <b>air pollution</b>
+      and <b>carbon emissions</b>, significantly impacting public health and the
+      environment.
+  - title: Heat Amplifier
+    fact: "The plant\u2019s operations contribute to the <b>urban heat island effect</b>,
+      with industrial zones often raising surrounding temperatures by up to 10\xB0F."
+  - title: Green Space Reduction
+    fact: The large footprint of coal plants drastically reduces <b>green space</b>,
+      limiting natural cooling and biodiversity in urban areas.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &3095412744837479016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1352,6 +1346,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &6319363023558620523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,6 +1471,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &7154619427325838312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,6 +1646,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8153347221091577815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,6 +1888,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8518388907409151356
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,6 +2014,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1001 &148211819485164978
 PrefabInstance:
   m_ObjectHideFlags: 0

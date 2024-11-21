@@ -498,6 +498,20 @@ MonoBehaviour:
   - metricName: 7
     boostValue: 10
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
+  funFacts:
+  - title: 'Social Energy '
+    fact: The <b>Nightclub</b> boosts <b>happiness</b> by providing a vibrant social
+      space for nightlife and community gatherings.
+  - title: Moderate Environmental Impact
+    fact: With noticeable <b>energy consumption</b> and pollution, nightclubs contribute
+      to the urban carbon footprint but can benefit from sustainable upgrades.
+  - title: Heat Island Effect
+    fact: Nightclubs add to the <b>urban heat island effect</b> due to heat emissions
+      from their operations and building materials.
+  - title: Eco-Friendly Potential
+    fact: Incorporating energy-efficient lighting and small green areas can reduce
+      the nightclub's <b>environmental impact</b> while preserving its lively atmosphere.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &4992570464852695727
 MonoBehaviour:
   m_ObjectHideFlags: 0

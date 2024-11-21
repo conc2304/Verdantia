@@ -1267,30 +1267,32 @@ MonoBehaviour:
     boostValue: 1
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Urban Heat & City Temperature
-    fact: "Roads, especially asphalt ones, absorb and retain heat, contributing significantly
-      to the <b>urban heat island effect</b>. Light-colored or permeable pavement
-      can reduce surface temperatures by up to <b>10\xB0C</b>, making them an eco-friendlier
-      option."
-  - title: Pollution
-    fact: Roads can increase <b>pollution levels</b> through vehicle emissions and
-      stormwater runoff. However, implementing green infrastructure like bioswales
-      or porous pavements alongside roads can help filter pollutants before they
-      enter waterways.
-  - title: Happiness & Population
-    fact: Roads play a key role in <b>connectivity</b>, enabling citizens to commute
-      to work, visit friends, and explore the city. However, excessive road coverage
-      without pedestrian-friendly options can decrease happiness due to traffic and
-      pollution concerns.
-  - title: Budget & Revenue
-    fact: Roads are a vital backbone of commerce, enabling transportation for goods
-      and services. Well-planned roads can boost <b>city revenue</b> by improving
-      access to businesses while poorly maintained roads can increase <b>expenses</b>
-      due to frequent repairs.
-  - title: Green Space
-    fact: Roads often take up significant space that could otherwise be green. Innovative
-      designs like "green streets" incorporate <b>trees and vegetation</b> into roadways,
-      offsetting the impact and even increasing the city's overall green space.
+  - title: Heat Contributor
+    fact: <b>Roads</b> contribute to the <b>urban heat island effect</b> by replacing
+      natural surfaces with heat-absorbing materials.
+  - title: Pollution Source
+    fact: Proximity to <b>roads</b> can increase <b>pollution</b> levels, negatively
+      impacting <b>air quality</b> and <b>public health</b>.
+  - title: Carbon Footprint Driver
+    fact: The <b>carbon footprint</b> of <b>roads</b> grows as vehicle usage increases,
+      adding to <b>greenhouse gas emissions</b>.
+  - title: Green Space Reducer
+    fact: <b>Roads</b> reduce surrounding <b>green space</b>, limiting <b>natural
+      cooling</b> and <b>biodiversity</b> in urban areas.
+  - title: Indirect Happiness Impact
+    fact: While <b>roads</b> don't directly influence <b>happiness</b>, their effects
+      on <b>heat</b>, <b>pollution</b>, and <b>greenery</b> can indirectly reduce
+      <b>city livability</b>.
+  - title: Heat Retention
+    fact: Paved areas, like <b>roads</b>, exacerbate <b>heat retention</b> in cities,
+      increasing nearby <b>temperatures</b>.
+  - title: Construction Emissions
+    fact: Building and maintaining <b>roads</b> requires materials with a significant
+      <b>carbon footprint</b>, adding to overall <b>emissions</b>.
+  - title: Economic Utility
+    fact: Despite their negative <b>environmental impact</b>, <b>roads</b> are essential
+      for <b>city functionality</b> and <b>revenue generation</b> through transport
+      and trade facilitation.
   caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &7358976786566942640
 GameObject:

@@ -1784,25 +1784,19 @@ MonoBehaviour:
     boostValue: -10
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Improved Quality of Life
-    factoid: The combination of vertical greenery and recreational spaces enhances
-      residents' <b>happiness</b>, offering a natural retreat amidst the urban environment.
-  - title: Urban Oasis
-    factoid: The inclusion of rooftop gardens and landscaped areas around the building
-      significantly boosts <b>green space</b>, helping to mitigate <b>urban heat</b>
-      and lower the <b>city temperature</b>
-  - title: Parking Trade-Off
-    factoid: While parking facilities provide convenience, they can increase <b>pollution</b>
-      and <b>carbon emissions</b> unless paired with electric vehicle infrastructure
-      or other sustainable transportation options.
-  - title: Energy Efficiency Through Design
-    factoid: "Rooftop gardens act as natural insulators, reducing the building's
-      energy demands for heating and cooling, positively impacting the city\u2019s
-      <b>energy</b> metrics."
-  - title: Revenue Generator
-    factoid: As a mixed-use structure, it supports both residential and commercial
-      spaces, contributing to steady <b>revenue</b> through property taxes and increased
-      economic activity.
+  - title: 'Eco-Friendly Design '
+    fact: The <b>High-Rise with Garden</b> integrates green spaces to enhance urban
+      <b>livability</b>, promoting a balance between density and sustainability.
+  - title: Urban Cooling
+    fact: The rooftop garden and surrounding greenery help mitigate the <b>urban
+      heat island effect</b>, reducing local temperatures and improving comfort.
+  - title: 'Improved Well-Being '
+    fact: Access to green spaces in high-rises has been linked to better <b>mental
+      health</b> and increased <b>happiness</b> for residents.
+  - title: Biodiversity Hub
+    fact: "The building\u2019s green features provide habitats for pollinators and
+      birds, fostering <b>biodiversity</b> in the urban environment."
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,6 +2164,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2345,6 +2340,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2469,6 +2465,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0

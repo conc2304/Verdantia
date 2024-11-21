@@ -55,7 +55,6 @@ public static class ObjectPrinter
         StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.Append("{\n");
 
-
         jsonBuilder.AppendFormat("  \"{0}\": {1}", "buildingName", FormatValue(buildingProps.buildingName));
         jsonBuilder.Append(",");
         jsonBuilder.Append("\n");
@@ -67,7 +66,6 @@ public static class ObjectPrinter
         jsonBuilder.AppendFormat("  \"{0}\": {1}", "buildingSize", FormatValue(buildingProps.additionalSpace.Length + 1));
         jsonBuilder.Append(",");
         jsonBuilder.Append("\n");
-
 
         // Iterate over each property in dataProps
         foreach (BuildingMetric metric in Enum.GetValues(typeof(BuildingMetric)))
@@ -89,10 +87,29 @@ public static class ObjectPrinter
             }
         }
 
+        // Add proximity effects
+        jsonBuilder.Append("  \"proximityEffects\": [\n");
+        foreach (MetricBoost boost in buildingProps.proximityEffects)
+        {
+            jsonBuilder.Append("    {\n");
+            jsonBuilder.AppendFormat("      \"title\": {0},\n", FormatValue(boost.metricName));
+            jsonBuilder.AppendFormat("      \"value\": {0}\n", FormatValue(boost.boostValue));
+            jsonBuilder.Append("    },\n");
+        }
+
+        // Remove trailing comma from the last proximity effect
+        if (buildingProps.proximityEffects.Count > 0)
+        {
+            jsonBuilder.Length -= 2; // Remove the last comma and newline
+            jsonBuilder.Append("\n");
+        }
+
+        jsonBuilder.Append("  ]\n");
+
         jsonBuilder.Append("}");
 
         // Print the JSON-like string
-        // Debug.Log(jsonBuilder.ToString());
+        Debug.Log(jsonBuilder.ToString());
     }
 
     // Format the value to be JSON-compatible

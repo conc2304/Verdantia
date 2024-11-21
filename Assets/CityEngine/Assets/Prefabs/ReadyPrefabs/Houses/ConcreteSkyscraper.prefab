@@ -1742,25 +1742,22 @@ MonoBehaviour:
     boostValue: 20
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}
   funFacts:
-  - title: Thermal Mass Contribution
-    factoid: The dense concrete material absorbs and retains heat, increasing <b>urban
-      heat</b> and slightly raising the <b>city temperature</b> over time.
-  - title: Durability Advantage
-    factoid: "Concrete buildings are long-lasting, reducing the need for frequent
-      reconstruction costs, which benefits the city\u2019s <b>budget</b> in the long
-      run."
-  - title: Neutral Aesthetics
-    factoid: While functional, concrete skyscrapers may lack the visual appeal of
-      their glass counterparts, leading to a neutral or slightly lower impact on
-      <b>happiness</b>.
-  - title: Energy Efficiency Potential
-    factoid: When designed with proper insulation, concrete can moderate internal
-      temperatures, slightly improving <b>energy</b> efficiency compared to older
-      designs.
-  - title: 'Carbon Footprint Concern:'
-    factoid: "The production of concrete is a significant contributor to global <b>carbon
-      emissions</b>, which directly impacts the city\u2019s overall environmental
-      metrics."
+  - title: Sustainability Need
+    fact: Incorporating energy-efficient systems and green rooftops could mitigate
+      its <b>environmental impact</b> while maintaining its economic benefits.
+  - title: 'Economic Generator '
+    fact: The <b>Concrete Skyscraper Office</b> drives <b>city revenue</b> through
+      substantial tax contributions, supporting urban economic growth.
+  - title: Heat Island Intensifier
+    fact: Constructed from heat-retaining materials, the skyscraper significantly
+      amplifies the <b>urban heat island effect</b>, raising local temperatures.
+  - title: Environmental Impact
+    fact: "High <b>energy consumption</b> and pollution output contribute to the
+      building\u2019s large carbon footprint, affecting air quality and public health."
+  - title: Loss of Green Space
+    fact: The lack of surrounding <b>green space</b> reduces natural cooling and
+      exacerbates the building's environmental challenges.
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!114 &6004032861037003687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2045,6 +2042,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8161172973872829999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2220,6 +2218,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8509036438469127679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2344,6 +2343,7 @@ MonoBehaviour:
   proximityEffects: []
   floatingValuePrefab: {fileID: 0}
   funFacts: []
+  caseStudyLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
 --- !u!1 &8837194073898992501
 GameObject:
   m_ObjectHideFlags: 0

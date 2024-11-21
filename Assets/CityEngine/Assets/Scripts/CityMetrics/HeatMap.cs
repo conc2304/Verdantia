@@ -85,7 +85,6 @@ public class HeatMap : MonoBehaviour
         };
 
         if (heatColors != null && heatColors.Count > 0) gradientPalette = heatColors;
-        print($"Color Count: {gradientPalette.Count}");
 
 
         // Define the color keys and alpha keys
