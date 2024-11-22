@@ -143,6 +143,7 @@ public class SaveDataTrigger : MonoBehaviour
         {
             Debug.Log("Save not found");
         }
+
         cityLoadInitialized = true;
     }
 

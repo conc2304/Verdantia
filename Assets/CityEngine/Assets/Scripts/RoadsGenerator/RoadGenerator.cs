@@ -106,7 +106,7 @@ public class RoadGenerator : MonoBehaviour
         // repair near roads
         for (int i = 0; i < nearRoads.Length; i++)
             if (nearRoads[i] != null)
-                CheckCreatedRoads(nearRoads[i], i);     // TODO CHECK THIS !! HERE
+                CheckCreatedRoads(nearRoads[i], i);
 
         CloseOfCloseRoads();
         for (int i = 0; i < nearRoads.Length; i++)
