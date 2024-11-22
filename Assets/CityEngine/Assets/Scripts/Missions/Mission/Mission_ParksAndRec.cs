@@ -15,6 +15,7 @@ namespace GreenCityBuilder.Missions
             timeLimitInMonths = 24;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-parks_and_rec");
             difficulty = DifficultyLevel.Easy;
+            missionCityFileName = "parks_and_rec_city";
 
             AddMetric(MetricTitle.GreenSpace);
             AddMetric(MetricTitle.Happiness);

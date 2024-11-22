@@ -14,6 +14,8 @@ public class Mission
     public DifficultyLevel difficulty;
     public Sprite missionIcon;
 
+    public string missionCityFileName;
+
     // List of metric displays
     public List<MetricDisplay> missionMetrics;
 

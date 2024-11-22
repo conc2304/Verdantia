@@ -8,7 +8,7 @@ public class CityMetricTopBar : MonoBehaviour
     public MissionCatalog missionCatalog;
     public Transform missionMetricsContainer;
     public GameObject metricItemPrefab;
-    public Mission currentMission;       // Reference to the current mission (null if "free play")
+    public Mission currentMission;
 
     private Dictionary<MetricTitle, CityMetricUIItem> activeMetricItems = new Dictionary<MetricTitle, CityMetricUIItem>();
 
@@ -41,7 +41,7 @@ public class CityMetricTopBar : MonoBehaviour
         // If there's a current mission, display its specific metrics
         if (currentMission != null)
         {
-            foreach (var objective in currentMission.objectives)
+            foreach (MissionObjective objective in currentMission.objectives)
             {
                 if (objective.metricName == MetricTitle.CityTemperature) continue; // city temp has its own ui
 
@@ -92,7 +92,7 @@ public class CityMetricTopBar : MonoBehaviour
         // Update either the mission-specific metrics or default metrics
         if (currentMission != null)
         {
-            foreach (var objective in currentMission.objectives)
+            foreach (MissionObjective objective in currentMission.objectives)
             {
                 UpdateMetricItem(objective.metricName);
             }
@@ -126,10 +126,10 @@ public class CityMetricTopBar : MonoBehaviour
                     metricUI.UpdateValue(cityMetricsManager.happiness.ToString());
                     break;
                 case MetricTitle.Budget:
-                    metricUI.UpdateValue(cityMetricsManager.budget.ToString());
+                    metricUI.UpdateValue(NumbersUtils.NumberToAbrev(cityMetricsManager.budget, "", ""));
                     break;
                 case MetricTitle.GreenSpace:
-                    metricUI.UpdateValue(cityMetricsManager.greenSpace.ToString());
+                    metricUI.UpdateValue(cityMetricsManager.greenSpace.ToString() + "");
                     break;
                 case MetricTitle.UrbanHeat:
                     metricUI.UpdateValue(cityMetricsManager.urbanHeat.ToString());
@@ -138,13 +138,13 @@ public class CityMetricTopBar : MonoBehaviour
                     metricUI.UpdateValue(cityMetricsManager.pollution.ToString());
                     break;
                 case MetricTitle.Energy:
-                    metricUI.UpdateValue(cityMetricsManager.energy.ToString());
+                    metricUI.UpdateValue(NumbersUtils.NumberToAbrev(cityMetricsManager.energy, "", "KW"));
                     break;
                 case MetricTitle.CarbonEmission:
                     metricUI.UpdateValue(cityMetricsManager.carbonEmission.ToString());
                     break;
                 case MetricTitle.Revenue:
-                    metricUI.UpdateValue(cityMetricsManager.revenue.ToString());
+                    metricUI.UpdateValue(NumbersUtils.NumberToAbrev(cityMetricsManager.revenue, "", ""));
                     break;
             }
         }

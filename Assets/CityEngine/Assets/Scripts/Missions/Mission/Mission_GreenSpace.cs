@@ -15,6 +15,7 @@ namespace GreenCityBuilder.Missions
             startingBudget = 2000000;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-green_space");
             difficulty = DifficultyLevel.Hard;
+            missionCityFileName = "green_renaissance_city";
 
             AddMetric(MetricTitle.GreenSpace);
             AddMetric(MetricTitle.Pollution);

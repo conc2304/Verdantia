@@ -46,7 +46,6 @@ public class Spawner : MonoBehaviour
                             Quaternion.Euler(0, currentPath.transform.eulerAngles.y - 180, 0), cameraController.citizensParent);
                         citizens.Add(obj.transform);
                         obj.GetComponent<HumansNav>().currentPathTarget = currentPath.GetComponent<PathTarget>();
-                       
                     }
                     yield return new WaitForSeconds(UnityEngine.Random.Range(3.0f, 6.0f));
                 }
@@ -67,7 +66,7 @@ public class Spawner : MonoBehaviour
                     if (carsSpawnPoints.Count != 0)
                     {
                         Transform currentPath = carsSpawnPoints[UnityEngine.Random.Range(0, carsSpawnPoints.Count)];
-                        
+
                         GameObject objToSpawn = null;
                         if (currentPath.tag == "AmbulanceCarsSpawn")
                             objToSpawn = ambulanceСarsToSpawn[Random.Range(0, ambulanceСarsToSpawn.Length)];

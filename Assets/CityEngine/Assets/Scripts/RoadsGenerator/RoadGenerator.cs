@@ -24,7 +24,6 @@ public class RoadGenerator : MonoBehaviour
     int countWays;
     int roadRotationY;
 
-    BuildingsMenu buildingsMenu;
     CameraController cameraController;
     Spawner spawner;
 
@@ -32,7 +31,6 @@ public class RoadGenerator : MonoBehaviour
     {
         nearRoads = new Transform[4];
         nearBuildings = new Transform[8];
-        buildingsMenu = FindObjectOfType<BuildingsMenu>();
         cameraController = FindObjectOfType<CameraController>();
         spawner = FindObjectOfType<Spawner>();
     }

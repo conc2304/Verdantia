@@ -44,4 +44,9 @@ public static class SaveSystem
 
     }
 
+    public static string FormatFileName(string name)
+    {
+        return ($"binary_{name}.fun");
+    }
+
 }

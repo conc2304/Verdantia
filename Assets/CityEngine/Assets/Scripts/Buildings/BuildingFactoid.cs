@@ -40,6 +40,7 @@ public class BuildingFactoid : MonoBehaviour
 
     private IEnumerator AnimateFactoid(System.Action onComplete)
     {
+        inProgress = true;
         // Move to visible position
         yield return AnimatePosition(sequence[0], sequence[1], animationDurations[0]);
 
@@ -55,7 +56,6 @@ public class BuildingFactoid : MonoBehaviour
 
     private IEnumerator AnimatePosition((float bottom, float top) from, (float bottom, float top) to, float duration)
     {
-        print("AnimatePosition");
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -78,64 +78,11 @@ public class BuildingFactoid : MonoBehaviour
 
     }
 
-    private IEnumerator<WaitForSeconds> AnimateFactoid_OLD(System.Action onComplete)
-    {
-        inProgress = true;
-        for (int i = 0; i < sequence.Count; i++)
-        {
-            float duration = animationDurations[i];
-            var step = sequence[i];
-
-            // If the duration is > 0, animate the padding
-            if (duration > 0)
-            {
-                float elapsedTime = 0f;
-                float initialTop = verticalSlider.padding.top;
-                float initialBottom = verticalSlider.padding.bottom;
-
-                float targetTop = step.top;
-                float targetBottom = step.bottom;
-
-                while (elapsedTime < duration)
-                {
-                    elapsedTime += Time.deltaTime;
-                    float t = Mathf.Clamp01(elapsedTime / duration);
-
-                    verticalSlider.padding.top = Mathf.RoundToInt(Mathf.Lerp(initialTop, targetTop, t));
-                    verticalSlider.padding.bottom = Mathf.RoundToInt(Mathf.Lerp(initialBottom, targetBottom, t));
-
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
-
-                    yield return null;
-                }
-
-                verticalSlider.padding.top = Mathf.RoundToInt(targetTop);
-                verticalSlider.padding.bottom = Mathf.RoundToInt(targetBottom);
-
-                LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
-            }
-            else
-            {
-                // If duration is 0, apply the padding immediately
-                verticalSlider.padding.top = Mathf.RoundToInt(step.top);
-                verticalSlider.padding.bottom = Mathf.RoundToInt(step.bottom);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
-            }
-
-            // Pause after applying the padding for the specified duration
-            print($"Duration: {duration}");
-            yield return new WaitForSeconds(duration);
-        }
-        // Trigger the callback at the end of the animation
-        onComplete?.Invoke();
-    }
-
 
     // Update the factoid's content
     public void UpdateFactoid(string buildingName, string title, string description, string caseStudyLink)
     {
-        Debug.Log("UPDATE FACTOID");
-        Debug.Log($"{buildingName}, {title}, {description}, {caseStudyLink}");
+
         if (inProgress) return;
         if (buildingName.ToLower().Contains("road") && pastBuildings.Contains(buildingName))
         {
@@ -143,7 +90,6 @@ public class BuildingFactoid : MonoBehaviour
             pastBuildings.Append("");
             return;
         };
-
 
         pastBuildings.Append(buildingName);
 
@@ -160,12 +106,8 @@ public class BuildingFactoid : MonoBehaviour
         if (QRCodeImage != null)
         {
             // Generate QR Code Image from link
-            // QRCode.sprite = image;
             Texture2D qrTexture = QRGenerator.EncodeString(caseStudyLink, Color.black, Color.white);
 
-            // Set the generated texture as the mainTexture on the quad
-            // QRCodeImage.GetComponent<Renderer>().material.mainTexture = qrTexture;
-            // QRCodeImage. = qrTexture;
             Sprite sprite = Sprite.Create(
                 qrTexture,
                 new Rect(0, 0, qrTexture.width, qrTexture.height),
@@ -186,7 +128,6 @@ public class BuildingFactoid : MonoBehaviour
     private void ResetPosition()
     {
         InitializePosition();
-
         LayoutRebuilder.ForceRebuildLayoutImmediate(verticalSlider.GetComponent<RectTransform>());
         inProgress = false;
         const int maxBuffer = 3;
@@ -195,7 +136,5 @@ public class BuildingFactoid : MonoBehaviour
             int startingIndex = pastBuildings.Length - maxBuffer;
             pastBuildings = ArrayUtils.Slice(pastBuildings, startingIndex);
         }
-
-        Debug.Log("Position reset for the next trigger.");
     }
 }

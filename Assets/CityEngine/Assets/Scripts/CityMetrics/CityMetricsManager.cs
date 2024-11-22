@@ -346,7 +346,7 @@ public class CityMetricsManager : MonoBehaviour
 
 
     // Method to reset all metrics to initial state before recalculation
-    private void ResetMetrics()
+    public void ResetMetrics()
     {
         population = 0;
         happiness = 50;

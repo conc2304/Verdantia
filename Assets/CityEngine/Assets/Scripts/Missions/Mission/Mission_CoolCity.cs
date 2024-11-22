@@ -16,6 +16,7 @@ namespace GreenCityBuilder.Missions
                 missionIcon = Resources.Load<Sprite>("Missions/mission_icon-cool_the_city");
                 startingBudget = 1300000;
                 difficulty = DifficultyLevel.Medium;
+                missionCityFileName = "cool_down_city";
 
 
                 AddMetric(MetricTitle.CityTemperature);

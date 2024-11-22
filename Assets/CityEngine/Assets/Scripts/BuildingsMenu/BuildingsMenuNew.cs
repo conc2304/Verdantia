@@ -892,7 +892,8 @@ public class BuildingsMenuNew : MonoBehaviour
             // put error message on opposite side of target icon
             errorText.transform.localPosition = trackPad.mousePosition.y > 0 ? new Vector3(0, -150, 0) : new Vector3(0, 150, 0);
             errorText.text = message;
-            errorText.color = status == true ? Color.black : Color.red;
+
+            errorText.color = status == true ? new Color(97 / 255, 219 / 255, 231 / 255) : Color.red;
             errorText.gameObject.SetActive(true);
         }
         else
