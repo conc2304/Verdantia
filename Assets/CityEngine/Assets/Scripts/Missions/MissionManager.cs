@@ -30,6 +30,7 @@ public class MissionManager : MonoBehaviour
         mission.startMonth = cityMetricsManager.currentMonth;
         mission.startYear = cityMetricsManager.currentYear;
         missionInProgress = true;
+
         LoadMissionCity(mission);
     }
 

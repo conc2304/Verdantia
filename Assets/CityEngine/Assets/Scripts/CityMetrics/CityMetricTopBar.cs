@@ -37,9 +37,10 @@ public class CityMetricTopBar : MonoBehaviour
         activeMetricItems.Clear();
 
         bool budgetIncluded = false;  // Track if Budget metric is included
-
+        print($"DisplayMetricsForCurrentMode | {currentMission.missionName}");
+        // print("DisplayMetricsForCurrentMode");
         // If there's a current mission, display its specific metrics
-        if (currentMission != null)
+        if (currentMission != null && currentMission.objectives.Length > 0)
         {
             foreach (MissionObjective objective in currentMission.objectives)
             {
