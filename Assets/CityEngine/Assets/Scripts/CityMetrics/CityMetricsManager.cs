@@ -9,7 +9,9 @@ public class CityMetricsManager : MonoBehaviour
 
     // Global city metrics
     public int startingBudget = 1000000;
-    public float startingTemp = 69.0f;
+    public float startingTemp = 67.0f;
+    public float cityTempLow = float.PositiveInfinity;
+    public float cityTempMax = float.NegativeInfinity;
 
     // Time-keeping variables
     public int currentMonth = 1; // January starts as 1
@@ -59,24 +61,28 @@ public class CityMetricsManager : MonoBehaviour
 
     // City Temperature Heat Diffusion 
     public float[,] cityTempGrid { get; private set; }
-    // NOTE these values are stable
-    // public float heatDiffusionRate = 0.25f;
-    // public float heatDissipationRate = 0.999f; // todo remove 
-    // public float sunHeatBase = 0.06f;
 
     [Header("Heat Map Debug")]
     public bool takeStep = false;
     public bool toggleRestartTemp = false;
     public bool playTemp = false;
 
-    public int minTemp = 50;
-    public int maxTemp = 100;
+    private int minTemp = 50;
+    private int maxTemp = 100;
+
+    public int tempScaleRange = 15;
     public float heatAddRange = 0.05f;
     private HeatMap heatMap;
     private HeatDiffusion heatDiffusion;
+
+
     void Start()
     {
         heatMap = FindObjectOfType<HeatMap>();
+
+        minTemp = (int)startingTemp - tempScaleRange;
+        maxTemp = (int)startingTemp + tempScaleRange;
+
 
         gridTileSize = cameraController.gridSize;
         cityTemperature = startingTemp;
@@ -188,11 +194,13 @@ public class CityMetricsManager : MonoBehaviour
         float[,] heatContributionGrid = BuildingsToHeatGrid();
 
         cityTempGrid = heatDiffusion.GetCityTempGrid(cityTempGrid, heatContributionGrid, gridLengthX, gridLengthZ);
-
         // Only call to render if we have temps, and if heatmap is set to metric
         if (cityTempGrid != null && cityTempGrid.Length != 0 && cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")
         {
+            minTemp = (int)startingTemp - tempScaleRange;
+            maxTemp = (int)startingTemp + tempScaleRange;
             heatMap.RenderCityTemperatureHeatMap(cityTempGrid, minTemp, maxTemp);
+            cityTemperature = GetAvgTemp(cityTempGrid);
         }
     }
 
@@ -628,8 +636,7 @@ public class CityMetricsManager : MonoBehaviour
     }
 
 
-
-
+    // show min and max heats of the city
     private float GetAvgTemp(float[,] temps, int padding = 5)
     {
         // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
@@ -642,11 +649,17 @@ public class CityMetricsManager : MonoBehaviour
         float totalTemperature = 0f;
         int count = 0;
 
+        cityTempLow = float.PositiveInfinity; ;
+        cityTempMax = float.NegativeInfinity;
+
         for (int i = minGridX; i <= maxGridX; i++)
         {
             for (int j = minGridZ; j <= maxGridZ; j++)
             {
                 totalTemperature += temps[i, j];
+                cityTempLow = Math.Min(cityTempLow, temps[i, j]);
+                cityTempMax = Math.Max(cityTempMax, temps[i, j]);
+
                 count++;
             }
         }

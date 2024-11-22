@@ -4,13 +4,18 @@ using UnityEngine;
 public class HeatDiffusion : MonoBehaviour
 {
     // NOTE these values are stable
-    public float diffusionRate = 0.25f;
-    public float dissipationRate = 1.0f;
-    public float sunHeatBase = 0.06f;
+    public float diffusionRate = 20f;
+    public float dissipationRate = 0.999f;
+    public float sunHeatBase { get; private set; } = 36f;
     public float heatAddRange = 0.05f;
     public float initialTemp = 67f;
     public float timeStep = 0.1f;
 
+    private void Start()
+    {
+        // we are apply sun heat 2x (once for each tranposition step)
+        sunHeatBase = initialTemp / 2;
+    }
 
     public float[] GetColumnTemperatures(
         float[,] tempMatrix,
@@ -46,7 +51,7 @@ public class HeatDiffusion : MonoBehaviour
         for (int i = 0; i < gridSizeZ - 1; i++)
         {
             // Add heat sources and sinks
-            heatContribution = heatContributionGrid[i, calculateColumn];
+            heatContribution = heatContributionGrid[i, calculateColumn] + sunHeatBase;
 
             rightSide[i] = (heatContribution * timeStep) + (C * tempMatrix[i, calculateColumn]);
 
@@ -65,10 +70,10 @@ public class HeatDiffusion : MonoBehaviour
         }
 
         // return new temperures at calculate column
-        Debug.Log($"lower : {lower.Length}  @ {calculateColumn}");
-        Debug.Log($"diagonal : {diagonal.Length}  @ {calculateColumn}");
-        Debug.Log($"upper : {upper.Length}  @ {calculateColumn}");
-        Debug.Log($"rightSide : {rightSide.Length}  @ {calculateColumn}");
+        // Debug.Log($"lower : {lower.Length}  @ {calculateColumn}");
+        // Debug.Log($"diagonal : {diagonal.Length}  @ {calculateColumn}");
+        // Debug.Log($"upper : {upper.Length}  @ {calculateColumn}");
+        // Debug.Log($"rightSide : {rightSide.Length}  @ {calculateColumn}");
         return TDMA.SolveInPlace(lower, diagonal, upper, rightSide);
     }
 
@@ -83,8 +88,11 @@ public class HeatDiffusion : MonoBehaviour
             currentTemps = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, initialTemp);
         }
 
+        sunHeatBase = initialTemp / 2;
+
+
         float[,] newTemps = new float[gridSizeX, gridSizeZ];
-        for (int t = 1; t < 2; t++)
+        for (int t = 1; t <= 2; t++)
         {
             // Run once for each row, and once for each column by transposing the 
 
