@@ -100,8 +100,8 @@ public class CameraController : MonoBehaviour
         if (!heatMap) heatMap = FindObjectOfType<HeatMap>();
 
         // todo remove debugging
-        // heatmapMetric = "cityTemperature";
-        // ToggleHeatMapView();
+        heatmapMetric = "cityTemperature";
+        ToggleHeatMapView();
     }
 
 
