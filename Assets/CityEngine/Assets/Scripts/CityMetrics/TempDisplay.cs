@@ -5,6 +5,8 @@ public class TempDisplay : MonoBehaviour
 {
     public CityMetricsManager cityMetricsManager;
     public TMP_Text tempText;
+    public TMP_Text tempLowText;
+    public TMP_Text tempHighText;
 
     void Start()
     {
@@ -22,6 +24,16 @@ public class TempDisplay : MonoBehaviour
     void UpdateTempText()
     {
         tempText.text = cityMetricsManager.cityTemperature.ToString();
+
+        if (tempLowText != null)
+        {
+            tempLowText.text = cityMetricsManager.cityTempLow.ToString();
+        }
+
+        if (tempHighText != null)
+        {
+            tempHighText.text = cityMetricsManager.cityTempMax.ToString();
+        }
     }
 
     void OnDestroy()

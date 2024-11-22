@@ -109,7 +109,7 @@ public static class ObjectPrinter
         jsonBuilder.Append("}");
 
         // Print the JSON-like string
-        Debug.Log(jsonBuilder.ToString());
+        // Debug.Log(jsonBuilder.ToString());
     }
 
     // Format the value to be JSON-compatible

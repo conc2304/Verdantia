@@ -29,14 +29,15 @@ public class FloatingValueEffect : MonoBehaviour
     private void Start()
     {
         cameraController = FindObjectOfType<CameraController>();
+        sdt = FindObjectOfType<SaveDataTrigger>();
+        if (sdt == null || !sdt.cityLoadInitialized) Destroy(gameObject); // dont show pop ups on city load
     }
 
     public void Initialize(string valueString, bool isPositive, MetricTitle? metricTitle, float displayDelay)
     {
         cameraController = FindObjectOfType<CameraController>();
-        SaveDataTrigger sdt = FindObjectOfType<SaveDataTrigger>();
 
-        if (sdt == null || !sdt.cityLoadInitialized) Destroy(gameObject); // dont show pop ups on city load
+        // if (sdt == null || !sdt.cityLoadInitialized) Destroy(gameObject); // dont show pop ups on city load
 
         // the further the zoom, the faster the items move and the larger they are
         float zoomPos = cameraController.toZoom.y;
@@ -94,7 +95,6 @@ public class FloatingValueEffect : MonoBehaviour
 
     void Update()
     {
-
         // if (!sdt.cityLoadInitialized) Destroy(gameObject); // dont show pop ups on city load
         // Only move and count lifetime if the popup is visible
         if (isVisible && elapsedTime >= 0f)

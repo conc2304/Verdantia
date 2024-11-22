@@ -97,11 +97,13 @@ public class BuildingProperties : MonoBehaviour
     public List<BuildingFact> funFacts;
     public string caseStudyLink = "https://onetreeplanted.org/blogs/stories/urban-heat-island";
 
+    private SaveDataTrigger sdt;
 
     void Start()
     {
         demolitionCost = demolitionCost != 0 ? demolitionCost : (int)(constructionCost * 0.25f);
         PassonBuildingProperties();
+        sdt = FindObjectOfType<SaveDataTrigger>();
     }
 
 
@@ -244,7 +246,10 @@ public class BuildingProperties : MonoBehaviour
         float valueInverter = removeEffect ? -1f : 1f;
         ModifyProperty(targetBuilding, boost.metricName.ToString(), valueInverter * boost.boostValue);
         targetBuilding.PassonBuildingProperties();
-        targetBuilding.ShowFloatingValue(boost.metricName, valueInverter * boost.boostValue, displayDelay);
+        if (sdt && sdt.cityLoadInitialized)
+        {
+            targetBuilding.ShowFloatingValue(boost.metricName, valueInverter * boost.boostValue, displayDelay);
+        }
     }
 
 
@@ -315,7 +320,7 @@ public class BuildingProperties : MonoBehaviour
         popupPosition.y = popupPosition.y / 2;
 
         // Instantiate the floating value prefab
-        GameObject floatingValue = Instantiate(floatingValuePrefab, popupPosition, Quaternion.identity);
+        // GameObject floatingValue = Instantiate(floatingValuePrefab, popupPosition, Quaternion.identity);
 
         // Set the text and color based on the boost value
         bool isPositive = boostValue > 0;
@@ -324,7 +329,11 @@ public class BuildingProperties : MonoBehaviour
         bool metricIsInverted = MetricMapping.CityMetricIsInverted(metricTitle.Value);
         if (metricIsInverted) isPositive = !isPositive; // swap the color after the sign assignment
 
-        if (boostValue != 0) floatingValue.GetComponent<FloatingValueEffect>().Initialize(valueText, isPositive, metricTitle, displayDelay);
+        if (boostValue != 0)
+        {
+            GameObject floatingValue = Instantiate(floatingValuePrefab, popupPosition, Quaternion.identity);
+            floatingValue.GetComponent<FloatingValueEffect>().Initialize(valueText, isPositive, metricTitle, displayDelay);
+        }
     }
 
     // Method to add or subtract a value to/from a property or field

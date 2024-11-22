@@ -928,6 +928,8 @@ public class CameraController : MonoBehaviour
         // Reset metrics and counters
         spawner.carsCount = 0;
         spawner.citizensCount = 0;
+        spawner.citizensSpawnPoints.Clear();
+        spawner.carsSpawnPoints.Clear(); ;
         cityMetricsManager.ResetMetrics(); // Create a method to reset all city metrics if needed.
 
         // Reset any other gameplay-related objects or states
