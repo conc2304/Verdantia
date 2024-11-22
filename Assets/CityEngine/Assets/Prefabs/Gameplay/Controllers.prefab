@@ -170,6 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1024400442031631239}
   - component: {fileID: 7962657566462079142}
+  - component: {fileID: 1516040887155469648}
   - component: {fileID: 1024400442031631236}
   - component: {fileID: 1024400442031631238}
   - component: {fileID: 277078930}
@@ -222,14 +223,32 @@ MonoBehaviour:
   cameraController: {fileID: 783540590}
   buildingsMenu: {fileID: 0}
   grid: {fileID: 0}
-  heatDiffusionRate: 0.25
-  heatDissipationRate: 0.999
-  sunHeatBase: 0.06
-  heatAddRange: 0.05
+  cityTempUpdateInterval: 6
+  temperatureMapTimeSteps: 5
   takeStep: 0
   toggleRestartTemp: 0
-  play: 0
-  pause: 1
+  playTemp: 0
+  minTemp: 50
+  maxTemp: 100
+  heatAddRange: 0.05
+--- !u!114 &1516040887155469648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0080fb94e74d3cb4993bdfd78ce070bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diffusionRate: 0.25
+  dissipationRate: 1
+  sunHeatBase: 0.06
+  heatAddRange: 0.05
+  initialTemp: 67
+  timeStep: 0.1
 --- !u!114 &1024400442031631236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +374,7 @@ MonoBehaviour:
   - {fileID: 5793062631657546409, guid: dab673c86cc2b144ab493f26cc9c9024, type: 3}
   - {fileID: 5793062631657546409, guid: 6e7d693cbda93e54babd1d4819c831be, type: 3}
   road: {fileID: 1730668401964716652, guid: bc0c6e061703dff48a029ec97c7143ea, type: 3}
+  doSave: 0
 --- !u!114 &783540590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +402,7 @@ MonoBehaviour:
   movSpeed: 1
   rotationScale: 3
   zoomScale: {x: 0, y: -10, z: 10}
+  toZoom: {x: 0, y: 0, z: 0}
   minZoom: -80
   maxZoom: 300
   zoomSlider: {fileID: 0}
@@ -396,10 +417,6 @@ MonoBehaviour:
   fixedJoystick: {fileID: 0}
   placementTrackpad: {fileID: 0}
   cityMetricsManager: {fileID: 0}
-  cityTempUpdateInterval: 6
-  temperatureMapTimeSteps: 5
-  toggleRestartTemp: 0
-  playTemp: 0
 --- !u!114 &783540595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,10 +478,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1190580588960731718, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1190580588960731718, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
       propertyPath: m_VersionIndex
       value: 1294
       objectReference: {fileID: 0}
@@ -513,18 +526,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4605253578287316118, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4605253578287316118, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
       propertyPath: m_VersionIndex
       value: 4987
       objectReference: {fileID: 0}
     - target: {fileID: 5073377636627901479, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5274336331469734167, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
