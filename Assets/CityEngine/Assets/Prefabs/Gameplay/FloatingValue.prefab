@@ -253,7 +253,7 @@ MonoBehaviour:
   iconRenderer: {fileID: 3981612466695995063}
   floatSpeed: 7
   lifetime: 10
-  positiveColor: {r: 0, g: 1, b: 0, a: 1}
+  positiveColor: {r: 0.38020647, g: 0.85993993, b: 0.9056604, a: 1}
   negativeColor: {r: 1, g: 0, b: 0, a: 1}
   delayMultiplier: 0.1
   startScale: 0.1

@@ -5,21 +5,23 @@ public class MissionManager : MonoBehaviour
     public CityMetricsManager cityMetricsManager;
 
     public Mission currentMission = null;
-    // public TextMeshProUGUI missionBriefUI;
-    // public TextMeshProUGUI missionStatusUI;
 
     private bool missionInProgress = false;
+    private SaveDataTrigger saveDataTrigger;
+    private CameraController cameraController;
 
     private void Awake()
     {
         currentMission = null;
+        saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
+        cameraController = FindObjectOfType<CameraController>();
     }
 
     private void Start()
     {
         cityMetricsManager.OnTimeUpdated += OnTimeUpdated;
-    }
 
+    }
 
     public void StartMission(Mission mission)
     {
@@ -28,9 +30,25 @@ public class MissionManager : MonoBehaviour
         mission.startMonth = cityMetricsManager.currentMonth;
         mission.startYear = cityMetricsManager.currentYear;
         missionInProgress = true;
+        LoadMissionCity(mission);
+    }
 
-        //     missionBriefUI.text = mission.missionBrief;
-        //     missionStatusUI.text = "Mission in Progress";
+    public void LoadMissionCity(Mission mission)
+    {
+        print("Load Mission");
+        // Load the mission's starting city
+
+        cameraController.ResetGameField();
+
+        if (mission.missionName == "Free Play")
+        {
+            // do nothing
+        }
+        else
+        {
+            string missionFile = SaveSystem.FormatFileName(mission.missionCityFileName);
+            saveDataTrigger.BuildingDataLoad(missionFile);
+        }
     }
 
     private void OnTimeUpdated(int currentMonth, int currentYear)

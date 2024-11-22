@@ -529,7 +529,7 @@ public class CameraController : MonoBehaviour
         // Check if the target is next to a building of a type
         foreach (Transform other in allBuildings)
         {
-            if (!buildingNames.Contains(other.name)) continue;
+            // if (!buildingNames.Contains(other.name)) continue;
 
             if (IsAdjacent(targetNew.position, other.position))
             {
@@ -585,7 +585,6 @@ public class CameraController : MonoBehaviour
 
     public Dictionary<string, object> DeleteTarget(Transform target)
     {
-
         bool removeEffect = true;
 
         string demolishedBuildingName = "";
@@ -878,6 +877,58 @@ public class CameraController : MonoBehaviour
         }
 
         return cityBuildings;
+    }
+
+    public void ActivateBackgroundForest()
+    {
+        for (int i = 0; i < forestObj.Count; i++)
+        {
+            forestObj[i].gameObject.SetActive(true);
+        }
+    }
+
+    public void ResetGameField()
+    {
+        // Destroy all child objects in the buildingsParent
+        foreach (Transform child in buildingsParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Destroy all child objects in the roadsParent
+        foreach (Transform child in roadsParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in citizensParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in carsParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        WindmillsController windmillsController = FindObjectOfType<WindmillsController>();
+        windmillsController.blades.Clear();
+
+
+        // Clear tracking lists
+        allBuildings.Clear();
+        roadGenerator.allRoads.Clear();
+
+        // Reset metrics and counters
+        spawner.carsCount = 0;
+        spawner.citizensCount = 0;
+        cityMetricsManager.ResetMetrics(); // Create a method to reset all city metrics if needed.
+
+        // Reset any other gameplay-related objects or states
+        forestObj.ForEach(forest => forest.gameObject.SetActive(true)); // Reset forest objects if applicable.
+        cityChanged = false;
+
+        Debug.Log("Playing field has been reset.");
     }
 }
 

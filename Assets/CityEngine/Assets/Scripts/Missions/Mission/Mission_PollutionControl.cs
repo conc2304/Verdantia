@@ -15,6 +15,7 @@ namespace GreenCityBuilder.Missions
             startingBudget = 27000000;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-pollution_control");
             difficulty = DifficultyLevel.Extreme;
+            missionCityFileName = "pollution_control_city";
 
             AddMetric(MetricTitle.Pollution);
             AddMetric(MetricTitle.Revenue);

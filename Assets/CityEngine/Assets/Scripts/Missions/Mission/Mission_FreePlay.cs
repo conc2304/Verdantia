@@ -16,6 +16,7 @@ namespace GreenCityBuilder.Missions
             difficulty = DifficultyLevel.Medium;
             startingBudget = 750000; // TODO Set a reasonable starting budget
             objectives = new MissionObjective[0];
+            missionCityFileName = null;
         }
     }
 }

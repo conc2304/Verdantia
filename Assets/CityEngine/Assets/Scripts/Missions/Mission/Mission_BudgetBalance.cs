@@ -14,13 +14,12 @@ namespace GreenCityBuilder.Missions
             startingBudget = 1700000;
             difficulty = DifficultyLevel.Medium;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-budget_balance");
+            missionCityFileName = "budget_balance_city";
 
             // Add metrics with icons
             AddMetric(MetricTitle.Budget);
             AddMetric(MetricTitle.CarbonEmission);
             AddMetric(MetricTitle.Happiness);
-            // AddMetric(MetricTitle.Income);
-            // AddMetric(MetricTitle.Expenses);
 
             objectives = new MissionObjective[]
             {
