@@ -402,9 +402,6 @@ public class BuildingProperties : MonoBehaviour
 
         return null;
     }
-
-
-
 }
 
 
