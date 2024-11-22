@@ -323,7 +323,8 @@ public class BuildingProperties : MonoBehaviour
         string valueText = $"{(isPositive ? "+" : "")}{boostValue}";
         bool metricIsInverted = MetricMapping.CityMetricIsInverted(metricTitle.Value);
         if (metricIsInverted) isPositive = !isPositive; // swap the color after the sign assignment
-        floatingValue.GetComponent<FloatingValueEffect>().Initialize(valueText, isPositive, metricTitle, displayDelay);
+
+        if (boostValue != 0) floatingValue.GetComponent<FloatingValueEffect>().Initialize(valueText, isPositive, metricTitle, displayDelay);
     }
 
     // Method to add or subtract a value to/from a property or field

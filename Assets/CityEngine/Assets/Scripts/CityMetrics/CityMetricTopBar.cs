@@ -37,8 +37,7 @@ public class CityMetricTopBar : MonoBehaviour
         activeMetricItems.Clear();
 
         bool budgetIncluded = false;  // Track if Budget metric is included
-        print($"DisplayMetricsForCurrentMode | {currentMission.missionName}");
-        // print("DisplayMetricsForCurrentMode");
+
         // If there's a current mission, display its specific metrics
         if (currentMission != null && currentMission.objectives.Length > 0)
         {
@@ -49,10 +48,8 @@ public class CityMetricTopBar : MonoBehaviour
                 CreateAndDisplayMetricItem(objective.metricName, objective.icon);
 
                 // Check if Budget is one of the objectives
-                if (objective.metricName == MetricTitle.Budget)
-                {
-                    budgetIncluded = true;
-                }
+                if (objective.metricName == MetricTitle.Budget) budgetIncluded = true;
+
             }
 
             // Add Budget at the end if not already included
@@ -66,9 +63,9 @@ public class CityMetricTopBar : MonoBehaviour
             // Free play mode: display default metrics, including Budget
             CreateAndDisplayMetricItem(MetricTitle.Population, MissionRepository.metricIcons[MetricTitle.Population]);
             CreateAndDisplayMetricItem(MetricTitle.Happiness, MissionRepository.metricIcons[MetricTitle.Happiness]);
-            CreateAndDisplayMetricItem(MetricTitle.Budget, MissionRepository.metricIcons[MetricTitle.Budget]);
             CreateAndDisplayMetricItem(MetricTitle.GreenSpace, MissionRepository.metricIcons[MetricTitle.GreenSpace]);
             CreateAndDisplayMetricItem(MetricTitle.UrbanHeat, MissionRepository.metricIcons[MetricTitle.UrbanHeat]);
+            CreateAndDisplayMetricItem(MetricTitle.Budget, MissionRepository.metricIcons[MetricTitle.Budget]);
         }
     }
 

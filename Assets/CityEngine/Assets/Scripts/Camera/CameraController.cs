@@ -843,7 +843,13 @@ public class CameraController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        saveDataTrigger.BuildingDataSave();
+        Mission currentMission = FindObjectOfType<MissionManager>().currentMission;
+
+        if (saveDataTrigger.doSave && currentMission.missionName != "Free Play Mode")
+        {
+            string missionFile = SaveSystem.FormatFileName(currentMission.missionCityFileName);
+            saveDataTrigger.BuildingDataSave(missionFile);
+        }
     }
 
     public List<Transform> GetAllBuildings(bool includeSpaces = true)

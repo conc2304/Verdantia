@@ -30,7 +30,7 @@ public class SaveDataTrigger : MonoBehaviour
 
     BuildingData data;
 
-    [SerializeField] private bool doSave = false;
+    public bool doSave = false;
 
     public bool cityLoadInitialized { get; private set; } = false;
     private void Awake()
@@ -59,7 +59,7 @@ public class SaveDataTrigger : MonoBehaviour
         cityLoadInitialized = true;
     }
 
-    public void BuildingDataSave()
+    public void BuildingDataSave(string fileName)
     {
 
         buildingsPropertiesBuilded = new SaveProperties[cameraController.buildingsParent.childCount + cameraController.roadsParent.childCount];
@@ -97,7 +97,7 @@ public class SaveDataTrigger : MonoBehaviour
             buildingsPropertiesBuilded[cameraController.buildingsParent.childCount + i].z = (int)cameraController.roadsParent.GetChild(i).transform.position.z;
         }
 
-        SaveSystem.SaveBuildings(buildingsPropertiesBuilded, cityFileName);
+        SaveSystem.SaveBuildings(buildingsPropertiesBuilded, fileName);
     }
 
     public void BuildingDataLoad(string cityFileName)
