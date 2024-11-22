@@ -71,10 +71,9 @@ public class CityMetricsManager : MonoBehaviour
 
     public int minTemp = 50;
     public int maxTemp = 100;
-    public int timeStep = 5;
     public float heatAddRange = 0.05f;
     private HeatMap heatMap;
-
+    private HeatDiffusion heatDiffusion;
     void Start()
     {
         heatMap = FindObjectOfType<HeatMap>();
@@ -104,6 +103,11 @@ public class CityMetricsManager : MonoBehaviour
 
         gridLengthX = (grid.gridSizeX / gridTileSize) + gridPadding;
         gridLengthZ = (grid.gridSizeZ / gridTileSize) + gridPadding;
+    }
+
+    private void Awake()
+    {
+        heatDiffusion = FindObjectOfType<HeatDiffusion>();
     }
 
     public float GetMetricValue(MetricTitle metricName)
@@ -183,7 +187,7 @@ public class CityMetricsManager : MonoBehaviour
     {
         float[,] heatContributionGrid = BuildingsToHeatGrid();
 
-        cityTempGrid = HeatDiffusion.GetCityTempGrid(cityTempGrid, heatContributionGrid, timeStep, gridLengthX, gridLengthZ);
+        cityTempGrid = heatDiffusion.GetCityTempGrid(cityTempGrid, heatContributionGrid, gridLengthX, gridLengthZ);
 
         // Only call to render if we have temps, and if heatmap is set to metric
         if (cityTempGrid != null && cityTempGrid.Length != 0 && cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")

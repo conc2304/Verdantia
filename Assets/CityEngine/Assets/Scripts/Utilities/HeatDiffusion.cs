@@ -1,21 +1,21 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public static class HeatDiffusion
+public class HeatDiffusion : MonoBehaviour
 {
     // NOTE these values are stable
-    public static float diffusionRate = 0.25f;
-    public static float dissipationRate = 0.999f; // todo remove 
-    public static float sunHeatBase = 0.06f;
-    public static float heatAddRange = 0.05f;
-    public static float initialTemp = 67f;
+    public float diffusionRate = 0.25f;
+    public float dissipationRate = 1.0f;
+    public float sunHeatBase = 0.06f;
+    public float heatAddRange = 0.05f;
+    public float initialTemp = 67f;
+    public float timeStep = 0.1f;
 
 
-    public static float[] GetColumnTemperatures(
+    public float[] GetColumnTemperatures(
         float[,] tempMatrix,
         float[,] heatContributionGrid,
         int calculateColumn,
-        int timeStep = 5,
         int gridSizeX = 100, int gridSizeZ = 100)
     {
         Debug.Log("GetColumnTemperatures");
@@ -72,10 +72,9 @@ public static class HeatDiffusion
         return TDMA.SolveInPlace(lower, diagonal, upper, rightSide);
     }
 
-    public static float[,] GetCityTempGrid(
+    public float[,] GetCityTempGrid(
         float[,] currentTemps,
         float[,] heatContributionGrid,
-        int timeStep = 5,
         int gridSizeX = 100, int gridSizeZ = 100)
     {
 
@@ -92,7 +91,7 @@ public static class HeatDiffusion
             for (int i = 0; i < gridSizeZ; i++)
             {
                 // For each column, calculate the new temperatures and assign them to the newTemps matrix
-                float[] columnTemps = GetColumnTemperatures(currentTemps, heatContributionGrid, timeStep, i, gridSizeX, gridSizeZ);
+                float[] columnTemps = GetColumnTemperatures(currentTemps, heatContributionGrid, i, gridSizeX, gridSizeZ);
                 for (int j = 0; j < gridSizeX; j++)
                 {
                     newTemps[j, i] = columnTemps[j];
