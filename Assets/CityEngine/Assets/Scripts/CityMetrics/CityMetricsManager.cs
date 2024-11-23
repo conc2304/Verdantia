@@ -1,30 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CityMetricsManager : MonoBehaviour
 {
 
-
     // Global city metrics
     public int startingBudget = 1000000;
     public float startingTemp = 67.0f;
-
-    // Time-keeping variables
-    public int currentMonth = 1; // January starts as 1
-    public int currentYear = 2024; // Set the starting year
-    public float monthDuration = 30.0f; // Duration of a "month" in seconds (for testing purposes)
-    private float monthTimer = 0f;
-
-    public event Action<int, int> OnTimeUpdated; // (month, year)
-    public event Action OnMetricsUpdate;
-
-    // Metric Setter and Getters
-    private Dictionary<MetricTitle, float> metrics;
-    private Dictionary<string, (float min, float max)> propertyRanges;
-
-    public float tempSensitivity = 0.05f; // Sensitivity factor for how much extra heat affects energy and emissions
+    public float tempSensitivity = 0.05f; // Sensitivity factor for how much extra heat affects energy and emissions...
     public float cityTemperature { get; private set; }
     public float population { get; private set; }
     public float happiness { get; private set; }
@@ -34,11 +20,27 @@ public class CityMetricsManager : MonoBehaviour
     public float pollution { get; private set; }
     public float energy { get; private set; }
     public float carbonEmission { get; private set; }
+
+    // Time-keeping variables
+    public int currentMonth = 1;
+    public int currentYear = 2024;
+    public float monthDuration = 30.0f; // Duration of a "month" in seconds 
+    private float monthTimer = 0f;
+    private MissionManager missionManager;
+    private int missionMonthsRemaining = 0;
+    public event Action<int, int, int> OnTimeUpdated; // (month, year, monthsRemaining)
+    public event Action OnMetricsUpdate;
+
+    // Metric Setter and Getters
+    private Dictionary<MetricTitle, float> metrics;
+    private Dictionary<string, (float min, float max)> propertyRanges;
+
     public float revenue { get; private set; }
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
 
     private CityTemperatureController cityTemperatureController;
+
 
 
     void Start()
@@ -66,6 +68,7 @@ public class CityMetricsManager : MonoBehaviour
     private void Awake()
     {
         cityTemperatureController = FindObjectOfType<CityTemperatureController>();
+        missionManager = FindObjectOfType<MissionManager>();
         cityTemperatureController.OnTempUpdated += HandleUpdateTemperature;
     }
 
@@ -101,9 +104,14 @@ public class CityMetricsManager : MonoBehaviour
             currentYear++; // Move to the next year
         }
 
+        if (missionManager.currentMission != null && !missionManager.IsMissionFreePlay())
+        {
+            missionMonthsRemaining = missionManager.currentMission.GetMonthsRemaining(currentMonth, currentYear);
+        }
+
         // Notify any systems 
         OnMetricsUpdate?.Invoke();
-        OnTimeUpdated?.Invoke(currentMonth, currentYear);
+        OnTimeUpdated?.Invoke(currentMonth, currentYear, missionMonthsRemaining);
         propertyRanges = buildingsMenu.GetPropertyRanges();
 
     }
@@ -328,7 +336,6 @@ public class CityMetricsManager : MonoBehaviour
 
     void OnDestroy()
     {
-        // Unsubscribe from the event to avoid memory leaks
         cityTemperatureController.OnTempUpdated -= HandleUpdateTemperature;
     }
 

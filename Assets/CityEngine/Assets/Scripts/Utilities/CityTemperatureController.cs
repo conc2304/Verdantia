@@ -71,7 +71,7 @@ public class CityTemperatureController : MonoBehaviour
 
         RestartSimulation();
         StepSimulation();
-        UpdateTemperature();
+        UpdateTemperatureMetric();
     }
 
     private void Update()
@@ -125,24 +125,28 @@ public class CityTemperatureController : MonoBehaviour
         // Always update the grid on regular intervals
         cityTempGrid = GetCityTempGrid(cityTempGrid);
 
+        UpdateTemperatureMetric();
+
         // Only call to render if we have temps, and if heatmap is set to metric
         if (cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")
         {
-            UpdateTemperature();
+            RenderTemperature();
         }
     }
 
-    public void UpdateTemperature()
+    public void UpdateTemperatureMetric()
     {
+        (float cityTempAvg, float cityTempLow, float cityTempHigh) = GetCityTemps(cityTempGrid);
+        OnTempUpdated?.Invoke(cityTempAvg, cityTempLow, cityTempHigh);
+    }
 
+    public void RenderTemperature()
+    {
         if (cityTempGrid != null && cityTempGrid.Length != 0)
         {
-
             heatMapLabelLow = (int)startingTemp - tempScaleRange;
             heatMapLabelHigh = (int)startingTemp + tempScaleRange;
             heatMap.RenderCityTemperatureHeatMap(cityTempGrid, heatMapLabelLow, heatMapLabelHigh);
-            (float cityTempAvg, float cityTempLow, float cityTempHigh) = GetCityTemps(cityTempGrid);
-            OnTempUpdated?.Invoke(cityTempAvg, cityTempLow, cityTempHigh);
         }
     }
 
@@ -310,6 +314,8 @@ public class CityTemperatureController : MonoBehaviour
 
         float averageTemperature = count > 0 ? totalTemperature / count : 0;
         averageTemperature = (float)Math.Round(averageTemperature);
+        cityTempLow = (float)Math.Round(cityTempLow);
+        cityTempHigh = (float)Math.Round(cityTempHigh);
 
         return (averageTemperature, cityTempLow, cityTempHigh);
     }
