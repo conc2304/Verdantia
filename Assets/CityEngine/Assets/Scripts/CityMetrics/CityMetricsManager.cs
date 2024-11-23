@@ -67,7 +67,6 @@ public class CityMetricsManager : MonoBehaviour
     {
         cityTemperatureController = FindObjectOfType<CityTemperatureController>();
         cityTemperatureController.OnTempUpdated += HandleUpdateTemperature;
-
     }
 
     void Update()
@@ -112,7 +111,6 @@ public class CityMetricsManager : MonoBehaviour
     // Update budget based on revenue and expenses (done every "month")
     private void UpdateMonthlybudget()
     {
-        // Update the budget by subtracting expenses from income
         budget += revenue;
     }
 

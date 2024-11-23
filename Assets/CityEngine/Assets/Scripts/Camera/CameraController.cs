@@ -127,8 +127,7 @@ public class CameraController : MonoBehaviour
 
         if (heatmapMetric == "cityTemperature" && heatmapActive)
         {
-            // DO NOTHING / handled by Citymetric manager
-            // heatMap.RenderCityTemperatureHeatMap(cityMetricsManager.temps, cityMetricsManager.minTemp, cityMetricsManager.maxTemp);
+            // DO NOTHING / handled by City Temp manager
         }
 
         cityChanged = false; // reset for next run
@@ -176,8 +175,6 @@ public class CameraController : MonoBehaviour
             }
         }
     }
-
-
 
     public Vector3 TrackpadToMainCamera()
     {
