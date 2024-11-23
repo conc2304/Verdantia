@@ -10,29 +10,24 @@ public class TempDisplay : MonoBehaviour
 
     private void Awake()
     {
-        // Subscribe to the OnTempUpdated event
         cityTempController.OnTempUpdated += UpdateTempText;
     }
 
     // Update the UI text when the month/year changes
     void UpdateTempText(float cityTempAvg, float cityTempLow, float cityTempHigh)
     {
-        tempText.text = cityTempAvg.ToString();
+        MetricTitle metricTitle = MetricTitle.CityTemperature;
+        string unit = MetricUnits.GetUnit(metricTitle);
 
-        if (tempLowText != null)
-        {
-            tempLowText.text = cityTempLow.ToString();
-        }
+        tempText.text = $"{cityTempAvg}{unit}";
 
-        if (tempHighText != null)
-        {
-            tempHighText.text = cityTempHigh.ToString();
-        }
+        if (tempLowText != null) tempLowText.text = $"L {cityTempLow}°";
+        if (tempHighText != null) tempHighText.text = $"H {cityTempHigh}°";
+
     }
 
     void OnDestroy()
     {
-        // Unsubscribe from the event to avoid memory leaks
         cityTempController.OnTempUpdated -= UpdateTempText;
     }
 }

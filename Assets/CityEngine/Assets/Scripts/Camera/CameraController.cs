@@ -68,6 +68,8 @@ public class CameraController : MonoBehaviour
     public FixedJoystick fixedJoystick;
     public TrackPad placementTrackpad;
     public CityMetricsManager cityMetricsManager;
+    private CityTemperatureController cityTemperatureController;
+
 
 
 
@@ -83,6 +85,7 @@ public class CameraController : MonoBehaviour
         roadGenerator = FindObjectOfType<RoadGenerator>();
         spawner = FindObjectOfType<Spawner>();
         saveDataTrigger = FindObjectOfType<SaveDataTrigger>();
+        cityTemperatureController = FindObjectOfType<CityTemperatureController>();
 
         toPos = cameraHolder.transform.position;
         toRot = cameraHolder.transform.rotation;
@@ -99,9 +102,7 @@ public class CameraController : MonoBehaviour
 
         if (!heatMap) heatMap = FindObjectOfType<HeatMap>();
 
-        // todo remove debugging
-        // heatmapMetric = "cityTemperature";
-        // ToggleHeatMapView();
+        heatmapMetric = "cityTemperature";
     }
 
 
@@ -112,22 +113,22 @@ public class CameraController : MonoBehaviour
 
         if (cityChanged)
         {
-
             if (heatmapMetric != "cityTemperature")
             {
                 UpdateHeatMap(heatmapMetric);
+            }
+            else
+            {
+                // DO NOTHING :: handled by City Temp Manager
+
             }
 
 
             if (saveDataTrigger.cityLoadInitialized)
             {
                 cityMetricsManager.UpdateCityMetrics();
-            } // TODO is this correct
-        }
-
-        if (heatmapMetric == "cityTemperature" && heatmapActive)
-        {
-            // DO NOTHING / handled by City Temp manager
+                cityTemperatureController.StepSimulation();
+            }
         }
 
         cityChanged = false; // reset for next run

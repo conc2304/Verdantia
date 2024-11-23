@@ -42,6 +42,12 @@ public class Mission
         return monthsElapsed <= timeLimitInMonths;
     }
 
+    public int GetMonthsRemaining(int currentMonth, int currentYear)
+    {
+        int monthsElapsed = (currentYear - startYear) * 12 + (currentMonth - startMonth);
+        return timeLimitInMonths - monthsElapsed;
+    }
+
     public bool CheckMissionStatus(CityMetricsManager metrics, int currentMonth, int currentYear)
     {
         if (!IsWithinTimeLimit(currentMonth, currentYear)) return false;
@@ -82,7 +88,8 @@ public class Mission
     {
         return StringsUtils.DifficultyToString(difficulty);
     }
-    // Method to retrieve icon for a given MetricTitle
+
+    // Retrieve icon for a given MetricTitle
     public Sprite GetMetricIcon(MetricTitle metricTitle)
     {
         if (metricIcons != null && metricIcons.ContainsKey(metricTitle))

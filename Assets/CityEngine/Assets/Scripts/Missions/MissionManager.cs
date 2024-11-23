@@ -9,6 +9,7 @@ public class MissionManager : MonoBehaviour
     private bool missionInProgress = false;
     private SaveDataTrigger saveDataTrigger;
     private CameraController cameraController;
+    public GameObject timeRemainingGO;
 
     private void Awake()
     {
@@ -20,18 +21,23 @@ public class MissionManager : MonoBehaviour
     private void Start()
     {
         cityMetricsManager.OnTimeUpdated += OnTimeUpdated;
-
     }
 
     public void StartMission(Mission mission)
     {
         currentMission = mission;
-        // mission.missionBrief = $"Mission Started: {mission.missionName}\n" + mission.missionBrief;
         mission.startMonth = cityMetricsManager.currentMonth;
         mission.startYear = cityMetricsManager.currentYear;
         missionInProgress = true;
 
+        timeRemainingGO.SetActive(!IsMissionFreePlay());
+
         LoadMissionCity(mission);
+    }
+
+    public bool IsMissionFreePlay()
+    {
+        return currentMission != null && currentMission.missionName.ToLower().Contains("free play");
     }
 
     public void LoadMissionCity(Mission mission)
@@ -41,7 +47,7 @@ public class MissionManager : MonoBehaviour
 
         cameraController.ResetGameField();
 
-        if (mission.missionName == "Free Play")
+        if (IsMissionFreePlay())
         {
             // do nothing
         }
@@ -52,11 +58,11 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    private void OnTimeUpdated(int currentMonth, int currentYear)
+    private void OnTimeUpdated(int currentMonth, int currentYear, int missionMonthsRemaining)
     {
         if (!missionInProgress) return;
 
-        if (currentMission != null && currentMission.missionName == "Free Play") return;
+        if (currentMission != null && IsMissionFreePlay()) return;
 
         // Check if mission objectives are met
         if (currentMission.CheckMissionStatus(cityMetricsManager, currentMonth, currentYear))

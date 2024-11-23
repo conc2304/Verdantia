@@ -19,7 +19,7 @@ public static class MetricUnits
         { MetricTitle.GreenSpace, ("%", UnitPosition.After) },
         { MetricTitle.UrbanHeat, ("", UnitPosition.After) },
         { MetricTitle.Pollution, ("%", UnitPosition.After) },
-        { MetricTitle.CityTemperature, ("°C", UnitPosition.After) },
+        { MetricTitle.CityTemperature, ("°F", UnitPosition.After) },
         { MetricTitle.Revenue, ("$", UnitPosition.Before) },
     };
 
