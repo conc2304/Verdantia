@@ -241,12 +241,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024400442031631237}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0080fb94e74d3cb4993bdfd78ce070bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 673d46f7bd779d449b058ece840cd66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   diffusionRate: 20
-  dissipationRate: 1
-  heatAddRange: 0
+  dissipationRate: 0.999
+  heatAddRange: 0.05
   initialTemp: 67
   timeStep: 0.1
 --- !u!114 &1024400442031631236

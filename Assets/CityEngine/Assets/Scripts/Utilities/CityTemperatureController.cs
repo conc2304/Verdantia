@@ -1,0 +1,310 @@
+using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEngine;
+
+public class CityTemperatureController : MonoBehaviour
+{
+    // NOTE these values are stable
+    public float diffusionRate = 20f;
+    public float dissipationRate = 0.999f;
+    public float sunHeatBase { get; private set; } = 36f;
+    public float heatAddRange = 0.05f;
+    public float timeStep = 0.1f;
+
+
+    public CameraController cameraController;
+    public BuildingsMenuNew buildingsMenu;
+    public Grid grid;
+
+    // City Boarder
+    private float cityBoarderMinX = float.MaxValue;
+    private float cityBoarderMaxX = float.MinValue;
+    private float cityBoarderMinZ = float.MaxValue;
+    private float cityBoarderMaxZ = float.MinValue;
+
+    private int gridTileSize = 10;
+    private int gridSizeX;
+    private int gridSizeZ;
+    private readonly int gridPadding = 2;
+
+    public float startingTemp = 67;
+
+
+    [Header("Heat Map Debug")]
+    public bool takeStep = false;
+    public bool toggleRestartTemp = false;
+    public bool playTemp = false;
+
+    private int minTemp = 50;
+    private int maxTemp = 100;
+
+    public int tempScaleRange = 15;
+
+    public float cityTempUpdateRate = 10f;
+    private float cityTempTimer = 0f;
+
+    private HeatMap heatMap;
+
+
+    public float[,] cityTempGrid { get; private set; }
+
+
+
+    private void Start()
+    {
+        heatMap = FindObjectOfType<HeatMap>();
+
+
+        // we are apply sun heat 2x (once for each tranposition step)
+        minTemp = (int)startingTemp - tempScaleRange;
+        maxTemp = (int)startingTemp + tempScaleRange;
+
+        // if (cameraController == null) cameraController = FindObjectOfType<CameraController>();
+        // if (buildingsMenu == null) buildingsMenu = FindObjectOfType<BuildingsMenuNew>();
+        // if (grid == null) grid = FindObjectOfType<Grid>();
+
+        gridTileSize = cameraController.gridSize;
+
+        gridSizeX = (grid.gridSizeX / gridTileSize) + gridPadding;
+        gridSizeZ = (grid.gridSizeZ / gridTileSize) + gridPadding;
+
+
+        RestartSimulation();
+    }
+
+    private void Update()
+    {
+        HandleTempUpdate();
+
+    }
+
+    public void HandleTempUpdate()
+    {
+
+        if (playTemp)
+        {
+            toggleRestartTemp = false;
+            takeStep = false;
+        }
+
+        if (toggleRestartTemp)
+        {
+            RestartSimulation();
+            toggleRestartTemp = false;
+            playTemp = false;
+            return;
+        }
+
+        if (takeStep)
+        {
+            StepSimulation();
+            takeStep = false;
+            playTemp = false;
+            return;
+        }
+
+
+        cityTempTimer += Time.deltaTime;
+        if (playTemp && cityTempTimer >= cityTempUpdateRate)
+        {
+            StepSimulation();
+            cityTempTimer = 0f;
+        }
+    }
+
+
+    public void RestartSimulation()
+    {
+        InitializeGrid();
+        // StepSimulation();
+        heatMap.RenderCityTemperatureHeatMap(cityTempGrid, minTemp, maxTemp);
+    }
+
+    public void StepSimulation()
+    {
+        // float[,] heatContributionGrid = BuildingsToHeatGrid();
+
+        cityTempGrid = GetCityTempGrid(cityTempGrid);
+        // Only call to render if we have temps, and if heatmap is set to metric
+        if (cityTempGrid != null && cityTempGrid.Length != 0 && cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")
+        {
+            minTemp = (int)startingTemp - tempScaleRange;
+            maxTemp = (int)startingTemp + tempScaleRange;
+            heatMap.RenderCityTemperatureHeatMap(cityTempGrid, minTemp, maxTemp);
+            // cityTemperature = cityTemperatureController.GetAvgTemp(cityTempGrid);
+        }
+    }
+
+
+    public void InitializeGrid()
+    {
+        cityTempGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, startingTemp);
+    }
+
+    public float[,] GetCityTempGrid(float[,] currentTemps)
+    {
+
+        if (currentTemps == null || currentTemps.Length == 0)
+        {
+            currentTemps = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, startingTemp);
+        }
+
+        sunHeatBase = startingTemp / 2;
+
+
+        float[,] newTemps = new float[gridSizeX, gridSizeZ];
+        float[,] heatContributionGrid = BuildingsToHeatGrid();
+        for (int t = 1; t <= 2; t++)
+        {
+            // Run once for each row, and once for each column by transposing the 
+
+            for (int i = 0; i < gridSizeZ; i++)
+            {
+                // For each column, calculate the new temperatures and assign them to the newTemps matrix
+                float[] columnTemps = GetColumnTemperatures(currentTemps, heatContributionGrid, i, gridSizeX, gridSizeZ);
+                for (int j = 0; j < gridSizeX; j++)
+                {
+                    newTemps[j, i] = columnTemps[j];
+                }
+            }
+
+            heatContributionGrid = ArrayUtils.TransposeMatrix(heatContributionGrid);
+            currentTemps = ArrayUtils.TransposeMatrix(newTemps);
+        }
+
+        return currentTemps;
+    }
+
+
+
+
+    public float[,] BuildingsToHeatGrid()
+    {
+        float[,] buildingHeatGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, 0f);
+
+        int rescaleVal = gridTileSize;
+
+        cityBoarderMinX = float.MaxValue;
+        cityBoarderMaxX = float.MinValue;
+        cityBoarderMinZ = float.MaxValue;
+        cityBoarderMaxZ = float.MinValue;
+
+        // First, determine all occupied positions
+        bool includeSpaces = true;
+        List<Transform> allBuildings = cameraController.GetAllBuildings(includeSpaces);
+
+        foreach (Transform building in allBuildings)
+        {
+
+            BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
+            if (buildingProps == null) continue;
+
+
+            int posX = Mathf.RoundToInt(building.position.x / rescaleVal);
+            int posZ = Mathf.RoundToInt(building.position.z / rescaleVal);
+
+            float adjustedHeatContribution = buildingProps.heatContribution * heatAddRange;
+
+            // Apply heat to the building's grid position
+            buildingHeatGrid[posX, posZ] = adjustedHeatContribution;
+
+            // Update boundaries based on the building position
+            cityBoarderMinX = Mathf.Min(cityBoarderMinX, posX);
+            cityBoarderMaxX = Mathf.Max(cityBoarderMaxX, posX);
+            cityBoarderMinZ = Mathf.Min(cityBoarderMinZ, posZ);
+            cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, posZ);
+        }
+
+
+        return buildingHeatGrid;
+    }
+
+    public float[] GetColumnTemperatures(
+        float[,] tempsGrid,
+        float[,] heatContributionGrid,
+        int calculateColumn,
+        int gridSizeX = 100, int gridSizeZ = 100)
+    {
+        if (tempsGrid == null || tempsGrid.Length == 0)
+        {
+            tempsGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, startingTemp);
+        }
+
+        float A = diffusionRate * timeStep / 2;
+        float B = 1 + (2 * A) + (dissipationRate * timeStep / 4);
+        float C = 2 - B;
+
+        // 3 vectors | for the lower, upper and diagonal for the solver
+        // int gridSize = gridSizeX * gridSizeZ;
+
+        float[] lower = ArrayUtils.Fill(gridSizeZ - 1, -A);
+        lower[gridSizeZ - 2] *= 2;
+
+        float[] diagonal = ArrayUtils.Fill(gridSizeZ, B);
+        float[] upper = ArrayUtils.Fill(gridSizeZ - 1, -A);
+        upper[0] *= 2;
+
+        // Form the right hand side of the system 
+        float[] rightSide = new float[gridSizeZ];
+
+        float heatContribution;
+        // skip first and last
+        for (int i = 0; i < gridSizeZ - 1; i++)
+        {
+            // Add heat sources and sinks
+            heatContribution = heatContributionGrid[i, calculateColumn] + sunHeatBase;
+
+            rightSide[i] = (heatContribution * timeStep) + (C * tempsGrid[i, calculateColumn]);
+
+            if (calculateColumn == 0)
+            {
+                rightSide[i] += 2 * A * tempsGrid[i, 1];
+            }
+            else if (calculateColumn == gridSizeZ - 1)
+            {
+                rightSide[i] += 2 * A * tempsGrid[i, gridSizeZ - 2];
+            }
+            else
+            {
+                rightSide[i] += A * (tempsGrid[i, calculateColumn - 1] + tempsGrid[i, calculateColumn + 1]);
+            }
+        }
+
+        // return new temperures at calculate column
+        return TDMA.SolveInPlace(lower, diagonal, upper, rightSide);
+    }
+
+    // private float GetAvgTemp(float[,] temps, int padding = 5)
+    // {
+    //     // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
+    //     int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridLengthX - 1);
+    //     int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridLengthX - 1);
+    //     int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridLengthZ - 1);
+    //     int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridLengthZ - 1);
+
+    //     // Calculate the average temperature within city bounds
+    //     float totalTemperature = 0f;
+    //     int count = 0;
+
+    //     cityTempLow = float.PositiveInfinity; ;
+    //     cityTempMax = float.NegativeInfinity;
+
+    //     for (int i = minGridX; i <= maxGridX; i++)
+    //     {
+    //         for (int j = minGridZ; j <= maxGridZ; j++)
+    //         {
+    //             totalTemperature += temps[i, j];
+    //             cityTempLow = Math.Min(cityTempLow, temps[i, j]);
+    //             cityTempMax = Math.Max(cityTempMax, temps[i, j]);
+
+    //             count++;
+    //         }
+    //     }
+
+    //     float averageTemperature = count > 0 ? totalTemperature / count : 0;
+    //     averageTemperature = (float)Math.Round(averageTemperature);
+
+    //     OnTempUpdated?.Invoke();
+    //     return averageTemperature;
+    // }
+}
