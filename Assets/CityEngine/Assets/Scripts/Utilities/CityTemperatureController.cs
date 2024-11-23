@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class CityTemperatureController : MonoBehaviour
 {
-    // NOTE these values are stable
+    // Heat Diffusion Variables
+    public float[,] cityTempGrid { get; private set; }
+
+    public float startingTemp = 67;
     public float diffusionRate = 20f;
     public float dissipationRate = 0.999f;
     public float sunHeatBase { get; private set; } = 36f;
@@ -14,7 +18,9 @@ public class CityTemperatureController : MonoBehaviour
 
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
-    public Grid grid;
+    private HeatMap heatMap;
+
+
 
     // City Boarder
     private float cityBoarderMinX = float.MaxValue;
@@ -22,32 +28,29 @@ public class CityTemperatureController : MonoBehaviour
     private float cityBoarderMinZ = float.MaxValue;
     private float cityBoarderMaxZ = float.MinValue;
 
+    // City Grid Variables
+    public Grid grid;
     private int gridTileSize = 10;
     private int gridSizeX;
     private int gridSizeZ;
-    private readonly int gridPadding = 2;
+    private readonly int gridPadding = 2;   // TODO find out if this is still needed
 
-    public float startingTemp = 67;
 
 
     [Header("Heat Map Debug")]
     public bool takeStep = false;
     public bool toggleRestartTemp = false;
-    public bool playTemp = false;
+    public bool playTemp = true;
 
-    private int minTemp = 50;
-    private int maxTemp = 100;
-
+    // Heat Map Legend Vars
+    private int heatMapLabelLow;
+    private int heatMapLabelHigh;
     public int tempScaleRange = 15;
 
-    public float cityTempUpdateRate = 10f;
+    public float cityTempUpdateRate = 3f;
     private float cityTempTimer = 0f;
 
-    private HeatMap heatMap;
-
-
-    public float[,] cityTempGrid { get; private set; }
-
+    public event Action<float, float, float> OnTempUpdated;
 
 
     private void Start()
@@ -56,12 +59,9 @@ public class CityTemperatureController : MonoBehaviour
 
 
         // we are apply sun heat 2x (once for each tranposition step)
-        minTemp = (int)startingTemp - tempScaleRange;
-        maxTemp = (int)startingTemp + tempScaleRange;
+        heatMapLabelLow = (int)startingTemp - tempScaleRange;
+        heatMapLabelHigh = (int)startingTemp + tempScaleRange;
 
-        // if (cameraController == null) cameraController = FindObjectOfType<CameraController>();
-        // if (buildingsMenu == null) buildingsMenu = FindObjectOfType<BuildingsMenuNew>();
-        // if (grid == null) grid = FindObjectOfType<Grid>();
 
         gridTileSize = cameraController.gridSize;
 
@@ -70,12 +70,13 @@ public class CityTemperatureController : MonoBehaviour
 
 
         RestartSimulation();
+        StepSimulation();
+        UpdateTemperature();
     }
 
     private void Update()
     {
         HandleTempUpdate();
-
     }
 
     public void HandleTempUpdate()
@@ -116,22 +117,32 @@ public class CityTemperatureController : MonoBehaviour
     public void RestartSimulation()
     {
         InitializeGrid();
-        // StepSimulation();
-        heatMap.RenderCityTemperatureHeatMap(cityTempGrid, minTemp, maxTemp);
+        heatMap.RenderCityTemperatureHeatMap(cityTempGrid, heatMapLabelLow, heatMapLabelHigh);
     }
 
     public void StepSimulation()
     {
-        // float[,] heatContributionGrid = BuildingsToHeatGrid();
-
+        // Always update the grid on regular intervals
         cityTempGrid = GetCityTempGrid(cityTempGrid);
+
         // Only call to render if we have temps, and if heatmap is set to metric
-        if (cityTempGrid != null && cityTempGrid.Length != 0 && cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")
+        if (cameraController.heatmapActive && cameraController.heatmapMetric == "cityTemperature")
         {
-            minTemp = (int)startingTemp - tempScaleRange;
-            maxTemp = (int)startingTemp + tempScaleRange;
-            heatMap.RenderCityTemperatureHeatMap(cityTempGrid, minTemp, maxTemp);
-            // cityTemperature = cityTemperatureController.GetAvgTemp(cityTempGrid);
+            UpdateTemperature();
+        }
+    }
+
+    public void UpdateTemperature()
+    {
+
+        if (cityTempGrid != null && cityTempGrid.Length != 0)
+        {
+
+            heatMapLabelLow = (int)startingTemp - tempScaleRange;
+            heatMapLabelHigh = (int)startingTemp + tempScaleRange;
+            heatMap.RenderCityTemperatureHeatMap(cityTempGrid, heatMapLabelLow, heatMapLabelHigh);
+            (float cityTempAvg, float cityTempLow, float cityTempHigh) = GetCityTemps(cityTempGrid);
+            OnTempUpdated?.Invoke(cityTempAvg, cityTempLow, cityTempHigh);
         }
     }
 
@@ -174,8 +185,6 @@ public class CityTemperatureController : MonoBehaviour
 
         return currentTemps;
     }
-
-
 
 
     public float[,] BuildingsToHeatGrid()
@@ -235,8 +244,6 @@ public class CityTemperatureController : MonoBehaviour
         float C = 2 - B;
 
         // 3 vectors | for the lower, upper and diagonal for the solver
-        // int gridSize = gridSizeX * gridSizeZ;
-
         float[] lower = ArrayUtils.Fill(gridSizeZ - 1, -A);
         lower[gridSizeZ - 2] *= 2;
 
@@ -274,37 +281,36 @@ public class CityTemperatureController : MonoBehaviour
         return TDMA.SolveInPlace(lower, diagonal, upper, rightSide);
     }
 
-    // private float GetAvgTemp(float[,] temps, int padding = 5)
-    // {
-    //     // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
-    //     int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridLengthX - 1);
-    //     int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridLengthX - 1);
-    //     int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridLengthZ - 1);
-    //     int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridLengthZ - 1);
+    private (float cityTempAvg, float cityTempLow, float cityTempHigh) GetCityTemps(float[,] temps, int padding = 5)
+    {
+        // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
+        int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridSizeX - 1);
+        int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridSizeX - 1);
+        int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridSizeZ - 1);
+        int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridSizeZ - 1);
 
-    //     // Calculate the average temperature within city bounds
-    //     float totalTemperature = 0f;
-    //     int count = 0;
+        // Calculate the average temperature within city bounds
+        float totalTemperature = 0f;
+        int count = 0;
 
-    //     cityTempLow = float.PositiveInfinity; ;
-    //     cityTempMax = float.NegativeInfinity;
+        float cityTempLow = float.PositiveInfinity; ;
+        float cityTempHigh = float.NegativeInfinity;
 
-    //     for (int i = minGridX; i <= maxGridX; i++)
-    //     {
-    //         for (int j = minGridZ; j <= maxGridZ; j++)
-    //         {
-    //             totalTemperature += temps[i, j];
-    //             cityTempLow = Math.Min(cityTempLow, temps[i, j]);
-    //             cityTempMax = Math.Max(cityTempMax, temps[i, j]);
+        for (int i = minGridX; i <= maxGridX; i++)
+        {
+            for (int j = minGridZ; j <= maxGridZ; j++)
+            {
+                totalTemperature += temps[i, j];
+                cityTempLow = Math.Min(cityTempLow, temps[i, j]);
+                cityTempHigh = Math.Max(cityTempHigh, temps[i, j]);
 
-    //             count++;
-    //         }
-    //     }
+                count++;
+            }
+        }
 
-    //     float averageTemperature = count > 0 ? totalTemperature / count : 0;
-    //     averageTemperature = (float)Math.Round(averageTemperature);
+        float averageTemperature = count > 0 ? totalTemperature / count : 0;
+        averageTemperature = (float)Math.Round(averageTemperature);
 
-    //     OnTempUpdated?.Invoke();
-    //     return averageTemperature;
-    // }
+        return (averageTemperature, cityTempLow, cityTempHigh);
+    }
 }
