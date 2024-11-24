@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour
@@ -10,6 +11,9 @@ public class MissionManager : MonoBehaviour
     private SaveDataTrigger saveDataTrigger;
     private CameraController cameraController;
     public GameObject timeRemainingGO;
+
+    public Action<Mission, bool> onMissionDone;
+
 
     private void Awake()
     {
@@ -40,11 +44,9 @@ public class MissionManager : MonoBehaviour
         return currentMission != null && currentMission.missionName.ToLower().Contains("free play");
     }
 
+    // Load the mission's starting city
     public void LoadMissionCity(Mission mission)
     {
-        print("Load Mission");
-        // Load the mission's starting city
-
         cameraController.ResetGameField();
 
         if (IsMissionFreePlay())
@@ -80,6 +82,7 @@ public class MissionManager : MonoBehaviour
         missionInProgress = false;
         // missionStatusUI.text = "Mission Completed!";
         print("Mission Success");
+        onMissionDone?.Invoke(currentMission, true);
     }
 
     private void OnMissionFailure()
@@ -88,7 +91,7 @@ public class MissionManager : MonoBehaviour
         // missionStatusUI.text = "Mission Failed!";
 
         print("Mission Failed");
-
+        onMissionDone?.Invoke(currentMission, false);
     }
 
     private void OnDestroy()

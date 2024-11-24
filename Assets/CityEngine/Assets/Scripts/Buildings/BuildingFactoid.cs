@@ -61,7 +61,6 @@ public class BuildingFactoid : MonoBehaviour
         while (elapsedTime < duration)
         {
             // Interpolate position based on elapsed time
-            // target.position = Vector3.Lerp(from, to, elapsedTime / duration);
             float percentComplete = elapsedTime / duration;
             verticalSlider.padding.top = (int)Mathf.Lerp(from.top, to.top, percentComplete);
             verticalSlider.padding.bottom = (int)Mathf.Lerp(from.bottom, to.bottom, percentComplete);

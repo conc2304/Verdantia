@@ -16,6 +16,9 @@ namespace GreenCityBuilder.Missions
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-budget_balance");
             missionCityFileName = "budget_balance_city";
 
+            successMessage = "Your balanced budget and eco-friendly planning have increased revenue while keeping citizens happy and carbon emissions low.";
+            failedMessage = "The budget remains unbalanced, with rising emissions and discontent showing the need for smarter eco-friendly planning.";
+
             // Add metrics with icons
             AddMetric(MetricTitle.Budget);
             AddMetric(MetricTitle.CarbonEmission);

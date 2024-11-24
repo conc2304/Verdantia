@@ -13,6 +13,8 @@ public class Mission
     public int startYear;
     public DifficultyLevel difficulty;
     public Sprite missionIcon;
+    public string successMessage;
+    public string failedMessage;
 
     public string missionCityFileName;
 
