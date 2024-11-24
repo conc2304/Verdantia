@@ -13,6 +13,7 @@ public class MissionManager : MonoBehaviour
     public GameObject timeRemainingGO;
 
     public Action<Mission, bool> onMissionDone;
+    public Action onStartOver;
 
 
     private void Awake()
@@ -92,6 +93,13 @@ public class MissionManager : MonoBehaviour
 
         print("Mission Failed");
         onMissionDone?.Invoke(currentMission, false);
+    }
+
+    public void OnStartOver()
+    {
+        currentMission = null;
+        missionInProgress = false;
+        onStartOver?.Invoke(); // TODO add start over logic to various steps/components
     }
 
     private void OnDestroy()

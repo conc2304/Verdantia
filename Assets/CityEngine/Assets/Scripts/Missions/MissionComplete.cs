@@ -21,6 +21,8 @@ public class MissionComplete : MonoBehaviour
     public string completedMessage = "Completed";
     public string uncompletedMessage = "Not Completed";
 
+    public Action StartOver;
+
 
     private void Start()
     {
