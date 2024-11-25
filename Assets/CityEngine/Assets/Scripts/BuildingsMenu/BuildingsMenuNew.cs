@@ -94,9 +94,13 @@ public class BuildingsMenuNew : MonoBehaviour
     public GameObject heroTitleBar;
     private BuildingInfoDisplay displayData;
     private BuildingFactoid buildingFactPopup;
+    private MissionManager missionManager;
 
     private void Start()
     {
+
+        missionManager = FindObjectOfType<MissionManager>();
+        missionManager.onStartOver += HandleStartOver;
 
         CreateTypes();
 
@@ -143,7 +147,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
     private bool IsMissionSelected()
     {
-        return FindObjectOfType<MissionManager>() != null && FindObjectOfType<MissionManager>().currentMission != null && FindObjectOfType<MissionManager>().currentMission.missionName != null;
+        return missionManager != null && missionManager.currentMission != null && missionManager.currentMission.missionName != null;
     }
 
     private void InitializeTouchGui()
@@ -994,5 +998,16 @@ public class BuildingsMenuNew : MonoBehaviour
         missionSelector.SetActive(false);
         mainMenu.SetActive(true);
         navigationGui.SetActive(true);
+    }
+
+    public void HandleStartOver()
+    {
+        InitializeTouchGui();
+    }
+
+    public void OnDestroy()
+    {
+        missionManager.onStartOver -= HandleStartOver;
+
     }
 }

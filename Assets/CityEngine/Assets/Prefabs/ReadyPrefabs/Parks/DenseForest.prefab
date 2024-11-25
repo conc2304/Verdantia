@@ -776,15 +776,15 @@ MonoBehaviour:
   cityRevenue: 0
   netEnergy: 0
   capacity: 0
-  happinessImpact: 20
+  happinessImpact: 40
   pollutionImpact: -25
   heatContribution: -15
-  greenSpaceEffect: 60
+  greenSpaceEffect: 70
   carbonFootprint: -500
-  effectRadius: 20
+  effectRadius: 25
   proximityEffects:
   - metricName: 6
-    boostValue: 12
+    boostValue: 20
   - metricName: 7
     boostValue: -20
   - metricName: 8
