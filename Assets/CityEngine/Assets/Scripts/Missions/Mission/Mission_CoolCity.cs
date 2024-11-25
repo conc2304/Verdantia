@@ -8,7 +8,7 @@ namespace GreenCityBuilder.Missions
         public CoolTheCityDownMission(Dictionary<MetricTitle, Sprite> metricIcons) : base(metricIcons)
         {
             missionName = "Cool the City Down";
-            missionObjective = "Reduce the city’s temperature and urban heat levels by 20%, while maintaining the population and happiness levels.";
+            missionObjective = "Reduce the city’s temperature and urban heat levels by 10%, while maintaining the population and happiness levels.";
             {
                 missionBrief = " The summer heat is impacting citizen well-being and increasing energy demands. Cool down the city by adding green space, reducing heat contributions, and managing pollution levels. Use parks, eco-friendly buildings, and urban green spaces to lower the temperature and fight the urban heat island effect. Be careful, though—budget constraints require you to balance your expenses and avoid overspending..";
                 timeLimitInMonths = 6 * 12;
@@ -30,14 +30,14 @@ namespace GreenCityBuilder.Missions
                 {
                     metricName = MetricTitle.CityTemperature,
                     objectiveType = MissionObjective.ObjectiveType.ReduceByPercentage,
-                    comparisonPercentage = 20,
+                    comparisonPercentage = 10,
                     icon = GetMetricIcon(MetricTitle.CityTemperature)
                 },
                 new MissionObjective
                 {
                     metricName = MetricTitle.UrbanHeat,
                     objectiveType = MissionObjective.ObjectiveType.ReduceByPercentage,
-                    comparisonPercentage = 20,
+                    comparisonPercentage = 10,
                     icon = GetMetricIcon(MetricTitle.UrbanHeat)
 
                 },
@@ -45,7 +45,7 @@ namespace GreenCityBuilder.Missions
                 {
                     metricName = MetricTitle.Happiness,
                     objectiveType = MissionObjective.ObjectiveType.MaintainAbove,
-                    targetValue = 75,
+                    targetValue = 65,
                     icon = GetMetricIcon(MetricTitle.Happiness)
                 }
                 };

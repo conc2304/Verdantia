@@ -21,8 +21,6 @@ public class MissionComplete : MonoBehaviour
     public string completedMessage = "Completed";
     public string uncompletedMessage = "Not Completed";
 
-    public Action StartOver;
-
 
     private void Start()
     {
@@ -30,6 +28,7 @@ public class MissionComplete : MonoBehaviour
         if (missionManager == null) missionManager = FindObjectOfType<MissionManager>();
 
         missionManager.onMissionDone += HandleMissionComplete;
+        missionManager.onStartOver += HandleStartOver;
 
         Texture2D qrTexture = QRGenerator.EncodeString(learnMoreLink, Color.black, Color.white);
         Sprite sprite = Sprite.Create(
@@ -81,8 +80,17 @@ public class MissionComplete : MonoBehaviour
         }
     }
 
+    public void HandleStartOver()
+    {
+        modalGO.SetActive(false);
+    }
+
+
     private void OnDestroy()
     {
         missionManager.onMissionDone -= HandleMissionComplete;
+        missionManager.onStartOver -= HandleStartOver;
     }
+
+
 }

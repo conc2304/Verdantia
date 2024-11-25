@@ -461,7 +461,7 @@ MonoBehaviour:
   cityRevenue: 0
   netEnergy: 0
   capacity: 0
-  happinessImpact: 15
+  happinessImpact: 30
   pollutionImpact: -20
   heatContribution: -20
   greenSpaceEffect: 50
@@ -472,6 +472,20 @@ MonoBehaviour:
     boostValue: 15
   - metricName: 7
     boostValue: -15
+  - metricName: 8
+    boostValue: 25
+  - metricName: 8
+    boostValue: 25
+  - metricName: 8
+    boostValue: 25
+  - metricName: 8
+    boostValue: 25
+  - metricName: 8
+    boostValue: 25
+  - metricName: 8
+    boostValue: 25
+  - metricName: 8
+    boostValue: 25
   - metricName: 8
     boostValue: 25
   floatingValuePrefab: {fileID: 8519940450281997041, guid: f0a60e0f451f3e042aaa625a4a31e98b, type: 3}

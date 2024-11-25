@@ -36,8 +36,13 @@ public class IntroSequenceManager : MonoBehaviour
     private int currentStep = 0;
     public bool introCompleted = false;
 
+    private MissionManager missionManager;
+
     void Start()
     {
+        missionManager = FindObjectOfType<MissionManager>();
+        missionManager.onStartOver += HandleStartOver;
+
         nextButton.onClick.AddListener(AdvanceSequence);
         backButton.onClick.AddListener(PreviousSequence);
         InitializeSequence();
@@ -49,6 +54,7 @@ public class IntroSequenceManager : MonoBehaviour
     private void InitializeSequence()
     {
         currentStep = 0;
+        introCompleted = false;
         nextButton.GetComponentInChildren<TMP_Text>(true).color = Color.black;
         nextButton.GetComponentInChildren<TMP_Text>(true).text = continueBtnText;
 
@@ -165,5 +171,21 @@ public class IntroSequenceManager : MonoBehaviour
         gameObject.SetActive(false);
         mainGameUI.SetActive(true);
         missionSelector.SetActive(true);
+    }
+
+    public void HandleStartOver()
+    {
+        InitializeSequence();
+        InitializePagination();
+        ShowCurrentStep();
+
+        gameObject.SetActive(true);
+        mainGameUI.SetActive(false);
+        missionSelector.SetActive(false);
+    }
+
+    public void OnDestroy()
+    {
+        missionManager.onStartOver -= HandleStartOver;
     }
 }
