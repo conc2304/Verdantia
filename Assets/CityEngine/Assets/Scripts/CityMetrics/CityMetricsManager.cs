@@ -138,18 +138,15 @@ public class CityMetricsManager : MonoBehaviour
         float totalHappinessImpact = 0f;
         float totalWeight = 0f;
 
-        // Include additional spaces in the "allBuildings" list
         bool includeSpaces = false;
         List<Transform> cityBuildings = cameraController.GetAllBuildings(includeSpaces);
         int totalCityBuildings = cityBuildings.Count;
         float totalPopulation = 0;
 
         // Constants for greenspace and intrinsic weights
-        // const float GreenMultiplier = 0.5f; // Amplifies the effect of greenspace
-        const float BaseWeight = 5f;        // Intrinsic weight for capacity-zero buildings
+        const float BaseWeight = 5f;        // Intrinsic weight for low population buildings
 
         print($"--- UpdateCityMetrics --- ");
-        // print($"#Buildings : {cityBuildings.Count}");
 
         foreach (Transform building in cityBuildings)
         {
@@ -195,9 +192,8 @@ public class CityMetricsManager : MonoBehaviour
             // Calculate dynamic GreenMultiplier based on greenspaceEffect
             float greenMultiplier = (buildingProps.greenSpaceEffect + 100f) / 200f;
             float populationWeight = 0f;
-
             // Calculate weight based on building type
-            if (buildingProps.capacity > 0)
+            if (buildingProps.capacity > 50)
             {
                 // Population-based weight for residential/commercial buildings
                 populationWeight = buildingProps.capacity + buildingProps.effectRadius * greenMultiplier;
@@ -209,36 +205,25 @@ public class CityMetricsManager : MonoBehaviour
             }
 
             // Add to happiness impact
-            totalHappinessImpact += buildingProps.happinessImpact * populationWeight;
+            totalHappinessImpact += adjustedHappiness * populationWeight;
 
             // Accumulate weight and population
             totalWeight += populationWeight;
             totalPopulation += buildingProps.capacity;
 
             // Apply adjusted metrics
-            // happiness += (int)adjustedHappiness;
             urbanHeat += (int)adjustedHeatContribution;
             pollution += (int)adjustedPollution;
             energy += (int)adjustedEnergyConsumption;
             carbonEmission += (int)adjustedCarbonFootprint;
         }
-        // Debug.Log($"total happiness : {totalHappinessImpact}");
-        // Debug.Log($"totalPopulationWeight : {totalWeight}");
+
 
         // Calculate overall city happiness
         // Calculate normalization factor (adjust based on city size and population)
         float normalizationFactor = Mathf.Max(1, totalCityBuildings + totalPopulation); // Prevent division by zero
-
-        // Adjust city happiness
         happiness += totalHappinessImpact / normalizationFactor;
-        // print($"City Happiness: {happiness} | -2");
-
-        // Clamp city happiness to the range [0, 100]
         happiness = Mathf.Clamp(happiness, 0f, 100f);
-
-        // Log the city happiness for debugging
-        // print($"City Happiness: {happiness} | -1");
-
 
         CleanMetrics();
         OnMetricsUpdate?.Invoke();

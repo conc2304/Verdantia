@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -891,33 +892,19 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void ResetGameField()
+
+    // public IEnumerator ResetGameField()
+    // {
+    //     StartCoroutine(ResetGameFieldCoroutine());
+    // }
+
+    public IEnumerator ResetGameField()
+
+
     {
-        // Destroy all child objects in the buildingsParent
-        foreach (Transform child in buildingsParent)
-        {
-            Destroy(child.gameObject);
-        }
-
-        // Destroy all child objects in the roadsParent
-        foreach (Transform child in roadsParent)
-        {
-            Destroy(child.gameObject);
-        }
-
-        foreach (Transform child in citizensParent)
-        {
-            Destroy(child.gameObject);
-        }
-
-        foreach (Transform child in carsParent)
-        {
-            Destroy(child.gameObject);
-        }
-
+        // Clear windmill blades
         WindmillsController windmillsController = FindObjectOfType<WindmillsController>();
         windmillsController.blades.Clear();
-
 
         // Clear tracking lists
         allBuildings.Clear();
@@ -927,14 +914,90 @@ public class CameraController : MonoBehaviour
         spawner.carsCount = 0;
         spawner.citizensCount = 0;
         spawner.citizensSpawnPoints.Clear();
-        spawner.carsSpawnPoints.Clear(); ;
-        cityMetricsManager.ResetMetrics(); // Create a method to reset all city metrics if needed.
+        spawner.carsSpawnPoints.Clear();
+        cityMetricsManager.ResetMetrics();
 
-        // Reset any other gameplay-related objects or states
-        forestObj.ForEach(forest => forest.gameObject.SetActive(true)); // Reset forest objects if applicable.
+
+        // Destroy child objects in batches
+        yield return DestroyChildrenInBatches(buildingsParent);
+        yield return DestroyChildrenInBatches(roadsParent);
+        yield return DestroyChildrenInBatches(citizensParent);
+        yield return DestroyChildrenInBatches(carsParent);
+
+        // Reset forest objects
+        forestObj.ForEach(forest => forest.gameObject.SetActive(true));
+
         cityChanged = false;
 
         Debug.Log("Playing field has been reset.");
     }
+
+    private IEnumerator DestroyChildrenInBatches(Transform parent)
+    {
+        int counter = 0;
+        float destructionBatchSize = 10; // Number of objects to destroy per frame
+
+        foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+            counter++;
+
+            // After destroying a batch, wait for the next frame
+            if (counter >= destructionBatchSize)
+            {
+                counter = 0;
+                yield return null;
+            }
+        }
+
+        // Ensure all remaining children are destroyed
+        yield return null;
+    }
+
+    // public void ResetGameField()
+    // {
+    //     // Destroy all child objects in the buildingsParent
+    //     foreach (Transform child in buildingsParent)
+    //     {
+    //         Destroy(child.gameObject);
+    //     }
+
+    //     // Destroy all child objects in the roadsParent
+    //     foreach (Transform child in roadsParent)
+    //     {
+    //         Destroy(child.gameObject);
+    //     }
+
+    //     foreach (Transform child in citizensParent)
+    //     {
+    //         Destroy(child.gameObject);
+    //     }
+
+    //     foreach (Transform child in carsParent)
+    //     {
+    //         Destroy(child.gameObject);
+    //     }
+
+    //     WindmillsController windmillsController = FindObjectOfType<WindmillsController>();
+    //     windmillsController.blades.Clear();
+
+
+    //     // Clear tracking lists
+    //     allBuildings.Clear();
+    //     roadGenerator.allRoads.Clear();
+
+    //     // Reset metrics and counters
+    //     spawner.carsCount = 0;
+    //     spawner.citizensCount = 0;
+    //     spawner.citizensSpawnPoints.Clear();
+    //     spawner.carsSpawnPoints.Clear(); ;
+    //     cityMetricsManager.ResetMetrics(); // Create a method to reset all city metrics if needed.
+
+    //     // Reset any other gameplay-related objects or states
+    //     forestObj.ForEach(forest => forest.gameObject.SetActive(true)); // Reset forest objects if applicable.
+    //     cityChanged = false;
+
+    //     Debug.Log("Playing field has been reset.");
+    // }
 }
 

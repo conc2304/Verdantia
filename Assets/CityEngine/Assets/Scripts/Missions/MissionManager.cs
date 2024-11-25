@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class MissionManager : MonoBehaviour
 
     public Action<Mission, bool> onMissionDone;
     public Action onStartOver;
+    public GameObject loadingScreen;
 
 
     private void Awake()
@@ -26,6 +28,7 @@ public class MissionManager : MonoBehaviour
     private void Start()
     {
         cityMetricsManager.OnTimeUpdated += OnTimeUpdated;
+        loadingScreen.SetActive(false);
     }
 
     public void StartMission(Mission mission)
@@ -46,9 +49,20 @@ public class MissionManager : MonoBehaviour
     }
 
     // Load the mission's starting city
+
     public void LoadMissionCity(Mission mission)
     {
-        cameraController.ResetGameField();
+
+        StartCoroutine(LoadMissionCityCoroutine(mission));
+    }
+
+    private IEnumerator LoadMissionCityCoroutine(Mission mission)
+    {
+        loadingScreen.SetActive(true);
+
+        // Wait for ResetGameField to finish
+        yield return StartCoroutine(cameraController.ResetGameField());
+
 
         if (IsMissionFreePlay())
         {
@@ -59,6 +73,8 @@ public class MissionManager : MonoBehaviour
             string missionFile = SaveSystem.FormatFileName(mission.missionCityFileName);
             saveDataTrigger.BuildingDataLoad(missionFile);
         }
+        loadingScreen.SetActive(false);
+
     }
 
     private void OnTimeUpdated(int currentMonth, int currentYear, int missionMonthsRemaining)

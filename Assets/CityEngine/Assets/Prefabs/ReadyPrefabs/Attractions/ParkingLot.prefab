@@ -699,7 +699,7 @@ MonoBehaviour:
   heatContribution: 10
   greenSpaceEffect: -10
   carbonFootprint: 200
-  effectRadius: 5
+  effectRadius: 7
   proximityEffects:
   - metricName: 7
     boostValue: 5
