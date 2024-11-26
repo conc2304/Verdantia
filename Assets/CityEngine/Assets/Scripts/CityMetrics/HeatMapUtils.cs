@@ -22,14 +22,13 @@ public static class HeatMapUtils
         {
             for (int z = 0; z < dataGrid.GetLength(1); z++)
             {
-                // Normalize the heat/alpha value to a range of 0 to 1
+                // Normalize the heat/alpha value to a range of 0 to 1 to match gradient range
                 float normalizedHeat = invertValues ?
                     Mathf.InverseLerp(heatMax, heatMin, dataGrid[x, z]) :
                     Mathf.InverseLerp(heatMin, heatMax, dataGrid[x, z]);
 
                 normalizedHeat = dataGrid[x, z] == float.NegativeInfinity ? 0.5f : normalizedHeat;
 
-                // print($"Normalized heat : {normalizedHeat}");
                 // Use the gradient to get the color at the normalized heat value
                 Color heatColor = heatGradient.Evaluate(normalizedHeat);
 
