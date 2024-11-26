@@ -21,8 +21,8 @@ public class TempDisplay : MonoBehaviour
 
         tempText.text = $"{cityTempAvg}{unit}";
 
-        if (tempLowText != null) tempLowText.text = $"L {cityTempLow}°";
-        if (tempHighText != null) tempHighText.text = $"H {cityTempHigh}°";
+        if (tempLowText != null) tempLowText.text = $"{cityTempLow}°";
+        if (tempHighText != null) tempHighText.text = $"{cityTempHigh}°";
 
     }
 
