@@ -1,5 +1,6 @@
 
 using System;
+using UnityEngine;
 
 public static class ArrayUtils
 {
@@ -95,6 +96,70 @@ public static class ArrayUtils
 
         return shiftedMatrix;
     }
+
+    public static float[,] CropMatrixToAspectRatio(float[,] matrix, int textureWidth, int textureHeight)
+    {
+        int originalRows = matrix.GetLength(0);
+        int originalCols = matrix.GetLength(1);
+
+        // Calculate the aspect ratio of the texture
+        float textureAspectRatio = (float)textureWidth / textureHeight;
+
+        // Start with the full matrix dimensions
+        int croppedRows = originalRows;
+        int croppedCols = Mathf.RoundToInt(croppedRows * textureAspectRatio);
+
+        // Adjust dimensions to fit within bounds
+        if (croppedCols > originalCols)
+        {
+            croppedCols = originalCols;
+            croppedRows = Mathf.RoundToInt(croppedCols / textureAspectRatio);
+        }
+
+        // Ensure rows and columns are within bounds
+        if (croppedRows > originalRows)
+        {
+            croppedRows = originalRows;
+            croppedCols = Mathf.RoundToInt(croppedRows * textureAspectRatio);
+        }
+
+        // Ensure final cropping dimensions are still in bounds
+        croppedRows = Mathf.Clamp(croppedRows, 1, originalRows);
+        croppedCols = Mathf.Clamp(croppedCols, 1, originalCols);
+
+        // Calculate starting indices to center the crop
+        int startRow = Mathf.Clamp((originalRows - croppedRows) / 2, 0, originalRows - croppedRows);
+        int startCol = Mathf.Clamp((originalCols - croppedCols) / 2, 0, originalCols - croppedCols);
+
+        // Create and return the cropped matrix
+        return CropMatrix(matrix, startRow, startCol, croppedRows, croppedCols);
+    }
+
+    public static float[,] CropMatrix(float[,] matrix, int startRow, int startCol, int numRows, int numCols)
+    {
+        // Validate inputs
+        int originalRows = matrix.GetLength(0);
+        int originalCols = matrix.GetLength(1);
+
+        if (startRow < 0 || startCol < 0 || startRow + numRows > originalRows || startCol + numCols > originalCols)
+        {
+            throw new ArgumentOutOfRangeException("Crop dimensions are out of matrix bounds.");
+        }
+
+        // Create the cropped matrix
+        float[,] croppedMatrix = new float[numRows, numCols];
+
+        for (int i = 0; i < numRows; i++)
+        {
+            for (int j = 0; j < numCols; j++)
+            {
+                croppedMatrix[i, j] = matrix[startRow + i, startCol + j];
+            }
+        }
+
+        return croppedMatrix;
+    }
+
 
     public static T[,] TransposeMatrix<T>(T[,] matrix)
     {
