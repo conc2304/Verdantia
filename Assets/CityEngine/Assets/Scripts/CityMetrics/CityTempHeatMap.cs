@@ -44,7 +44,7 @@ public class CityTempHeatMap : MonoBehaviour
         int maxZIndex = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ), 0, cityTempsGrid.GetLength(1) - 1);
 
         // Adjust crop points to fit the texture's aspect ratio
-        (minXIndex, maxXIndex, minZIndex, maxZIndex) = HeatMapUtils.AdjustCropToAspectRatio(
+        (minXIndex, maxXIndex, minZIndex, maxZIndex) = ArrayUtils.AdjustCropToAspectRatio(
             minXIndex,
             maxXIndex,
             minZIndex,

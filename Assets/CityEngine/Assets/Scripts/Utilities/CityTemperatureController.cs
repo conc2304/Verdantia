@@ -20,7 +20,7 @@ public class CityTemperatureController : MonoBehaviour
 
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
-    private HeatMap heatMap;
+    private HeatMapOverlay heatMap;
 
     // City Boarder
     private float cityBoarderMinX = float.MaxValue;
@@ -56,7 +56,7 @@ public class CityTemperatureController : MonoBehaviour
 
     private void Start()
     {
-        heatMap = FindObjectOfType<HeatMap>();
+        heatMap = FindObjectOfType<HeatMapOverlay>();
 
 
         // we are apply sun heat 2x (once for each tranposition step)

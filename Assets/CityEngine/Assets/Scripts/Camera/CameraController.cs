@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviour
     public GameObject activateMenu;
 
     public Grid grid;
-    private HeatMap heatMap;
+    private HeatMapOverlay heatMap;
     public bool cityChanged = false;
 
     public GameObject groundPlane;
@@ -101,7 +101,7 @@ public class CameraController : MonoBehaviour
         for (int i = 0; i < forest.childCount; i++)
             forestObj.Add(forest.GetChild(i));
 
-        if (!heatMap) heatMap = FindObjectOfType<HeatMap>();
+        if (!heatMap) heatMap = FindObjectOfType<HeatMapOverlay>();
 
         heatmapMetric = "cityTemperature";
     }

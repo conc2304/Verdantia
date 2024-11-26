@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 
-public class HeatMap : MonoBehaviour
+public class HeatMapOverlay : MonoBehaviour
 {
     private int gridSizeX;
     private int gridSizeZ;
@@ -24,7 +24,7 @@ public class HeatMap : MonoBehaviour
     {
         if (!heatMapLegend) heatMapLegend = FindObjectOfType<HeatMapLegend>();
 
-        InitializeGradient();
+        heatGradient = HeatMapUtils.InitializeGradient(heatColors);
 
         Grid grid = FindObjectOfType<Grid>();
         gridSizeX = grid.gridSizeX;
@@ -67,47 +67,10 @@ public class HeatMap : MonoBehaviour
             }
         }
 
-        if (heatGradient == null) InitializeGradient();
+        if (heatGradient == null) heatGradient = HeatMapUtils.InitializeGradient(heatColors);
         heatMapInitialized = true;
     }
 
-    private void InitializeGradient()
-    {
-        // Create a new Gradient
-        heatGradient = new Gradient();
-
-        List<Color> gradientPalette = new List<Color>{
-            Color.blue,
-            Color.cyan,
-            Color.green,
-            Color.yellow,
-            Color.red
-        };
-
-        if (heatColors != null && heatColors.Count > 0) gradientPalette = heatColors;
-
-
-        // Define the color keys and alpha keys
-        GradientColorKey[] colorKeys = new GradientColorKey[gradientPalette.Count];
-        float timeStep = 1f / (gradientPalette.Count - 1);
-
-        // for (int i = 0; i < gradientPalette.Count - 1; i++)
-        for (int i = 0; i < gradientPalette.Count; i++)
-        {
-            colorKeys[i].color = gradientPalette[i];
-            colorKeys[i].time = i * timeStep;
-        }
-
-
-        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
-        alphaKeys[0].alpha = 1.0f;
-        alphaKeys[0].time = 0.0f;
-        alphaKeys[1].alpha = 1.0f;
-        alphaKeys[1].time = 1.0f;
-
-        // Set the color and alpha keys to the gradient
-        heatGradient.SetKeys(colorKeys, alphaKeys);
-    }
 
     // Update the heat map with buildings and their given metric
     public void UpdateHeatMap(List<Transform> allBuildings, string metricName, float metricMin, float metricMax)
@@ -153,10 +116,8 @@ public class HeatMap : MonoBehaviour
             : false;
 
 
-        // Debug.Log($"{metricName} INVERT == {invertMetrics}");
         // Generate the texture to represent the heat map
         GenerateHeatMapTexture(metricMin, metricMax, invertMetrics);
-        DisplayHeatMap();
 
         heatMapLegend.UpdateLabels(metricName, metricMin, metricMax, invertMetrics);
     }
@@ -165,7 +126,6 @@ public class HeatMap : MonoBehaviour
     {
         heatValues = matrix;
         GenerateHeatMapTexture(metricMin, metricMax, false);
-        DisplayHeatMap();
 
         heatMapLegend.UpdateLabels("cityTemperature", metricMin, metricMax, false);
 
@@ -175,42 +135,17 @@ public class HeatMap : MonoBehaviour
 
     private void GenerateHeatMapTexture(float metricMin, float metricMax, bool invertValues = false)
     {
-        if (heatGradient == null) InitializeGradient();
+        heatGradient ??= HeatMapUtils.InitializeGradient(heatColors);
+
         if (!heatMapInitialized || heatValues.Length == 0 || heatGradient == null) return;
 
         print("GenerateHeatMapTexture");
         heatMapTexture = new Texture2D(gridSizeX, gridSizeZ);
-        float heatMin = metricMin;
-        float heatMax = metricMax;
 
-        for (int x = 0; x < gridSizeX; x++)
-        {
-            for (int z = 0; z < gridSizeZ; z++)
-            {
-                // Normalize the heat/alpha value to a range of 0 to 1
-                float normalizedHeat = invertValues ?
-                    Mathf.InverseLerp(heatMax, heatMin, heatValues[x, z]) :
-                    Mathf.InverseLerp(heatMin, heatMax, heatValues[x, z]);
-                normalizedHeat = heatValues[x, z] == float.NegativeInfinity ? 0.5f : normalizedHeat;
-
-                // print($"Normalized heat : {normalizedHeat}");
-                // Use the gradient to get the color at the normalized heat value
-                Color heatColor = heatGradient.Evaluate(normalizedHeat);
-                // Color heatColor = heatGradient.Evaluate(1);
-
-                heatColor.a = heatValues[x, z] == float.NegativeInfinity ? 0.3f : heatMapAlpha;
-
-                // Set the pixel color in the texture
-                heatMapTexture.SetPixel(x, z, heatColor);
-            }
-        }
-
-        // Apply the changes to the texture
-        heatMapTexture.Apply();
 
         // Assign the texture to the heatmap plane
-        // heatMapTexture = ApplyBlur(heatMapTexture, 0);
-        heatMapPlane.GetComponent<Renderer>().material.mainTexture = heatMapTexture;
+        heatMapTexture = HeatMapUtils.GenerateHeatMapTexture(heatValues, heatGradient, heatMapAlpha, metricMin, metricMax, invertValues);
+        DisplayHeatMap();
     }
 
 
@@ -244,5 +179,3 @@ public class HeatMap : MonoBehaviour
     }
 }
 
-
-// GenericPropertyJSON: { "name":"heatColors","type":-1,"arraySize":6,"arrayType":"Color","children":[{ "name":"Array","type":-1,"arraySize":6,"arrayType":"Color","children":[{ "name":"size","type":12,"val":6},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":1},{ "name":"g","type":2,"val":1},{ "name":"b","type":2,"val":1},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":0},{ "name":"g","type":2,"val":0},{ "name":"b","type":2,"val":0.5294118},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":0},{ "name":"g","type":2,"val":0.9725491},{ "name":"b","type":2,"val":1},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":0},{ "name":"g","type":2,"val":1},{ "name":"b","type":2,"val":0.223529428},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":0.937254965},{ "name":"g","type":2,"val":1},{ "name":"b","type":2,"val":0.211764723},{ "name":"a","type":2,"val":0}]},{ "name":"data","type":4,"children":[{ "name":"r","type":2,"val":1},{ "name":"g","type":2,"val":0.04705883},{ "name":"b","type":2,"val":0.003921569},{ "name":"a","type":2,"val":0}]}]}]}
