@@ -23,7 +23,6 @@ public class TempDisplay : MonoBehaviour
 
         if (tempLowText != null) tempLowText.text = $"{cityTempLow}°";
         if (tempHighText != null) tempHighText.text = $"{cityTempHigh}°";
-
     }
 
     void OnDestroy()

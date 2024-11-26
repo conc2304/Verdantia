@@ -33,8 +33,6 @@ public class CityTempHeatMap : MonoBehaviour
         float cityBoarderMaxZ
     )
     {
-
-        print("HandleTemperatureUpdate");
         float textureAspectRatio = (float)textureWidth / textureHeight;
 
         // Determine the indices within the grid corresponding to the city borders
