@@ -85,62 +85,6 @@ public static class HeatMapUtils
         return heatGradient;
     }
 
-    public static (int minX, int maxX, int minZ, int maxZ) AdjustCropToAspectRatio(
-        int minX,
-        int maxX,
-        int minZ,
-        int maxZ,
-        float targetAspectRatio,
-        int maxGridWidth,
-        int maxGridHeight
-    )
-    {
-        // Calculate the current crop width and height
-        int currentWidth = maxX - minX + 1;
-        int currentHeight = maxZ - minZ + 1;
 
-        // Calculate the current aspect ratio
-        float currentAspectRatio = (float)currentWidth / currentHeight;
-
-        // Adjust the crop to match the target aspect ratio
-        if (currentAspectRatio < targetAspectRatio)
-        {
-            // Increase width to match the target aspect ratio
-            int newWidth = Mathf.RoundToInt(currentHeight * targetAspectRatio);
-            int deltaWidth = newWidth - currentWidth;
-
-            // Expand minX and maxX equally, clamping to grid bounds
-            minX = Mathf.Max(0, minX - deltaWidth / 2);
-            maxX = Mathf.Min(maxGridWidth - 1, maxX + deltaWidth / 2);
-        }
-        else if (currentAspectRatio > targetAspectRatio)
-        {
-            // Increase height to match the target aspect ratio
-            int newHeight = Mathf.RoundToInt(currentWidth / targetAspectRatio);
-            int deltaHeight = newHeight - currentHeight;
-
-            // Expand minZ and maxZ equally, clamping to grid bounds
-            minZ = Mathf.Max(0, minZ - deltaHeight / 2);
-            maxZ = Mathf.Min(maxGridHeight - 1, maxZ + deltaHeight / 2);
-        }
-
-        // Recalculate dimensions after adjustments
-        currentWidth = maxX - minX + 1;
-        currentHeight = maxZ - minZ + 1;
-
-        // Ensure the aspect ratio is exact by recalculating if necessary
-        float adjustedAspectRatio = (float)currentWidth / currentHeight;
-
-        if (Mathf.Abs(adjustedAspectRatio - targetAspectRatio) > 0.01f)
-        {
-            // Minor tweaks if floating-point rounding caused slight mismatch
-            if (adjustedAspectRatio < targetAspectRatio && maxX < maxGridWidth - 1)
-                maxX++;
-            else if (adjustedAspectRatio > targetAspectRatio && maxZ < maxGridHeight - 1)
-                maxZ++;
-        }
-
-        return (minX, maxX, minZ, maxZ);
-    }
 
 }

@@ -7,7 +7,7 @@ using System;
 public class HeatMapLegend : MonoBehaviour
 {
 
-    public HeatMap heatMap;
+    public HeatMapOverlay heatMap;
     public RawImage legendImage;
     public GradientDirection direction = GradientDirection.Horizontal;
     public TMP_Text minValueText;
