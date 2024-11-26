@@ -15,12 +15,12 @@ public class CityTemperatureController : MonoBehaviour
     public float heatAddRange = 0.05f;
     public float timeStep = 0.1f;
 
+    public float cityTempAvg, cityTempLow, cityTempHigh;
+
 
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
     private HeatMap heatMap;
-
-
 
     // City Boarder
     private float cityBoarderMinX = float.MaxValue;
@@ -43,14 +43,15 @@ public class CityTemperatureController : MonoBehaviour
     public bool playTemp = true;
 
     // Heat Map Legend Vars
-    private int heatMapLabelLow;
-    private int heatMapLabelHigh;
+    public int heatMapLabelLow;
+    public int heatMapLabelHigh;
     public int tempScaleRange = 15;
 
     public float cityTempUpdateRate = 3f;
     private float cityTempTimer = 0f;
 
     public event Action<float, float, float> OnTempUpdated;
+    public event Action<float[,], float, float, float, float> OnTempGridUpdated; //  (cityTempsGrid, cityBoarderMinX, cityBoarderMaxX, cityBoarderMinZ, cityBoarderMaxZ)
 
 
     private void Start()
@@ -125,6 +126,7 @@ public class CityTemperatureController : MonoBehaviour
         // Always update the grid on regular intervals
         cityTempGrid = GetCityTempGrid(cityTempGrid);
 
+
         UpdateTemperatureMetric();
 
         // Only call to render if we have temps, and if heatmap is set to metric
@@ -136,8 +138,15 @@ public class CityTemperatureController : MonoBehaviour
 
     public void UpdateTemperatureMetric()
     {
-        (float cityTempAvg, float cityTempLow, float cityTempHigh) = GetCityTemps(cityTempGrid);
+        (cityTempAvg, cityTempLow, cityTempHigh) = GetCityTemps(cityTempGrid);
         OnTempUpdated?.Invoke(cityTempAvg, cityTempLow, cityTempHigh);
+        OnTempGridUpdated?.Invoke(
+            cityTempGrid,
+            cityBoarderMinX,
+            cityBoarderMaxX,
+            cityBoarderMinZ,
+            cityBoarderMaxZ
+        );
     }
 
     public void RenderTemperature()
@@ -313,10 +322,10 @@ public class CityTemperatureController : MonoBehaviour
         }
 
         float averageTemperature = count > 0 ? totalTemperature / count : 0;
-        averageTemperature = (float)Math.Round(averageTemperature);
+        cityTempAvg = (float)Math.Round(averageTemperature);
         cityTempLow = (float)Math.Round(cityTempLow);
         cityTempHigh = (float)Math.Round(cityTempHigh);
 
-        return (averageTemperature, cityTempLow, cityTempHigh);
+        return (cityTempAvg, cityTempLow, cityTempHigh);
     }
 }
