@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CityMetricsManager : MonoBehaviour
@@ -33,7 +32,7 @@ public class CityMetricsManager : MonoBehaviour
 
     // Metric Setter and Getters
     private Dictionary<MetricTitle, float> metrics;
-    private Dictionary<string, (float min, float max)> propertyRanges;
+    public Dictionary<string, (float min, float max)> propertyRanges;
 
     public float revenue { get; private set; }
     public CameraController cameraController;
