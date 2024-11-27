@@ -188,10 +188,6 @@ public class CityTemperatureController : MonoBehaviour
                 for (int j = 0; j < gridSizeX; j++)
                 {
                     newTemps[j, i] = columnTemps[j];
-                    if (i < 10 && j < 10)
-                    {
-                        newTemps[j, i] = 100;
-                    }
                 }
 
             }
