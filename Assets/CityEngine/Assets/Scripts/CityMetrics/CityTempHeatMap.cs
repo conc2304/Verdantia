@@ -62,10 +62,9 @@ public class CityTempHeatMap : MonoBehaviour
 
 
         // Generate and apply the heatmap texture
-        float metricMin = Math.Max(cityTemperatureController.cityTempLow, cityTemperatureController.heatMapLabelLow);
-        float metricMax = Math.Min(cityTemperatureController.cityTempHigh, cityTemperatureController.heatMapLabelHigh);
+        float metricMin = Math.Max(cityTemperatureController.cityTempLow, cityTemperatureController.heatMapTempMin);
+        float metricMax = Math.Min(cityTemperatureController.cityTempHigh, cityTemperatureController.heatMapTempMax);
 
-        print($"Range: {metricMin} to{metricMax}");
         bool invertMetrics = false;
         Texture2D heatTexture = HeatMapUtils.GenerateHeatMapTexture(
             textureGrid,

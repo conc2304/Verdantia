@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -9,8 +10,10 @@ public class CityTemperatureController : MonoBehaviour
     public float[,] cityTempGrid { get; private set; }
 
     public float startingTemp = 67;
-    public float diffusionRate = 20f;
-    public float dissipationRate = 0.999f;
+    public float diffusionRate = 35f;
+    public float dissipationRate = 0.9999999f;
+    public float dissipationConstant = 0.9999999f;
+    public float something = 16000f;
     public float sunHeatBase { get; private set; } = 36f;
     public float heatAddRange = 0.05f;
     public float timeStep = 0.1f;
@@ -28,6 +31,8 @@ public class CityTemperatureController : MonoBehaviour
     private float cityBoarderMinZ = float.MaxValue;
     private float cityBoarderMaxZ = float.MinValue;
 
+    private float totalCarbonAccumulation = 0;
+
     // City Grid Variables
     public Grid grid;
     private int gridTileSize = 10;
@@ -42,8 +47,8 @@ public class CityTemperatureController : MonoBehaviour
     public bool playTemp = true;
 
     // Heat Map Legend Vars
-    public int heatMapLabelLow;
-    public int heatMapLabelHigh;
+    public int heatMapTempMin;
+    public int heatMapTempMax;
     public int tempScaleRange = 15;
 
     public float cityTempUpdateRate = 3f;
@@ -59,9 +64,8 @@ public class CityTemperatureController : MonoBehaviour
 
 
         // we are apply sun heat 2x (once for each tranposition step)
-        heatMapLabelLow = (int)startingTemp - tempScaleRange;
-        heatMapLabelHigh = (int)startingTemp + tempScaleRange;
-
+        heatMapTempMin = (int)startingTemp - tempScaleRange;
+        heatMapTempMax = (int)startingTemp + tempScaleRange;
 
         gridTileSize = cameraController.gridSize;
 
@@ -117,7 +121,7 @@ public class CityTemperatureController : MonoBehaviour
     public void RestartSimulation()
     {
         InitializeGrid();
-        heatMap.RenderCityTemperatureHeatMap(cityTempGrid, heatMapLabelLow, heatMapLabelHigh);
+        heatMap.RenderCityTemperatureHeatMap(cityTempGrid, heatMapTempMin, heatMapTempMax);
     }
 
     public void StepSimulation()
@@ -152,9 +156,9 @@ public class CityTemperatureController : MonoBehaviour
     {
         if (cityTempGrid != null && cityTempGrid.Length != 0)
         {
-            heatMapLabelLow = (int)startingTemp - tempScaleRange;
-            heatMapLabelHigh = (int)startingTemp + tempScaleRange;
-            heatMap.RenderCityTemperatureHeatMap(cityTempGrid, heatMapLabelLow, heatMapLabelHigh);
+            heatMapTempMin = (int)startingTemp - tempScaleRange;
+            heatMapTempMax = (int)startingTemp + tempScaleRange;
+            heatMap.RenderCityTemperatureHeatMap(cityTempGrid, heatMapTempMin, heatMapTempMax);
         }
     }
 
@@ -175,7 +179,7 @@ public class CityTemperatureController : MonoBehaviour
         sunHeatBase = startingTemp / 2;
 
         float[,] newTemps = new float[gridSizeX, gridSizeZ];
-        float[,] heatContributionGrid = BuildingsToHeatGrid();
+        float[,] heatContributionGrid = CalculateBuildingsHeat();
 
         for (int t = 1; t <= 2; t++)
         {
@@ -189,7 +193,6 @@ public class CityTemperatureController : MonoBehaviour
                 {
                     newTemps[j, i] = columnTemps[j];
                 }
-
             }
 
             heatContributionGrid = ArrayUtils.TransposeMatrix(heatContributionGrid);
@@ -200,7 +203,7 @@ public class CityTemperatureController : MonoBehaviour
     }
 
 
-    public float[,] BuildingsToHeatGrid()
+    public float[,] CalculateBuildingsHeat()
     {
         float[,] buildingHeatGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, 0f);
 
@@ -211,9 +214,28 @@ public class CityTemperatureController : MonoBehaviour
         cityBoarderMinZ = float.MaxValue;
         cityBoarderMaxZ = float.MinValue;
 
+        totalCarbonAccumulation = 0;
+
         // First, determine all occupied positions
         bool includeSpaces = true;
         List<Transform> allBuildings = cameraController.GetAllBuildings(includeSpaces);
+        Dictionary<string, (float min, float max)> propertyRanges = buildingsMenu.GetPropertyRanges();
+
+        // Current Min: -50000, Max: 500 (per building)
+        // To Normalized : -5 min 5 max
+        // Make normalization range -50000 min to 50000 max
+
+        // ie buildingCE = 0;
+
+        // float carbonMin = propertyRanges["carbonFootprint"].min;
+        // float carbonMax = propertyRanges["carbonFootprint"].max;
+        // float cScale = 2f;
+        // // instead of range from -100 to 800 where a value
+        // // then do -800 to 800
+        // float normalizedCarbonMax = Math.Max(Math.Abs(carbonMin), Math.Abs(carbonMax)) * cScale;
+        // float normalizedCarbonMin = -normalizedCarbonMax;
+
+
 
         foreach (Transform building in allBuildings)
         {
@@ -235,6 +257,20 @@ public class CityTemperatureController : MonoBehaviour
             cityBoarderMaxX = Mathf.Max(cityBoarderMaxX, posX);
             cityBoarderMinZ = Mathf.Min(cityBoarderMinZ, posZ);
             cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, posZ);
+
+            // Get total carbon footprint of the city
+            // Current Min: -500, Max: 8000 (per building)
+            if (!building.CompareTag("Space"))
+            {
+                // float normalizeCarbon = NumbersUtils.Remap(
+                //     normalizedCarbonMin, // input range
+                //     normalizedCarbonMax,
+                //     -normalizedCarbonRange, // output range
+                //     normalizedCarbonRange,
+                //     buildingProps.carbonFootprint // input value
+                // );
+                totalCarbonAccumulation += buildingProps.carbonFootprint;
+            }
         }
 
 
@@ -252,11 +288,28 @@ public class CityTemperatureController : MonoBehaviour
             tempsGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, startingTemp);
         }
 
+        // Heat Dissipation Rate is affected by the carbon emmissions of the city
+
+        float bMin = startingTemp / heatMapTempMax;
+        float bMax = startingTemp / heatMapTempMin;
+        float carbonEmissionNormalized = 0; // TODO
+
+        Debug.Log($"B min max | {bMin}, {bMax}");
+        carbonEmissionNormalized = totalCarbonAccumulation / something;
+        Debug.Log($"CEN | {carbonEmissionNormalized}");
+
+        // NumbersUtils.Remap(carbonRangeInputRangeMin, carbonRangeInputRangeMax, -normalizedCarbonRange, normalizedCarbonRange, totalCarbonAccumulation);
+
+        dissipationRate = dissipationRate * (float)Math.Pow(dissipationConstant, carbonEmissionNormalized);
+        Debug.Log($"Pre Clamp | {dissipationRate}");
+        dissipationRate = Math.Clamp(dissipationRate, bMin, bMax);
+        Debug.Log($"Clamped | {dissipationRate}");
+
         float A = diffusionRate * timeStep / 2;
         float B = 1 + (2 * A) + (dissipationRate * timeStep / 4);
         float C = 2 - B;
 
-        // 3 vectors | for the lower, upper and diagonal for the solver
+        // 3 vectors | for the lower, upper, and diagonal for the solver
         float[] lower = ArrayUtils.Fill(gridSizeZ - 1, -A);
         lower[gridSizeZ - 2] = 2 * (-A);
 

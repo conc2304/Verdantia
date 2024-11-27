@@ -14145,6 +14145,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1516040887155469648, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
+      propertyPath: something
+      value: 25000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516040887155469648, guid: 6bf4d8742f6f261498f6e50051007298, type: 3}
       propertyPath: heatAddRange
       value: 0.45
       objectReference: {fileID: 0}
