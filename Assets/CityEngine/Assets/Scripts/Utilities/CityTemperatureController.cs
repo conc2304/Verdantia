@@ -33,7 +33,6 @@ public class CityTemperatureController : MonoBehaviour
     private int gridTileSize = 10;
     private int gridSizeX;
     private int gridSizeZ;
-    private readonly int gridPadding = 2;   // TODO find out if this is still needed
 
 
 
@@ -66,8 +65,8 @@ public class CityTemperatureController : MonoBehaviour
 
         gridTileSize = cameraController.gridSize;
 
-        gridSizeX = (grid.gridSizeX / gridTileSize) + gridPadding;
-        gridSizeZ = (grid.gridSizeZ / gridTileSize) + gridPadding;
+        gridSizeX = grid.gridSizeX / gridTileSize;
+        gridSizeZ = grid.gridSizeZ / gridTileSize;
 
 
         RestartSimulation();
@@ -175,9 +174,9 @@ public class CityTemperatureController : MonoBehaviour
 
         sunHeatBase = startingTemp / 2;
 
-
         float[,] newTemps = new float[gridSizeX, gridSizeZ];
         float[,] heatContributionGrid = BuildingsToHeatGrid();
+
         for (int t = 1; t <= 2; t++)
         {
             // Run once for each row, and once for each column by transposing the 
@@ -189,7 +188,12 @@ public class CityTemperatureController : MonoBehaviour
                 for (int j = 0; j < gridSizeX; j++)
                 {
                     newTemps[j, i] = columnTemps[j];
+                    if (i < 10 && j < 10)
+                    {
+                        newTemps[j, i] = 100;
+                    }
                 }
+
             }
 
             heatContributionGrid = ArrayUtils.TransposeMatrix(heatContributionGrid);
@@ -258,18 +262,17 @@ public class CityTemperatureController : MonoBehaviour
 
         // 3 vectors | for the lower, upper and diagonal for the solver
         float[] lower = ArrayUtils.Fill(gridSizeZ - 1, -A);
-        lower[gridSizeZ - 2] *= 2;
+        lower[gridSizeZ - 2] = 2 * (-A);
 
         float[] diagonal = ArrayUtils.Fill(gridSizeZ, B);
         float[] upper = ArrayUtils.Fill(gridSizeZ - 1, -A);
-        upper[0] *= 2;
+        upper[0] = 2 * (-A);
 
         // Form the right hand side of the system 
         float[] rightSide = new float[gridSizeZ];
-
         float heatContribution;
-        // skip first and last
-        for (int i = 0; i < gridSizeZ - 1; i++)
+
+        for (int i = 0; i < gridSizeZ; i++)
         {
             // Add heat sources and sinks
             heatContribution = heatContributionGrid[i, calculateColumn] + sunHeatBase;
