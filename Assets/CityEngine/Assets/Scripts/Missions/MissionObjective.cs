@@ -20,10 +20,12 @@ public class MissionObjective
     public bool IsObjectiveMet(CityMetricsManager metrics)
     {
         float currentMetricValue = metrics.GetMetricValue(metricName);
+        string unit = MetricUnits.GetUnit(metricName);
+
         return objectiveType switch
         {
-            ObjectiveType.ReduceByPercentage => targetValue != float.NegativeInfinity && currentMetricValue <= targetValue * (1 - comparisonPercentage / 100f),
-            ObjectiveType.IncreaseByPercentage => targetValue != float.NegativeInfinity && currentMetricValue >= targetValue * (1 + comparisonPercentage / 100f),
+            ObjectiveType.ReduceByPercentage => targetValue != float.NegativeInfinity && currentMetricValue <= targetValue,
+            ObjectiveType.IncreaseByPercentage => targetValue != float.NegativeInfinity && currentMetricValue >= targetValue,
             ObjectiveType.MaintainAbove => currentMetricValue >= targetValue,
             ObjectiveType.MaintainBelow => currentMetricValue <= targetValue,
             _ => false,

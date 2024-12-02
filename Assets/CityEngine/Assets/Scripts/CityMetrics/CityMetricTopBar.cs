@@ -5,7 +5,8 @@ using GreenCityBuilder.Missions;
 public class CityMetricTopBar : MonoBehaviour
 {
     public CityMetricsManager cityMetricsManager;
-    public MissionCatalog missionCatalog;
+    // public MissionCatalog missionCatalog;
+    public MissionManager missionManager;
     public Transform missionMetricsContainer;
     public GameObject metricItemPrefab;
     public Mission currentMission;
@@ -15,19 +16,19 @@ public class CityMetricTopBar : MonoBehaviour
     void Start()
     {
         cityMetricsManager.OnMetricsUpdate += UpdateMetrics;
-        missionCatalog.OnMissionAccepted += SetMission;
+        missionManager.onMissionStarted += HandleMissionStarted;
 
-        DisplayMetricsForCurrentMode();
+        DisplayMetricsForCurrentMode(currentMission);
     }
 
-    public void SetMission(Mission mission)
+    public void HandleMissionStarted(Mission mission)
     {
         currentMission = mission;
-        DisplayMetricsForCurrentMode();
+        DisplayMetricsForCurrentMode(mission);
         UpdateMetrics();
     }
 
-    private void DisplayMetricsForCurrentMode()
+    private void DisplayMetricsForCurrentMode(Mission mission)
     {
         // Clear previous metrics from missionMetricsContainer
         foreach (Transform child in missionMetricsContainer)
@@ -39,13 +40,13 @@ public class CityMetricTopBar : MonoBehaviour
         bool budgetIncluded = false;  // Track if Budget metric is included
 
         // If there's a current mission, display its specific metrics
-        if (currentMission != null && currentMission.objectives.Length > 0)
+        if (mission != null && mission.objectives.Length > 0)
         {
-            foreach (MissionObjective objective in currentMission.objectives)
+            foreach (MissionObjective objective in mission.objectives)
             {
                 if (objective.metricName == MetricTitle.CityTemperature) continue; // city temp has its own ui
 
-                CreateAndDisplayMetricItem(objective.metricName, objective.icon);
+                CreateAndDisplayMetricItem(objective.metricName, objective.icon, objective.targetValue.ToString());
 
                 // Check if Budget is one of the objectives
                 if (objective.metricName == MetricTitle.Budget) budgetIncluded = true;
@@ -69,7 +70,7 @@ public class CityMetricTopBar : MonoBehaviour
         }
     }
 
-    private void CreateAndDisplayMetricItem(MetricTitle metricTitle, Sprite icon)
+    private void CreateAndDisplayMetricItem(MetricTitle metricTitle, Sprite icon, string targetValue = null)
     {
         // Instantiate and set up a new metric item
         GameObject metricItem = Instantiate(metricItemPrefab, missionMetricsContainer);
@@ -81,6 +82,16 @@ public class CityMetricTopBar : MonoBehaviour
         string unit = MetricUnits.GetUnit(metricTitle);
         MetricUnits.UnitPosition position = MetricUnits.GetUnitPosition(metricTitle);
         metricUI.SetUnit(unit, position);
+
+        // if objective has a target then display it
+        if (targetValue != null)
+        {
+            metricUI.UpdateTargetValue(targetValue);
+        }
+        else
+        {
+            metricUI.targetText.gameObject.SetActive(false);
+        }
 
         activeMetricItems[metricTitle] = metricUI;
     }
@@ -151,6 +162,6 @@ public class CityMetricTopBar : MonoBehaviour
     void OnDestroy()
     {
         cityMetricsManager.OnMetricsUpdate -= UpdateMetrics;
-        missionCatalog.OnMissionAccepted -= SetMission;
+        missionManager.onMissionStarted -= HandleMissionStarted;
     }
 }
