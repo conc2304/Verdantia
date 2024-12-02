@@ -11,7 +11,7 @@ namespace GreenCityBuilder.Missions
             { MetricTitle.Population, Resources.Load<Sprite>("MetricIcons/population") },
             { MetricTitle.Happiness, Resources.Load<Sprite>("MetricIcons/happiness") },
             { MetricTitle.Budget, Resources.Load<Sprite>("MetricIcons/budget") },
-            { MetricTitle.GreenSpace, Resources.Load<Sprite>("MetricIcons/green-space") },
+            // { MetricTitle.GreenSpace, Resources.Load<Sprite>("MetricIcons/green-space") },
             { MetricTitle.UrbanHeat, Resources.Load<Sprite>("MetricIcons/urban-heat") },
             { MetricTitle.Pollution, Resources.Load<Sprite>("MetricIcons/pollution") },
             { MetricTitle.Energy, Resources.Load<Sprite>("MetricIcons/energy") },
@@ -25,7 +25,7 @@ namespace GreenCityBuilder.Missions
         {
             new ParksAndRecMission(metricIcons),
             new CoolTheCityDownMission(metricIcons),
-            new GreenSpaceRenaissanceMission(metricIcons),
+            // new GreenSpaceRenaissanceMission(metricIcons),  // todo update missions without greenspace
             new BudgetBalanceMission(metricIcons),
             new PollutionControlMission(metricIcons),
             new FreePlayMission(metricIcons),

@@ -14,7 +14,6 @@ public class CityMetricsManager : MonoBehaviour
     public float population { get; private set; }
     public float happiness { get; private set; }
     public float budget { get; private set; }
-    public float greenSpace { get; private set; }
     public float urbanHeat { get; private set; }
     public float pollution { get; private set; }
     public float energy { get; private set; }
@@ -55,7 +54,6 @@ public class CityMetricsManager : MonoBehaviour
         {
             { MetricTitle.CityTemperature, cityTemperature },
             { MetricTitle.UrbanHeat, urbanHeat },
-            { MetricTitle.GreenSpace, greenSpace },
             { MetricTitle.Budget, budget },
             { MetricTitle.Happiness, happiness },
             { MetricTitle.Pollution, pollution },
@@ -142,7 +140,6 @@ public class CityMetricsManager : MonoBehaviour
         int totalCityBuildings = cityBuildings.Count;
         float totalPopulation = 0;
 
-        // Constants for greenspace and intrinsic weights
         const float BaseWeight = 5f;        // Intrinsic weight for low population buildings
 
         print($"--- UpdateCityMetrics --- ");
@@ -167,7 +164,6 @@ public class CityMetricsManager : MonoBehaviour
             // Cumulative Metrics
             population += (float)Math.Round(buildingProps.capacity);
             revenue += buildingProps.cityRevenue;
-            greenSpace += buildingProps.greenSpaceEffect;
 
             // Non standard metrics
             float adjustedHeatContribution = buildingProps.heatContribution;
@@ -235,7 +231,6 @@ public class CityMetricsManager : MonoBehaviour
     {
         population = 0;
         happiness = 50;
-        greenSpace = 0;
         urbanHeat = 0;
         pollution = 0;
         energy = 0;
@@ -248,7 +243,6 @@ public class CityMetricsManager : MonoBehaviour
     {
         population = (float)Math.Round(population);
         happiness = (float)Math.Round(happiness);
-        greenSpace = (float)Math.Round(greenSpace);
         urbanHeat = (float)Math.Round(urbanHeat);
         pollution = (float)Math.Round(pollution);
         energy = (float)Math.Round(energy);
@@ -268,45 +262,6 @@ public class CityMetricsManager : MonoBehaviour
         OnMetricsUpdate?.Invoke();
     }
 
-
-
-    public float CalculateOverallGreenSpaceEffect()
-    {
-        float totalGreenSpaceEffect = 0;
-        int totalBuildingsWithGreenSpaceEffect = 0;
-
-        // Constants for normalization
-        float maxGreenSpaceEffect = 60f;
-        float maxEffectRadius = 6f;
-        float normalizationFactor = maxGreenSpaceEffect * maxEffectRadius; // 360
-
-        bool includeSpaces = false;
-        foreach (Transform building in cameraController.GetAllBuildings(includeSpaces))
-        {
-            BuildingProperties buildingProps = building.GetComponent<BuildingProperties>();
-
-            // Only consider buildings with a positive green space effect
-            if (buildingProps.greenSpaceEffect != 0 && buildingProps.effectRadius > 0)
-            {
-                // Calculate weighted green space effect
-                float weightedGreenSpaceEffect = buildingProps.greenSpaceEffect * buildingProps.effectRadius;
-                float normalizedGreenSpaceContribution = weightedGreenSpaceEffect / normalizationFactor;
-
-                // Sum up the normalized contribution
-                totalGreenSpaceEffect += normalizedGreenSpaceContribution;
-                totalBuildingsWithGreenSpaceEffect++;
-            }
-        }
-
-        // Scale up to make it more readable (e.g., on a 0-100 scale)
-        float cityGreenSpaceEffect = totalGreenSpaceEffect * 100;
-
-        // Optional: If you want to adjust based on green space coverage of residential areas
-        // float coverageScore = CalculateGreenSpaceCoverageScore(greenSpaces, residentialBuildings);
-        // cityGreenSpaceEffect *= (coverageScore / 100);
-
-        return Mathf.Round(cityGreenSpaceEffect);
-    }
 
     public float GetMetricValue(MetricTitle metricName)
     {

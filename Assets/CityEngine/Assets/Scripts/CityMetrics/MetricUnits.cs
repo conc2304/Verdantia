@@ -16,7 +16,7 @@ public static class MetricUnits
         { MetricTitle.CarbonEmission, ("kg", UnitPosition.After) },
         { MetricTitle.Population, ("", UnitPosition.After) },
         { MetricTitle.Happiness, ("%", UnitPosition.After) },
-        { MetricTitle.GreenSpace, ("%", UnitPosition.After) },
+        // { MetricTitle.GreenSpace, ("%", UnitPosition.After) },
         { MetricTitle.UrbanHeat, ("", UnitPosition.After) },
         { MetricTitle.Pollution, ("%", UnitPosition.After) },
         { MetricTitle.CityTemperature, ("°F", UnitPosition.After) },

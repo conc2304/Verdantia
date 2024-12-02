@@ -104,9 +104,6 @@ public class CameraController : MonoBehaviour
         if (!heatMap) heatMap = FindObjectOfType<HeatMapOverlay>();
 
         heatmapMetric = "cityTemperature";
-
-        //  TODO remove
-        ToggleHeatMapView();
     }
 
 

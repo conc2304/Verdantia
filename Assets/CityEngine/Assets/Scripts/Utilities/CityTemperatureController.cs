@@ -219,23 +219,6 @@ public class CityTemperatureController : MonoBehaviour
         // First, determine all occupied positions
         bool includeSpaces = true;
         List<Transform> allBuildings = cameraController.GetAllBuildings(includeSpaces);
-        Dictionary<string, (float min, float max)> propertyRanges = buildingsMenu.GetPropertyRanges();
-
-        // Current Min: -50000, Max: 500 (per building)
-        // To Normalized : -5 min 5 max
-        // Make normalization range -50000 min to 50000 max
-
-        // ie buildingCE = 0;
-
-        // float carbonMin = propertyRanges["carbonFootprint"].min;
-        // float carbonMax = propertyRanges["carbonFootprint"].max;
-        // float cScale = 2f;
-        // // instead of range from -100 to 800 where a value
-        // // then do -800 to 800
-        // float normalizedCarbonMax = Math.Max(Math.Abs(carbonMin), Math.Abs(carbonMax)) * cScale;
-        // float normalizedCarbonMin = -normalizedCarbonMax;
-
-
 
         foreach (Transform building in allBuildings)
         {
@@ -259,16 +242,8 @@ public class CityTemperatureController : MonoBehaviour
             cityBoarderMaxZ = Mathf.Max(cityBoarderMaxZ, posZ);
 
             // Get total carbon footprint of the city
-            // Current Min: -500, Max: 8000 (per building)
             if (!building.CompareTag("Space"))
             {
-                // float normalizeCarbon = NumbersUtils.Remap(
-                //     normalizedCarbonMin, // input range
-                //     normalizedCarbonMax,
-                //     -normalizedCarbonRange, // output range
-                //     normalizedCarbonRange,
-                //     buildingProps.carbonFootprint // input value
-                // );
                 totalCarbonAccumulation += buildingProps.carbonFootprint;
             }
         }
@@ -292,18 +267,11 @@ public class CityTemperatureController : MonoBehaviour
 
         float bMin = startingTemp / heatMapTempMax;
         float bMax = startingTemp / heatMapTempMin;
-        float carbonEmissionNormalized = 0; // TODO
 
-        Debug.Log($"B min max | {bMin}, {bMax}");
-        carbonEmissionNormalized = totalCarbonAccumulation / something;
-        Debug.Log($"CEN | {carbonEmissionNormalized}");
-
-        // NumbersUtils.Remap(carbonRangeInputRangeMin, carbonRangeInputRangeMax, -normalizedCarbonRange, normalizedCarbonRange, totalCarbonAccumulation);
+        float carbonEmissionNormalized = totalCarbonAccumulation / something;
 
         dissipationRate = dissipationRate * (float)Math.Pow(dissipationConstant, carbonEmissionNormalized);
-        Debug.Log($"Pre Clamp | {dissipationRate}");
         dissipationRate = Math.Clamp(dissipationRate, bMin, bMax);
-        Debug.Log($"Clamped | {dissipationRate}");
 
         float A = diffusionRate * timeStep / 2;
         float B = 1 + (2 * A) + (dissipationRate * timeStep / 4);

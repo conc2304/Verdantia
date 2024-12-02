@@ -10,7 +10,7 @@ public enum MetricTitle
     Population,
     Happiness,
     Budget,
-    GreenSpace,
+    // GreenSpace,
     UrbanHeat,
     Pollution,
     Energy,

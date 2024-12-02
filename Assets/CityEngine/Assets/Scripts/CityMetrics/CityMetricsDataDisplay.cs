@@ -16,7 +16,7 @@ public class CityMetricsDataDisplay : MonoBehaviour
     public CityMetricUIItem populationUIItem;
     public CityMetricUIItem happinessUIItem;
     public CityMetricUIItem budgetUIItem;
-    public CityMetricUIItem greenSpaceUIItem;
+    // public CityMetricUIItem greenSpaceUIItem;
     public CityMetricUIItem urbanHeatUIItem;
     public CityMetricUIItem pollutionUIItem;
     public CityMetricUIItem energyUIItem;
@@ -46,7 +46,7 @@ public class CityMetricsDataDisplay : MonoBehaviour
         populationUIItem.UpdateValue(cityMetricsManager.population.ToString());
         happinessUIItem.UpdateValue(cityMetricsManager.happiness.ToString());
         budgetUIItem.UpdateValue(cityMetricsManager.budget.ToString());
-        greenSpaceUIItem.UpdateValue(cityMetricsManager.greenSpace.ToString());
+        // greenSpaceUIItem.UpdateValue(cityMetricsManager.greenSpace.ToString());
         urbanHeatUIItem.UpdateValue(cityMetricsManager.urbanHeat.ToString());
         pollutionUIItem.UpdateValue(cityMetricsManager.pollution.ToString());
         energyUIItem.UpdateValue(cityMetricsManager.energy.ToString());
@@ -83,7 +83,7 @@ public class CityMetricsDataDisplay : MonoBehaviour
     public void OnPopulationClick() { OnMetricClick(MetricTitle.Population); }
     public void OnHappinessClick() { OnMetricClick(MetricTitle.Happiness); }
     public void OnBudgetClick() { OnMetricClick(MetricTitle.Budget); }
-    public void OnGreenSpaceClick() { OnMetricClick(MetricTitle.GreenSpace); }
+    // public void OnGreenSpaceClick() { OnMetricClick(MetricTitle.GreenSpace); }
     public void OnUrbanHeatClick() { OnMetricClick(MetricTitle.UrbanHeat); }
     public void OnPollutionClick() { OnMetricClick(MetricTitle.Pollution); }
     public void OnEnergyClick() { OnMetricClick(MetricTitle.Energy); }

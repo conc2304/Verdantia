@@ -20,7 +20,7 @@ namespace GreenCityBuilder.Missions
             failedMessage = "Without enough parks and green spaces, residents remain unhappy, showing how vital greenery is for cooling and well-being.";
 
 
-            AddMetric(MetricTitle.GreenSpace);
+            // AddMetric(MetricTitle.GreenSpace);
             AddMetric(MetricTitle.Happiness);
 
             objectives = new MissionObjective[]
@@ -32,12 +32,12 @@ namespace GreenCityBuilder.Missions
                     icon = GetMetricIcon(MetricTitle.Happiness)
 
                 },
-                new() {
-                    metricName = MetricTitle.GreenSpace,
-                    objectiveType = MissionObjective.ObjectiveType.MaintainAbove,
-                    targetValue = 30, // TODO UPDATE THIS
-                    icon = GetMetricIcon(MetricTitle.GreenSpace)
-                }
+                // new() {
+                //     metricName = MetricTitle.GreenSpace,
+                //     objectiveType = MissionObjective.ObjectiveType.MaintainAbove,
+                //     targetValue = 30, // TODO UPDATE THIS
+                //     icon = GetMetricIcon(MetricTitle.GreenSpace)
+                // }
             };
         }
     }

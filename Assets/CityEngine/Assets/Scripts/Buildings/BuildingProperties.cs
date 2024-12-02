@@ -13,7 +13,7 @@ public enum BuildingMetric
     capacity,
     happinessImpact,
     pollutionImpact,
-    greenSpaceEffect,
+    // greenSpaceEffect,
     carbonFootprint,
     effectRadius,
 };
