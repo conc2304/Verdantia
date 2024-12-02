@@ -3,13 +3,13 @@ using UnityEngine.Events;
 
 public class IdleTimer : MonoBehaviour
 {
-    public float idleDuration = 60f; // Time in seconds before the idle action is triggered
-    public UnityEvent onIdle; // Event to trigger on idle
-    private float idleTimer; // Tracks time since last activity
+    public float idleDuration = 60f;
+    public UnityEvent onIdle;
+    private float idleTimer;
 
     void Start()
     {
-        idleTimer = 0f; // Initialize timer
+        idleTimer = 0f;
         if (onIdle == null)
         {
             onIdle = new UnityEvent();
@@ -19,26 +19,25 @@ public class IdleTimer : MonoBehaviour
     void Update()
     {
         // Check for any input to reset the timer
-        if (Input.anyKey || Input.mousePosition != Vector3.zero)
+        if (Input.anyKey || Input.touchCount > 0)
         {
-            idleTimer = 0f; // Reset idle timer on activity
+            idleTimer = 0f;
         }
         else
         {
-            idleTimer += Time.deltaTime; // Increment idle timer
-        }
+            idleTimer += Time.deltaTime;
 
-        // Check if idle duration has been exceeded
-        if (idleTimer >= idleDuration)
-        {
-            TriggerIdleAction();
-            idleTimer = 0f; // Reset the timer after triggering idle action
+            if (idleTimer >= idleDuration)
+            {
+
+                idleTimer = 0f;
+            }
         }
     }
 
     private void TriggerIdleAction()
     {
         Debug.Log("Player has been idle for " + idleDuration + " seconds.");
-        onIdle.Invoke(); // Trigger the assigned idle action/event
+        onIdle.Invoke();
     }
 }

@@ -38,9 +38,40 @@ public class MissionManager : MonoBehaviour
         mission.startYear = cityMetricsManager.currentYear;
         missionInProgress = true;
 
-        timeRemainingGO.SetActive(!IsMissionFreePlay());
+        bool isFreePlay = IsMissionFreePlay();
+        if (!isFreePlay)
+        {
+            cityMetricsManager.missionMonthsRemaining = mission.timeLimitInMonths;
+        }
+
+        timeRemainingGO.SetActive(!isFreePlay);
 
         LoadMissionCity(mission);
+    }
+
+    public void UpdateMissionTargets(Mission mission)
+    {
+        // Dynamically set the target value for each mission objective based on starting city metrics
+        foreach (var objective in mission.objectives)
+        {
+            float currentMetricValue = cityMetricsManager.GetMetricValue(objective.metricName);
+
+            switch (objective.objectiveType)
+            {
+                case MissionObjective.ObjectiveType.IncreaseByPercentage:
+                    objective.targetValue = currentMetricValue; // Baseline for increase
+                    break;
+
+                case MissionObjective.ObjectiveType.ReduceByPercentage:
+                    objective.targetValue = currentMetricValue; // Baseline for reduction
+                    break;
+
+                case MissionObjective.ObjectiveType.MaintainAbove:
+                case MissionObjective.ObjectiveType.MaintainBelow:
+                    // For these, the target value should already be preset in the mission data
+                    break;
+            }
+        }
     }
 
     public bool IsMissionFreePlay()
@@ -48,7 +79,6 @@ public class MissionManager : MonoBehaviour
         return currentMission != null && currentMission.missionName.ToLower().Contains("free play");
     }
 
-    // Load the mission's starting city
 
     public void LoadMissionCity(Mission mission)
     {
@@ -64,17 +94,17 @@ public class MissionManager : MonoBehaviour
         yield return StartCoroutine(cameraController.ResetGameField());
 
 
-        if (IsMissionFreePlay())
-        {
-            // do nothing
-        }
-        else
+        if (!IsMissionFreePlay())
         {
             string missionFile = SaveSystem.FormatFileName(mission.missionCityFileName);
             saveDataTrigger.BuildingDataLoad(missionFile);
         }
-        loadingScreen.SetActive(false);
 
+        // Reset Targets based on initial metrics (for percent change based objectives)
+        cityMetricsManager.UpdateCityMetrics();
+        UpdateMissionTargets(mission);
+
+        loadingScreen.SetActive(false);
     }
 
     private void OnTimeUpdated(int currentMonth, int currentYear, int missionMonthsRemaining)
@@ -97,7 +127,6 @@ public class MissionManager : MonoBehaviour
     private void OnMissionSuccess()
     {
         missionInProgress = false;
-        // missionStatusUI.text = "Mission Completed!";
         print("Mission Success");
         onMissionDone?.Invoke(currentMission, true);
     }
@@ -105,7 +134,6 @@ public class MissionManager : MonoBehaviour
     private void OnMissionFailure()
     {
         missionInProgress = false;
-        // missionStatusUI.text = "Mission Failed!";
 
         print("Mission Failed");
         onMissionDone?.Invoke(currentMission, false);

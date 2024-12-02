@@ -14,7 +14,6 @@ public class TimeDisplay : MonoBehaviour
 
     private void Awake()
     {
-        // Subscribe to the OnTimeUpdated event
         cityMetricsManager.OnTimeUpdated += UpdateTimeText;
     }
 

@@ -8,7 +8,7 @@ namespace GreenCityBuilder.Missions
         public ParksAndRecMission(Dictionary<MetricTitle, Sprite> metricIcons) : base(metricIcons)
         {
             missionName = "Parks and Recreation Boost";
-            missionObjective = "Increase happiness by 10% by adding parks and green spaces around residential areas.";
+            missionObjective = "Increase happiness by 5% by adding parks and green spaces around residential areas.";
             missionBrief = "Residents are eager for more green spaces and recreational areas to improve their quality of life. Your task is to create an inviting environment by strategically placing small and medium parks around the city’s neighborhoods. This will boost happiness and improve the community’s overall well-being. With a reasonable budget and minimal restrictions, you can freely add parks and green zones to meet the happiness target.";
             startingBudget = 500000;
             timeLimitInMonths = 24;
@@ -28,16 +28,9 @@ namespace GreenCityBuilder.Missions
                 new() {
                     metricName = MetricTitle.Happiness,
                     objectiveType = MissionObjective.ObjectiveType.IncreaseByPercentage,
-                    comparisonPercentage = 10,
+                    comparisonPercentage = 5,
                     icon = GetMetricIcon(MetricTitle.Happiness)
-
                 },
-                // new() {
-                //     metricName = MetricTitle.GreenSpace,
-                //     objectiveType = MissionObjective.ObjectiveType.MaintainAbove,
-                //     targetValue = 30, // TODO UPDATE THIS
-                //     icon = GetMetricIcon(MetricTitle.GreenSpace)
-                // }
             };
         }
     }

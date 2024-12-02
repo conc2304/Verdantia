@@ -25,7 +25,7 @@ public class CityMetricsManager : MonoBehaviour
     public float monthDuration = 30.0f; // Duration of a "month" in seconds 
     private float monthTimer = 0f;
     private MissionManager missionManager;
-    private int missionMonthsRemaining = 0;
+    public int missionMonthsRemaining = 0;
     public event Action<int, int, int> OnTimeUpdated; // (month, year, monthsRemaining)
     public event Action OnMetricsUpdate;
 
@@ -38,7 +38,6 @@ public class CityMetricsManager : MonoBehaviour
     public BuildingsMenuNew buildingsMenu;
 
     private CityTemperatureController cityTemperatureController;
-
 
 
     void Start()
