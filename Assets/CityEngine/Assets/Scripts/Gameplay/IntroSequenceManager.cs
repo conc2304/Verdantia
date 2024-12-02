@@ -95,7 +95,13 @@ public class IntroSequenceManager : MonoBehaviour
     {
         InitializeSequence();
         InitializePagination();
+
+        gameObject.SetActive(true);
+
+        mainGameUI.SetActive(false);
+        missionSelector.SetActive(false);
     }
+
     private void OnDisable()
     {
         InitializeSequence();
