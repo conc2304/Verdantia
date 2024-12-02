@@ -8,6 +8,7 @@ namespace GreenCityBuilder.Missions
         public GreenSpaceRenaissanceMission(Dictionary<MetricTitle, Sprite> metricIcons) : base(metricIcons)
         {
             missionName = "Green Space Renaissance";
+            // TODO update text to not include green space as part of mission
             missionObjective = "Increase green space by 30% while keeping pollution below a set level and achieving a 10% boost in happiness.";
             missionBrief = "The city council has called for a 'Green Space Renaissance' to improve the quality of life and promote environmental health. You’re tasked with designing an expansion that adds parks, forests, and green rooftops to meet this goal. However, the city’s industrial and commercial zones generate high pollution, so you’ll need to strategically place buildings like recycling stations and green energy facilities to offset it.";
             timeLimitInMonths = 5 * 12;
@@ -19,18 +20,19 @@ namespace GreenCityBuilder.Missions
             successMessage = "Your green expansion has transformed the city, reducing pollution and boosting happiness while creating lush, thriving spaces.";
             failedMessage = "Without enough green growth, pollution and dissatisfaction persist, showing the city's need for a true green renaissance.";
 
-            AddMetric(MetricTitle.GreenSpace);
+
+            // AddMetric(MetricTitle.GreenSpace);
             AddMetric(MetricTitle.Pollution);
             AddMetric(MetricTitle.Happiness);
 
             objectives = new MissionObjective[]
             {
-                new() {
-                    metricName = MetricTitle.GreenSpace,
-                    objectiveType = MissionObjective.ObjectiveType.IncreaseByPercentage,
-                    comparisonPercentage = 30,
-                    icon = GetMetricIcon(MetricTitle.GreenSpace)
-                },
+                // new() {
+                //     metricName = MetricTitle.GreenSpace,
+                //     objectiveType = MissionObjective.ObjectiveType.IncreaseByPercentage,
+                //     comparisonPercentage = 30,
+                //     icon = GetMetricIcon(MetricTitle.GreenSpace)
+                // },
                 new() {
                     metricName = MetricTitle.Pollution,
                     objectiveType = MissionObjective.ObjectiveType.MaintainBelow,

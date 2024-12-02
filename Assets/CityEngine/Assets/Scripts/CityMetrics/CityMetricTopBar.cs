@@ -63,7 +63,7 @@ public class CityMetricTopBar : MonoBehaviour
             // Free play mode: display default metrics, including Budget
             CreateAndDisplayMetricItem(MetricTitle.Population, MissionRepository.metricIcons[MetricTitle.Population]);
             CreateAndDisplayMetricItem(MetricTitle.Happiness, MissionRepository.metricIcons[MetricTitle.Happiness]);
-            CreateAndDisplayMetricItem(MetricTitle.GreenSpace, MissionRepository.metricIcons[MetricTitle.GreenSpace]);
+            // CreateAndDisplayMetricItem(MetricTitle.GreenSpace, MissionRepository.metricIcons[MetricTitle.GreenSpace]);
             CreateAndDisplayMetricItem(MetricTitle.UrbanHeat, MissionRepository.metricIcons[MetricTitle.UrbanHeat]);
             CreateAndDisplayMetricItem(MetricTitle.Budget, MissionRepository.metricIcons[MetricTitle.Budget]);
         }
@@ -100,7 +100,7 @@ public class CityMetricTopBar : MonoBehaviour
             // Free play mode: update default metrics
             UpdateMetricItem(MetricTitle.Population);
             UpdateMetricItem(MetricTitle.Happiness);
-            UpdateMetricItem(MetricTitle.GreenSpace);
+            // UpdateMetricItem(MetricTitle.GreenSpace);
             UpdateMetricItem(MetricTitle.UrbanHeat);
         }
         // Budget should always be visible
@@ -126,9 +126,9 @@ public class CityMetricTopBar : MonoBehaviour
                 case MetricTitle.Budget:
                     metricUI.UpdateValue(NumbersUtils.NumberToAbrev(cityMetricsManager.budget, "", ""));
                     break;
-                case MetricTitle.GreenSpace:
-                    metricUI.UpdateValue(cityMetricsManager.greenSpace.ToString() + "");
-                    break;
+                // case MetricTitle.GreenSpace:
+                //     metricUI.UpdateValue(cityMetricsManager.greenSpace.ToString() + "");
+                //     break;
                 case MetricTitle.UrbanHeat:
                     metricUI.UpdateValue(cityMetricsManager.urbanHeat.ToString());
                     break;

@@ -11,7 +11,7 @@ public class MetricMapping
         { BuildingMetric.capacity, MetricTitle.Population },
         { BuildingMetric.happinessImpact, MetricTitle.Happiness },
         { BuildingMetric.pollutionImpact, MetricTitle.Pollution },
-        { BuildingMetric.greenSpaceEffect, MetricTitle.GreenSpace },
+        // { BuildingMetric.greenSpaceEffect, MetricTitle.GreenSpace },
         { BuildingMetric.carbonFootprint, MetricTitle.CarbonEmission }
     };
 
@@ -31,7 +31,7 @@ public class MetricMapping
         { MetricTitle.Population, false },
         { MetricTitle.Happiness, false },
         { MetricTitle.Budget, false },
-        { MetricTitle.GreenSpace, false },
+        // { MetricTitle.GreenSpace, false },
         { MetricTitle.UrbanHeat, true },
         { MetricTitle.Pollution, true },
         { MetricTitle.Energy, false },
@@ -45,7 +45,7 @@ public class MetricMapping
         { BuildingMetric.capacity, false },           // Higher capacity (population) is good
         { BuildingMetric.happinessImpact, false },    // Higher happiness is good
         { BuildingMetric.cityRevenue, true },        // Higher revenue is good
-        { BuildingMetric.greenSpaceEffect, true },   // More green space is good
+        // { BuildingMetric.greenSpaceEffect, true },   // More green space is good
         { BuildingMetric.pollutionImpact, false },     // Higher pollution impact is bad
         { BuildingMetric.netEnergy, true },          // Higher net energy is good
         { BuildingMetric.carbonFootprint, false }      // Higher carbon footprint is bad
@@ -58,7 +58,7 @@ public class MetricMapping
         { "capacity", BuildingMetric.capacity },
         { "happinessImpact", BuildingMetric.happinessImpact },
         { "cityRevenue", BuildingMetric.cityRevenue },
-        { "greenSpaceEffect", BuildingMetric.greenSpaceEffect },
+        // { "greenSpaceEffect", BuildingMetric.greenSpaceEffect },
         { "pollutionImpact", BuildingMetric.pollutionImpact },
         { "netEnergy", BuildingMetric.netEnergy },
         { "carbonFootprint", BuildingMetric.carbonFootprint }
