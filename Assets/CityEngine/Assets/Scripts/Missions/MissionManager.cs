@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour
@@ -15,6 +16,7 @@ public class MissionManager : MonoBehaviour
 
     public Action<Mission, bool> onMissionDone;
     public Action onStartOver;
+    public Action<Mission> onMissionStarted;
     public GameObject loadingScreen;
 
 
@@ -49,21 +51,30 @@ public class MissionManager : MonoBehaviour
         LoadMissionCity(mission);
     }
 
-    public void UpdateMissionTargets(Mission mission)
+    public Mission UpdateMissionTargets(Mission mission)
     {
         // Dynamically set the target value for each mission objective based on starting city metrics
         foreach (var objective in mission.objectives)
         {
             float currentMetricValue = cityMetricsManager.GetMetricValue(objective.metricName);
+            string unit = MetricUnits.GetUnit(objective.metricName);
+            float percentChange = objective.comparisonPercentage;
+
+            //  if value is already a percentage then just increment, else calculate target based on percent change of value
 
             switch (objective.objectiveType)
             {
                 case MissionObjective.ObjectiveType.IncreaseByPercentage:
-                    objective.targetValue = currentMetricValue; // Baseline for increase
+                    // Baseline for increase
+                    objective.targetValue = unit == "%" ?
+                        currentMetricValue + objective.comparisonPercentage :
+                        currentMetricValue * (1 + percentChange / 100f);
                     break;
 
                 case MissionObjective.ObjectiveType.ReduceByPercentage:
-                    objective.targetValue = currentMetricValue; // Baseline for reduction
+                    objective.targetValue = unit == "%" ?
+                        currentMetricValue - objective.comparisonPercentage :
+                        currentMetricValue * (1 - percentChange / 100f);
                     break;
 
                 case MissionObjective.ObjectiveType.MaintainAbove:
@@ -72,6 +83,7 @@ public class MissionManager : MonoBehaviour
                     break;
             }
         }
+        return mission;
     }
 
     public bool IsMissionFreePlay()
@@ -102,8 +114,9 @@ public class MissionManager : MonoBehaviour
 
         // Reset Targets based on initial metrics (for percent change based objectives)
         cityMetricsManager.UpdateCityMetrics();
-        UpdateMissionTargets(mission);
+        mission = UpdateMissionTargets(mission);
 
+        onMissionStarted?.Invoke(mission);
         loadingScreen.SetActive(false);
     }
 

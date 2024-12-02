@@ -8,6 +8,7 @@ public class CityMetricUIItem : MonoBehaviour
     [Header("UI Components")]
     public TMP_Text labelText;
     public TMP_Text valueText;
+    public TMP_Text targetText;
     public Image iconImage;
 
     [Header("Properties")]
@@ -15,6 +16,7 @@ public class CityMetricUIItem : MonoBehaviour
     public Sprite icon;
 
     public string value = "0";
+    public string targetValue;
     public string valuePrefix = "";
     public string valueSuffix = "";
     private string unit = "";
@@ -57,6 +59,15 @@ public class CityMetricUIItem : MonoBehaviour
         UpdateValueText(newValue);
     }
 
+    public void UpdateTargetValue(string newValue)
+    {
+        targetValue = newValue;
+        targetText.gameObject.SetActive(true);
+        UpdateTargetText(targetValue);
+    }
+
+
+
     private void UpdateLabelText()
     {
         if (labelText != null)
@@ -64,6 +75,7 @@ public class CityMetricUIItem : MonoBehaviour
             labelText.text = label;
         }
     }
+
 
     private void UpdateIconImage()
     {
@@ -90,6 +102,18 @@ public class CityMetricUIItem : MonoBehaviour
         else
         {
             valueText.text = $"{newValue}{unit}";
+        }
+    }
+
+    public void UpdateTargetText(string newValue)
+    {
+        if (unitPosition == MetricUnits.UnitPosition.Before)
+        {
+            targetText.text = $"/ {unit}{newValue}";
+        }
+        else
+        {
+            targetText.text = $"/ {newValue}{unit}";
         }
     }
 

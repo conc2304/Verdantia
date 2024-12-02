@@ -21,7 +21,6 @@ namespace GreenCityBuilder.Missions
         private Mission selectedMission = null;
 
         public Button missionCloseBtn;
-        public event Action<Mission> OnMissionAccepted;
 
         private void Awake()
         {
@@ -109,7 +108,6 @@ namespace GreenCityBuilder.Missions
             FindObjectOfType<MissionManager>().StartMission(selectedMission);
             currentMissionTitle.text = missionSelectedText + selectedMission.missionName;
             OnCatalogClose();
-            OnMissionAccepted?.Invoke(selectedMission);
         }
 
         public void OnMissionOverviewClose()
