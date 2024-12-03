@@ -42,6 +42,8 @@ public class CarouselFacts : MonoBehaviour
             .Concat(FactLibrary.UrbanReforestationBenefits)
             .Concat(FactLibrary.UrbanHeatIslandEffects)
             .Concat(FactLibrary.PollutionEffects)
+            .Concat(FactLibrary.TemperatureDownFacts)
+            .Concat(FactLibrary.TemperatureUpFacts)
         ));
 
         if (facts.Count == 0)

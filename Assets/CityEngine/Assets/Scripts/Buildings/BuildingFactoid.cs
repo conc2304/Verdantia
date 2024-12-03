@@ -87,7 +87,7 @@ public class BuildingFactoid : MonoBehaviour
             // Display a random fact
             string randomFact;
             string title;
-            switch (Random.Range(0, 4))
+            switch (Random.Range(0, 6))
             {
                 case 0:
                     randomFact = FactLibrary.HealthBenefits[Random.Range(0, FactLibrary.HealthBenefits.Count)];
@@ -102,6 +102,14 @@ public class BuildingFactoid : MonoBehaviour
                     title = "Pollution Effects";
                     break;
                 case 3:
+                    randomFact = FactLibrary.TemperatureDownFacts[Random.Range(0, FactLibrary.TemperatureDownFacts.Count)];
+                    title = "Temperature Decreases";
+                    break;
+                case 4:
+                    randomFact = FactLibrary.TemperatureUpFacts[Random.Range(0, FactLibrary.TemperatureUpFacts.Count)];
+                    title = "Temperature Increases";
+                    break;
+                case 5:
                 default:
                     randomFact = FactLibrary.UrbanHeatIslandEffects[Random.Range(0, FactLibrary.UrbanHeatIslandEffects.Count)];
                     title = "Urban Heat Island Effects";

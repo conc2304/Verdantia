@@ -27,7 +27,10 @@ public static class FactLibrary
         "Urban forests act as biodiversity hotspots, providing habitat for birds, bees, and other wildlife within cities.",
         "Planting trees near roads reduces vehicle noise by up to 10 decibels, creating quieter neighborhoods.",
         "Urban reforestation projects encourage environmental stewardship and community pride among residents.",
-        "Cities with high tree cover are perceived as more attractive, increasing tourism and business opportunities."
+        "Cities with high tree cover are perceived as more attractive, increasing tourism and business opportunities.",
+        "Urban reforestation is one of the most effective ways to combat the effects of rising temperatures.",
+        "City-wide cooling improves public health, reduces energy demand, and enhances quality of life.",
+        "Balancing green spaces with infrastructure is key to creating sustainable, resilient cities."
     };
 
     public static readonly List<string> UrbanHeatIslandEffects = new List<string>
@@ -53,4 +56,34 @@ public static class FactLibrary
         "Polluted urban surfaces, covered in dust and soot, absorb more heat compared to clean surfaces, further warming the city.",
         "High levels of carbon emissions lead to global warming, indirectly intensifying urban heat island effects by raising baseline temperatures."
     };
+
+    public static readonly List<string> TemperatureUpFacts = new List<string>
+    {
+        "High temperatures in cities increase the risk of heat-related illnesses and hospitalizations.",
+        "Urban heat islands can make cities up to 7–10°F warmer than surrounding rural areas.",
+        "Rising temperatures accelerate energy demand for air conditioning, raising utility costs and emissions.",
+        "Heatwaves are becoming more frequent and intense due to climate change, amplifying urban heat effects.",
+        "Dark surfaces like asphalt and rooftops absorb and retain heat, increasing city temperatures.",
+        "Pollution traps heat in the atmosphere, worsening urban heat island effects.",
+        "Higher city temperatures reduce air quality by increasing ground-level ozone and smog.",
+        "Extreme heat stresses infrastructure, reducing the lifespan of roads, bridges, and buildings.",
+        "The lack of tree cover and green spaces in urban areas limits natural cooling mechanisms like shade and transpiration.",
+        "Unshaded pavement can reach temperatures of 120–150°F, radiating heat into the surrounding air."
+    };
+
+    public static readonly List<string> TemperatureDownFacts = new List<string> {
+        "Urban green spaces and tree cover can lower temperatures by 2–9°F through shade and evaporation.",
+        "Planting trees strategically around buildings can reduce cooling costs by up to 50%.",
+        "Parks and green roofs mitigate heat by absorbing sunlight and releasing moisture into the air.",
+        "Reflective or light-colored surfaces help cool cities by reflecting sunlight instead of absorbing it.",
+        "Replacing asphalt with permeable surfaces reduces heat absorption and improves stormwater management.",
+        "Urban reforestation reduces heat islands by increasing shade and enhancing air circulation.",
+        "Cooler cities are more energy-efficient, reducing emissions from air conditioning use.",
+        "Green corridors promote airflow, dispersing heat and improving overall urban temperature regulation.",
+        "Reducing pollution levels improves air quality and allows vegetation to cool the environment more effectively.",
+        "A single large tree can cool an area equivalent to 10 air conditioners running for 20 hours a day."
+    };
+
+
+
 }

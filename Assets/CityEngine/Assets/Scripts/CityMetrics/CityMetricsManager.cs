@@ -9,6 +9,8 @@ public class CityMetricsManager : MonoBehaviour
     // Global city metrics
     public int startingBudget = 1000000;
     public float startingTemp = 67.0f;
+    private float lowTemp;
+    private float highTemp;
     public float tempSensitivity = 0.05f; // Sensitivity factor for how much extra heat affects energy and emissions...
     public float cityTemperature { get; private set; }
     public float population { get; private set; }
@@ -37,6 +39,7 @@ public class CityMetricsManager : MonoBehaviour
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
 
+    public HeatFactModal heatFactModal;
     private CityTemperatureController cityTemperatureController;
 
 
@@ -82,7 +85,28 @@ public class CityMetricsManager : MonoBehaviour
             UpdateMonthlybudget();
             UpdateCityMetrics();
             AdvanceMonth();
+            HandleTemperatureChange();
             monthTimer = 0f;
+        }
+    }
+
+    public void HandleTemperatureChange()
+    {
+        // Trigger heat fact if conditions are met
+        if (cityTemperature != 0 && missionManager.currentMission != null)
+        {
+            if (cityTemperature >= startingTemp + 1 || highTemp >= startingTemp + 4)
+            {
+                // Trigger a heat fact pop-up
+                string randomHeatFact = heatFactModal.GetRandomHeatFact();
+                heatFactModal.TriggerFact(randomHeatFact);
+            }
+            else if (cityTemperature <= startingTemp - 1)
+            {
+                // Trigger a temperature drop fact pop-up
+                string randomTempDropFact = heatFactModal.GetRandomTempDropFact();
+                heatFactModal.TriggerFact(randomTempDropFact);
+            }
         }
     }
 
@@ -106,7 +130,6 @@ public class CityMetricsManager : MonoBehaviour
         }
 
         // Notify any systems 
-        OnMetricsUpdate?.Invoke();
         OnTimeUpdated?.Invoke(currentMonth, currentYear, missionMonthsRemaining);
         propertyRanges = buildingsMenu.GetPropertyRanges();
 
@@ -267,9 +290,11 @@ public class CityMetricsManager : MonoBehaviour
         return metrics.ContainsKey(metricName) ? metrics[metricName] : 0f;
     }
 
-    public void HandleUpdateTemperature(float avgTemp, float lowTemp, float hightTemp)
+    public void HandleUpdateTemperature(float cityAvgTemp, float cityLowTemp, float cityHighTemp)
     {
-        cityTemperature = avgTemp;
+        lowTemp = cityLowTemp;
+        highTemp = cityHighTemp;
+        cityTemperature = cityAvgTemp;
     }
 
     void OnDestroy()
