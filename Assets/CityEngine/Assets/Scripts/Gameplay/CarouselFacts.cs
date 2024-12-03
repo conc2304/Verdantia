@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,10 +37,12 @@ public class CarouselFacts : MonoBehaviour
             return;
         }
 
-        facts.AddRange(FactLibrary.HealthBenefits);
-        facts.AddRange(FactLibrary.UrbanReforestationBenefits);
-        facts.AddRange(FactLibrary.UrbanHeatIslandEffects);
-        facts.AddRange(FactLibrary.PollutionEffects);
+        facts = new List<string>(new HashSet<string>(
+            FactLibrary.HealthBenefits
+            .Concat(FactLibrary.UrbanReforestationBenefits)
+            .Concat(FactLibrary.UrbanHeatIslandEffects)
+            .Concat(FactLibrary.PollutionEffects)
+        ));
 
         if (facts.Count == 0)
         {

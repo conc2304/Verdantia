@@ -23,14 +23,104 @@ public class BuildingFactoid : MonoBehaviour
         (0f, -2000f)  // End
     };
 
+    public float idleDuration = 90f;
+    private float idleTimer;
+
+    private List<string> randomFacts;
+
+
     public string[] pastBuildings = { };
 
     public bool inProgress = false;
+    private bool isIdle = false;
+    private Coroutine idleCoroutine;
 
     private void Start()
     {
         InitializePosition();
+
+        // Load random facts from the FactLibrary
+        randomFacts = new List<string>();
+        randomFacts.AddRange(FactLibrary.HealthBenefits);
+        randomFacts.AddRange(FactLibrary.UrbanReforestationBenefits);
+        randomFacts.AddRange(FactLibrary.UrbanHeatIslandEffects);
+        randomFacts.AddRange(FactLibrary.PollutionEffects);
     }
+
+    void Update()
+    {
+        // Check for any input to reset the idle timer
+        if (Input.anyKey || Input.touchCount > 0)
+        {
+            idleTimer = 0f;
+            isIdle = false;
+
+            // Stop idle factoid cycling if active
+            if (idleCoroutine != null)
+            {
+                StopCoroutine(idleCoroutine);
+                idleCoroutine = null;
+            }
+        }
+        else
+        {
+            idleTimer += Time.deltaTime;
+
+            if (!isIdle && (idleTimer >= idleDuration))
+            {
+                isIdle = true;
+                TriggerIdleMode();
+            }
+        }
+    }
+
+    private void TriggerIdleMode()
+    {
+        Debug.Log("Idle mode activated.");
+        idleCoroutine = StartCoroutine(CycleIdleFactoids());
+    }
+
+    private IEnumerator CycleIdleFactoids()
+    {
+        while (isIdle)
+        {
+            // Display a random fact
+            // string randomFact = randomFacts[Random.Range(0, randomFacts.Count)];
+
+            string randomFact;
+            string title;
+            switch (Random.Range(0, 4))
+            {
+                case 0:
+                    randomFact = FactLibrary.HealthBenefits[Random.Range(0, FactLibrary.HealthBenefits.Count)];
+                    title = "Health Benefits";
+
+                    break;
+                case 1:
+                    randomFact = FactLibrary.UrbanReforestationBenefits[Random.Range(0, FactLibrary.UrbanReforestationBenefits.Count)];
+                    title = "Urban Reforestation Benefits";
+                    break;
+
+                case 2:
+                    randomFact = FactLibrary.PollutionEffects[Random.Range(0, FactLibrary.PollutionEffects.Count)];
+                    title = "Pollution Effects";
+                    break;
+                case 3:
+                default:
+                    randomFact = FactLibrary.UrbanHeatIslandEffects[Random.Range(0, FactLibrary.UrbanHeatIslandEffects.Count)];
+                    title = "Urban Heat Island Effects";
+                    break;
+            }
+
+
+            UpdateFactoid(title, "Did You Know?", randomFact, "https://onetreeplanted.org/blogs/stories/urban-heat-island");
+
+            // Wait for the factoid animation to complete
+            yield return AnimateFactoid(() => ResetPosition());
+        }
+    }
+
+
 
     private void InitializePosition()
     {
