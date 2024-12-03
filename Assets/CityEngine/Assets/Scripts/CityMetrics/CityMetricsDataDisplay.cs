@@ -45,13 +45,12 @@ public class CityMetricsDataDisplay : MonoBehaviour
     {
         populationUIItem.UpdateValue(cityMetricsManager.population.ToString());
         happinessUIItem.UpdateValue(cityMetricsManager.happiness.ToString());
-        budgetUIItem.UpdateValue(cityMetricsManager.budget.ToString());
-        // greenSpaceUIItem.UpdateValue(cityMetricsManager.greenSpace.ToString());
+        budgetUIItem.UpdateValue(NumbersUtils.NumberToAbrev(cityMetricsManager.budget, "", ""));
         urbanHeatUIItem.UpdateValue(cityMetricsManager.urbanHeat.ToString());
         pollutionUIItem.UpdateValue(cityMetricsManager.pollution.ToString());
-        energyUIItem.UpdateValue(cityMetricsManager.energy.ToString());
+        energyUIItem.UpdateValue(NumbersUtils.NumberToAbrev(cityMetricsManager.energy, "", "KW"));
         carbonEmissionUIItem.UpdateValue(cityMetricsManager.carbonEmission.ToString());
-        revenueUIItem.UpdateValue(cityMetricsManager.revenue.ToString());
+        revenueUIItem.UpdateValue(NumbersUtils.NumberToAbrev(cityMetricsManager.revenue, "", ""));
     }
 
 
