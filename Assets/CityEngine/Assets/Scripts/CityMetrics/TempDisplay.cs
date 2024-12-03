@@ -7,6 +7,7 @@ public class TempDisplay : MonoBehaviour
     public TMP_Text tempText;
     public TMP_Text tempLowText;
     public TMP_Text tempHighText;
+    public bool displayUnit = false;
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class TempDisplay : MonoBehaviour
         MetricTitle metricTitle = MetricTitle.CityTemperature;
         string unit = MetricUnits.GetUnit(metricTitle);
 
-        tempText.text = $"{cityTempAvg}{unit}";
+        tempText.text = $"{cityTempAvg}{(displayUnit ? unit : "")}";
 
         if (tempLowText != null) tempLowText.text = $"{cityTempLow}°";
         if (tempHighText != null) tempHighText.text = $"{cityTempHigh}°";

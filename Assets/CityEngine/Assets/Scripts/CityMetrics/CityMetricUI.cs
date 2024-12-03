@@ -10,11 +10,12 @@ public class CityMetricUIItem : MonoBehaviour
     public TMP_Text valueText;
     public TMP_Text targetText;
     public Image iconImage;
+    public Image infoImage;
 
     [Header("Properties")]
     public string label;
     public Sprite icon;
-
+    public bool displayInfoIcon = false;
     public string value = "0";
     public string targetValue;
     public string valuePrefix = "";
@@ -22,11 +23,17 @@ public class CityMetricUIItem : MonoBehaviour
     private string unit = "";
     private MetricUnits.UnitPosition unitPosition = MetricUnits.UnitPosition.After;
 
+    void Start()
+    {
+        infoImage.gameObject.SetActive(displayInfoIcon);
+    }
+
     void OnValidate()
     {
         UpdateLabelText();
         UpdateIconImage();
         UpdateValueText(value);
+        infoImage.gameObject.SetActive(displayInfoIcon);
     }
 
     public void SetLabel(string newLabel)
