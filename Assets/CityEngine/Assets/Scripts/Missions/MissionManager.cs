@@ -147,11 +147,11 @@ public class MissionManager : MonoBehaviour
     private void OnMissionFailure()
     {
         missionInProgress = false;
-
         print("Mission Failed");
         onMissionDone?.Invoke(currentMission, false);
     }
 
+    // Called by button click handler
     public void OnStartOver()
     {
         currentMission = null;

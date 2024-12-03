@@ -1008,6 +1008,5 @@ public class BuildingsMenuNew : MonoBehaviour
     public void OnDestroy()
     {
         missionManager.onStartOver -= HandleStartOver;
-
     }
 }

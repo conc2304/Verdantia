@@ -73,7 +73,6 @@ public class CameraController : MonoBehaviour
 
 
 
-
     void Start()
     {
         zoomSlider.onValueChanged.AddListener(OnZoomSliderChanged);
@@ -121,7 +120,6 @@ public class CameraController : MonoBehaviour
             else
             {
                 // DO NOTHING :: handled by City Temp Manager
-
             }
 
 

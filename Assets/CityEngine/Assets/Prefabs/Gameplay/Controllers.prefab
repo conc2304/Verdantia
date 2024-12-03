@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 783540595}
   - component: {fileID: 4596873504838643656}
   - component: {fileID: 4792170062877596470}
+  - component: {fileID: 8943927021170602758}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -216,22 +217,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingBudget: 500000
   startingTemp: 67
-  cityTempLow: Infinity
-  cityTempMax: -Infinity
+  tempSensitivity: 0.05
   currentMonth: 1
   currentYear: 2024
   monthDuration: 45
-  tempSensitivity: 0.05
+  missionMonthsRemaining: 0
   cameraController: {fileID: 783540590}
   buildingsMenu: {fileID: 0}
-  grid: {fileID: 0}
-  cityTempUpdateInterval: 6
-  temperatureMapTimeSteps: 5
-  takeStep: 1
-  toggleRestartTemp: 1
-  playTemp: 0
-  tempScaleRange: 15
-  heatAddRange: 0.5
+  heatFactModal: {fileID: 0}
 --- !u!114 &1516040887155469648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,11 +237,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673d46f7bd779d449b058ece840cd66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingTemp: 67
   diffusionRate: 20
   dissipationRate: 0.999
+  dissipationConstant: 0.9999999
+  something: 16000
   heatAddRange: 0.05
-  initialTemp: 67
   timeStep: 0.1
+  cityTempAvg: 0
+  cityTempLow: 0
+  cityTempHigh: 0
+  cameraController: {fileID: 0}
+  buildingsMenu: {fileID: 0}
+  grid: {fileID: 0}
+  takeStep: 0
+  toggleRestartTemp: 0
+  playTemp: 1
+  heatMapTempMin: 0
+  heatMapTempMax: 0
+  tempScaleRange: 15
+  cityTempUpdateRate: 3
 --- !u!114 &1024400442031631236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,6 +469,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cityMetricsManager: {fileID: 7962657566462079142}
+  timeRemainingGO: {fileID: 0}
+  loadingScreen: {fileID: 0}
+--- !u!114 &8943927021170602758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024400442031631237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e89646f746d384aac77ac552f4f168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleDuration: 60
+  onIdle:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &3396585114514160142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -473,17 +499,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlacementCursor
       objectReference: {fileID: 0}
-    - target: {fileID: 399331673632499171, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1190580588960731718, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
       propertyPath: m_VersionIndex
-      value: 1294
-      objectReference: {fileID: 0}
-    - target: {fileID: 1741271344220316777, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
+      value: 1297
       objectReference: {fileID: 0}
     - target: {fileID: 3048171511845222067, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -527,27 +545,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4605253578287316118, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
       propertyPath: m_VersionIndex
-      value: 4987
-      objectReference: {fileID: 0}
-    - target: {fileID: 5073377636627901479, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
+      value: 4990
       objectReference: {fileID: 0}
     - target: {fileID: 5274336331469734167, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
       propertyPath: m_VersionIndex
-      value: 1180
-      objectReference: {fileID: 0}
-    - target: {fileID: 5894154087259116627, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7105641794686629566, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8621399174669617671, guid: 0f816fbe4a3ce16428abf4486f6941b8, type: 3}
-      propertyPath: m_Mesh
-      value: 
+      value: 1183
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
