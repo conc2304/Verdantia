@@ -6,6 +6,7 @@ public class IdleTimer : MonoBehaviour
     public float idleDuration = 60f;
     public UnityEvent onIdle;
     private float idleTimer;
+    private bool isIdle = false;
 
     void Start()
     {
@@ -22,15 +23,16 @@ public class IdleTimer : MonoBehaviour
         if (Input.anyKey || Input.touchCount > 0)
         {
             idleTimer = 0f;
+            isIdle = false;
         }
         else
         {
             idleTimer += Time.deltaTime;
 
-            if (idleTimer >= idleDuration)
+            if (!isIdle && idleTimer >= idleDuration)
             {
-
-                idleTimer = 0f;
+                isIdle = true;
+                TriggerIdleAction();
             }
         }
     }
@@ -38,6 +40,6 @@ public class IdleTimer : MonoBehaviour
     private void TriggerIdleAction()
     {
         Debug.Log("Player has been idle for " + idleDuration + " seconds.");
-        onIdle.Invoke();
+        onIdle?.Invoke();
     }
 }
