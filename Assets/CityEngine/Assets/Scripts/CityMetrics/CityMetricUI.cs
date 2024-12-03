@@ -33,7 +33,8 @@ public class CityMetricUIItem : MonoBehaviour
         UpdateLabelText();
         UpdateIconImage();
         UpdateValueText(value);
-        infoImage.gameObject.SetActive(displayInfoIcon);
+
+        if (infoImage != null) infoImage.gameObject.SetActive(displayInfoIcon);
     }
 
     public void SetLabel(string newLabel)
