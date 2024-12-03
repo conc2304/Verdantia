@@ -85,8 +85,6 @@ public class BuildingFactoid : MonoBehaviour
         while (isIdle)
         {
             // Display a random fact
-            // string randomFact = randomFacts[Random.Range(0, randomFacts.Count)];
-
             string randomFact;
             string title;
             switch (Random.Range(0, 4))
@@ -94,13 +92,11 @@ public class BuildingFactoid : MonoBehaviour
                 case 0:
                     randomFact = FactLibrary.HealthBenefits[Random.Range(0, FactLibrary.HealthBenefits.Count)];
                     title = "Health Benefits";
-
                     break;
                 case 1:
                     randomFact = FactLibrary.UrbanReforestationBenefits[Random.Range(0, FactLibrary.UrbanReforestationBenefits.Count)];
                     title = "Urban Reforestation Benefits";
                     break;
-
                 case 2:
                     randomFact = FactLibrary.PollutionEffects[Random.Range(0, FactLibrary.PollutionEffects.Count)];
                     title = "Pollution Effects";
