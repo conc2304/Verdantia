@@ -365,28 +365,28 @@ MonoBehaviour:
   activeDotSprite: {fileID: 21300000, guid: b0c692320f39fe04f85c6adce9ec54d1, type: 3}
   inactiveDotSprite: {fileID: 21300000, guid: e4999fd7a210d0c44926b69cfa69efe3, type: 3}
   sequenceSteps:
-  - videoClip: {fileID: 0}
+  - videoClip: {fileID: 32900000, guid: beab450504c29bf4e81f84fac83cff54, type: 3}
     narration: As the new City Planner, your vision will shape its future. But every
       choice has an impact, from the air we breathe to the green spaces we cherish.
     displayDuration: 0
-  - videoClip: {fileID: 0}
+  - videoClip: {fileID: 32900000, guid: a742e10dfab1a3149849a25731ec4723, type: 3}
     narration: 'Verdantia faces challenges common to cities worldwide: pollution,
       urban heat, a demand for green space, and economic balance. Each decision you
       make will either bring relief or amplify these issues. Can you find the balance
       that ensures prosperity and sustainability?'
     displayDuration: 0
-  - videoClip: {fileID: 0}
+  - videoClip: {fileID: 32900000, guid: 41a23470988c4364d959504d77ada463, type: 3}
     narration: "As you progress, you\u2019ll face diverse missions with unique objectives.
       You\u2019ll create green spaces, manage finances, reduce pollution, and promote
       happiness across Verdantia\u2019s neighborhoods."
     displayDuration: 0
-  - videoClip: {fileID: 0}
+  - videoClip: {fileID: 32900000, guid: 5dc389a7a1ec2c946b34405c474700d7, type: 3}
     narration: "Track your progress through the city\u2019s vital metrics. Happiness
       and green spaces tell us how the people feel. The budget shows how efficiently
       the city thrives. And urban heat, pollution, and carbon emissions reveal the
       health of our environment."
     displayDuration: 0
-  - videoClip: {fileID: 0}
+  - videoClip: {fileID: 32900000, guid: e63dd40ccce421849b84325701f51b52, type: 3}
     narration: "Verdantia\u2019s future rests in your hands. Build a thriving city
       where innovation and nature coexist, where every neighborhood prospers. Are
       you ready to shape a greener, happier tomorrow?\n\nStart your first mission
