@@ -9,7 +9,7 @@ public class CarouselFacts : MonoBehaviour
     [Header("Facts Carousel Settings")]
     public RectTransform modalRect;
     [Tooltip("List of facts to display in the carousel.")]
-    public List<string> facts;
+    private List<string> facts = new List<string>();
 
     [Tooltip("Text component to display the facts.")]
     public TMP_Text factText;
@@ -36,13 +36,17 @@ public class CarouselFacts : MonoBehaviour
             return;
         }
 
+        facts.AddRange(FactLibrary.HealthBenefits);
+        facts.AddRange(FactLibrary.UrbanReforestationBenefits);
+        facts.AddRange(FactLibrary.UrbanHeatIslandEffects);
+        facts.AddRange(FactLibrary.PollutionEffects);
+
         if (facts.Count == 0)
         {
             Debug.LogError("No facts provided for the carousel.");
             return;
         }
 
-        // modalRect = GetComponent<RectTransform>();
 
         // Start the carousel coroutine
         StartCoroutine(RunCarousel());
@@ -69,7 +73,7 @@ public class CarouselFacts : MonoBehaviour
             yield return new WaitForSeconds(1);
 
             // Move to the next fact
-            currentFactIndex = (currentFactIndex + 1) % facts.Count;
+            currentFactIndex = Random.Range(0, facts.Count);
         }
     }
 
