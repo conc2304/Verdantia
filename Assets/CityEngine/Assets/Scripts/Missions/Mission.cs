@@ -37,6 +37,16 @@ public class Mission
         }
     }
 
+    public List<MetricTitle> GetMissionMetrics()
+    {
+        List<MetricTitle> metrics = new List<MetricTitle>();
+        foreach (MetricDisplay metric in missionMetrics)
+        {
+            metrics.Add(metric.metricTitle);
+        }
+
+        return metrics;
+    }
 
     public bool IsWithinTimeLimit(int currentMonth, int currentYear)
     {
