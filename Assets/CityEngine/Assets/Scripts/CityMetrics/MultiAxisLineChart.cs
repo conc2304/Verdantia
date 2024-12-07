@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class MultiAxisLineChart : MonoBehaviour
 {
 
@@ -25,7 +26,7 @@ public class MultiAxisLineChart : MonoBehaviour
         // Pass ChartArea to YAxisRenderer
         if (yAxisRenderer != null)
         {
-            yAxisRenderer.axisRect = axisRect;
+            yAxisRenderer.axisRect = axisRectLeft;
         }
     }
 
