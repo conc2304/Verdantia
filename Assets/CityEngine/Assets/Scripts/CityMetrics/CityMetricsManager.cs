@@ -20,6 +20,8 @@ public class CityMetricsManager : MonoBehaviour
     public float pollution { get; private set; }
     public float energy { get; private set; }
     public float carbonEmission { get; private set; }
+    public Dictionary<MetricTitle, List<MetricData>> metricsOverTime = new Dictionary<MetricTitle, List<MetricData>>();
+
 
     // Time-keeping variables
     public int currentMonth = 1;
@@ -49,7 +51,6 @@ public class CityMetricsManager : MonoBehaviour
         budget = startingBudget;
         cityTemperatureController.startingTemp = startingTemp;
 
-        UpdateCityMetrics();
 
         // Initialize the dictionary for easier access
         metrics = new Dictionary<MetricTitle, float>
@@ -62,6 +63,10 @@ public class CityMetricsManager : MonoBehaviour
             { MetricTitle.Population, population },
             { MetricTitle.CarbonEmission, carbonEmission },
         };
+
+        InitializeMetricsOverTime();
+        UpdateCityMetrics();
+
     }
 
     private void Awake()
@@ -75,6 +80,19 @@ public class CityMetricsManager : MonoBehaviour
     {
         HandleDateChange();
     }
+
+    private void InitializeMetricsOverTime()
+    {
+        metricsOverTime[MetricTitle.CityTemperature] = new List<MetricData>();
+        metricsOverTime[MetricTitle.UrbanHeat] = new List<MetricData>();
+        // metricsOverTime[MetricTitle.GreenSpace] = new List<MetricData>();
+        metricsOverTime[MetricTitle.Budget] = new List<MetricData>();
+        metricsOverTime[MetricTitle.Happiness] = new List<MetricData>();
+        metricsOverTime[MetricTitle.Pollution] = new List<MetricData>();
+        metricsOverTime[MetricTitle.Population] = new List<MetricData>();
+        metricsOverTime[MetricTitle.CarbonEmission] = new List<MetricData>();
+    }
+
 
     public void HandleDateChange()
     {
@@ -243,6 +261,7 @@ public class CityMetricsManager : MonoBehaviour
         happiness = Mathf.Clamp(happiness, 0f, 100f);
 
         CleanMetrics();
+        AddMetricsToHistory();
         OnMetricsUpdate?.Invoke();
     }
 
@@ -270,6 +289,23 @@ public class CityMetricsManager : MonoBehaviour
         energy = (float)Math.Round(energy);
         carbonEmission = (float)Math.Round(carbonEmission);
         revenue = (float)Math.Round(revenue);
+    }
+
+    private void AddMetricsToHistory()
+    {
+        float monthElapsed = (float)Math.Round(monthTimer / monthDuration, 1) * 10;
+        float yearMonth = float.Parse(string.Format("{0}{1:D2}.{2}", currentYear, currentMonth, monthElapsed));
+
+        print($"YearMonth {yearMonth} {monthElapsed}");
+
+        metricsOverTime[MetricTitle.CityTemperature].Add(new MetricData { Value = cityTemperature, YearMonth = yearMonth });
+        metricsOverTime[MetricTitle.UrbanHeat].Add(new MetricData { Value = urbanHeat, YearMonth = yearMonth });
+        // metricsOverTime[MetricTitle.GreenSpace].Add(new MetricData { Value = greenSpace, YearMonth = yearMonth });
+        metricsOverTime[MetricTitle.Budget].Add(new MetricData { Value = budget, YearMonth = yearMonth });
+        metricsOverTime[MetricTitle.Happiness].Add(new MetricData { Value = happiness, YearMonth = yearMonth });
+        metricsOverTime[MetricTitle.Pollution].Add(new MetricData { Value = pollution, YearMonth = yearMonth });
+        metricsOverTime[MetricTitle.Population].Add(new MetricData { Value = population, YearMonth = yearMonth });
+        metricsOverTime[MetricTitle.CarbonEmission].Add(new MetricData { Value = carbonEmission, YearMonth = yearMonth });
     }
 
     public void AddRevenue(float amount)

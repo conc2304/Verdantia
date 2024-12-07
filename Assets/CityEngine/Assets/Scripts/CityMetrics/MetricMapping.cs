@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class MetricMapping
 {
@@ -27,7 +29,7 @@ public class MetricMapping
     // Mapping for metrics that should be inverted
     public static readonly Dictionary<MetricTitle, bool> ShouldInvertMetric = new Dictionary<MetricTitle, bool>
     {
-        { MetricTitle.CityTemperature, false },  // TODO evaluate this
+        { MetricTitle.CityTemperature, false },
         { MetricTitle.Population, false },
         { MetricTitle.Happiness, false },
         { MetricTitle.Budget, false },
@@ -63,6 +65,23 @@ public class MetricMapping
         { "netEnergy", BuildingMetric.netEnergy },
         { "carbonFootprint", BuildingMetric.carbonFootprint }
     };
+
+    public static Color GetMetricColor(MetricTitle metricTitle)
+    {
+        // Generate a unique color for each metric 
+        switch (metricTitle)
+        {
+            case MetricTitle.CityTemperature: return Color.red;
+            case MetricTitle.UrbanHeat: return Color.yellow;
+            // case MetricTitle.GreenSpace: return Color.green;
+            case MetricTitle.Budget: return Color.blue;
+            case MetricTitle.Happiness: return Color.magenta;
+            case MetricTitle.Pollution: return Color.gray;
+            case MetricTitle.Population: return Color.cyan;
+            case MetricTitle.CarbonEmission: return new Color(1.0f, 0.5f, 0.0f); // orange
+            default: return Color.white;
+        }
+    }
 
     // Method to determine if a metric's scale should be inverted
     public static bool CityMetricIsInverted(MetricTitle metricTitle)
