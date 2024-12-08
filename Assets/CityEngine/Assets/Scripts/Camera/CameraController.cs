@@ -250,8 +250,7 @@ public class CameraController : MonoBehaviour
             BuildingProperties roadProps = newestRoad.GetComponent<BuildingProperties>();
             float lastPopupDelay = roadProps.ApplyProximityEffects();
             // Check for proximity boosts from existing buildings onto this new ROAD
-            ApplyNeighborEffectsToSelf(roadProps, lastPopupDelay);
-
+            roadProps.ApplyNeighborEffectsToSelf(lastPopupDelay);
 
             cityChanged = true;
             return new Dictionary<string, object> { { "status", true }, { "msg", "Road added! You can add more." } };
@@ -365,14 +364,6 @@ public class CameraController : MonoBehaviour
                 }
             }
 
-            // Apply Proximity Effects
-            // Check for proximity boosts from new building on surrounding buildings
-            float lastPopupDelay = 0;
-            // first display from new building on surrounding buildings
-            lastPopupDelay += targetBuildProp.ApplyProximityEffects();
-            // then show surrounding buildings on new building
-            ApplyNeighborEffectsToSelf(targetBuildProp, lastPopupDelay);
-
             spawner.carsCount += 1;
             spawner.citizensCount += 2;
             allBuildings.Add(targetNew);
@@ -393,13 +384,23 @@ public class CameraController : MonoBehaviour
             );
 
 
-
             //building animation
             BuildConstruction buildConstProp = targetBuildProp.buildConstruction.GetComponent<BuildConstruction>();
             if (isInitializing)
             {
                 buildConstProp.buildTime = 0.00001f;
-                // buildConstProp.builded = true;
+                buildConstProp.isInitialLoad = true;
+                // NOTE if we wait for building construction to apply effects of buildings loaded from memory,
+                // then we risk completing the missions before they even start
+
+                // Apply Proximity Effects
+                // Check for proximity boosts from new building on surrounding buildings
+                float lastPopupDelay = 0;
+                // first display from new building on surrounding buildings
+                lastPopupDelay += targetBuildProp.ApplyProximityEffects();
+                // then show surrounding buildings on new building
+                targetBuildProp.ApplyNeighborEffectsToSelf(lastPopupDelay);
+
             }
             buildConstProp.buildingProperties = targetBuildProp;
             buildConstProp.roadGenerator = roadGenerator;
@@ -419,66 +420,7 @@ public class CameraController : MonoBehaviour
         return new Dictionary<string, object> { { "status", false }, { "msg", "Unable to add building." } };
     }
 
-    // Mirrors BuildingProperties.ApplyPromiximtyEffect() but inversed : Neigherbors to self
-    public void ApplyNeighborEffectsToSelf(BuildingProperties self, float delayTime)
-    {
-        bool includeSpaces = false;
-        List<Transform> allCityStructures = GetAllBuildings(includeSpaces);
 
-        // Aggregate all of the boosts and do them once
-        BuildingProperties targetProps = self;
-
-        Dictionary<BuildingMetric, float> aggregatedBoosts = new Dictionary<BuildingMetric, float>();
-        foreach (Transform existingBuildingTransform in allCityStructures)
-        {
-            if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue;
-            if (self.gameObject.GetInstanceID() == existingBuildingTransform.gameObject.GetInstanceID()) continue;
-
-            // Check if new ROAD is in the proximity radius of the existing building
-            BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
-            if (existingBuilding != null && existingBuilding.IsWithinProximity(self, existingBuilding.effectRadius))
-            {
-
-                // dissipate the value of the effect over the distance
-                Vector3 positionA = self.GetBuildingPopUpPlacement();
-                positionA.y = 0;
-                Vector3 positionB = existingBuilding.GetBuildingPopUpPlacement();
-                positionB.y = 0;
-                float roundedDistance = (float)Math.Round(Vector3.Distance(positionA, positionB)) / gridSize; // in number of grid spaces
-                float distanceMultiplier = Math.Min(1, roundedDistance / existingBuilding.effectRadius);
-
-                // Aggregate proximity effects from the existing building to the new building
-                foreach (MetricBoost boost in existingBuilding.proximityEffects)
-                {
-                    if (aggregatedBoosts.ContainsKey(boost.metricName))
-                    {
-                        aggregatedBoosts[boost.metricName] += (float)NumbersUtils.RoundToNearestHalf(boost.boostValue * distanceMultiplier); ;
-                    }
-                    else
-                    {
-                        aggregatedBoosts[boost.metricName] = (float)NumbersUtils.RoundToNearestHalf(boost.boostValue * distanceMultiplier); ;
-                    }
-                }
-            }
-        }
-
-        int metricCount = 0;
-        foreach (KeyValuePair<BuildingMetric, float> boostMetric in aggregatedBoosts)
-        {
-            // start the self applyboost at x% of the previous set of neighbording boosts
-            float popupDelay = (delayTime * 0.66f) + (metricCount * 6);
-            metricCount++;
-
-            MetricBoost boost = new MetricBoost
-            {
-                metricName = boostMetric.Key,
-                boostValue = boostMetric.Value
-            };
-
-            // Apply the aggregated boost to the roadProps or a specific building
-            self.ApplyBoost(self, boost, popupDelay);
-        }
-    }
 
     // Check if building is next to any chainable buildings, chainable buildings can chain off of themselves
     public bool CanBuildingChain(Transform targetNew)

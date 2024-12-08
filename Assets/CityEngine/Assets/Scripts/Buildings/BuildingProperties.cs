@@ -151,6 +151,7 @@ public class BuildingProperties : MonoBehaviour
 
         foreach (Transform existingBuilding in allBuildings)
         {
+            // Skip self, Skip "Spaces" and anything not a "Building"
             if (gameObject.GetInstanceID() == existingBuilding.gameObject.GetInstanceID())
             {
                 continue;
@@ -160,7 +161,6 @@ public class BuildingProperties : MonoBehaviour
             {
                 continue;
             }
-            // Skip self, Skip "Spaces" and anything not a "Building"
 
             BuildingProperties building = existingBuilding.GetComponent<BuildingProperties>();
             // Check if building[i] is within THIS building's effect radius
@@ -192,6 +192,67 @@ public class BuildingProperties : MonoBehaviour
         }
 
         return maxDelay;
+    }
+
+    // Mirrors BuildingProperties.ApplyPromiximtyEffect() but inversed : Neigherbors to self
+    public void ApplyNeighborEffectsToSelf(float delayTime)
+    {
+        BuildingProperties self = this;
+        bool includeSpaces = false;
+        List<Transform> allCityStructures = FindObjectOfType<CameraController>().GetAllBuildings(includeSpaces);
+
+        // Aggregate all of the boosts and do them once
+
+        Dictionary<BuildingMetric, float> aggregatedBoosts = new Dictionary<BuildingMetric, float>();
+        foreach (Transform existingBuildingTransform in allCityStructures)
+        {
+            if (!(existingBuildingTransform.CompareTag("Building") || existingBuildingTransform.CompareTag("Road"))) continue;
+            if (self.gameObject.GetInstanceID() == existingBuildingTransform.gameObject.GetInstanceID()) continue;
+
+            // Check if NEW Building is in the proximity radius of the EXISTING building
+            BuildingProperties existingBuilding = existingBuildingTransform.GetComponent<BuildingProperties>();
+            if (existingBuilding != null && existingBuilding.IsWithinProximity(self, existingBuilding.effectRadius))
+            {
+
+                // dissipate the value of the effect over the distance
+                Vector3 positionA = self.GetBuildingPopUpPlacement();
+                positionA.y = 0;
+                Vector3 positionB = existingBuilding.GetBuildingPopUpPlacement();
+                positionB.y = 0;
+                float roundedDistance = (float)Math.Round(Vector3.Distance(positionA, positionB)) / gridSize; // in number of grid spaces
+                float distanceMultiplier = Math.Min(1, roundedDistance / existingBuilding.effectRadius);
+
+                // Aggregate proximity effects from the existing building to the new building
+                foreach (MetricBoost boost in existingBuilding.proximityEffects)
+                {
+                    if (aggregatedBoosts.ContainsKey(boost.metricName))
+                    {
+                        aggregatedBoosts[boost.metricName] += (float)NumbersUtils.RoundToNearestHalf(boost.boostValue * distanceMultiplier); ;
+                    }
+                    else
+                    {
+                        aggregatedBoosts[boost.metricName] = (float)NumbersUtils.RoundToNearestHalf(boost.boostValue * distanceMultiplier); ;
+                    }
+                }
+            }
+        }
+
+        int metricCount = 0;
+        foreach (KeyValuePair<BuildingMetric, float> boostMetric in aggregatedBoosts)
+        {
+            // start the self applyboost at x% of the previous set of neighbording boosts
+            float popupDelay = (delayTime * 0.66f) + (metricCount * 6);
+            metricCount++;
+
+            MetricBoost boost = new MetricBoost
+            {
+                metricName = boostMetric.Key,
+                boostValue = boostMetric.Value
+            };
+
+            // Apply the aggregated boost to the target (self)
+            ApplyBoost(self, boost, popupDelay);
+        }
     }
 
 
@@ -373,7 +434,6 @@ public class BuildingProperties : MonoBehaviour
             if (currentValue is int intValue && deltaValue is int deltaInt)
             {
                 field.SetValue(component, intValue + deltaInt);
-                // Debug.Log($"Field '{propertyName}' modified to: {intValue + deltaInt}");
                 return;
             }
             if (currentValue is float floatValue && deltaValue is float deltaFloat)
@@ -383,7 +443,7 @@ public class BuildingProperties : MonoBehaviour
             }
         }
 
-        Debug.LogError($"Property or field '{propertyName}' not found, or type mismatch in {type.Name}.");
+        Debug.LogWarning($"Property or field '{propertyName}' not found, or type mismatch in {type.Name}.");
     }
 
     public Factoid? GetRandomBuildingFact()

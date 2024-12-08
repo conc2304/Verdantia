@@ -12,6 +12,7 @@ public class BuildConstruction : MonoBehaviour
     public float timer;
 
     public bool builded;
+    public bool isInitialLoad = false;  // for buildings that are being loaded from memory, aka not spawned by player action
 
     public ParticleSystem startBuildPS;
     public ParticleSystem finishBuildPS;
@@ -81,6 +82,20 @@ public class BuildConstruction : MonoBehaviour
 
             if (timer > 1)
             {
+
+                // NOTE if we wait for building construction to apply effects of buildings loaded from memory,
+                // then we risk completing the missions before they even start
+                if (!isInitialLoad)
+                {
+                    // Apply Proximity Effects
+                    // Check for proximity boosts from new building on surrounding buildings
+                    float lastPopupDelay = 0;
+                    // first display from new building on surrounding buildings
+                    lastPopupDelay += buildingProperties.ApplyProximityEffects();
+                    // then show surrounding buildings on new building
+                    buildingProperties.ApplyNeighborEffectsToSelf(lastPopupDelay);
+                }
+
                 Destroy(this.gameObject);
                 buildingProperties.buildConstruction = null;
                 buildingProperties.environment.SetActive(true);
