@@ -50,13 +50,17 @@ public class MissionComplete : MonoBehaviour
 
     public void HandleMissionComplete(Mission mission, bool status)
     {
+        Debug.Log("HandleMissionComplete");
+
         string msg = status ? mission.successMessage : mission.failedMessage;
-        UpdateModal(status, mission.missionName, msg);
         OpenModal();
+        UpdateModal(status, mission.missionName, msg);
     }
 
     public void OpenModal()
     {
+
+        Debug.Log("OpenModal");
         modalGO.SetActive(false);
     }
 
@@ -64,6 +68,9 @@ public class MissionComplete : MonoBehaviour
 
     public void UpdateModal(bool missionCompleted, string missionName, string completedMessage)
     {
+
+        Debug.Log("UpdateModal");
+
         if (missionStatusText != null)
         {
             missionStatusText.text = missionCompleted ? completedMessage : uncompletedMessage;

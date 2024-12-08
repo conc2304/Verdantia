@@ -760,7 +760,7 @@ MonoBehaviour:
   - {fileID: 8538671939875801243}
   buildConstruction: {fileID: 3468565513508231131}
   buildingHigh: 0.25
-  buildingTime: 2
+  buildingTime: 240
   spaceWidth: 3
   buildingName: Dense Forest
   buildingDescription: "The Dense Forest is a vital green space that brings immense

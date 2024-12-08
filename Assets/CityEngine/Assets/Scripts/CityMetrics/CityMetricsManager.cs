@@ -53,6 +53,15 @@ public class CityMetricsManager : MonoBehaviour
 
 
         // Initialize the dictionary for easier access
+        UpdateDictionary();
+
+        InitializeMetricsOverTime();
+        UpdateCityMetrics();
+
+    }
+
+    public void UpdateDictionary()
+    {
         metrics = new Dictionary<MetricTitle, float>
         {
             { MetricTitle.CityTemperature, cityTemperature },
@@ -63,10 +72,6 @@ public class CityMetricsManager : MonoBehaviour
             { MetricTitle.Population, population },
             { MetricTitle.CarbonEmission, carbonEmission },
         };
-
-        InitializeMetricsOverTime();
-        UpdateCityMetrics();
-
     }
 
     private void Awake()
@@ -261,6 +266,7 @@ public class CityMetricsManager : MonoBehaviour
         happiness = Mathf.Clamp(happiness, 0f, 100f);
 
         CleanMetrics();
+        UpdateDictionary();
         AddMetricsToHistory();
         OnMetricsUpdate?.Invoke();
     }
@@ -289,6 +295,17 @@ public class CityMetricsManager : MonoBehaviour
         energy = (float)Math.Round(energy);
         carbonEmission = (float)Math.Round(carbonEmission);
         revenue = (float)Math.Round(revenue);
+
+        metrics = new Dictionary<MetricTitle, float>
+        {
+            { MetricTitle.CityTemperature, cityTemperature },
+            { MetricTitle.UrbanHeat, urbanHeat },
+            { MetricTitle.Budget, budget },
+            { MetricTitle.Happiness, happiness },
+            { MetricTitle.Pollution, pollution },
+            { MetricTitle.Population, population },
+            { MetricTitle.CarbonEmission, carbonEmission },
+        };
     }
 
     private void AddMetricsToHistory()

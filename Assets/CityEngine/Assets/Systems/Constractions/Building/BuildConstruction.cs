@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildConstruction : MonoBehaviour
 {
 
-    float buildTime = 10;
+    public float buildTime = 10;
     float buildingHigh = 1;
 
     Renderer[] rend;
@@ -87,7 +87,7 @@ public class BuildConstruction : MonoBehaviour
                 builded = true;
                 finishBuildPS.transform.parent = null;
                 finishBuildPS.Play();
-                
+
                 if (target.connectToRoad)
                     roadGenerator.ConnectBuildingToRoad(target.transform);
             }

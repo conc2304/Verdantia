@@ -22,7 +22,6 @@ namespace GreenCityBuilder.Missions
 
             // AddMetric(MetricTitle.GreenSpace);
             AddMetric(MetricTitle.Happiness);
-            AddMetric(MetricTitle.UrbanHeat);
 
             objectives = new MissionObjective[]
             {

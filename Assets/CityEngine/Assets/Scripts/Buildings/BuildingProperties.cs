@@ -298,19 +298,19 @@ public class BuildingProperties : MonoBehaviour
     {
         if (CompareTag("Space"))
         {
-            Debug.LogError("Attempting to show floating value for SPACE");
+            Debug.LogWarning("Attempting to show floating value for SPACE");
             return;
         }
         if (floatingValuePrefab == null)
         {
-            Debug.LogError($"{name} has no floating value prefab");
+            Debug.LogWarning($"{name} has no floating value prefab");
             return;
         };
         MetricTitle? metricTitle = MetricMapping.GetMetricTitle(metric);
 
         if (!metricTitle.HasValue)
         {
-            Debug.LogError($"{metric} has no city metric mapping");
+            Debug.LogWarning($"{metric} has no city metric mapping");
             return;
         }
 

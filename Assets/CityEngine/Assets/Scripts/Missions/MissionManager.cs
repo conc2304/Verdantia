@@ -60,6 +60,8 @@ public class MissionManager : MonoBehaviour
             string unit = MetricUnits.GetUnit(objective.metricName);
             float percentChange = objective.comparisonPercentage;
 
+            Debug.Log($"Unit: {unit}");
+
             //  if value is already a percentage then just increment, else calculate target based on percent change of value
 
             switch (objective.objectiveType)
@@ -82,6 +84,7 @@ public class MissionManager : MonoBehaviour
                     // For these, the target value should already be preset in the mission data
                     break;
             }
+            print($"objective Target | {objective.metricName}, {objective.targetValue}");
         }
         return mission;
     }
@@ -114,8 +117,8 @@ public class MissionManager : MonoBehaviour
 
         // Reset Targets based on initial metrics (for percent change based objectives)
         cityMetricsManager.UpdateCityMetrics();
-        mission = UpdateMissionTargets(mission);
 
+        mission = UpdateMissionTargets(mission);
         onMissionStarted?.Invoke(mission);
         loadingScreen.SetActive(false);
     }

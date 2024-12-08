@@ -393,11 +393,14 @@ public class CameraController : MonoBehaviour
             );
 
 
-            // if (target.GetComponent<BuildingProperties>().connectToRoad)
-            // //   roadGenerator.ConnectBuildingToRoad(target);
 
             //building animation
             BuildConstruction buildConstProp = targetBuildProp.buildConstruction.GetComponent<BuildConstruction>();
+            if (isInitializing)
+            {
+                buildConstProp.buildTime = 0.00001f;
+                // buildConstProp.builded = true;
+            }
             buildConstProp.buildingProperties = targetBuildProp;
             buildConstProp.roadGenerator = roadGenerator;
             buildConstProp.target = targetBuildProp;
@@ -535,6 +538,7 @@ public class CameraController : MonoBehaviour
 
             // Check if building is next to any of the existing building's additional slaces
             other.TryGetComponent(out BuildingProperties buildingProps);
+            if (buildingProps == null || buildingProps.additionalSpace == null) continue;
             foreach (Transform additionalSpace in buildingProps.additionalSpace)
             {
                 if (IsAdjacent(targetNew.position, additionalSpace.position))
@@ -869,6 +873,7 @@ public class CameraController : MonoBehaviour
             if (!(building.CompareTag("Building") || (building.CompareTag("Space") && includeSpaces))) continue;
             if (building.name.ToLower().Contains("spawn")) continue;
 
+
             building.TryGetComponent(out BuildingProperties buildingProps);
             if (!buildingProps)
             {
@@ -876,7 +881,12 @@ public class CameraController : MonoBehaviour
                 continue;
             };
 
-            cityBuildings.Add(building);
+            // only count buildings if they are built
+            if (buildingProps.buildConstruction != null && buildingProps.buildConstruction.builded == true)
+            {
+                cityBuildings.Add(building);
+            }
+
         }
 
         return cityBuildings;

@@ -83,7 +83,7 @@ public class CityMetricTopBar : MonoBehaviour
         MetricUnits.UnitPosition position = MetricUnits.GetUnitPosition(metricTitle);
         metricUI.SetUnit(unit, position);
 
-        // if objective has a target then display it
+        // if metric has a target objective then display it
         if (targetValue != null)
         {
             metricUI.UpdateTargetValue(targetValue);
