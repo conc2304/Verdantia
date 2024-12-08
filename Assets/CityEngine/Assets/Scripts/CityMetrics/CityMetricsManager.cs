@@ -116,7 +116,7 @@ public class CityMetricsManager : MonoBehaviour
     public void HandleTemperatureChange()
     {
         // Trigger heat fact if conditions are met
-        if (cityTemperature != 0 && missionManager.currentMission != null)
+        if (cityTemperature != 0 && missionManager.currentMission != null && missionManager.missionInProgress)
         {
             if (cityTemperature >= startingTemp + 1 || highTemp >= startingTemp + 4)
             {
@@ -313,7 +313,6 @@ public class CityMetricsManager : MonoBehaviour
         float monthElapsed = (float)Math.Round(monthTimer / monthDuration, 1) * 10;
         float yearMonth = float.Parse(string.Format("{0}{1:D2}.{2}", currentYear, currentMonth, monthElapsed));
 
-        print($"YearMonth {yearMonth} {monthElapsed}");
 
         metricsOverTime[MetricTitle.CityTemperature].Add(new MetricData { Value = cityTemperature, YearMonth = yearMonth });
         metricsOverTime[MetricTitle.UrbanHeat].Add(new MetricData { Value = urbanHeat, YearMonth = yearMonth });

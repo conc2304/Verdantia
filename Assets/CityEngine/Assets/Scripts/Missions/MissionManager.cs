@@ -9,7 +9,7 @@ public class MissionManager : MonoBehaviour
 
     public Mission currentMission = null;
 
-    private bool missionInProgress = false;
+    public bool missionInProgress = false;
     private SaveDataTrigger saveDataTrigger;
     private CameraController cameraController;
     public GameObject timeRemainingGO;
@@ -29,7 +29,8 @@ public class MissionManager : MonoBehaviour
 
     private void Start()
     {
-        cityMetricsManager.OnTimeUpdated += OnTimeUpdated;
+        cityMetricsManager.OnTimeUpdated += HandleTimeUpdated;
+        cityMetricsManager.OnMetricsUpdate += HandleMetricsUpdated;
         loadingScreen.SetActive(false);
     }
 
@@ -59,8 +60,6 @@ public class MissionManager : MonoBehaviour
             float currentMetricValue = cityMetricsManager.GetMetricValue(objective.metricName);
             string unit = MetricUnits.GetUnit(objective.metricName);
             float percentChange = objective.comparisonPercentage;
-
-            Debug.Log($"Unit: {unit}");
 
             //  if value is already a percentage then just increment, else calculate target based on percent change of value
 
@@ -123,7 +122,7 @@ public class MissionManager : MonoBehaviour
         loadingScreen.SetActive(false);
     }
 
-    private void OnTimeUpdated(int currentMonth, int currentYear, int missionMonthsRemaining)
+    private void HandleTimeUpdated(int currentMonth, int currentYear, int missionMonthsRemaining)
     {
         if (!missionInProgress) return;
 
@@ -135,6 +134,23 @@ public class MissionManager : MonoBehaviour
             OnMissionSuccess();
         }
         else if (!currentMission.IsWithinTimeLimit(currentMonth, currentYear))
+        {
+            OnMissionFailure();
+        }
+    }
+
+    private void HandleMetricsUpdated()
+    {
+        if (!missionInProgress) return;
+
+        if (currentMission != null && IsMissionFreePlay()) return;
+
+        // Check if mission objectives are met
+        if (currentMission.CheckMissionStatus(cityMetricsManager, cityMetricsManager.currentMonth, cityMetricsManager.currentYear))
+        {
+            OnMissionSuccess();
+        }
+        else if (!currentMission.IsWithinTimeLimit(cityMetricsManager.currentMonth, cityMetricsManager.currentYear))
         {
             OnMissionFailure();
         }
@@ -165,6 +181,9 @@ public class MissionManager : MonoBehaviour
     private void OnDestroy()
     {
         if (cityMetricsManager != null)
-            cityMetricsManager.OnTimeUpdated -= OnTimeUpdated;
+        {
+            cityMetricsManager.OnTimeUpdated -= HandleTimeUpdated;
+            cityMetricsManager.OnMetricsUpdate -= HandleMetricsUpdated;
+        }
     }
 }

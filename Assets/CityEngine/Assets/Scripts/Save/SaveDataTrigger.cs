@@ -55,7 +55,7 @@ public class SaveDataTrigger : MonoBehaviour
 
         }
 
-        print(buildingsStr);
+        // print(buildingsStr);
         cityLoadInitialized = true;
     }
 

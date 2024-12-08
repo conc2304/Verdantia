@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 9040222469351622205}
   - component: {fileID: 192133515762488829}
   - component: {fileID: 1116074437653733591}
+  - component: {fileID: 8673802948088310219}
   m_Layer: 0
   m_Name: TouchGUI
   m_TagString: Untagged
@@ -559,7 +560,7 @@ MonoBehaviour:
   missionSelector: {fileID: 8790289272023359984}
   introSequenceGO: {fileID: 8970040614510026363}
   gameUIContainerGO: {fileID: 5234955664147290296}
-  heroTitleBar: {fileID: 0}
+  heroTitleBar: {fileID: 7003353299792018994}
 --- !u!114 &9040222469351622205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,6 +703,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8673802948088310219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451817918945984747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9836341e9be2b848bf814ae3ca66f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionManager: {fileID: 0}
+  modalGO: {fileID: 3416088886818756250}
+  missionStatusText: {fileID: 6630325973951400495}
+  missionNameText: {fileID: 6490771898848085638}
+  messageText: {fileID: 5958806685994307987}
+  metricsParent: {fileID: 4234824574441048581}
+  learnMoreLink: https://onetreeplanted.org/blogs/stories/urban-heat-island
+  QRCodeImageLeft: {fileID: 8052460372150586490}
+  QRCodeImageRight: {fileID: 0}
+  completedMessage: Completed
+  uncompletedMessage: Not Completed
 --- !u!1 &471590061963501782
 GameObject:
   m_ObjectHideFlags: 0

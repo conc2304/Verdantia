@@ -61,12 +61,12 @@ public class MissionComplete : MonoBehaviour
     {
 
         Debug.Log("OpenModal");
-        modalGO.SetActive(false);
+        modalGO.SetActive(true);
     }
 
 
 
-    public void UpdateModal(bool missionCompleted, string missionName, string completedMessage)
+    public void UpdateModal(bool missionCompleted, string missionName, string message)
     {
 
         Debug.Log("UpdateModal");
@@ -83,7 +83,7 @@ public class MissionComplete : MonoBehaviour
 
         if (messageText != null)
         {
-            messageText.text = completedMessage;
+            messageText.text = message;
         }
     }
 

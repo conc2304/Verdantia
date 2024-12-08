@@ -101,6 +101,8 @@ public class BuildingsMenuNew : MonoBehaviour
 
         missionManager = FindObjectOfType<MissionManager>();
         missionManager.onStartOver += HandleStartOver;
+        missionManager.onMissionDone += HandleMissionComplete;
+
 
         CreateTypes();
 
@@ -153,7 +155,6 @@ public class BuildingsMenuNew : MonoBehaviour
     private void InitializeTouchGui()
     {
         // initial state
-        // print("InitializeGui");
         if (displayData != null) displayData.OnModalClose();
 
         cameraController.placementCursor.SetActive(false);
@@ -1005,8 +1006,17 @@ public class BuildingsMenuNew : MonoBehaviour
         InitializeTouchGui();
     }
 
+    public void HandleMissionComplete(Mission mission, bool status)
+    {
+        // gameObject.SetActive(false);
+        InitializeTouchGui();
+        gameUIContainerGO.SetActive(false);
+
+    }
+
     public void OnDestroy()
     {
         missionManager.onStartOver -= HandleStartOver;
+        missionManager.onMissionDone -= HandleMissionComplete;
     }
 }
