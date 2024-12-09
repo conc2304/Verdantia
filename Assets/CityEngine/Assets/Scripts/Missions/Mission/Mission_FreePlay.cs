@@ -14,7 +14,7 @@ namespace GreenCityBuilder.Missions
             timeLimitInMonths = 0;
             missionIcon = Resources.Load<Sprite>("Missions/mission_icon-free_play");
             difficulty = DifficultyLevel.Medium;
-            startingBudget = 750000; // TODO Set a reasonable starting budget
+            startingBudget = 950000; // TODO Set a reasonable starting budget
             objectives = new MissionObjective[0];
             missionCityFileName = null;
         }

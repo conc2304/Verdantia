@@ -843,14 +843,9 @@ public class CameraController : MonoBehaviour
     }
 
 
-    // public IEnumerator ResetGameField()
-    // {
-    //     StartCoroutine(ResetGameFieldCoroutine());
-    // }
+
 
     public IEnumerator ResetGameField()
-
-
     {
         // Clear windmill blades
         WindmillsController windmillsController = FindObjectOfType<WindmillsController>();
@@ -866,7 +861,6 @@ public class CameraController : MonoBehaviour
         spawner.citizensSpawnPoints.Clear();
         spawner.carsSpawnPoints.Clear();
         cityMetricsManager.ResetMetrics();
-
 
         // Destroy child objects in batches
         yield return DestroyChildrenInBatches(buildingsParent);
@@ -885,9 +879,17 @@ public class CameraController : MonoBehaviour
     private IEnumerator DestroyChildrenInBatches(Transform parent)
     {
         int counter = 0;
-        float destructionBatchSize = 10; // Number of objects to destroy per frame
+        int destructionBatchSize = 20; // Number of objects to destroy per frame
 
+        // Store children in a temporary list to avoid modifying the collection while iterating
+        List<Transform> children = new List<Transform>();
         foreach (Transform child in parent)
+        {
+            children.Add(child);
+        }
+
+        // Iterate through the list and destroy the objects
+        foreach (Transform child in children)
         {
             Destroy(child.gameObject);
             counter++;
@@ -900,54 +902,9 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        // Ensure all remaining children are destroyed
+        // Ensure all children are cleared
         yield return null;
     }
 
-    // public void ResetGameField()
-    // {
-    //     // Destroy all child objects in the buildingsParent
-    //     foreach (Transform child in buildingsParent)
-    //     {
-    //         Destroy(child.gameObject);
-    //     }
-
-    //     // Destroy all child objects in the roadsParent
-    //     foreach (Transform child in roadsParent)
-    //     {
-    //         Destroy(child.gameObject);
-    //     }
-
-    //     foreach (Transform child in citizensParent)
-    //     {
-    //         Destroy(child.gameObject);
-    //     }
-
-    //     foreach (Transform child in carsParent)
-    //     {
-    //         Destroy(child.gameObject);
-    //     }
-
-    //     WindmillsController windmillsController = FindObjectOfType<WindmillsController>();
-    //     windmillsController.blades.Clear();
-
-
-    //     // Clear tracking lists
-    //     allBuildings.Clear();
-    //     roadGenerator.allRoads.Clear();
-
-    //     // Reset metrics and counters
-    //     spawner.carsCount = 0;
-    //     spawner.citizensCount = 0;
-    //     spawner.citizensSpawnPoints.Clear();
-    //     spawner.carsSpawnPoints.Clear(); ;
-    //     cityMetricsManager.ResetMetrics(); // Create a method to reset all city metrics if needed.
-
-    //     // Reset any other gameplay-related objects or states
-    //     forestObj.ForEach(forest => forest.gameObject.SetActive(true)); // Reset forest objects if applicable.
-    //     cityChanged = false;
-
-    //     Debug.Log("Playing field has been reset.");
-    // }
 }
 

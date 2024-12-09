@@ -322,6 +322,7 @@ public class CityTemperatureController : MonoBehaviour
         int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridSizeZ - 1);
         int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridSizeZ - 1);
 
+        print($"{minGridX} {maxGridX} {minGridZ} {maxGridZ}");
         // Calculate the average temperature within city bounds
         float totalTemperature = 0f;
         int count = 0;
@@ -341,10 +342,10 @@ public class CityTemperatureController : MonoBehaviour
             }
         }
 
-        float averageTemperature = count > 0 ? totalTemperature / count : 0;
+        float averageTemperature = count > 0 ? totalTemperature / count : startingTemp;
         cityTempAvg = (float)Math.Round(averageTemperature);
-        cityTempLow = (float)Math.Round(cityTempLow);
-        cityTempHigh = (float)Math.Round(cityTempHigh);
+        cityTempLow = count > 0 ? (float)Math.Round(cityTempLow) : startingTemp;
+        cityTempHigh = count > 0 ? (float)Math.Round(cityTempHigh) : startingTemp;
 
         return (cityTempAvg, cityTempLow, cityTempHigh);
     }

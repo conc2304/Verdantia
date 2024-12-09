@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public static class HeatMapUtils
                     Mathf.InverseLerp(heatMax, heatMin, dataGrid[x, z]) :
                     Mathf.InverseLerp(heatMin, heatMax, dataGrid[x, z]);
 
-                normalizedHeat = dataGrid[x, z] == float.NegativeInfinity ? 0.5f : normalizedHeat;
+                normalizedHeat = dataGrid[x, z] == float.NegativeInfinity || float.IsNaN(dataGrid[x, z]) ? 0.5f : normalizedHeat;
 
                 // Use the gradient to get the color at the normalized heat value
                 Color heatColor = heatGradient.Evaluate(normalizedHeat);

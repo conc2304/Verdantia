@@ -78,6 +78,7 @@ public class CityMetricsManager : MonoBehaviour
     {
         cityTemperatureController = FindObjectOfType<CityTemperatureController>();
         missionManager = FindObjectOfType<MissionManager>();
+        missionManager.onMissionStarted += HandleMissionStarted;
         cityTemperatureController.OnTempUpdated += HandleUpdateTemperature;
     }
 
@@ -111,6 +112,11 @@ public class CityMetricsManager : MonoBehaviour
             HandleTemperatureChange();
             monthTimer = 0f;
         }
+    }
+
+    public void HandleMissionStarted(Mission mission)
+    {
+        budget = mission.startingBudget;
     }
 
     public void HandleTemperatureChange()
@@ -262,6 +268,7 @@ public class CityMetricsManager : MonoBehaviour
         // Calculate overall city happiness
         // Calculate normalization factor (adjust based on city size and population)
         float normalizationFactor = Mathf.Max(1, totalCityBuildings + totalPopulation); // Prevent division by zero
+        population = Math.Max(population, totalPopulation);
         happiness += totalHappinessImpact / normalizationFactor;
         happiness = Mathf.Clamp(happiness, 0f, 100f);
 
@@ -285,6 +292,8 @@ public class CityMetricsManager : MonoBehaviour
         revenue = 0;
         // Budget does not get reset
     }
+
+
 
     private void CleanMetrics()
     {
@@ -352,6 +361,7 @@ public class CityMetricsManager : MonoBehaviour
     void OnDestroy()
     {
         cityTemperatureController.OnTempUpdated -= HandleUpdateTemperature;
+        missionManager.onMissionStarted -= HandleMissionStarted;
     }
 
 }
