@@ -100,6 +100,8 @@ public class IntroSequenceManager : MonoBehaviour
 
         mainGameUI.SetActive(false);
         missionSelector.SetActive(false);
+
+        ShowCurrentStep();
     }
 
     private void OnDisable()
