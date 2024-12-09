@@ -45,6 +45,7 @@ public class BuildConstruction : MonoBehaviour
 
     public void StartBuild()
     {
+        buildingProperties.isBuilt = false;
         environment.SetActive(true);
 
         buildingHigh = buildingProperties.buildingHigh;
@@ -96,6 +97,7 @@ public class BuildConstruction : MonoBehaviour
                     buildingProperties.ApplyNeighborEffectsToSelf(lastPopupDelay);
                 }
 
+                buildingProperties.isBuilt = true;
                 Destroy(this.gameObject);
                 buildingProperties.buildConstruction = null;
                 buildingProperties.environment.SetActive(true);

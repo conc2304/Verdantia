@@ -74,8 +74,6 @@ public class CityMetricUIItem : MonoBehaviour
         UpdateTargetText(targetValue);
     }
 
-
-
     private void UpdateLabelText()
     {
         if (labelText != null)

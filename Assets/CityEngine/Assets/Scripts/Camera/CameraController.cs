@@ -123,9 +123,9 @@ public class CameraController : MonoBehaviour
             }
 
 
+            cityMetricsManager.UpdateCityMetrics();
             if (saveDataTrigger.cityLoadInitialized)
             {
-                cityMetricsManager.UpdateCityMetrics();
                 cityTemperatureController.StepSimulation();
             }
         }
@@ -386,8 +386,15 @@ public class CameraController : MonoBehaviour
 
             //building animation
             BuildConstruction buildConstProp = targetBuildProp.buildConstruction.GetComponent<BuildConstruction>();
+            buildConstProp.buildingProperties = targetBuildProp;
+            buildConstProp.roadGenerator = roadGenerator;
+            buildConstProp.target = targetBuildProp;
+            buildConstProp.StartBuild();
+            buildConstProp.cameraController = this;
+
             if (isInitializing)
             {
+                targetBuildProp.isBuilt = true;
                 buildConstProp.buildTime = 0.00001f;
                 buildConstProp.isInitialLoad = true;
                 // NOTE if we wait for building construction to apply effects of buildings loaded from memory,
@@ -400,13 +407,8 @@ public class CameraController : MonoBehaviour
                 lastPopupDelay += targetBuildProp.ApplyProximityEffects();
                 // then show surrounding buildings on new building
                 targetBuildProp.ApplyNeighborEffectsToSelf(lastPopupDelay);
-
             }
-            buildConstProp.buildingProperties = targetBuildProp;
-            buildConstProp.roadGenerator = roadGenerator;
-            buildConstProp.target = targetBuildProp;
-            buildConstProp.StartBuild();
-            buildConstProp.cameraController = this;
+
 
             //menu
             buildingMenu.grid.enabled = false;
@@ -815,7 +817,6 @@ public class CameraController : MonoBehaviour
             if (!(building.CompareTag("Building") || (building.CompareTag("Space") && includeSpaces))) continue;
             if (building.name.ToLower().Contains("spawn")) continue;
 
-
             building.TryGetComponent(out BuildingProperties buildingProps);
             if (!buildingProps)
             {
@@ -824,7 +825,7 @@ public class CameraController : MonoBehaviour
             };
 
             // only count buildings if they are built
-            if (buildingProps.buildConstruction != null && buildingProps.buildConstruction.builded == true)
+            if (buildingProps.isBuilt == true)
             {
                 cityBuildings.Add(building);
             }
@@ -841,8 +842,6 @@ public class CameraController : MonoBehaviour
             forestObj[i].gameObject.SetActive(true);
         }
     }
-
-
 
 
     public IEnumerator ResetGameField()

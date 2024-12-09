@@ -98,6 +98,8 @@ public class BuildingProperties : MonoBehaviour
 
     private SaveDataTrigger sdt;
 
+    public bool isBuilt = true;
+
     void Start()
     {
         demolitionCost = demolitionCost != 0 ? demolitionCost : (int)(constructionCost * 0.25f);

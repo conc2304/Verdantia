@@ -189,7 +189,6 @@ public class CityMetricsManager : MonoBehaviour
         bool includeSpaces = false;
         List<Transform> cityBuildings = cameraController.GetAllBuildings(includeSpaces);
         int totalCityBuildings = cityBuildings.Count;
-        float totalPopulation = 0;
 
         const float BaseWeight = 5f;        // Intrinsic weight for low population buildings
 
@@ -206,7 +205,7 @@ public class CityMetricsManager : MonoBehaviour
             building.TryGetComponent(out BuildingProperties buildingProps);
             if (!buildingProps)
             {
-                Debug.LogError("Building Props is Null for : " + building.name);
+                Debug.LogWarning("Building Props is Null for : " + building.name);
                 continue;
             }
 
@@ -255,7 +254,6 @@ public class CityMetricsManager : MonoBehaviour
 
             // Accumulate weight and population
             totalWeight += populationWeight;
-            totalPopulation += buildingProps.capacity;
 
             // Apply adjusted metrics
             urbanHeat += (int)adjustedHeatContribution;
@@ -267,8 +265,10 @@ public class CityMetricsManager : MonoBehaviour
 
         // Calculate overall city happiness
         // Calculate normalization factor (adjust based on city size and population)
-        float normalizationFactor = Mathf.Max(1, totalCityBuildings + totalPopulation); // Prevent division by zero
-        population = Math.Max(population, totalPopulation);
+        float normalizationFactor = Mathf.Max(1, totalCityBuildings + population); // Prevent division by zero
+        urbanHeat = urbanHeat / totalCityBuildings;
+
+        Debug.Log($"Total Pop: {population}");
         happiness += totalHappinessImpact / normalizationFactor;
         happiness = Mathf.Clamp(happiness, 0f, 100f);
 
