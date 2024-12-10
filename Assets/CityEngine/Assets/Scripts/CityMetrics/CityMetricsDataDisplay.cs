@@ -22,8 +22,7 @@ public class CityMetricsDataDisplay : MonoBehaviour
     public CityMetricUIItem energyUIItem;
     public CityMetricUIItem carbonEmissionUIItem;
     public CityMetricUIItem revenueUIItem;
-    public CityMetricUIItem incomeUIItem;
-    public CityMetricUIItem expensesUIItem;
+
 
 
     void Start()

@@ -83,7 +83,6 @@ public class MissionManager : MonoBehaviour
                     // For these, the target value should already be preset in the mission data
                     break;
             }
-            print($"objective Target | {objective.metricName}, {objective.targetValue}");
         }
         return mission;
     }

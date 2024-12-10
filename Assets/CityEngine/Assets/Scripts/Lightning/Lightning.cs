@@ -16,6 +16,7 @@ public class Lightning : MonoBehaviour
     public bool switchDayNight = false;
 
     public float dayTime = 30;
+    public bool disableNight = true;
 
     float timer;
 
@@ -27,8 +28,8 @@ public class Lightning : MonoBehaviour
 
     void Update()
     {
+        if (disableNight) return;
         timer += Time.deltaTime;
-
         if (timer > dayTime)
             switchDayNight = true;
 

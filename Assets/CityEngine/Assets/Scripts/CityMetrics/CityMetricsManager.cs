@@ -57,7 +57,6 @@ public class CityMetricsManager : MonoBehaviour
 
         InitializeMetricsOverTime();
         UpdateCityMetrics();
-
     }
 
     public void UpdateDictionary()
@@ -117,6 +116,9 @@ public class CityMetricsManager : MonoBehaviour
     public void HandleMissionStarted(Mission mission)
     {
         budget = mission.startingBudget;
+        missionMonthsRemaining = missionManager.currentMission.GetMonthsRemaining(currentMonth, currentYear);
+        OnTimeUpdated?.Invoke(currentMonth, currentYear, missionMonthsRemaining);
+        OnMetricsUpdate?.Invoke();
     }
 
     public void HandleTemperatureChange()
@@ -268,7 +270,6 @@ public class CityMetricsManager : MonoBehaviour
         float normalizationFactor = Mathf.Max(1, totalCityBuildings + population); // Prevent division by zero
         urbanHeat = urbanHeat / totalCityBuildings;
 
-        Debug.Log($"Total Pop: {population}");
         happiness += totalHappinessImpact / normalizationFactor;
         happiness = Mathf.Clamp(happiness, 0f, 100f);
 

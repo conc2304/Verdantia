@@ -69,8 +69,8 @@ public class CityTemperatureController : MonoBehaviour
 
         gridTileSize = cameraController.gridSize;
 
-        gridSizeX = grid.gridSizeX / gridTileSize;
-        gridSizeZ = grid.gridSizeZ / gridTileSize;
+        gridSizeX = Math.Max(grid.gridSizeX / gridTileSize, 100);
+        gridSizeZ = Math.Max(grid.gridSizeZ / gridTileSize, 100);
 
 
         RestartSimulation();
@@ -141,7 +141,12 @@ public class CityTemperatureController : MonoBehaviour
 
     public void UpdateTemperatureMetric()
     {
-        (cityTempAvg, cityTempLow, cityTempHigh) = GetCityTemps(cityTempGrid);
+        var (_cityTempAvg, _cityTempLow, _cityTempHigh) = GetCityTemps(cityTempGrid);
+
+        if (float.IsNaN(_cityTempAvg) || float.IsNaN(_cityTempLow) || float.IsNaN(_cityTempHigh)) return;
+
+        (cityTempAvg, cityTempLow, cityTempHigh) = (_cityTempAvg, _cityTempLow, _cityTempHigh);
+
         OnTempUpdated?.Invoke(cityTempAvg, cityTempLow, cityTempHigh);
         OnTempGridUpdated?.Invoke(
             cityTempGrid,
@@ -205,7 +210,17 @@ public class CityTemperatureController : MonoBehaviour
 
     public float[,] CalculateBuildingsHeat()
     {
-        float[,] buildingHeatGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, 0f);
+        bool includeSpaces = true;
+        List<Transform> allBuildings = cameraController.GetAllBuildings(includeSpaces);
+
+        Debug.Log($"ALL Building Count @ cacl | {allBuildings.Count}");
+
+        float[,] buildingHeatGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, 0f);  // No contribution by default
+        if (allBuildings.Count <= 1)
+        {
+            Debug.LogWarning("all buildings count is 1 or less");
+            return buildingHeatGrid;
+        };
 
         int rescaleVal = gridTileSize;
 
@@ -217,8 +232,6 @@ public class CityTemperatureController : MonoBehaviour
         totalCarbonAccumulation = 0;
 
         // First, determine all occupied positions
-        bool includeSpaces = true;
-        List<Transform> allBuildings = cameraController.GetAllBuildings(includeSpaces);
 
         foreach (Transform building in allBuildings)
         {
@@ -317,11 +330,13 @@ public class CityTemperatureController : MonoBehaviour
     private (float cityTempAvg, float cityTempLow, float cityTempHigh) GetCityTemps(float[,] temps, int padding = 5)
     {
         // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
+        print($"{cityBoarderMinX} {cityBoarderMaxX} {cityBoarderMinZ} {cityBoarderMaxZ}");
         int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridSizeX - 1);
         int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridSizeX - 1);
         int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridSizeZ - 1);
         int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridSizeZ - 1);
 
+        // if ()
         print($"{minGridX} {maxGridX} {minGridZ} {maxGridZ}");
         // Calculate the average temperature within city bounds
         float totalTemperature = 0f;

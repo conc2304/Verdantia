@@ -57,6 +57,16 @@ public class CarouselFacts : MonoBehaviour
         StartCoroutine(RunCarousel());
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    private void OnEnable()
+    {
+        if (facts.Count > 0) StartCoroutine(RunCarousel());
+    }
+
     private IEnumerator RunCarousel()
     {
         while (true)

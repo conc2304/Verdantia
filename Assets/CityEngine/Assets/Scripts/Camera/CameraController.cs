@@ -409,6 +409,7 @@ public class CameraController : MonoBehaviour
                 targetBuildProp.ApplyNeighborEffectsToSelf(lastPopupDelay);
             }
 
+            StartCoroutine(UpdateMetricsOnBuilt(buildConstProp.buildTime));
 
             //menu
             buildingMenu.grid.enabled = false;
@@ -420,6 +421,12 @@ public class CameraController : MonoBehaviour
         }
 
         return new Dictionary<string, object> { { "status", false }, { "msg", "Unable to add building." } };
+    }
+
+    private IEnumerator UpdateMetricsOnBuilt(float buildTime)
+    {
+        yield return new WaitForSeconds(buildTime);
+        cityMetricsManager.UpdateCityMetrics();
     }
 
 
@@ -801,14 +808,11 @@ public class CameraController : MonoBehaviour
     {
         List<Transform> cityBuildings = new List<Transform>();
 
-        // cityBuildings.AddRange(roadGenerator.allRoads);
-
         foreach (Transform road in roadGenerator.allRoads)
         {
             if (road.name.ToLower().Contains("spawn")) continue;
             cityBuildings.Add(road);
         }
-
 
         // allBuildings contians buildings, spaces,
         foreach (Transform building in allBuildings)
@@ -890,7 +894,7 @@ public class CameraController : MonoBehaviour
         // Iterate through the list and destroy the objects
         foreach (Transform child in children)
         {
-            Destroy(child.gameObject);
+            if (child && child.gameObject) Destroy(child.gameObject);
             counter++;
 
             // After destroying a batch, wait for the next frame

@@ -39,10 +39,9 @@ public class BuildingsMenuNew : MonoBehaviour
 
     public GameObject mainMenu;
     public GameObject navigationGui;
-    public Toggle heatmapToggle;
-    public Color heatmapOffColor = Color.white;
-    public Color heatmapOnColor = new(1f, 0.498f, 0.055f, 1f);
+
     public TMP_Dropdown heatmapDropdown;
+    public TMP_Dropdown heatmapDropdownActionGroup;
     private static string drowpDownLabel = "<i>  Heat Map Type</i>";
     private List<string> heatmapOptionsList = new List<string> { drowpDownLabel, "City Temperature" };
 
@@ -130,6 +129,7 @@ public class BuildingsMenuNew : MonoBehaviour
 
         InitializeHeatmapDropdownList();
         heatmapDropdown.onValueChanged.AddListener(OnDropdownValueChanged);
+        heatmapDropdownActionGroup.onValueChanged.AddListener(OnDropdownValueChanged);
     }
 
     private void Awake()
@@ -142,9 +142,13 @@ public class BuildingsMenuNew : MonoBehaviour
 
     private void InitializeHeatmapDropdownList()
     {
-        heatmapDropdown.ClearOptions();
         heatmapOptionsList.AddRange(propertyRanges.Keys.Select(key => StringsUtils.ConvertToLabel(key)).ToList());
+
+        heatmapDropdown.ClearOptions();
         heatmapDropdown.AddOptions(heatmapOptionsList);
+
+        heatmapDropdownActionGroup.ClearOptions();
+        heatmapDropdownActionGroup.AddOptions(heatmapOptionsList);
     }
 
     private bool IsMissionSelected()
@@ -551,11 +555,6 @@ public class BuildingsMenuNew : MonoBehaviour
     public void OnHeatMapToggle()
     {
         cameraController.ToggleHeatMapView();
-
-        ColorBlock colorBlock = heatmapToggle.colors;
-        colorBlock.normalColor = cameraController.heatmapActive ? heatmapOnColor : heatmapOffColor;
-        colorBlock.selectedColor = cameraController.heatmapActive ? heatmapOnColor : heatmapOffColor;
-        heatmapToggle.colors = colorBlock;
     }
 
 
