@@ -41,12 +41,11 @@ public static class SaveSystem
             Debug.Log("Save file not found at: " + path);
             return null;
         }
-
     }
 
     public static string FormatFileName(string name)
     {
-        return ($"binary_{name}.fun");
+        return $"binary_{name}.fun";
     }
 
 }

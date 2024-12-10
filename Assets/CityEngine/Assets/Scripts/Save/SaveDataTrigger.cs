@@ -100,12 +100,12 @@ public class SaveDataTrigger : MonoBehaviour
         SaveSystem.SaveBuildings(buildingsPropertiesBuilded, fileName);
     }
 
-    public void BuildingDataLoad(string cityFileName)
+    public void BuildingDataLoad(string fileName)
     {
         bool spawnInitialization = true;
         cityLoadInitialized = false;
 
-        data = SaveSystem.LoadBuildings(cityFileName);
+        data = SaveSystem.LoadBuildings(fileName);
         if (data != null)
         {
             for (int i = 0; i < data.length; i++)
