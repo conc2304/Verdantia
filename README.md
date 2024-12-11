@@ -72,5 +72,7 @@ This project uses the following vendor packages from the Unity Asset Store:
 - **[Stylized Solarpunk City](https://assetstore.unity.com/packages/3d/environments/sci-fi/stylized-solarpunk-city-267031)**: A set of building blocks to create solarpunk city environment, perfect for futuristic urban settings.
 - **[Simple Button Set 01](https://assetstore.unity.com/packages/2d/gui/icons/simple-button-set-01-153979)**: A collection of simple, customizable buttons for UI design, used throughout the project for interactive elements.
 - **[Joystick Pack](https://assetstore.unity.com/packages/tools/input-management/joystick-pack-107631)**: A comprehensive joystick input management system for enhanced user controls and gameplay interaction. Used for camera navigation from the touch kiosk.
+- **[Easy QR Code Generator & Encoder](https://assetstore.unity.com/packages/tools/easy-qr-code-generator-encoder-37821)**: A tool for generating and encoding QR codes, used in this project for interactive and informational elements.
+
 
 I would like to thank the developers of these packages for providing these tools and resources.
