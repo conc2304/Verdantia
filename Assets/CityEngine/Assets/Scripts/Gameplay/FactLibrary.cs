@@ -83,7 +83,4 @@ public static class FactLibrary
         "Reducing pollution levels improves air quality and allows vegetation to cool the environment more effectively.",
         "A single large tree can cool an area equivalent to 10 air conditioners running for 20 hours a day."
     };
-
-
-
 }
