@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Handles the spawning of citizens and vehicles (including ambulances and industrial cars) in the city simulation. 
+It maintains lists of spawn points and dynamically adds objects to the scene at regular intervals.
+**/
 public class Spawner : MonoBehaviour
 {
 

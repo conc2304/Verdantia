@@ -1,8 +1,15 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
+
+/**
+Manages the lifecycle and state of missions within the game and handles starting missions, 
+tracking mission progress, checking for success or failure conditions, and resetting the game field when necessary. 
+It integrates with city metrics to dynamically adjust mission objectives and listens for metric updates or time progression to evaluate mission outcomes. 
+It supports "free play" and mission-specific modes, using coroutines to load mission-specific city data while displaying a loading screen. 
+It also includes events for mission start, completion, and reset, ensuring other game systems can respond appropriately to mission changes.
+**/
 public class MissionManager : MonoBehaviour
 {
     public CityMetricsManager cityMetricsManager;

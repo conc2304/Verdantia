@@ -1,8 +1,11 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/**
+Manages the behavior of a trackpad interface in the city builder game, 
+allowing players to interact with the game by positioning a "bullseye" for building or demolishing actions.
+**/
 public class TrackPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     public bool isTracking = false;

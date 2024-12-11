@@ -1,6 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Defines a Mission class for managing game missions. 
+Each mission includes details such as name, objectives, starting budget, time limits, difficulty, and associated metrics. 
+Functionality:
+Add and retrieve mission metrics, including their icons.
+Check if the mission is within its time limit and calculate remaining months.
+Validate if all mission objectives are met using data from a CityMetricsManager.
+Format time limits and difficulty for display.
+Retrieve icons for specific metrics.
+The class supports dynamic setup and validation of missions within the game, ensuring objectives and time constraints are managed effectively.
+**/
 public class Mission
 {
     public string missionName;

@@ -1,6 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Defines a specific mission in the Green City Builder game where players must increase the city's budget by 25% while 
+maintaining low carbon emissions and stable citizen happiness. 
+dIt includes mission details such as objectives, time limits, starting budget, difficulty level, success/failure messages, 
+and associated metrics like Budget, Carbon Emission, and Happiness. 
+
+The mission encourages eco-friendly infrastructure development and strategic financial management to achieve sustainability goals.
+**/
 namespace GreenCityBuilder.Missions
 {
     public class BudgetBalanceMission : Mission

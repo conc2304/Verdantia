@@ -1,6 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged except for initialization flag, and flexible filenames)
+
+Handles saving and loading city-building game data, including buildings and roads. 
+It serializes properties like position, rotation, and timers into SaveProperties and saves them using SaveSystem. 
+On load, it recreates buildings and roads from saved data by instantiating prefabs and restoring their properties.  
+It integrates with the CameraController to ensure proper placement and behavior in the game, enabling persistence and seamless gameplay continuity as well as loading city mission levels.
+**/
 
 public class SaveDataTrigger : MonoBehaviour
 {

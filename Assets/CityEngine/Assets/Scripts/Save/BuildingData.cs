@@ -1,9 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+data structure used for saving and loading building-related information in a city-building game. 
+It stores building properties such as indices, levels, positions, rotations, and timers. 
+Initializes the data from an array of building properties, converting positional and rotational data into arrays for serialization. 
+Facilitates saving and restoring building states during gameplay.
+**/
 
 [System.Serializable]
-public class BuildingData 
+public class BuildingData
 {
     public int length;
     public int[] buildingIndex;
@@ -47,5 +52,5 @@ public class BuildingData
         rotation = new float[length][];
         timer = new float[length];
     }
-    
+
 }

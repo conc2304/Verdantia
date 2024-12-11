@@ -1,7 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
+
+
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Custom editor tool for Unity that visually enhances the PathTarget objects in the Scene view. 
+It draws gizmos (visual indicators) to represent the PathTarget's position, width, and connections to other PathTargets (previous, next, and branches). 
+The gizmos use different colors to indicate specific connections (e.g., red for previous targets, green for next targets) 
+and provide a clear visual aid for designing and debugging path networks in the Unity editor.
+**/
 
 [InitializeOnLoad()]
 public class PathTargetEditor

@@ -2,10 +2,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using GreenCityBuilder.Missions;
 
+/**
+Manages the display and updating of city metrics in a top bar UI, either for specific mission objectives or for general "free play" mode. 
+It dynamically creates metric UI items based on the current mission or the default metrics for free play, 
+updates them in response to metric changes, and ensures metrics like the budget are always displayed. 
+It listens for mission start events and metric updates, using this information to update the displayed values and relevant labels. 
+This script integrates closely with CityMetricsManager and MissionManager to provide real-time feedback 
+to the player about the state of the city and mission progress.
+**/
 public class CityMetricTopBar : MonoBehaviour
 {
     public CityMetricsManager cityMetricsManager;
-    // public MissionCatalog missionCatalog;
     public MissionManager missionManager;
     public Transform missionMetricsContainer;
     public GameObject metricItemPrefab;

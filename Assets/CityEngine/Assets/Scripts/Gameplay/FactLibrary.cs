@@ -1,5 +1,12 @@
 using System.Collections.Generic;
 
+/**
+Centralized library of categorized facts related to environmental and urban topics. 
+It organizes these facts into various static lists, such as Health Benefits, Urban Reforestation Benefits, 
+Urban Heat Island Effects, Pollution Effects, and others. 
+These facts are stored as strings and are designed to be used in other parts of the application, 
+such as carousel displays or educational features, to inform users about the positive impacts of green spaces and the challenges of urbanization.
+**/
 public static class FactLibrary
 {
     public static readonly List<string> HealthBenefits = new List<string>

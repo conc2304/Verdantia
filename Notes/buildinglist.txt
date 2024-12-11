@@ -87,11 +87,6 @@ Small Park,
  Dense Forest, 
  Green Factory, 
 
-UnityEngine.MonoBehaviour:print (object)
-SaveDataTrigger:Awake () (at Assets/CityEngine/Assets/Scripts/Save/SaveDataTrigger.cs:54)
-
-
-
 Dictionary Properties:
 Key: constructionCost, Min: 0, Max: 3000000
 Key: demolitionCost, Min: 0, Max: 0

@@ -1,6 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Defines an extreme-level mission in the Green City Builder game. 
+Players are tasked with reducing pollution by 40% while maintaining positive revenue and population growth. 
+With a starting budget of $27,000,000 and a 3-year time limit, players must implement green energy, 
+eco-friendly factory upgrades, and green infrastructure to improve the city's health and sustainability. 
+Success highlights the impact of green initiatives on reducing pollution and fostering growth, 
+while failure underscores the risks of inaction. 
+Metrics include pollution, revenue, and population.
+**/
 namespace GreenCityBuilder.Missions
 {
     public class PollutionControlMission : Mission

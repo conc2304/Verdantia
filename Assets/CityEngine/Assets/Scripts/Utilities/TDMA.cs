@@ -1,6 +1,14 @@
-using System;
-
 // Tri Diagonal Matrix Solver Algorithm
+
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+
+Implements the Thomas algorithm (also known as the Tri-Diagonal Matrix Algorithm) 
+to solve a system of linear equations represented by a tridiagonal matrix. 
+This algorithm solves the system in two main steps: forward elimination (modifying the lower, diagonal, and upper matrices) 
+and backward substitution to compute the solution vector. 
+It operates in-place to reduce memory usage and returns the solution as an array of floats.
+**/
 public static class TDMA
 {
     public static float[] SolveInPlace(float[] lower, float[] diagonal, float[] upper, float[] rightSide)
@@ -25,21 +33,4 @@ public static class TDMA
 
         return x;
     }
-
-    // public static void Main()
-    // {
-    //     // Example of a tridiagonal system
-    //     double[] lower = { 1.0, 1.0, 1.0 };  // Lower diagonal (subdiagonal)
-    //     double[] diagonal = { 4.0, 4.0, 4.0, 4.0 };  // Main diagonal
-    //     double[] upper = { 1.0, 1.0, 1.0 };  // Upper diagonal (superdiagonal)
-    //     double[] b = { 5.0, 5.0, 5.0, 5.0 };  // Right-hand side
-
-    //     double[] solution = SolveInPlace(lower, diagonal, upper, b);
-
-    //     Console.WriteLine("Solution:");
-    //     foreach (var val in solution)
-    //     {
-    //         Console.WriteLine(val);
-    //     }
-    // }
 }

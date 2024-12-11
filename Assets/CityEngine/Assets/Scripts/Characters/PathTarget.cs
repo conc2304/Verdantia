@@ -1,6 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+defines a PathTarget, a node in a network of paths used for navigation in the game. 
+It includes functionality for branching and random position selection within a defined width.
+**/
 
 public class PathTarget : MonoBehaviour
 {

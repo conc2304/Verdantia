@@ -1,5 +1,11 @@
 using System.Collections.Generic;
 
+/**
+This file provides a utility class for managing units associated with different metrics in the game:
+A dictionary (Units) maps MetricTitle values to their corresponding unit strings (e.g., $, kW, °F)
+and the position of the unit (before or after the value).
+This class standardizes how metric values are displayed across the UI, ensuring consistent formatting with units.
+**/
 public static class MetricUnits
 {
     public enum UnitPosition

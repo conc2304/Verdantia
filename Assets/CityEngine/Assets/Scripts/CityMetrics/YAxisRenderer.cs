@@ -2,6 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+enders Y-axes for a multi-metric line chart, with tick marks and labels for each metric displayed. 
+It dynamically generates axes based on provided metrics, assigning colors, ranges, and units specific to each metric. 
+The axes and labels are positioned and styled to align with the chart's dimensions, allowing for clear visualization of multiple metrics simultaneously.
+**/
+
 public class YAxisRenderer : MonoBehaviour
 {
     [System.Serializable]

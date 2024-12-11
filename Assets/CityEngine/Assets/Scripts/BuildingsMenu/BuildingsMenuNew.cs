@@ -6,9 +6,43 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using System.Data;
+
+
+/**
+manages the building selection and placement interface in the city builder game, 
+providing players with an intuitive way to interact with different building types, view their stats, and manage construction.
+
+Key features include:
+
+Building Menu System:
+
+Displays categories and individual building types for selection.
+Allows navigation through building categories using drag-and-swipe gestures.
+Highlights buildings that are unavailable due to budget or resource constraints.
+Building Placement:
+
+Supports placing buildings or roads and demolishing structures using a trackpad-like interface.
+Provides visual feedback for placement errors, such as insufficient budget or energy.
+Automatically adjusts the UI to show relevant options based on the player's current task (e.g., building or demolition).
+Heatmap Integration:
+
+Allows toggling between various heatmaps (e.g., city temperature) to help players make informed decisions about building placement.
+Dynamic Stat Display:
+
+Shows detailed stats for selected buildings, including construction costs, energy usage, and environmental impacts.
+Highlights key information like over-budget costs in red for easy identification.
+Mission and City Stats Integration:
+
+Interfaces with the mission system to display relevant objectives and stats.
+Provides an overview of city-wide metrics through a dedicated stats display panel.
+Interactive Factoids:
+
+Displays educational factoids about buildings after successful placement, linking gameplay to real-world urban reforestation benefits.
+This script enhances the user experience by offering a comprehensive, 
+interactive menu for managing city-building activities while educating players about sustainable development concepts.
+**/
 
 
 public class BuildingsMenuNew : MonoBehaviour

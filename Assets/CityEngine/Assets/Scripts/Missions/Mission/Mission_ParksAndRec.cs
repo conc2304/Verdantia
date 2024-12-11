@@ -1,6 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Defines an easy-level mission in the Green City Builder game. 
+Players must increase happiness by 7% and maintain the city’s temperature below 70°F 
+by strategically adding parks and green spaces near residential areas. 
+With a starting budget of $500,000 and a 2-year time limit, 
+the mission focuses on improving community well-being and demonstrating the cooling effects of greenery. 
+Success highlights the benefits of green spaces for happiness and health, 
+while failure underscores their importance for urban quality of life. 
+Metrics include happiness and city temperature.
+**/
 namespace GreenCityBuilder.Missions
 {
     public class ParksAndRecMission : Mission

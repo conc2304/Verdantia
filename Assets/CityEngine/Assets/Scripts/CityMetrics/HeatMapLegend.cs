@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using TMPro;
 using System;
 
+/**
+Manages the heatmap legend, a UI component that visually represents the scale of heatmap values using a gradient. 
+It generates a gradient texture for the legend, updates labels for minimum, midpoint, and maximum values, and toggles visibility. 
+The gradient dynamically adapts to the metric being displayed and can be oriented horizontally or vertically.
+**/
 public class HeatMapLegend : MonoBehaviour
 {
 

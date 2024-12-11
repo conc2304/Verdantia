@@ -1,6 +1,12 @@
 ﻿
 using UnityEngine;
 
+/**
+controls a winter weather simulation in Unity. 
+When the "Y" key is pressed, it toggles the winterWeather state, activating or deactivating snowfall by adjusting the particle system's emission rate.
+ Additionally, it smoothly modifies a shader parameter (_Winter) over time, creating a gradual transition between winter and non-winter states. 
+The timer variable ensures the effect transitions smoothly at a set pace (adjusted by dividing Time.deltaTime by 4).
+**/
 public class WinterController : MonoBehaviour
 {
 

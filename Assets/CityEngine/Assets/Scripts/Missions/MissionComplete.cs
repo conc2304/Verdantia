@@ -1,8 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
+/**
+Handles the UI for displaying mission completion status. 
+It listens to the mission manager for mission completion or restart events, 
+and updates a modal with the mission's status, name, and message upon completion. 
+The class also generates QR codes for a "Learn More" link, which are displayed in the modal. 
+It ensures proper cleanup by unsubscribing from events on destruction.
+**/
 
 public class MissionComplete : MonoBehaviour
 {

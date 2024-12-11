@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Controls the movement and rotation of characters in the game, providing smooth navigation toward a designated target.
+**/
 public class CharacterController : MonoBehaviour
 {
 
@@ -26,7 +30,7 @@ public class CharacterController : MonoBehaviour
     {
         if (stop)
         {
-            if(startSpeedMovement > 0)
+            if (startSpeedMovement > 0)
                 startSpeedMovement -= Time.deltaTime * 10;
         }
         else
@@ -45,7 +49,7 @@ public class CharacterController : MonoBehaviour
 
             float destinationDistance = targetDirection.magnitude;
 
-            if(destinationDistance >= stopDistance)
+            if (destinationDistance >= stopDistance)
             {
                 //make smooth rotation
                 targetRotation = Quaternion.LookRotation(targetDirection);

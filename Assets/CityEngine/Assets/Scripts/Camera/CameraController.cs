@@ -6,6 +6,46 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+script manages the camera system and core interactions in the city builder game, 
+enabling movement, zoom, rotation, and interaction with objects like buildings and roads.
+
+Key features include:
+
+Camera Control:
+Smooth Movement and Rotation:
+
+Allows players to pan, zoom, and rotate the camera smoothly for optimal city-building visibility.
+Clamps camera movement to a predefined area, preventing navigation outside the playable zone.
+Dynamic Zoom:
+Adjusts the zoom level for detailed building placement or city-wide views.
+Includes a slider UI for intuitive zoom control.
+
+Interaction with Objects:
+Building and Road Placement:
+Supports placing buildings and roads with placement restrictions (e.g., proximity to roads or other chainable buildings).
+Ensures no overlaps with existing objects like roads or buildings.
+Handles snapping objects to the grid for precise alignment.
+Demolition:
+Allows players to demolish roads or buildings and updates metrics accordingly (e.g., deducting demolition costs, removing proximity effects).
+
+Heatmap Integration:
+Heatmap View:
+Toggles between standard and heatmap camera views for analyzing city metrics like temperature or pollution.
+Automatically adjusts the camera's angle and zoom for heatmap visualization.
+
+City State Management:
+Game Reset:
+Resets the city by clearing all objects (e.g., buildings, roads, citizens) and resetting metrics for a clean slate.
+Restores the background forest to its initial state.
+Metrics and Proximity Effects:
+Updates city-wide metrics based on building placements or demolitions.
+Manages proximity effects, such as boosts or penalties applied to neighboring structures.
+
+Trackpad Integration:
+Placement Cursor:
+Displays a cursor for precise placement or demolition of objects, linked to the trackpad input.
+**/
 public class CameraController : MonoBehaviour
 {
     public Transform cameraHolder;

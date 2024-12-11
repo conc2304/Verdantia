@@ -1,7 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+
+/**
+Manages a modal for displaying heat-related facts with smooth animations. 
+It retrieves random facts from the FactLibrary and displays them on a sliding modal. 
+The modal slides into view, pauses to show the fact, and then slides out. 
+The animations are configurable via settings such as slide duration and offset. 
+It ensures no new fact interrupts an ongoing display.
+**/
 public class HeatFactModal : MonoBehaviour
 {
     [Header("Facts Carousel Settings")]

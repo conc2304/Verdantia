@@ -2,7 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+
+Manages a day-night cycle with smooth transitions in a Unity environment. 
+It toggles between day and night states based on a timer, adjusting lighting and activating or deactivating specific lights accordingly. 
+The directional light's intensity is animated to simulate gradual changes, while a global shader property, _NightEmission, 
+is adjusted to represent the lighting conditions. 
+The day-night cycle duration and the option to disable the night mode are configurable.
+**/
 
 public class Lightning : MonoBehaviour
 {
@@ -29,6 +37,7 @@ public class Lightning : MonoBehaviour
     void Update()
     {
         if (disableNight) return;
+
         timer += Time.deltaTime;
         if (timer > dayTime)
             switchDayNight = true;
@@ -69,12 +78,10 @@ public class Lightning : MonoBehaviour
             yield return new WaitForSeconds(.1f);
         }
 
-        //directionalLight.gameObject.SetActive(false);
     }
 
     IEnumerator ActivateLight()
     {
-        //directionalLight.gameObject.SetActive(true);
 
         float timerActivate = Mathf.FloorToInt(directionalLight.intensity);
 
@@ -101,4 +108,3 @@ public class Lightning : MonoBehaviour
 }
 
 
-//yield return new WaitForEndOfFrame();

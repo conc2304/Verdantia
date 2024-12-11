@@ -2,6 +2,12 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/**
+a reusable component for managing the display of individual city metrics in the UI. 
+It allows customization and real-time updates of the metric's label, value, target value, and associated icon.
+Designed to be part of a larger UI system, where each city metric (e.g., population, budget, pollution) is represented by one CityMetricUIItem instance. 
+It simplifies the process of keeping the metric visuals in sync with the underlying data.
+**/
 [ExecuteAlways] // Allows this to work both at runtime and in the Editor
 public class CityMetricUIItem : MonoBehaviour
 {

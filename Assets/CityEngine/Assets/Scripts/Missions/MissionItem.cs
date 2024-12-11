@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+
+//  Manages the UI display for a mission, including its image, title, difficulty, and selection state, toggling border colors when selected.
 public class MissionItem : MonoBehaviour
 {
     public Image image;

@@ -1,7 +1,12 @@
 using System;
 using System.Reflection;
-using UnityEngine;
 using System.Text;
+
+/**
+Utility for inspecting and serializing objects. 
+It provides methods to output properties and fields of objects in readable formats, including JSON-like structures for custom data classes.
+This is for debugging, logging, and providing human-readable representations of complex data structures in Unity.
+**/
 
 public static class ObjectPrinter
 {

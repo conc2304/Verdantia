@@ -2,6 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+/**
+Custon Unity Graphic component for rendering smooth line charts using Catmull-Rom splines.
+
+Accepts a list of normalized Vector2 data points to plot the chart.
+Configurable line thickness and color.
+Utilizes Catmull-Rom spline interpolation formula for smooth transitions between data points.
+Draws line segments with a defined number of segments per curve for adjustable smoothness.
+Handles the rendering of lines directly in Unity's UI system via VertexHelper.
+**/
+
 [RequireComponent(typeof(RectTransform))]
 public class LineChartRenderer : Graphic
 {

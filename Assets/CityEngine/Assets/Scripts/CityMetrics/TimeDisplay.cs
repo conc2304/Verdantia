@@ -1,6 +1,11 @@
 using UnityEngine;
 using TMPro;
 
+/**
+Manages the display of the current date and the remaining mission time in a UI. 
+It listens to updates from the CityMetricsManager to refresh the displayed month, year, and months remaining for the mission. 
+The script ensures proper cleanup by unsubscribing from events when destroyed.
+**/
 public class TimeDisplay : MonoBehaviour
 {
     public CityMetricsManager cityMetricsManager;

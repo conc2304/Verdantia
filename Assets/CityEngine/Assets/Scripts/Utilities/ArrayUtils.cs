@@ -2,13 +2,14 @@
 using System;
 using UnityEngine;
 
+// provides a collection of utility methods for working with arrays and matrices.
+
 public static class ArrayUtils
 {
     public static T[,] MatrixFill<T>(int sizeX, int sizeY, T initialValue)
     {
         T[,] grid = new T[sizeX, sizeY];
 
-        // Optional: Explicitly setting all values to 0 (not necessary as default for int is 0)
         for (int i = 0; i < sizeX; i++)
         {
             for (int j = 0; j < sizeY; j++)

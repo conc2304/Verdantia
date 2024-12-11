@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 
+/**
+handles the creation and updating of a heatmap overlay in the Unity scene. 
+It calculates heatmap data from city metrics (e.g., pollution, temperature) and displays it visually on a grid. 
+The heatmap texture dynamically updates based on the selected metric, using building properties and a color gradient for visual representation. 
+It also updates a legend to display contextual information about the metric.
+**/
 public class HeatMapOverlay : MonoBehaviour
 {
     private int gridSizeX;

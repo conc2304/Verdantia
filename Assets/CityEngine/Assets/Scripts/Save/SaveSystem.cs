@@ -2,6 +2,14 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged except for initialization flag, and flexible filenames)
+provides methods for saving and loading game data, focusing on buildings and roads. 
+It uses binary serialization to store data into a BuildingData object, writing it to a file in the persistent data path. 
+The SaveBuildings method serializes and saves data, while LoadBuildings deserializes it to recreate game elements. 
+The FormatFileName method standardizes file names for consistency. 
+This ensures reliable data persistence for game continuity.
+**/
 public static class SaveSystem
 {
 

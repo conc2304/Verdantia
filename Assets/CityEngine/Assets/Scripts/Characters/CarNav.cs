@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Handles car navigation on a predefined path system, enabling dynamic traffic behavior with branching paths, collisions, and priority management.
+**/
 public class CarNav : MonoBehaviour
 {
 

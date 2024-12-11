@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+/**
+Manages a carousel of facts that cycles through different educational messages in a sliding modal UI element. 
+Displays a series of facts, sourced from various libraries.
+
+Displays a random fact from a collection of categorized fact libraries, ensuring no duplicates.
+Animates the modal sliding into and out of the screen with adjustable timings for sliding and pausing.
+Randomly selects the next fact to display after each cycle.
+
+Lifecycle Management: Stops the carousel when disabled and restarts when re-enabled.
+**/
 public class CarouselFacts : MonoBehaviour
 {
     [Header("Facts Carousel Settings")]

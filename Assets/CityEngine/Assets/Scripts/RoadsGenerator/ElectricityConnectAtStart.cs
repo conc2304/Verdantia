@@ -1,7 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Uses a LineRenderer to visually connect pairs of points with electricity lines when the scene starts. 
+It iterates through arrays of firstPoints and secondPoints, instantiating a line for each pair and setting their positions accordingly. 
+The created lines are parented to the respective firstPoints for organization.
+**/
 public class ElectricityConnectAtStart : MonoBehaviour
 {
 
@@ -22,5 +27,4 @@ public class ElectricityConnectAtStart : MonoBehaviour
             line.transform.parent = firstPoints[i].transform;
         }
     }
-    
 }

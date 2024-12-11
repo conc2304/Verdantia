@@ -1,7 +1,12 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Utility class provides methods for creating heatmap textures and initializing color gradients. 
+GenerateHeatMapTexture: Converts a 2D data grid into a heatmap texture using a gradient, with options for normalizing values, handling missing data, and inverting the gradient.
+InitializeGradient: Creates a customizable color gradient for the heatmap, defaulting to a blue-to-red scale but allowing custom colors.
+Used to dynamically generate visual heatmaps based on metric data, supporting visual representation in the application.
+**/
 public static class HeatMapUtils
 {
 

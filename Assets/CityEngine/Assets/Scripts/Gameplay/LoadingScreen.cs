@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/**
+Manages a dynamic loading screen by periodically updating the displayed text with 
+random inspirational messages about sustainability and green initiatives. 
+It initializes with a default message and cycles through a predefined list of messages at regular intervals while the loading screen is active. 
+The behavior stops and resets when the loading screen is disabled.
+**/
 public class LoadingScreen : MonoBehaviour
 {
     public TMP_Text loadingText;
@@ -31,7 +37,7 @@ public class LoadingScreen : MonoBehaviour
         "Expanding your green thumb..."
     };
 
-    public float updateInterval = 0.2f; // Time interval in seconds for updating the text
+    public float updateInterval = 0.07f; // Time interval in seconds for updating the text
 
     private Coroutine updateCoroutine;
 

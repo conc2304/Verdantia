@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Represents a sandbox mode in the Green City Builder game, where players can build and manage their city without any objectives or time constraints. 
+It encourages experimentation with different designs, layouts, and strategies. 
+The mission includes a starting budget of $950,000 and no defined metrics or objectives, providing players with complete creative freedom.
+**/
 namespace GreenCityBuilder.Missions
 {
     public class FreePlayMission : Mission

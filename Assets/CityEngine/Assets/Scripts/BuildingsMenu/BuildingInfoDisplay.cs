@@ -5,6 +5,31 @@ using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using System;
 
+/**
+Handles the display of detailed information about a selected building in the game, 
+providing insights into its properties and effects on city metrics.
+
+Key features include:
+
+Dynamic Data Display: 
+Displays key building metrics like construction cost, demolition cost, happiness impact, and energy consumption 
+by dynamically reading properties from the selected building.
+
+Budget Visualization: 
+Shows whether the building's construction or demolition cost exceeds the city's budget by highlighting values in red when over-budget.
+
+Proximity Effects: 
+Lists nearby buildings' effects (e.g., boosts or penalties) on the selected building’s metrics, such as increased happiness or reduced pollution.
+
+Interactive Modal Window:
+Open: Shows additional information about the building in a modal view, including its description and detailed metrics.
+Close: Returns to the main interface when the modal is closed.
+UI Management: Automatically clears and repopulates UI elements to ensure accurate and up-to-date data is displayed for each selected building.
+
+This functionality provides players with an intuitive way to understand how 
+individual buildings impact the overall city simulation, promoting informed decision-making.
+**/
+
 public class BuildingInfoDisplay : MonoBehaviour
 {
 

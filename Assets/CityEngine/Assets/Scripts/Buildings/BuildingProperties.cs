@@ -3,6 +3,27 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+
+/**
+Defines the properties and behaviors of buildings in the city builder game, focusing on their environmental, economic, and social impacts.
+
+Each building has attributes like:
+
+Construction cost
+Heat contribution
+Happiness impact
+Carbon footprint
+The script manages how buildings influence their surroundings through:
+
+Proximity-based effects (e.g., the impact of nearby green spaces or industrial zones)
+Resource dynamics (e.g., energy use, city revenue, and pollution)
+Green space connectivity (allowing parks or other chainable areas to create larger networks).
+It also includes:
+
+Support for generating fun facts about buildings to educate players about urban reforestation.
+Methods for visualizing these effects, such as floating value indicators that pop up to show changes in metrics like happiness or temperature.
+**/
+
 public enum BuildingMetric
 {
     constructionCost,

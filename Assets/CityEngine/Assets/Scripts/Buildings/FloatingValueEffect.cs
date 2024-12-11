@@ -4,6 +4,18 @@ using GreenCityBuilder.Missions;
 using System.Collections;
 using System;
 
+/**
+manages the visual and functional behavior of "floating value indicators,"
+which display changes in city metrics (e.g., happiness, temperature, or revenue) above buildings or other relevant locations in the game.
+
+Key features include:
+
+Visual Feedback: Displays a numeric value and an optional icon that changes color based on whether the value is positive (green) or negative (red).
+Dynamic Animation: The indicator floats upward, scales smoothly, and disappears after a set lifetime to create a polished, informative effect.
+Zoom Adaptation: The size and movement of the indicator adjust dynamically based on the camera's zoom level, ensuring clarity at different viewing scales.
+Customizable Timing: Delayed display and adjustable animation speeds allow indicators to appear at appropriate moments without overwhelming the player.
+This enhances the player's experience by providing clear, real-time feedback on their decisions.
+**/
 public class FloatingValueEffect : MonoBehaviour
 {
     public TextMeshPro valueText;
@@ -37,8 +49,6 @@ public class FloatingValueEffect : MonoBehaviour
     {
         cameraController = FindObjectOfType<CameraController>();
 
-        // if (sdt == null || !sdt.cityLoadInitialized) Destroy(gameObject); // dont show pop ups on city load
-
         // the further the zoom, the faster the items move and the larger they are
         float zoomPos = cameraController.toZoom.y;
         float zoomMultiplier = 1 + Mathf.InverseLerp(cameraController.minZoom, cameraController.maxZoom, zoomPos);  // 0 to 1
@@ -56,7 +66,6 @@ public class FloatingValueEffect : MonoBehaviour
             : null;
 
         // Update the icon if the metric has one
-        // Update the icon if provided
         if (iconRenderer != null && icon != null)
         {
             iconRenderer.sprite = icon;
@@ -95,7 +104,6 @@ public class FloatingValueEffect : MonoBehaviour
 
     void Update()
     {
-        // if (!sdt.cityLoadInitialized) Destroy(gameObject); // dont show pop ups on city load
         // Only move and count lifetime if the popup is visible
         if (isVisible && elapsedTime >= 0f)
         {

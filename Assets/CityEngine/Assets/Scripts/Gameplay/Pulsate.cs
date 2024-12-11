@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/**
+ Creates a pulsating effect on a GameObject by smoothly oscillating its scale between a defined minimum and maximum value. 
+ The pulsation is driven by a sine wave, ensuring a smooth and continuous animation. 
+ The effect's speed and scale range are customizable via exposed properties.
+**/
 public class Pulsate : MonoBehaviour
 {
     [Header("Pulsate Settings")]

@@ -5,6 +5,11 @@ using System.Collections;
 using System;
 using TMPro;
 
+/**
+implements a "Hold to Select" functionality for buttons, requiring players to press and hold for a specified duration to trigger an action. 
+It also includes features for disabling buttons and providing visual feedback.
+**/
+
 public class HoldToSelect : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     public Image progressBar;

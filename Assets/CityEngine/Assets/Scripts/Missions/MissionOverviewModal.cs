@@ -1,6 +1,12 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+
+/**
+Container for UI elements in a mission overview modal. 
+It holds references to text components and a container for key metrics, 
+which can be dynamically populated to display information such as the mission's title, objective, time limit, difficulty, brief, and key metrics. 
+It serves as a structure for organizing and displaying mission details in the UI.
+**/
 public class MissionOverviewModal : MonoBehaviour
 {
 

@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
+/**
+Manages an introductory sequence in the game, consisting of narrated video steps with pagination indicators. 
+It allows players to navigate through steps, automatically progresses after a set duration (if specified), 
+and transitions to the main game UI upon completion. 
+It dynamically updates UI elements like buttons, pagination dots, and narration text for each step, 
+while providing options to replay or restart the introduction.
+**/
 public class IntroSequenceManager : MonoBehaviour
 {
     public GameObject mainGameUI;

@@ -1,7 +1,10 @@
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Collections.Generic;
-
+/**
+Utility functions for handling and converting string formats. 
+Simplify string manipulation and improve code readability and presentation.
+**/
 public static class StringsUtils
 {
     public static string ConvertToLabel(string camelCaseString)

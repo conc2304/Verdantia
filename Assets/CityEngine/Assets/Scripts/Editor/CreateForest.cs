@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged and unused)
+**/
 
 public class Example
 {
@@ -32,9 +35,6 @@ public class Example
             }
             lengthPos = 0;
         }
-
     }
-
-
 }
 

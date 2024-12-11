@@ -1,6 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+
+
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Manages the placement, rotation, and connections of roads in a city-building game. 
+It checks the surrounding area for existing roads and buildings, 
+determines the appropriate road type based on nearby connections, and handles road instantiation and rotation. 
+Determines road type (e.g., straight, curved, intersection) based on nearby roads, rotates the road correctly, and ensures it connects seamlessly.
+The script also connects roads to buildings and other roads for visual and logical continuity, 
+including electricity line connections.
+**/
 
 public class RoadGenerator : MonoBehaviour
 {

@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+Generates and updates a visual heatmap representing city center's temperature data. 
+It listens to updates from the CityTemperatureController, processes a temperature grid, 
+maps it to a customizable color gradient, and renders the heatmap as a texture on a UI element. 
+It dynamically adjusts the heatmap to fit the display area and provides real-time visualization of temperature variations within the city's boundaries.
+**/
 public class CityTempHeatMap : MonoBehaviour
 {
     [SerializeField] private CityTemperatureController cityTemperatureController;

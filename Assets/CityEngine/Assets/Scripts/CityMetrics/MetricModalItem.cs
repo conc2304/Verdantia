@@ -1,6 +1,7 @@
 using UnityEngine;
 
-[System.Serializable] // This makes the class show up in the Unity Editor
+// Defines a data structure to represent a metric's title and its associated description. 
+[System.Serializable]
 public class MetricModalItem
 {
     public MetricTitle title;

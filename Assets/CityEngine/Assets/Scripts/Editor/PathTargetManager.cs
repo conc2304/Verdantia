@@ -1,7 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEditor;
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Provides a custom Unity editor window for managing PathTarget objects, which are used for pathfinding and navigation. 
+It allows users to create, delete, or modify PathTargets directly in the Unity editor, streamlining the process of building path networks.
+**/
 
 public class PathTargetManager : EditorWindow
 {

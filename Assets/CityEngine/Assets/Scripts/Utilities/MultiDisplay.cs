@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Activates a second display if it's connected to the system.
 public class MultiDisplay : MonoBehaviour
 {
     void Start()

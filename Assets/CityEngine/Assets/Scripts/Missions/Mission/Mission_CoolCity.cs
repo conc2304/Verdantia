@@ -1,6 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Defines a mission in the Green City Builder game where players aim to 
+reduce the city's temperature and urban heat levels by 10% while maintaining population and happiness levels. 
+The mission involves implementing green initiatives such as adding parks 
+and eco-friendly buildings to combat the urban heat island effect. 
+It includes a six-year time limit, a starting budget of $1.3M, and specific objectives related to City Temperature, Urban Heat, and Happiness. 
+Success results in a cooler, happier city, while failure underscores the need for more green spaces to address rising temperatures.
+**/
+
 namespace GreenCityBuilder.Missions
 {
     public class CoolTheCityDownMission : Mission

@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/**
+creates a hovering and rotating effect for a GameObject. 
+The object moves up and down smoothly based on a sine wave (hover effect) and optionally rotates around its Y-axis.
+**/
 public class HoverRotate : MonoBehaviour
 {
     [Header("Hover Settings")]

@@ -1,3 +1,6 @@
+
+// Collection of game related constants used to define a set of named values that can be used as a variable type.
+
 public enum TrackpadTargetType
 {
     Build,

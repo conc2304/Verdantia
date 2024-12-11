@@ -1,8 +1,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
+/**
+This file manages mappings and utilities for metrics in the system. It provides:
+
+Metric Mapping: Links BuildingMetric enums to corresponding MetricTitle enums for consistent usage across the game.
+Inversion Logic: Identifies which metrics should be displayed inversely (e.g., higher values being bad).
+String-to-Metric Conversion: Converts string representations of metrics into their corresponding BuildingMetric enum.
+Metric Colors: Assigns distinct colors to each metric for visual representation.
+Heat Map Inversion Check: Determines if a metric or building metric's values should be inverted for heatmap rendering.
+
+This facilitates dynamic metric handling, visualization, and consistent logic across different game systems.
+**/
 public class MetricMapping
 {
     private static readonly Dictionary<BuildingMetric, MetricTitle> metricMapping = new Dictionary<BuildingMetric, MetricTitle>

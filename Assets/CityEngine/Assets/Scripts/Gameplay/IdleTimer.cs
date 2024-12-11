@@ -1,6 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+/**
+Tracks user inactivity and triggers an event after a specified duration of idleness. 
+It resets the idle timer whenever input is detected (keyboard, mouse, or touch) 
+and invokes a customizable Unity event (onIdle) if the idle duration is exceeded. 
+This is used to trigger actions like displaying a screensaver, prompting a message, or initiating specific gameplay behaviors after inactivity. 
+**/
 public class IdleTimer : MonoBehaviour
 {
     public float idleDuration = 60f;

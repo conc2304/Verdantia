@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Controls the movement of cars along a predefined path using Unity's NavMesh system, creating smooth and continuous navigation.
+**/
 public class CarController : MonoBehaviour
 {
     public Transform[] points;

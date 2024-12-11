@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Creates a customizable 3D grid in Unity, primarily used for visualizing and aligning objects in the game world.
+**/
 public class Grid : MonoBehaviour
 {
     public bool showMain = true;

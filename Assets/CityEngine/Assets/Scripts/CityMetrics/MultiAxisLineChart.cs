@@ -2,9 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
-
+/**
+ Renders a multi-axis line chart for visualizing city metrics over time, 
+ dynamically updating based on mission objectives and data from the CityMetricsManager. 
+ It normalizes and plots data points, adjusts Y-axis scaling for each metric, and color-codes lines for clarity. 
+ The chart adapts to include mission-specific metrics while ensuring core metrics like temperature and budget are always displayed. 
+ It enables users to track and compare trends in city performance visually and in real time.
+**/
 public class MultiAxisLineChart : MonoBehaviour
 {
 

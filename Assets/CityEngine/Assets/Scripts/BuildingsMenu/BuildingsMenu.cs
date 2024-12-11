@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Reflection;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
-using System.Linq;
 
+// The original unedited building menu from the "City Builder Engine" asset from the unity asset store before being stripped for parts in BuildingsMenuNew.cs
 public class BuildingsMenu : MonoBehaviour
 {
     [System.Serializable]

@@ -1,6 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+// NOTE Deprecated due to temporary/permament removal of the Green Space metric from the game
+
+Defines a high-difficulty mission in the Green City Builder game, 
+where players are tasked with transforming the city by reducing pollution and increasing happiness by 10%. 
+The mission emphasizes creating an environmentally friendly urban expansion while 
+strategically managing industrial and commercial zones to control pollution. 
+It includes a time limit of 5 years, a starting budget of $2,000,000, and specific metrics for pollution and happiness. 
+Success reflects a thriving and balanced urban ecosystem, while failure highlights the need for better planning.
+**/
 namespace GreenCityBuilder.Missions
 {
     public class GreenSpaceRenaissanceMission : Mission

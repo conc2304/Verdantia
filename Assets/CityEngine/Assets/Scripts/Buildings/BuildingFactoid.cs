@@ -5,6 +5,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+
+/**
+Manages the display of "factoids" (short informational snippets) about the benefits of reforestation, 
+urban green spaces, and their impact on happiness and urban heat island effects. 
+It cycles through these facts when the user is idle, animates their appearance on the screen, 
+and can reset or update the display with new information based on user interaction or events. 
+It also includes functionality to generate and display a QR code linking to relevant case studies or additional resources.
+**/
 public class BuildingFactoid : MonoBehaviour
 {
     // UI Elements

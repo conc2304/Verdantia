@@ -1,5 +1,14 @@
 using UnityEngine;
 
+/**
+Defines a MissionObjective, representing a specific goal or condition for a mission in the game. 
+It associates a metric (like budget or happiness) with a target value 
+and specifies how the value should be evaluated (e.g., increase by percentage, maintain above a threshold). 
+The IsObjectiveMet method checks whether the objective is achieved based on the current metric value in the CityMetricsManager, 
+supporting comparison types like reduce, increase, maintain above, or maintain below. 
+The class also includes visual representation through an optional icon.
+**/
+
 [System.Serializable]
 public class MissionObjective
 {

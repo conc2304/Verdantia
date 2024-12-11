@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/**
+Manages and updates various city-wide metrics in a simulation, such as temperature, budget, population, and happiness. 
+It handles the passage of time by simulating months, updates metrics based on building data, 
+adjusts metrics dynamically (e.g., due to temperature changes), and maintains a history of metric values over time. 
+It also integrates with other systems, such as missions and temperature controllers, 
+to ensure accurate metric updates and provides functionality for financial adjustments. 
+The script emits events to notify other parts of the system when metrics or time change.
+**/
 public class CityMetricsManager : MonoBehaviour
 {
 

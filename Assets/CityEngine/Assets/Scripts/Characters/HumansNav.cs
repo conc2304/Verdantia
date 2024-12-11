@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+Part of the "City Engine" Asset from the Unity Asset store (unchanged)
+Manages the navigation of human characters along a network of predefined paths, introducing dynamic behavior and decision-making at path branches.
+**/
 public class HumansNav : MonoBehaviour
 {
 
@@ -46,7 +50,7 @@ public class HumansNav : MonoBehaviour
                         currentPathTarget.branches.Remove(newCurrentPathTarget);
                 }
 
-                if(newCurrentPathTarget != null)
+                if (newCurrentPathTarget != null)
                     currentPathTarget = newCurrentPathTarget;
                 else
                     currentPathTarget = currentPathTarget.nextPathTarget;

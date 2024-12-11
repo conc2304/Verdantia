@@ -1,15 +1,20 @@
 using System;
 using UnityEngine;
 
+/**
+Provides utility functions for manipulating and formatting numerical data, such as remapping values between ranges, 
+formatting numbers with commas or abbreviations, rounding to specific decimal places, and scaling values for better readability. 
+To simplify numerical operations and improve data presentation in a more user-friendly manner.
+**/
 public static class NumbersUtils
 {
     // Remap function to remap values from one range to another
     public static float Remap(float inputMin, float inputMax, float outputMin, float outputMax, float value)
     {
-        // Normalize the input value to a range using Mathf.InverseLerp
+        // Normalize the input value to a range
         float t = Mathf.InverseLerp(inputMin, inputMax, value);
 
-        // Remap the normalized value to the output range using Mathf.Lerp
+        // Remap the normalized value to the output range
         return Mathf.Lerp(outputMin, outputMax, t);
     }
     public static string FormattedNumber(float number, string prefix = "", string suffix = "")

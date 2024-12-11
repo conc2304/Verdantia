@@ -1,9 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
 
+/**
+Manages the display and interaction of city metric data in a user interface.
+ensures that the user interface remains synchronized with the city metrics system, providing players with both an overview and detailed insights into the city’s health and progress. 
+**/
 
 public class CityMetricsDataDisplay : MonoBehaviour
 {

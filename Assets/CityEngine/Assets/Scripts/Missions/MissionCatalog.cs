@@ -1,9 +1,12 @@
-using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+
+/**
+Manages the UI for displaying and selecting missions in a catalog. 
+It populates a list of missions, allows users to view mission details in an overview modal, and facilitates mission selection. 
+It updates the current mission title and manages the state of the mission overview and catalog interface.
+**/
 
 namespace GreenCityBuilder.Missions
 {
