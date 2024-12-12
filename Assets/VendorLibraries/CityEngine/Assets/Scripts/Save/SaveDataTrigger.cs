@@ -12,6 +12,7 @@ It integrates with the CameraController to ensure proper placement and behavior 
 public class SaveDataTrigger : MonoBehaviour
 {
 
+    private const string defaultFilePath = "binary.fun";
     public string cityFileName = "binary.fun"; // default city
     public class SaveProperties
     {
@@ -38,6 +39,8 @@ public class SaveDataTrigger : MonoBehaviour
     BuildingData data;
 
     public bool doSave = false;
+
+
 
     public bool cityLoadInitialized { get; private set; } = false;
     private void Awake()
@@ -66,7 +69,7 @@ public class SaveDataTrigger : MonoBehaviour
         cityLoadInitialized = true;
     }
 
-    public void BuildingDataSave(string fileName)
+    public void BuildingDataSave(string fileName = defaultFilePath)
     {
 
         buildingsPropertiesBuilded = new SaveProperties[cameraController.buildingsParent.childCount + cameraController.roadsParent.childCount];

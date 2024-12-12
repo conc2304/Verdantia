@@ -217,8 +217,6 @@ public class CityTemperatureController : MonoBehaviour
         bool includeSpaces = true;
         List<Transform> allBuildings = cameraController.GetAllBuildings(includeSpaces);
 
-        Debug.Log($"ALL Building Count @ cacl | {allBuildings.Count}");
-
         float[,] buildingHeatGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, 0f);  // No contribution by default
         if (allBuildings.Count <= 1)
         {

@@ -837,10 +837,15 @@ public class CameraController : MonoBehaviour
     {
         Mission currentMission = FindObjectOfType<MissionManager>().currentMission;
 
-        if (saveDataTrigger.doSave && currentMission.missionName != "Free Play Mode")
+        if (saveDataTrigger.doSave && currentMission != null && currentMission.missionName != "Free Play Mode")
         {
             string missionFile = SaveSystem.FormatFileName(currentMission.missionCityFileName);
             saveDataTrigger.BuildingDataSave(missionFile);
+        }
+        else if (saveDataTrigger.doSave)
+        {
+            saveDataTrigger.BuildingDataSave();
+
         }
     }
 
