@@ -1,14 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Unity.Mathematics;
 using UnityEngine;
 
+/**
+Simulates and manages the temperature distribution across a city grid, 
+accounting for factors like sun heat, building heat contributions, and carbon emissions. 
+It uses a heat diffusion model to update the temperature of each grid cell over time, 
+adjusting for heat dissipation and accumulation. 
+The class integrates with a heat map overlay to visualize the temperature changes and 
+tracks metrics such as the average, high, and low temperatures within the city. 
+By using a tri-diagonal matrix algorithm, it efficiently solves for the new temperatures 
+at each grid point and updates the temperature distribution with more stability then the Euler Method.
+**/
 public class CityTemperatureController : MonoBehaviour
 {
     // Heat Diffusion Variables
     public float[,] cityTempGrid { get; private set; }
-
     public float startingTemp = 67;
     public float diffusionRate = 35f;
     public float dissipationRate = 0.9999999f;
@@ -19,7 +26,6 @@ public class CityTemperatureController : MonoBehaviour
     public float timeStep = 0.1f;
 
     public float cityTempAvg, cityTempLow, cityTempHigh;
-
 
     public CameraController cameraController;
     public BuildingsMenuNew buildingsMenu;
@@ -40,12 +46,6 @@ public class CityTemperatureController : MonoBehaviour
     private int gridSizeZ;
 
 
-
-    [Header("Heat Map Debug")]
-    public bool takeStep = false;
-    public bool toggleRestartTemp = false;
-    public bool playTemp = true;
-
     // Heat Map Legend Vars
     public int heatMapTempMin;
     public int heatMapTempMax;
@@ -57,6 +57,10 @@ public class CityTemperatureController : MonoBehaviour
     public event Action<float, float, float> OnTempUpdated;
     public event Action<float[,], float, float, float, float> OnTempGridUpdated; //  (cityTempsGrid, cityBoarderMinX, cityBoarderMaxX, cityBoarderMinZ, cityBoarderMaxZ)
 
+    [Header("Heat Map Debug")]
+    public bool takeStep = false;
+    public bool toggleRestartTemp = false;
+    public bool playTemp = true;
 
     private void Start()
     {
@@ -323,7 +327,7 @@ public class CityTemperatureController : MonoBehaviour
             }
         }
 
-        // return new temperures at calculate column
+        // return new temperures at column index to calculate
         return TDMA.SolveInPlace(lower, diagonal, upper, rightSide);
     }
 
@@ -336,8 +340,8 @@ public class CityTemperatureController : MonoBehaviour
         int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridSizeZ - 1);
         int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridSizeZ - 1);
 
-        // if ()
         print($"{minGridX} {maxGridX} {minGridZ} {maxGridZ}");
+
         // Calculate the average temperature within city bounds
         float totalTemperature = 0f;
         int count = 0;

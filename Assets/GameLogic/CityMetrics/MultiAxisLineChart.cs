@@ -109,8 +109,8 @@ public class MultiAxisLineChart : MonoBehaviour
             datasetGO.transform.SetParent(chartArea, false);
 
             LineChartRenderer lineChartRenderer = datasetGO.GetComponent<LineChartRenderer>();
-            lineChartRenderer.LineColor = MetricMapping.GetMetricColor(metricTitle);
-            lineChartRenderer.LineThickness = lineThickness;
+            lineChartRenderer.lineColor = MetricMapping.GetMetricColor(metricTitle);
+            lineChartRenderer.lineThickness = lineThickness;
 
             List<Vector2> normalizedPoints = new List<Vector2>();
             foreach (var metricEntry in metricsOverTime)
@@ -135,7 +135,7 @@ public class MultiAxisLineChart : MonoBehaviour
             }
 
             // Draw the dataset
-            lineChartRenderer.DataPoints = normalizedPoints;
+            lineChartRenderer.dataPoints = normalizedPoints;
             lineChartRenderer.SetVerticesDirty(); // Redraw
 
         }

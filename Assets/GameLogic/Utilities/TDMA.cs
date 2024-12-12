@@ -1,9 +1,7 @@
 // Tri Diagonal Matrix Solver Algorithm
 
 /**
-Part of the "City Engine" Asset from the Unity Asset store (unchanged)
-
-Implements the Thomas algorithm (also known as the Tri-Diagonal Matrix Algorithm) 
+Implementation of the Thomas algorithm (also known as the Tri-Diagonal Matrix Algorithm) 
 to solve a system of linear equations represented by a tridiagonal matrix. 
 This algorithm solves the system in two main steps: forward elimination (modifying the lower, diagonal, and upper matrices) 
 and backward substitution to compute the solution vector. 

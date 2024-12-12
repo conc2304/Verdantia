@@ -15,25 +15,25 @@ Handles the rendering of lines directly in Unity's UI system via VertexHelper.
 [RequireComponent(typeof(RectTransform))]
 public class LineChartRenderer : Graphic
 {
-    public List<Vector2> DataPoints; // Normalized data points
-    public float LineThickness = 2.5f;
-    public Color LineColor = Color.white;
+    public List<Vector2> dataPoints; // Normalized data points (0-1)
+    public float lineThickness = 2.5f;
+    public Color lineColor = Color.white;
     private const int SEGMENTS_PER_CURVE = 20; // Number of segments for smoothness
 
     protected override void OnPopulateMesh(VertexHelper vh)
     {
         vh.Clear();
-        if (DataPoints == null || DataPoints.Count < 2) return;
+        if (dataPoints == null || dataPoints.Count < 2) return;
 
-        for (int i = 0; i < DataPoints.Count - 1; i++)
+        for (int i = 0; i < dataPoints.Count - 1; i++)
         {
             // Determine points for the Catmull-Rom spline
-            Vector2 p0 = i > 0 ? DataPoints[i - 1] : DataPoints[i];
-            Vector2 p1 = DataPoints[i];
-            Vector2 p2 = DataPoints[i + 1];
-            Vector2 p3 = i < DataPoints.Count - 2 ? DataPoints[i + 2] : DataPoints[i + 1];
+            Vector2 p0 = i > 0 ? dataPoints[i - 1] : dataPoints[i];
+            Vector2 p1 = dataPoints[i];
+            Vector2 p2 = dataPoints[i + 1];
+            Vector2 p3 = i < dataPoints.Count - 2 ? dataPoints[i + 2] : dataPoints[i + 1];
 
-            DrawCurve(vh, p0, p1, p2, p3, LineThickness, LineColor);
+            DrawCurve(vh, p0, p1, p2, p3, lineThickness, lineColor);
         }
     }
 

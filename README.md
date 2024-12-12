@@ -47,7 +47,17 @@ This project integrates various gameplay mechanics, such as mission-based object
 - **Save Progress**: The game automatically saves data related to your city’s state, including buildings and roads, allowing you to pick up where you left off.
 - **Load Saved Data**: You can load saved cities from previous sessions and continue building upon them.
 
-## Code/Script Structure
+## Code Structure
+
+### Directory Structure
+GreenCityBuilder/
+├── Assets/
+│   ├── GameLogic/              # Custom gameplay logic scripts
+│   ├── Resources/              # Game-specific assets like icons and mission visuals
+│   ├── Scenes/                 # Unity scenes
+│   ├── Settings/               # Configuration files
+│   └── VendorLibraries/        # Third-party vendor libraries (e.g., CityEngine)
+
 
 ### Key Components
 - **City Management**: Includes classes like CityMetricsManager, MissionManager, and Mission to handle city data and mission tracking.
@@ -55,14 +65,6 @@ This project integrates various gameplay mechanics, such as mission-based object
 - **UI Elements**: Various UI classes like LineChartRenderer, MissionCatalog, and MetricDisplay provide data visualization and user interaction elements.
 - **Save/Load System**: SaveDataTrigger and SaveSystem classes manage the saving and loading of city data, allowing for persistent game progress.
 
-### Enums 
-- **TrackpadTargetType**: Specifies the possible actions the user can take (Building or Demolishing).
-- **MetricTitle**: Defines the key metrics tracked in the game (e.g., Population, Budget, Pollution).
-- **DifficultyLevel**: Represents the difficulty of missions (Easy, Medium, Hard, etc.).
-
-### Utilities
-- **NumbersUtils**: Provides helper methods for working with numbers, including remapping values, formatting, and rounding.
-- **StringsUtils**: Handles string conversion between camel case and label format, along with other string utility functions.
 
 ## Credits
 
