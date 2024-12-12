@@ -61,6 +61,11 @@ sysinfo.txt
 *.unitypackage
 *.app
 
+# User-specific files
+[Dd]esignerPrefs/
+.idea/
+.vscode/
+
 # Crashlytics generated file
 crashlytics-build.properties
 
