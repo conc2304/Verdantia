@@ -9,3 +9,5 @@ Assets/VendorLibraries/CityEngine/Assets/Meshes/CombinedNew/EcoHighRise.fbx filt
 *.unity filter=lfs diff=lfs merge=lfs -text
 *.anim filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
+*.meta -filter=lfs
+
