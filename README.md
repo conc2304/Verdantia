@@ -11,7 +11,6 @@ This project integrates various gameplay mechanics, such as mission-based object
 - **City Building & Management**: Players can build and manage their city infrastructure, focusing on sustainable growth, green spaces, and balancing environmental factors.
 - **Mission System**: The game includes a variety of missions that provide objectives related to urban reforestation, pollution control, energy management, and more. Missions are dynamically tracked, and player progress is evaluated based on success criteria like budget, population, and sustainability.
 - **Metrics & Data Visualization**: The game tracks key metrics such as city temperature, pollution levels, carbon emissions, and happiness. These metrics are presented to players in real-time to help them make informed decisions about their city's development.
-- **Weather & Environmental Effects**: The game includes dynamic weather systems like winter weather, influencing gameplay elements such as temperature and snow coverage.
 - **Multi-Display Support**: The project supports multiple displays for an immersive experience, including dedicated displays for city maps, metrics, and player interactions.
 - **User Interface**: The UI provides detailed statistics and key metrics in an easy-to-read format. It also supports interactive elements like sliders, buttons, and touch controls for managing the game’s progression.
 - **Dynamic Building and Road System**: The game includes an in-depth system for placing and connecting buildings and roads. Players can demolish and build structures dynamically within the city grid.
@@ -52,6 +51,7 @@ This project integrates various gameplay mechanics, such as mission-based object
 ## Code Structure
 
 ### Directory Structure
+```
 GreenCityBuilder/
 ├── Assets/
 │   ├── GameLogic/              # Custom gameplay logic scripts
@@ -59,6 +59,7 @@ GreenCityBuilder/
 │   ├── Scenes/                 # Unity scenes
 │   ├── Settings/               # Configuration files
 │   └── VendorLibraries/        # Third-party vendor libraries (e.g., CityEngine)
+```
 
 
 ### Key Components
