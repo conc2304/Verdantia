@@ -25,13 +25,14 @@ This project integrates various gameplay mechanics, such as mission-based object
    cd GreenCityBuilder
 
 2. **Install dependencies**: Make sure you have Unity installed (recommended version: Unity 2021.3 or later). Open the project using the Unity Hub.
-3. **Add City Mission Files **
-4. **Open the project**: For the game to properly load and function, the files located in the CityFiles directory must be placed in the application's persistent data location. On a PC  system, this location is likely:
+3. **Add City Mission Files**
+   1. For the game to properly load and function, the files located in the CityFiles directory must be placed in the application's persistent data location. On a PC  system, this location is likely:
   ``` C:/Users/<USER>/AppData/LocalLow/DefaultCompany/Green City Builder```
 
-- Open Unity and load the project.
-- Make sure all the required packages and dependencies are resolved automatically by Unity.
-1. **Running the project**:
+4. **Open the project**: 
+   1. Open Unity and load the project.
+   2. Make sure all the required packages and dependencies are resolved automatically by Unity.
+5. **Running the project**:
 - You can test the game by hitting the play button in the Unity editor. The game will automatically start with a test city.
 
 ## Usage
