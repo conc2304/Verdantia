@@ -26,6 +26,8 @@ public class MissionManager : MonoBehaviour
     public Action<Mission> onMissionStarted;
     public GameObject loadingScreen;
 
+    public bool updateDefaultCity = false;
+
 
     private void Awake()
     {
@@ -119,6 +121,11 @@ public class MissionManager : MonoBehaviour
             string missionFile = SaveSystem.FormatFileName(mission.missionCityFileName);
             saveDataTrigger.BuildingDataLoad(missionFile);
         }
+        else if (updateDefaultCity)
+        {
+            saveDataTrigger.BuildingDataLoad();
+        }
+
 
         // Reset Targets based on initial metrics (for percent change based objectives)
         cityMetricsManager.UpdateCityMetrics();

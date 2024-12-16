@@ -207,7 +207,7 @@ public class CameraController : MonoBehaviour
                 );
 
                 // Place a cursor for easy location
-                target.TryGetComponent<BuildingProperties>(out BuildingProperties buildingProps);
+                target.TryGetComponent(out BuildingProperties buildingProps);
                 if (!target.CompareTag("DeleteTool") && buildingProps != null)
                 {
                     placementCursor.transform.position = buildingProps.GetBuildingPopUpPlacement();

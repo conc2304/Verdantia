@@ -13,7 +13,6 @@ public class HeatMapOverlay : MonoBehaviour
 {
     private int gridSizeX;
     private int gridSizeZ;
-    private float[,] heatValues;
     private Texture2D heatMapTexture;
     public GameObject heatMapPlane;
     private Gradient heatGradient;
@@ -64,12 +63,12 @@ public class HeatMapOverlay : MonoBehaviour
         float heatMapYPos = 20;
         heatMapPlane.transform.position = new Vector3(currentPosition.x, heatMapYPos, currentPosition.z);
 
-        heatValues = new float[gridSizeX, gridSizeZ];
+        float[,] heatValues = new float[gridSizeX, gridSizeZ];
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int z = 0; z < gridSizeZ; z++)
             {
-                heatValues[x, z] = float.NegativeInfinity;  // Initialize all heat values to zero
+                heatValues[x, z] = float.NegativeInfinity;  // Initialize all heat values to negative infinity
             }
         }
 
@@ -81,16 +80,9 @@ public class HeatMapOverlay : MonoBehaviour
     // Update the heat map with buildings and their given metric
     public void UpdateHeatMap(List<Transform> allBuildings, string metricName, float metricMin, float metricMax)
     {
-        if (heatValues == null || heatValues.Length == 0) return;
-
         // Reset heat values before recalculating
-        for (int x = 0; x < gridSizeX; x++)
-        {
-            for (int z = 0; z < gridSizeZ; z++)
-            {
-                heatValues[x, z] = float.NegativeInfinity;
-            }
-        }
+        float[,] heatValues = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, float.NegativeInfinity);
+
 
         // Calculate heat contributions from buildings
         int rescaleVal = 10; // grid size is 10
@@ -112,7 +104,7 @@ public class HeatMapOverlay : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"{building.name} | No building Props");
+                Debug.LogWarning($"{building.name} | No building Props");
             }
         }
 
@@ -121,33 +113,26 @@ public class HeatMapOverlay : MonoBehaviour
             ? MetricMapping.BuildingMetricIsInverted(metricEnum.Value)
             : false;
 
-
         // Generate the texture to represent the heat map
-        GenerateHeatMapTexture(metricMin, metricMax, invertMetrics);
+        GenerateHeatMapTexture(heatValues, metricMin, metricMax, invertMetrics);
 
         heatMapLegend.UpdateLabels(metricName, metricMin, metricMax, invertMetrics);
     }
 
     public void RenderCityTemperatureHeatMap(float[,] matrix, int metricMin, int metricMax)
     {
-        heatValues = matrix;
-        GenerateHeatMapTexture(metricMin, metricMax, false);
-
+        GenerateHeatMapTexture(matrix, metricMin, metricMax, false);
         heatMapLegend.UpdateLabels("cityTemperature", metricMin, metricMax, false);
-
-        print("RenderCityTemperatureHeatMap");
     }
 
 
-    private void GenerateHeatMapTexture(float metricMin, float metricMax, bool invertValues = false)
+    private void GenerateHeatMapTexture(float[,] heatValues, float metricMin, float metricMax, bool invertValues = false)
     {
         heatGradient ??= HeatMapUtils.InitializeGradient(heatColors);
 
         if (!heatMapInitialized || heatValues.Length == 0 || heatGradient == null) return;
 
-        print("GenerateHeatMapTexture");
         heatMapTexture = new Texture2D(gridSizeX, gridSizeZ);
-
 
         // Assign the texture to the heatmap plane
         heatMapTexture = HeatMapUtils.GenerateHeatMapTexture(heatValues, heatGradient, heatMapAlpha, metricMin, metricMax, invertValues);
@@ -181,7 +166,7 @@ public class HeatMapOverlay : MonoBehaviour
         }
 
         // If the field or property is not found, throw an exception (or handle the error)
-        throw new System.Exception("No field or property found with the name: " + metricName);
+        throw new Exception("No field or property found with the name: " + metricName);
     }
 }
 

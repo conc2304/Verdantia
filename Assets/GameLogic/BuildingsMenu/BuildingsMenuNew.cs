@@ -233,6 +233,8 @@ public class BuildingsMenuNew : MonoBehaviour
         string hmLabel = heatmapOptionsList[index];
         string hmValue = StringsUtils.ConvertToCamelCase(hmLabel);
 
+        Debug.Log($"I: {index} = {hmValue}");
+
         cameraController.heatmapMetric = hmValue;
         cameraController.cityChanged = true;
     }

@@ -66,8 +66,6 @@ public class CityTemperatureController : MonoBehaviour
     {
         heatMap = FindObjectOfType<HeatMapOverlay>();
 
-
-        // we are apply sun heat 2x (once for each tranposition step)
         heatMapTempMin = (int)startingTemp - tempScaleRange;
         heatMapTempMax = (int)startingTemp + tempScaleRange;
 
@@ -134,6 +132,13 @@ public class CityTemperatureController : MonoBehaviour
         cityTempGrid = GetCityTempGrid(cityTempGrid);
 
 
+        if (float.IsNaN(cityTempGrid[10, 10])) // Catch to see if numbers are valid, otherwise restart
+        {
+            Debug.LogWarning("Simulation Failed | Attempt Restart");
+            RestartSimulation();
+            StepSimulation();
+        }
+
         UpdateTemperatureMetric();
 
         // Only call to render if we have temps, and if heatmap is set to metric
@@ -169,6 +174,10 @@ public class CityTemperatureController : MonoBehaviour
             heatMapTempMax = (int)startingTemp + tempScaleRange;
             heatMap.RenderCityTemperatureHeatMap(cityTempGrid, heatMapTempMin, heatMapTempMax);
         }
+        else
+        {
+            Debug.LogWarning("Unable to render heatmap");
+        }
     }
 
 
@@ -179,20 +188,21 @@ public class CityTemperatureController : MonoBehaviour
 
     public float[,] GetCityTempGrid(float[,] currentTemps)
     {
-
         if (currentTemps == null || currentTemps.Length == 0)
         {
             currentTemps = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, startingTemp);
         }
 
+        // we are apply sun heat 2x (once for each tranposition step)
         sunHeatBase = startingTemp / 2;
 
         float[,] newTemps = new float[gridSizeX, gridSizeZ];
+
         float[,] heatContributionGrid = CalculateBuildingsHeat();
 
         for (int t = 1; t <= 2; t++)
         {
-            // Run once for each row, and once for each column by transposing the 
+            // Run once for each row, and once for each column by transposing the matrix
 
             for (int i = 0; i < gridSizeZ; i++)
             {
@@ -273,12 +283,15 @@ public class CityTemperatureController : MonoBehaviour
         int calculateColumn,
         int gridSizeX = 100, int gridSizeZ = 100)
     {
+
+
         if (tempsGrid == null || tempsGrid.Length == 0)
         {
             tempsGrid = ArrayUtils.MatrixFill(gridSizeX, gridSizeZ, startingTemp);
         }
 
         // Heat Dissipation Rate is affected by the carbon emmissions of the city
+
 
         float bMin = startingTemp / heatMapTempMax;
         float bMax = startingTemp / heatMapTempMin;
@@ -303,6 +316,7 @@ public class CityTemperatureController : MonoBehaviour
         // Form the right hand side of the system 
         float[] rightSide = new float[gridSizeZ];
         float heatContribution;
+
 
         for (int i = 0; i < gridSizeZ; i++)
         {
@@ -332,7 +346,7 @@ public class CityTemperatureController : MonoBehaviour
     private (float cityTempAvg, float cityTempLow, float cityTempHigh) GetCityTemps(float[,] temps, int padding = 5)
     {
         // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
-        print($"{cityBoarderMinX} {cityBoarderMaxX} {cityBoarderMinZ} {cityBoarderMaxZ}");
+        // print($"{cityBoarderMinX} {cityBoarderMaxX} {cityBoarderMinZ} {cityBoarderMaxZ}");
         int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridSizeX - 1);
         int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridSizeX - 1);
         int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridSizeZ - 1);

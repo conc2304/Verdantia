@@ -12,7 +12,7 @@ It integrates with the CameraController to ensure proper placement and behavior 
 public class SaveDataTrigger : MonoBehaviour
 {
 
-    private const string defaultFilePath = "binary.fun";
+    public const string defaultFilePath = "binary.fun";
     public string cityFileName = "binary.fun"; // default city
     public class SaveProperties
     {
@@ -110,7 +110,7 @@ public class SaveDataTrigger : MonoBehaviour
         SaveSystem.SaveBuildings(buildingsPropertiesBuilded, fileName);
     }
 
-    public void BuildingDataLoad(string fileName)
+    public void BuildingDataLoad(string fileName = defaultFilePath)
     {
         bool spawnInitialization = true;
         cityLoadInitialized = false;

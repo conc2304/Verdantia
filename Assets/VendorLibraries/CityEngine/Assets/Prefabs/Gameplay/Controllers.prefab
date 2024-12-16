@@ -250,13 +250,13 @@ MonoBehaviour:
   cameraController: {fileID: 0}
   buildingsMenu: {fileID: 0}
   grid: {fileID: 0}
-  takeStep: 0
-  toggleRestartTemp: 0
-  playTemp: 1
   heatMapTempMin: 0
   heatMapTempMax: 0
   tempScaleRange: 15
   cityTempUpdateRate: 3
+  takeStep: 0
+  toggleRestartTemp: 0
+  playTemp: 1
 --- !u!114 &1024400442031631236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +324,7 @@ MonoBehaviour:
   lights: []
   switchDayNight: 0
   dayTime: 30
+  disableNight: 1
 --- !u!114 &783540589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,6 +382,7 @@ MonoBehaviour:
   - {fileID: 5793062631657546409, guid: b9a2534eb29b7e545b24239f7aa8ef5a, type: 3}
   - {fileID: 5793062631657546409, guid: dab673c86cc2b144ab493f26cc9c9024, type: 3}
   - {fileID: 5793062631657546409, guid: 6e7d693cbda93e54babd1d4819c831be, type: 3}
+  - {fileID: 5793062631657546409, guid: 59cf63277601312468138051ce7d3989, type: 3}
   road: {fileID: 1730668401964716652, guid: bc0c6e061703dff48a029ec97c7143ea, type: 3}
   doSave: 0
 --- !u!114 &783540590
@@ -469,8 +471,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cityMetricsManager: {fileID: 7962657566462079142}
+  missionInProgress: 0
   timeRemainingGO: {fileID: 0}
   loadingScreen: {fileID: 0}
+  updateDefaultCity: 0
 --- !u!114 &8943927021170602758
 MonoBehaviour:
   m_ObjectHideFlags: 0
