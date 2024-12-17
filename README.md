@@ -2,9 +2,14 @@
 
 ## Overview
 
-**Verdantia** is an urban simulation game aimed at educating players about environmental impact, city planning, and sustainability. The game enables users to create and manage cities, balancing various metrics such as pollution, energy consumption, happiness, and urban heat. Players are tasked with designing and developing urban spaces while considering factors like green spaces, energy usage, and population growth.
+**Verdantia** is an urban simulation museum installation game aimed at educating players about environmental impact, city planning, and sustainability. The game enables users to create and manage cities, balancing various metrics such as pollution, energy consumption, happiness, and urban heat. Players are tasked with designing and developing urban spaces while considering factors like green spaces, energy usage, and population growth.
 
 This project integrates various gameplay mechanics, such as mission-based objectives, city-building, and dynamic environmental systems. Additionally, the project utilizes interactive elements and multiple display systems to enhance the user experience.
+
+[Final Presentation Video](https://youtu.be/GenXJEmy9oA)
+
+[Game Walkthrough Video](https://youtu.be/ENvqWqhHPGc)
+
 
 ## Features
 
