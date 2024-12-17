@@ -1,4 +1,4 @@
-# GreenCityBuilder Project
+# Verdantia | Green City Builder Project
 
 ## Overview
 
