@@ -337,6 +337,8 @@ public class CityTemperatureController : MonoBehaviour
             {
                 rightSide[i] += A * (tempsGrid[i, calculateColumn - 1] + tempsGrid[i, calculateColumn + 1]);
             }
+
+            rightSide[i] = Math.Clamp(rightSide[i], heatMapTempMin, heatMapTempMax);
         }
 
         // return new temperures at column index to calculate
@@ -346,13 +348,10 @@ public class CityTemperatureController : MonoBehaviour
     private (float cityTempAvg, float cityTempLow, float cityTempHigh) GetCityTemps(float[,] temps, int padding = 5)
     {
         // Calculate the bounds in grid coordinates based on minX, maxX, minZ, maxZ
-        // print($"{cityBoarderMinX} {cityBoarderMaxX} {cityBoarderMinZ} {cityBoarderMaxZ}");
         int minGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinX - padding), 0, gridSizeX - 1);
         int maxGridX = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxX + padding), 0, gridSizeX - 1);
         int minGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMinZ - padding), 0, gridSizeZ - 1);
         int maxGridZ = Mathf.Clamp(Mathf.RoundToInt(cityBoarderMaxZ + padding), 0, gridSizeZ - 1);
-
-        print($"{minGridX} {maxGridX} {minGridZ} {maxGridZ}");
 
         // Calculate the average temperature within city bounds
         float totalTemperature = 0f;

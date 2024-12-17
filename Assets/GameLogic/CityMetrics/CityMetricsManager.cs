@@ -183,9 +183,6 @@ public class CityMetricsManager : MonoBehaviour
     // Update city metrics based on all buildings
     public void UpdateCityMetrics()
     {
-        propertyRanges = buildingsMenu.GetPropertyRanges();
-        if (propertyRanges == null) return;
-
         // Reset all metrics before recalculating them
         ResetMetrics();
 
@@ -202,7 +199,7 @@ public class CityMetricsManager : MonoBehaviour
 
         const float BaseWeight = 5f;        // Intrinsic weight for low population buildings
 
-        print($"--- UpdateCityMetrics --- ");
+        print($"--- UpdateCityMetrics ---  {totalCityBuildings}");
 
         foreach (Transform building in cityBuildings)
         {
@@ -233,7 +230,7 @@ public class CityMetricsManager : MonoBehaviour
             float adjustedPollution = buildingProps.pollutionImpact;
 
 
-            // Apply additional feedback if temperature is above base
+            // Apply additional feedback if temperature is above or below base
             if (tempDifference != 0)
             {
                 adjustedEnergyConsumption += adjustedEnergyConsumption * tempDifference * tempSensitivity;
